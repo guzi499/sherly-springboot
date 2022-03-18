@@ -9,11 +9,11 @@ import lombok.Data;
 /**
  * @author 谷子毅
  * @email guzyc@digitalchina.com
- * @date 2022/3/17
+ * @date 2022/3/18
  */
 @Data
-@TableName("sys_role")
-public class Role extends BaseModel {
+@TableName("sys_permission")
+public class Permission extends BaseModel {
     /** id */
     @TableId(type = IdType.AUTO)
     private Integer id;
