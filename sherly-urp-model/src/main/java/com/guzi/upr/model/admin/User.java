@@ -52,9 +52,6 @@ public class User extends BaseModel {
     /** 0不可用 1可用 */
     private Integer enable;
 
-    /** 0未删除 1已删除 */
-    private Integer delFlag;
-
     /** 最后登录时间 */
     private Date lastLoginTime;
 

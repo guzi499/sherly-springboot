@@ -8,7 +8,7 @@ spring:
   # mysql配置
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://101.34.169.185:3306/banner.txt?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://101.34.169.185:3306/sherly?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai
     username: root
     password: root
 
@@ -16,3 +16,11 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+
+# mybatis-plus配置
+mybatis-plus:
+  global-config:
+    # 逻辑删除
+    db-config:
+      logic-delete-value: 1
+      logic-not-delete-value: 0
