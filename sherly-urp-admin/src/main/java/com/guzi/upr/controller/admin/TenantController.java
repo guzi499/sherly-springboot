@@ -1,6 +1,5 @@
 package com.guzi.upr.controller.admin;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.guzi.upr.mapper.admin.TenantMapper;
 import com.guzi.upr.model.admin.Tenant;
@@ -39,7 +38,7 @@ public class TenantController {
     @GetMapping("/update")
     public String update() {
         Tenant tenant = new Tenant();
-        tenant.setId(5);
+        tenant.setTenantId(5);
         tenant.setTenantName("guaguagau");
         tenantMapper.updateById(tenant);
         return "ok";

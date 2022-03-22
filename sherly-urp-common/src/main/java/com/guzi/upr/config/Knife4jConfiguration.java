@@ -1,4 +1,4 @@
-package com.guzi.upr.common;
+package com.guzi.upr.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

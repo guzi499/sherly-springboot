@@ -1,6 +1,5 @@
 package com.guzi.upr.controller.admin;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.guzi.upr.mapper.admin.UserMapper;
 import com.guzi.upr.model.admin.User;
 import io.swagger.annotations.Api;
@@ -24,8 +23,8 @@ public class UserController {
     private UserMapper userMapper;
 
     @GetMapping("/user")
-    @ApiOperation(value = "查询所有用户")
+    @ApiOperation(value = "新增用户")
     public List<User> getAll() {
-        return userMapper.selectList(new QueryWrapper<>());
+        return null;
     }
 }

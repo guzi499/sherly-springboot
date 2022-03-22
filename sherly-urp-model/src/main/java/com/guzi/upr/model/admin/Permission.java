@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.guzi.upr.model.BaseModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
@@ -14,7 +15,16 @@ import lombok.Data;
 @Data
 @TableName("sys_permission")
 public class Permission extends BaseModel {
-    /** id */
+    /** 权限id */
+    @ApiModelProperty("权限id")
     @TableId(type = IdType.AUTO)
-    private Integer id;
+    private Integer permissionId;
+
+    /** 权限名 */
+    @ApiModelProperty("权限名")
+    private String permissionName;
+
+    /** 描述 */
+    @ApiModelProperty("描述")
+    private String description;
 }
