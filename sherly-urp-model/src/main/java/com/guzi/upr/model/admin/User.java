@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.guzi.upr.model.BaseModel;
+import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
 import java.util.Date;
@@ -15,6 +16,7 @@ import java.util.Date;
  */
 @Data
 @TableName("sys_user")
+@ApiModel("user")
 public class User extends BaseModel {
     /** id */
     @TableId(type = IdType.AUTO)

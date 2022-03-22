@@ -2,8 +2,17 @@ server:
   port: 8888
 
 spring:
+  application:
+    name: URP-后台管理系统
+
+  # mysql配置
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://101.34.169.185:3306/banner.txt?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai
     username: root
     password: root
+
+  # 适配knife4j高版本
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
