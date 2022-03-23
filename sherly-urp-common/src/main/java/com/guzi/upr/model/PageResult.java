@@ -16,4 +16,10 @@ public class PageResult extends Result {
     private Integer size;
 
     private Integer total;
+
+    public PageResult(Integer current, Integer size, Integer total) {
+        this.current = current;
+        this.size = size;
+        this.total = total;
+    }
 }
