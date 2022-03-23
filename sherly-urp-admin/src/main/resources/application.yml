@@ -8,15 +8,18 @@ spring:
   # mysql配置
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://101.34.169.185:3306/sherly?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai
-    username: root
-    password: root
+    url: ENC(e8q1RGCxuOuBefW8ok4TFUQUBBb6rUrD+hI55are+8BbOqqLqVy8nxJaQxnlLMNzdMvXAL3kryFaCakNZfl0lJibXJcJeSXJxOsO6FHyoq+VltorY6EaK8a5oN9R29Ad2fxCLk0we1jPf6StAr+Ozx9/223ssR0pZYMi5Gt99xoXURGbnXdYVA==)
+    username: ENC(C3Rk84T3jcjjl6/QDzgikw==)
+    password: ENC(C3Rk84T3jcjjl6/QDzgikw==)
 
   # 适配knife4j高版本
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
-
+jasypt:
+  encryptor:
+    # 加密slat
+    password: guzi
 # mybatis-plus配置
 mybatis-plus:
   global-config:
