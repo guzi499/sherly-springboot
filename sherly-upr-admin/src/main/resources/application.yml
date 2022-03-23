@@ -1,0 +1,32 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: UPR-后台管理系统
+    dev-flag: true
+
+
+  # mysql配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: mpw:8rub2V/NIqTiAtA5pUrk/pz6OLx7HvWqwg/3JIdDFB76y+Ze67UWNXNcVBE2b1sZIBvIbi5+p1xH4hF8x9ZBUztNRKfe4Ir8oBSsCeBiW5JayBtBSuKQWa/FVG1TPOFSyB8SUsLtqmwkp7w8VBaz+65WOGU3xss6ffDphLleJkw=
+    username: mpw:p3OX+TtwtRao5GE119Qvog==
+    password: mpw:p3OX+TtwtRao5GE119Qvog==
+
+  # 适配knife4j高版本
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+# mybatis-plus配置
+mybatis-plus:
+  global-config:
+    # 逻辑删除
+    db-config:
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+
+logging:
+  level:
+    -com.guzi.upr.mapper: debug
