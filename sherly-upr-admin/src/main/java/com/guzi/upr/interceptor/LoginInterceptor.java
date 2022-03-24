@@ -7,6 +7,7 @@ import com.guzi.upr.util.JwtUtil;
 import com.guzi.upr.util.ThreadLocalUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +18,8 @@ import javax.servlet.http.HttpServletResponse;
  * @email guzyc@digitalchina.com
  * @date 2022/3/24
  */
+
+@Component
 public class LoginInterceptor implements HandlerInterceptor {
 
     @Autowired
