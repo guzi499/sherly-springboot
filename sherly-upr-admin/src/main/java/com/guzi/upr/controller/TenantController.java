@@ -1,4 +1,4 @@
-package com.guzi.upr.controller.admin;
+package com.guzi.upr.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.guzi.upr.mapper.admin.TenantMapper;
@@ -38,7 +38,7 @@ public class TenantController {
     @GetMapping("/update")
     public String update() {
         Tenant tenant = new Tenant();
-        tenant.setTenantId(5);
+        tenant.setTenantId(5L);
         tenant.setTenantName("guaguagau");
         tenantMapper.updateById(tenant);
         return "ok";

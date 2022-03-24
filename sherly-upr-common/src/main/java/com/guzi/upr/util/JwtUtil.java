@@ -2,8 +2,6 @@ package com.guzi.upr.util;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.guzi.upr.exception.BizException;
-import com.guzi.upr.exception.ResultSystemEnum;
 
 import java.util.Calendar;
 
@@ -37,13 +35,7 @@ public class JwtUtil {
      * @return 解析出的自定义荷载
      */
     public static String parseToken(String token) {
-        String data;
-        try {
-            data = JWT.require(Algorithm.HMAC256(SIGN)).build().verify(token).getClaim("data").asString();
-        }catch (Exception e) {
-            throw new BizException(ResultSystemEnum.TOKEN_ERROR);
-        }
-        return data;
+        return JWT.require(Algorithm.HMAC256(SIGN)).build().verify(token).getClaim("data").asString();
     }
 
 

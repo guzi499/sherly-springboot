@@ -9,7 +9,10 @@ import com.guzi.upr.exception.IBaseError;
 public enum ResultAdminEnum implements IBaseError {
 
     /** 错误示例 */
-    ERROR("999999", "服务器错误");
+    ERROR("999999", "服务器错误"),
+
+    TOKEN_NOT_FOUND("100001", "TOKEN不存在，请检查！"),
+    TOKEN_ERROR("100002", "登录参数异常，请重试！");
 
     private final String code;
     private final String message;

@@ -40,6 +40,7 @@ public class BaseModel {
 
     /** 0未删除 1已删除 */
     @ApiModelProperty("0未删除 1已删除")
+    @TableField("is_deleted")
     @TableLogic
-    private Integer delFlag = 0;
+    private Integer deleted = 0;
 }

@@ -28,6 +28,7 @@
         <mybatis.plus>3.5.1</mybatis.plus>
         <knife4j>2.0.7</knife4j>
         <java.jwt>3.19.0</java.jwt>
+        <common.lang3>3.12.0</common.lang3>
     </properties>
 
     <dependencies>
@@ -44,11 +45,6 @@
             <dependency>
                 <groupId>com.guzi.upr</groupId>
                 <artifactId>sherly-upr-model</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.guzi.upr</groupId>
-                <artifactId>sherly-upr-util</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -96,6 +92,12 @@
                 <artifactId>java-jwt</artifactId>
                 <version>${java.jwt}</version>
             </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${common.lang3}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
