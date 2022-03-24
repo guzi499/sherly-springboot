@@ -18,7 +18,7 @@ public class Role extends BaseModel {
     /** 角色id */
     @ApiModelProperty("角色id")
     @TableId(type = IdType.AUTO)
-    private Integer roleId;
+    private Long roleId;
 
     /** 角色名 */
     @ApiModelProperty("角色名")

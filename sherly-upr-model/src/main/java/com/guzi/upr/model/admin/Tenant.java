@@ -21,7 +21,7 @@ public class Tenant extends BaseModel {
     /** 租户id */
     @ApiModelProperty("租户id")
     @TableId(type = IdType.AUTO)
-    private Integer tenantId;
+    private Long tenantId;
 
     /** 租户名称 */
     @ApiModelProperty("租户名称")
@@ -29,7 +29,7 @@ public class Tenant extends BaseModel {
 
     /** 联系人id */
     @ApiModelProperty("联系人id")
-    private String contactUserId;
+    private Long contactUserId;
 
     /** 过期时间 */
     @ApiModelProperty("过期时间")

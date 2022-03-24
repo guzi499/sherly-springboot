@@ -18,7 +18,7 @@ public class Menu extends BaseModel {
     /** 菜单id */
     @ApiModelProperty("菜单id")
     @TableId(type = IdType.AUTO)
-    private Integer menuId;
+    private Long menuId;
 
     /** 菜单名 */
     @ApiModelProperty("菜单名")
@@ -26,7 +26,7 @@ public class Menu extends BaseModel {
 
     /** 父菜单id */
     @ApiModelProperty("父菜单id")
-    private Integer parentId;
+    private Long parentId;
 
     /** 菜单路径 */
     @ApiModelProperty("菜单路径")

@@ -31,16 +31,12 @@ public class BaseModel {
     /** 创建人id */
     @ApiModelProperty("创建人id")
     @TableField(fill = FieldFill.INSERT)
-    private Integer createUserId;
+    private Long createUserId;
 
     /** 更新人id */
     @ApiModelProperty("更新人id")
     @TableField(fill = FieldFill.INSERT_UPDATE)
-    private Integer updateUserId;
-
-    /** 租户code */
-    @ApiModelProperty("租户code")
-    private String tenantCode;
+    private Long updateUserId;
 
     /** 0未删除 1已删除 */
     @ApiModelProperty("0未删除 1已删除")

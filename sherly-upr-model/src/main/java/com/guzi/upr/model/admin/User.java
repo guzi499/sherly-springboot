@@ -20,7 +20,7 @@ public class User extends BaseModel {
     /** 用户id */
     @ApiModelProperty("用户id")
     @TableId(type = IdType.AUTO)
-    private Integer userId;
+    private Long userId;
 
     /** 昵称 */
     @ApiModelProperty("昵称")
@@ -32,7 +32,7 @@ public class User extends BaseModel {
 
     /** 手机号 */
     @ApiModelProperty("手机号")
-    private String phoneNumber;
+    private String phone;
 
     /** 密码 */
     @ApiModelProperty("密码")
@@ -48,11 +48,11 @@ public class User extends BaseModel {
 
     /** 性别 */
     @ApiModelProperty("性别")
-    private String gender;
+    private Integer gender;
 
     /** 部门id */
     @ApiModelProperty("部门id")
-    private Integer deptId;
+    private Long deptId;
 
     /** 0超级管理员 1管理员 2普通用户 */
     @ApiModelProperty("0超级管理员 1管理员 2普通用户")

@@ -18,13 +18,13 @@ public class RolePermission extends BaseModel {
     /** id */
     @ApiModelProperty("id")
     @TableId(type = IdType.AUTO)
-    private Integer id;
+    private Long id;
 
     /** 角色id */
     @ApiModelProperty("角色id")
-    private Integer roleId;
+    private Long roleId;
 
     /** 权限id */
     @ApiModelProperty("权限id")
-    private Integer permissionId;
+    private Long permissionId;
 }

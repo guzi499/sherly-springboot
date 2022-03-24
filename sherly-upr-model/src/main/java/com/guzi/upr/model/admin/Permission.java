@@ -18,7 +18,7 @@ public class Permission extends BaseModel {
     /** 权限id */
     @ApiModelProperty("权限id")
     @TableId(type = IdType.AUTO)
-    private Integer permissionId;
+    private Long permissionId;
 
     /** 权限名 */
     @ApiModelProperty("权限名")

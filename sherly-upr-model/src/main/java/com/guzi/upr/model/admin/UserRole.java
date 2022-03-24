@@ -18,13 +18,13 @@ public class UserRole extends BaseModel {
     /** id */
     @ApiModelProperty("id")
     @TableId(type = IdType.AUTO)
-    private Integer id;
+    private Long id;
 
     /** 用户id */
     @ApiModelProperty("用户id")
-    private Integer userId;
+    private Long userId;
 
     /** 角色id */
     @ApiModelProperty("角色id")
-    private Integer roleId;
+    private Long roleId;
 }
