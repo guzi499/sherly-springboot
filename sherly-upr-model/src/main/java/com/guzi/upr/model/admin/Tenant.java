@@ -23,6 +23,10 @@ public class Tenant extends BaseModel {
     @TableId(type = IdType.AUTO)
     private Long tenantId;
 
+    /** 租户code */
+    @ApiModelProperty("租户code")
+    private String tenantCode;
+
     /** 租户名称 */
     @ApiModelProperty("租户名称")
     private String tenantName;

@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.DynamicTableNameInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
+import com.guzi.upr.model.ThreadLocalModel;
+import com.guzi.upr.util.ThreadLocalUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -20,10 +22,6 @@ import java.util.List;
 @Configuration
 public class MybatisPlusConfig {
 
-    private final String DEFAULT_DB = "sherly.";
-
-    private final String OTHER_DB = "sherly.";
-
     private List<String> DEFAULT_TABLE = new ArrayList<>();
 
     @Bean
@@ -33,11 +31,8 @@ public class MybatisPlusConfig {
         // 动态表名
         DynamicTableNameInnerInterceptor dynamicTableNameInnerInterceptor = new DynamicTableNameInnerInterceptor();
         dynamicTableNameInnerInterceptor.setTableNameHandler((sql, tableName) -> {
-            if (DEFAULT_TABLE.contains(tableName)) {
-                return DEFAULT_DB + tableName;
-            } else {
-                return OTHER_DB + tableName;
-            }
+            ThreadLocalModel threadLocalModel = ThreadLocalUtil.get();
+            return threadLocalModel.getTenantCode() + "." + tableName;
         });
         interceptor.addInnerInterceptor(dynamicTableNameInnerInterceptor);
 

@@ -23,7 +23,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
                         "/swagger-resources/**",
                         "/v2/**",
                         "/",
-                        "/csrf");
+                        "/csrf",
+                        "/login");
 
     }
 }

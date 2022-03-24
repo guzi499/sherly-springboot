@@ -12,7 +12,8 @@ public enum ResultAdminEnum implements IBaseError {
     ERROR("999999", "服务器错误"),
 
     TOKEN_NOT_FOUND("100001", "TOKEN不存在，请检查！"),
-    TOKEN_ERROR("100002", "登录参数异常，请重试！");
+    TOKEN_ERROR("100002", "登录参数异常，请重试！"),
+    LOGIN_ERROR("100003", "用户名或密码错误！");
 
     private final String code;
     private final String message;

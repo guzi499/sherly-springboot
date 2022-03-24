@@ -22,7 +22,7 @@ public class JwtUtil {
      */
     public static String generateToken(String data){
         Calendar instance = Calendar.getInstance();
-        instance.add(Calendar.SECOND, 1);
+        instance.add(Calendar.DATE, 1);
         return JWT.create()
                 .withClaim("data", data)
                 .withExpiresAt(instance.getTime())
