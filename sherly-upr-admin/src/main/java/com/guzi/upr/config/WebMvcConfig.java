@@ -3,10 +3,7 @@ package com.guzi.upr.config;
 import com.guzi.upr.interceptor.LoginInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-import javax.annotation.Resource;
 
 /**
  * @author 谷子毅
@@ -16,14 +13,11 @@ import javax.annotation.Resource;
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 
-    @Resource
-    private LoginInterceptor loginInterceptor;
-
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(loginInterceptor)
+        registry.addInterceptor(new LoginInterceptor())
                 .addPathPatterns("/**")
-                .excludePathPatterns("/error",
+                .excludePathPatterns(
                         "/webjars/**",
                         "/swagger-ui.html/**",
                         "/swagger-resources/**",
@@ -31,19 +25,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
                         "/doc.html/**",
                         "/favicon.ico",
                         "/",
-                        "/csrf",
-                        "/login");
-
-    }
-
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/**").addResourceLocations(
-                "classpath:/static/");
-        registry.addResourceHandler("doc.html").addResourceLocations(
-                "classpath:/META-INF/resources/");
-        registry.addResourceHandler("/webjars/**").addResourceLocations(
-                "classpath:/META-INF/resources/webjars/");
+                        "/csrf");
 
     }
 }

@@ -87,7 +87,10 @@ public class Result<T> {
         // 记录异常堆栈
         StackTraceElement[] stackTrace = e.getStackTrace();
         for (StackTraceElement stackTraceElement : stackTrace) {
-            list.add(stackTraceElement.toString());
+            String line = stackTraceElement.toString();
+            if (line.startsWith("com.guzi")) {
+                list.add(line);
+            }
         }
 
         return list;
