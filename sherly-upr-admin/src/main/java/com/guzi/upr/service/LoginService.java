@@ -23,14 +23,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class LoginService {
 
-    @Autowired
-    private ObjectMapper objectMapper;
+
+    private static final ObjectMapper OBJECTMAPPER = new ObjectMapper();
 
     @Autowired
     private UserMapper userMapper;
 
     /**
      * 登录
+     *
      * @param dto
      * @return
      */
@@ -54,7 +55,7 @@ public class LoginService {
         tokenParam.setRealName(user.getRealName());
         tokenParam.setTenantCode(dto.getTenantCode());
 
-        String token = JwtUtil.generateToken(objectMapper.writeValueAsString(tokenParam));
+        String token = JwtUtil.generateToken(OBJECTMAPPER.writeValueAsString(tokenParam));
         LoginVO loginVO = new LoginVO();
         loginVO.setToken(token);
         return loginVO;

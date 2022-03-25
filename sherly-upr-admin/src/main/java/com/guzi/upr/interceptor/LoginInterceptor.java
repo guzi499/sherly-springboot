@@ -6,7 +6,6 @@ import com.guzi.upr.exception.BizException;
 import com.guzi.upr.util.JwtUtil;
 import com.guzi.upr.util.ThreadLocalUtil;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -22,8 +21,8 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 public class LoginInterceptor implements HandlerInterceptor {
 
-    @Autowired
-    private ObjectMapper objectMapper;
+
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -33,7 +32,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         }
         try {
             String tokenParamJson = JwtUtil.parseToken(token);
-            ThreadLocalUtil.set(objectMapper.readValue(tokenParamJson, TokenParam.class));
+            ThreadLocalUtil.set(OBJECT_MAPPER.readValue(tokenParamJson, TokenParam.class));
         }catch (Exception e) {
             throw new BizException(ResultAdminEnum.TOKEN_ERROR);
         }
