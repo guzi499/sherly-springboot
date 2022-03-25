@@ -14,16 +14,19 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(BizException.class)
     public Result bizExceptionHandler(BizException e) {
+        e.printStackTrace();
         return Result.error(e);
     }
 
     @ExceptionHandler(NullPointerException.class)
     public Result nullPointExceptionHandler(NullPointerException e) {
+        e.printStackTrace();
         return Result.error(e);
     }
 
     @ExceptionHandler(Exception.class)
     public Result exceptionHandler(Exception e) {
+        e.printStackTrace();
         return Result.error(e);
     }
 }

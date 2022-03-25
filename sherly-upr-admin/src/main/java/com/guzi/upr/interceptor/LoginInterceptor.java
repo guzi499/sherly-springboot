@@ -21,11 +21,10 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 public class LoginInterceptor implements HandlerInterceptor {
 
-
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         String token = request.getHeader("token");
         if (StringUtils.isBlank(token)) {
             throw new BizException(ResultAdminEnum.TOKEN_NOT_FOUND);

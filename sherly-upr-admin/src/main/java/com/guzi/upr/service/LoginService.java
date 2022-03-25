@@ -23,7 +23,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class LoginService {
 
-
     private static final ObjectMapper OBJECTMAPPER = new ObjectMapper();
 
     @Autowired

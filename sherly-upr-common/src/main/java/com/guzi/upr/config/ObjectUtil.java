@@ -11,6 +11,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
  * @version 1.0
  * @date 2022/3/25 10:16
  */
+@Deprecated
 public class ObjectUtil {
     /**
      * CPU 核心数量
