@@ -9,7 +9,13 @@ public abstract class ThreadLocalModel {
 
     private String tenantCode;
 
+    private Long userId;
+
     public String getTenantCode() {
         return tenantCode;
+    }
+
+    public Long getUserId() {
+        return userId;
     }
 }

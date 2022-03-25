@@ -27,4 +27,8 @@ public class Permission extends BaseModel {
     /** 描述 */
     @ApiModelProperty("描述")
     private String description;
+
+    /** 父权限id */
+    @ApiModelProperty("父权限id")
+    private Long parentId;
 }

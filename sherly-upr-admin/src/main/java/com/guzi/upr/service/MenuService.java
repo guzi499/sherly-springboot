@@ -17,7 +17,7 @@ import java.util.List;
  * @date 2022/3/24
  */
 @Service
-public class MenuService extends ServiceImpl<MenuMapper, Menu> {
+public class MenuService {
 
     /**
      * 查询菜单树
