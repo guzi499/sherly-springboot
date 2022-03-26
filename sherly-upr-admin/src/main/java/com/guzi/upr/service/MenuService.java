@@ -1,8 +1,7 @@
 package com.guzi.upr.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.guzi.upr.mapper.admin.MenuMapper;
+import com.guzi.upr.manager.MenuManager;
 import com.guzi.upr.model.admin.Menu;
 import com.guzi.upr.model.dto.MenuInsertDTO;
 import com.guzi.upr.model.dto.MenuListTreeQueryDTO;
@@ -12,6 +11,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,6 +24,9 @@ import java.util.stream.Collectors;
 @Service
 public class MenuService {
 
+    @Resource
+    private MenuManager menuManager;
+
     /**
      * 查询菜单树
      *
@@ -34,9 +37,9 @@ public class MenuService {
         // 缓存
         if (dto.getParentId() == null || dto.getParentId() == 0) {
             // 父节点
-            List<Menu> parentList = list(new LambdaQueryWrapper<Menu>().isNull(Menu::getParentId).eq(Menu::getDeleted, 0));
+            List<Menu> parentList = menuManager.list(new LambdaQueryWrapper<Menu>().isNull(Menu::getParentId).eq(Menu::getDeleted, 0));
             // 子节点
-            List<Menu> childList = list(new LambdaQueryWrapper<Menu>().isNotNull(Menu::getParentId).eq(Menu::getDeleted, 0));
+            List<Menu> childList = menuManager.list(new LambdaQueryWrapper<Menu>().isNotNull(Menu::getParentId).eq(Menu::getDeleted, 0));
 
             List<MenuParentDto> menuParentDtos = new ArrayList<>();
             for (Menu menu : parentList) {
@@ -79,14 +82,14 @@ public class MenuService {
                 menu -> {
                     // 设置父节点属性
                     if (menu.getMenuId() == null) {
-                        save(menu);
+                        menuManager.save(menu);
                     }
                     if (menu.getChildren() == null) {
                         return;
                     }
                     List<Menu> children = menu.getChildren().stream().peek(item -> item.setParentId(menu.getMenuId())).collect(Collectors.toList());
                     // 设置子节点属性
-                    saveBatch(children);
+                    menuManager.saveBatch(children);
                     // 子节点分支
                     saveChildList(children);
                 }
@@ -105,7 +108,7 @@ public class MenuService {
             List<MenuParentDto> children1 = ((MenuParentDto) child).getChildren().stream().peek(item -> item.setParentId(child.getMenuId())).collect(Collectors.toList());
             childList.addAll(children1);
             // 保存子级
-            saveBatch(childList);
+            menuManager.saveBatch(childList);
             // 下一级
             for (MenuParentDto menuParentDto : children1) {
                 if (menuParentDto.getChildren() != null && !menuParentDto.getChildren().isEmpty()) {
@@ -121,9 +124,9 @@ public class MenuService {
      * @param id
      */
     public void removeOne(Long id) {
-        Menu byId = getById(id);
+        Menu byId = menuManager.getById(id);
         byId.setDeleted(1);
-        updateById(byId);
+        menuManager.updateById(byId);
     }
 
     /**
@@ -143,7 +146,7 @@ public class MenuService {
         );
         // 统一更新
         menus.addAll(menuList);
-        updateBatchById(menus);
+        menuManager.updateBatchById(menus);
 
     }
 
