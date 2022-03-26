@@ -19,10 +19,10 @@ public class PermissionManager extends ServiceImpl<PermissionMapper, Permission>
      * @param parentId
      * @return
      */
-    public Long countByPermissionName(String permissionName, Long parentId) {
+    public Permission getByPermissionName(String permissionName, Long parentId) {
         LambdaQueryWrapper<Permission> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(Permission::getPermissionName, permissionName)
                 .eq(Permission::getParentId, parentId);
-        return this.count(wrapper);
+        return this.getOne(wrapper);
     }
 }
