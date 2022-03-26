@@ -1,5 +1,6 @@
 package com.guzi.upr.model.vo;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**
@@ -8,6 +9,7 @@ import lombok.Data;
  * @date 2022/3/24
  */
 @Data
+@AllArgsConstructor
 public class LoginVO {
 
     private String token;

@@ -1,17 +1,17 @@
 package com.guzi.upr.service;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.guzi.upr.enums.ResultAdminEnum;
 import com.guzi.upr.exception.BizException;
+import com.guzi.upr.manager.UserManager;
 import com.guzi.upr.interceptor.TokenParam;
-import com.guzi.upr.mapper.admin.UserMapper;
 import com.guzi.upr.model.admin.User;
 import com.guzi.upr.model.dto.LoginDTO;
 import com.guzi.upr.model.vo.LoginVO;
 import com.guzi.upr.util.JwtUtil;
 import com.guzi.upr.util.ThreadLocalUtil;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +26,7 @@ public class LoginService {
     private static final ObjectMapper OBJECTMAPPER = new ObjectMapper();
 
     @Autowired
-    private UserMapper userMapper;
+    private UserManager userManager;
 
     /**
      * 登录
@@ -36,27 +36,20 @@ public class LoginService {
      */
     public LoginVO login(LoginDTO dto) throws JsonProcessingException {
 
+        // 往 threadLocal中放入 tenantCode 目的是实现动态表名
         TokenParam tokenParam = new TokenParam();
         tokenParam.setTenantCode(dto.getTenantCode());
         ThreadLocalUtil.set(tokenParam);
 
-        LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(User::getPhone, dto.getPhone())
-                .eq(User::getPassword, dto.getPassword());
-
-        User user = userMapper.selectOne(wrapper);
+        User user = userManager.getOneByPhoneAndPwd(dto.getPhone(), dto.getPassword());
         if (user == null) {
             throw new BizException(ResultAdminEnum.LOGIN_ERROR);
         }
+        BeanUtils.copyProperties(user, tokenParam);
 
-        tokenParam.setNickname(user.getNickname());
-        tokenParam.setUserId(user.getUserId());
-        tokenParam.setRealName(user.getRealName());
-        tokenParam.setTenantCode(dto.getTenantCode());
-
+        // 生成 token
         String token = JwtUtil.generateToken(OBJECTMAPPER.writeValueAsString(tokenParam));
-        LoginVO loginVO = new LoginVO();
-        loginVO.setToken(token);
-        return loginVO;
+
+        return new LoginVO(token);
     }
 }

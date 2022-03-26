@@ -25,7 +25,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
                         "/doc.html/**",
                         "/favicon.ico",
                         "/",
-                        "/csrf");
+                        "/csrf",
+                        "/error");
 
     }
 }
