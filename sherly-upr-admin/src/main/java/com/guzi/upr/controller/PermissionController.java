@@ -22,6 +22,12 @@ public class PermissionController {
     @Autowired
     private PermissionService permissionService;
 
+    @GetMapping("/list/tree")
+    @ApiOperation("查询权限树")
+    public Result listTree() {
+        return Result.success(permissionService.listTree());
+    }
+
     @PostMapping("/save/one")
     @ApiOperation("权限新增")
     public Result saveOne(@RequestBody PermissionInsertDTO dto) {
