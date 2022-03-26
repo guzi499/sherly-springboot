@@ -9,5 +9,5 @@ import lombok.Data;
  */
 @Data
 public class MenuListTreeQueryDTO {
-
+    private Integer parentId;
 }

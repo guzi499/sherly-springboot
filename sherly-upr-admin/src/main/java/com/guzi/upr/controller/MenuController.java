@@ -3,8 +3,8 @@ package com.guzi.upr.controller;
 import com.guzi.upr.model.Result;
 import com.guzi.upr.model.dto.MenuInsertDTO;
 import com.guzi.upr.model.dto.MenuListTreeQueryDTO;
+import com.guzi.upr.model.dto.MenuParentDto;
 import com.guzi.upr.model.dto.MenuUpdateDTO;
-import com.guzi.upr.model.vo.MenuListTreeVO;
 import com.guzi.upr.service.MenuService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -28,7 +28,7 @@ public class MenuController {
 
     @PostMapping("/list/tree")
     @ApiOperation("查询菜单树")
-    public Result<List<MenuListTreeVO>> listTree(@RequestBody MenuListTreeQueryDTO dto) {
+    public Result<List<MenuParentDto>> listTree(@RequestBody MenuListTreeQueryDTO dto) {
         return Result.success(menuService.listTree(dto));
     }
 

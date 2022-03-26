@@ -2,6 +2,8 @@ package com.guzi.upr.model.dto;
 
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * @author 谷子毅
  * @email guzyc@digitalchina.com
@@ -9,4 +11,5 @@ import lombok.Data;
  */
 @Data
 public class MenuUpdateDTO {
+    private List<MenuParentDto> menuList;
 }
