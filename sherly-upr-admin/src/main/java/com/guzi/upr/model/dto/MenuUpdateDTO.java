@@ -11,5 +11,5 @@ import java.util.List;
  */
 @Data
 public class MenuUpdateDTO {
-    private List<MenuParentDto> menuList;
+    private List<MenuParentDTO> menuList;
 }

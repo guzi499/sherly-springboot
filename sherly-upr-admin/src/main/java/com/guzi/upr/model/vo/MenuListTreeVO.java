@@ -1,6 +1,6 @@
 package com.guzi.upr.model.vo;
 
-import com.guzi.upr.model.dto.MenuParentDto;
+import com.guzi.upr.model.dto.MenuParentDTO;
 import lombok.Data;
 
 import java.util.List;
@@ -12,5 +12,5 @@ import java.util.List;
  */
 @Data
 public class MenuListTreeVO {
-    private List<MenuParentDto> menuList;
+    private List<MenuParentDTO> menuList;
 }
