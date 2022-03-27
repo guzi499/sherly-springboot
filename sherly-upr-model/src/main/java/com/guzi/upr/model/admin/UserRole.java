@@ -5,22 +5,31 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.guzi.upr.model.BaseModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author 谷子毅
  * @email guzyc@digitalchina.com
  * @date 2022/3/17
  */
+
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 @TableName("sys_user_role")
 public class UserRole extends BaseModel {
-    /** id */
+    /**
+     * id
+     */
     @ApiModelProperty("id")
     @TableId(type = IdType.AUTO)
     private Long id;
 
-    /** 用户id */
+    /**
+     * 用户id
+     */
     @ApiModelProperty("用户id")
     private Long userId;
 
