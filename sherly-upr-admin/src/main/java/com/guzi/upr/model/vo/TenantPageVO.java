@@ -1,8 +1,6 @@
-package com.guzi.upr.model.admin;
+package com.guzi.upr.model.vo;
 
-import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.guzi.upr.model.BaseModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -10,16 +8,12 @@ import java.util.Date;
 
 /**
  * @author 谷子毅
- * @email guzyc@digitalchina.com
- * @date 2022/3/18
+ * @date 2022/3/27
  */
 @Data
-@TableName("sys_tenant")
-public class Tenant extends BaseModel {
-
+public class TenantPageVO {
     /** 租户id */
     @ApiModelProperty("租户id")
-    @TableId(type = IdType.AUTO)
     private Long tenantId;
 
     /** 租户code */
@@ -42,4 +36,9 @@ public class Tenant extends BaseModel {
     /** 用户上限 */
     @ApiModelProperty("用户上限")
     private Long userLimit;
+
+    /** 创建时间 */
+    @ApiModelProperty("创建时间")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date createTime;
 }
