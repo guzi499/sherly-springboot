@@ -4,14 +4,12 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.guzi.upr.manager.RoleManager;
 import com.guzi.upr.manager.RolePermissionManager;
 import com.guzi.upr.model.admin.Role;
-import com.guzi.upr.model.admin.RolePermission;
 import com.guzi.upr.model.dto.RoleInsertDTO;
 import com.guzi.upr.model.dto.RoleUpdateDTO;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,47 +19,61 @@ import java.util.List;
  */
 @Service
 public class RoleService {
-    @Resource
+    @Autowired
     private RoleManager roleManager;
-    @Resource
+    @Autowired
     private RolePermissionManager rolePermissionManager;
 
+    /**
+     * 角色列表
+     *
+     * @return
+     */
     public List<Role> list() {
-        List<Role> list = roleManager.list(new LambdaQueryWrapper<Role>().orderByAsc(Role::getRoleId));
-        return list;
+        // TODO: 2022/3/27 分页
+        return roleManager.list();
     }
 
+    /**
+     * 保存角色
+     *
+     * @param dto
+     */
     public void saveOne(RoleInsertDTO dto) {
+        // 角色名重复
+        if (roleManager.count(new LambdaQueryWrapper<Role>().eq(Role::getRoleName, dto.getRoleName())) > 0) {
+            return;
+        }
         Role role = new Role();
         BeanUtils.copyProperties(dto, role);
         roleManager.save(role);
-        // 权限
-        saveRolePermission(role, dto.getPermissions());
+        // 添加权限
+        rolePermissionManager.updatePermission(role, dto.getPermissions());
     }
 
+    /**
+     * 移除角色
+     *
+     * @param id
+     */
     public void removeOne(Long id) {
         rolePermissionManager.removeById(id);
     }
 
+    /**
+     * 更新角色信息
+     *
+     * @param dto
+     */
     public void updateOne(RoleUpdateDTO dto) {
         Role role = new Role();
         BeanUtils.copyProperties(dto, role);
         boolean b = roleManager.updateById(role);
         // 更新权限
-        rolePermissionManager.remove(new LambdaQueryWrapper<RolePermission>().eq(RolePermission::getRoleId, role.getRoleId()));
-        saveRolePermission(role, dto.getPermissions());
+        rolePermissionManager.removePermissionByRoleId(dto.getRoleId());
+        rolePermissionManager.updatePermission(role, dto.getPermissions());
+
     }
 
-    private void saveRolePermission(Role role, List<Long> permissions2) {
-        List<RolePermission> rolePermissions = new ArrayList<>();
-        for (Long permission : permissions2) {
-            RolePermission rolePermission = new RolePermission();
-            rolePermission.setRoleId(role.getRoleId());
-            rolePermission.setPermissionId(permission);
-            rolePermissions.add(rolePermission);
-        }
-        if (!rolePermissions.isEmpty()) {
-            rolePermissionManager.saveBatch(rolePermissions);
-        }
-    }
+
 }

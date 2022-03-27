@@ -1,17 +1,14 @@
 package com.guzi.upr.service;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.guzi.upr.manager.MenuManager;
 import com.guzi.upr.model.admin.Menu;
 import com.guzi.upr.model.dto.MenuInsertDTO;
-import com.guzi.upr.model.dto.MenuListTreeQueryDTO;
-import com.guzi.upr.model.dto.MenuParentDTO;
 import com.guzi.upr.model.dto.MenuUpdateDTO;
+import com.guzi.upr.model.vo.MenuParentVO;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,47 +21,49 @@ import java.util.stream.Collectors;
 @Service
 public class MenuService {
 
-    @Resource
+    @Autowired
     private MenuManager menuManager;
 
     /**
      * 查询菜单树
      *
-     * @param dto
      * @return
      */
-    public List<MenuParentDTO> listTree(MenuListTreeQueryDTO dto) {
+    public List<MenuParentVO> listTree() {
         // 缓存
-        if (dto.getParentId() == null || dto.getParentId() == 0) {
-            // 所有菜单对象
-            List<MenuParentDTO> menuList = menuManager.list(new LambdaQueryWrapper<Menu>()).stream().map(
-                    e -> {
-                        MenuParentDTO menuParentDTO = new MenuParentDTO();
-                        BeanUtils.copyProperties(e, menuParentDTO);
-                        return menuParentDTO;
-                    }
-            ).collect(Collectors.toList());
-            // 子节点
-            // 获取子集
-            return menuList.stream().filter(
-                            e -> e.getParentId() == 0
-                    ).sorted(Comparator.comparing(MenuParentDTO::getSort))
-                    .peek(e -> {
-                        MenuParentDTO menuParentDto = getListTree(e, menuList);
-                    })
-                    .collect(Collectors.toList());
-        }
-        return null;
+        // 所有菜单对象
+        List<MenuParentVO> menuList = menuManager.list().stream().map(
+                e -> {
+                    MenuParentVO menuParentDTO = new MenuParentVO();
+                    BeanUtils.copyProperties(e, menuParentDTO);
+                    return menuParentDTO;
+                }
+        ).collect(Collectors.toList());
+        // 子节点
+        // 获取子集
+        return menuList.stream().filter(
+                        e -> e.getParentId() == 0
+                ).sorted(Comparator.comparing(MenuParentVO::getSort))
+                .peek(e -> {
+                    e.setChildren(getListTree(e, menuList));
+                })
+                .collect(Collectors.toList());
+
+
     }
 
-    private MenuParentDTO getListTree(MenuParentDTO parent, List<MenuParentDTO> childList) {
-        List<MenuParentDTO> collect = childList.stream().filter(child -> child.getParentId().equals(parent.getMenuId())).collect(Collectors.toList());
-        parent.setChildren(collect);
-
-        for (MenuParentDTO child : collect) {
-            getListTree(child, childList);
-        }
-        return parent;
+    /**
+     * 获取根节点下所有元素
+     *
+     * @param parent
+     * @param childList
+     * @return
+     */
+    private List<MenuParentVO> getListTree(MenuParentVO parent, List<MenuParentVO> childList) {
+        return childList.stream()
+                .filter(child -> child.getParentId().equals(parent.getMenuId()))
+                .peek(e -> e.setChildren(getListTree(e, childList)))
+                .collect(Collectors.toList());
     }
 
     /**
@@ -72,7 +71,6 @@ public class MenuService {
      *
      * @param dto
      */
-    @Transactional(rollbackFor = Exception.class)
     public void saveOne(MenuInsertDTO dto) {
         // 参数检查
         Menu menu = new Menu();
