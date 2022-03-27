@@ -2,12 +2,8 @@ package com.guzi.upr.model.dto;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-
-import java.util.ArrayList;
 
 /**
  * @author 谷子毅
@@ -52,28 +48,5 @@ public class MenuInsertDTO {
      */
     @ApiModelProperty("排序")
     private Integer sort;
-
-    public static void main(String[] args) throws JsonProcessingException {
-
-        MenuInsertDTO menuInsertDTO = new MenuInsertDTO();
-        ArrayList<MenuParentDTO> menuParentDtos = new ArrayList<>();
-        MenuParentDTO menuParentDto = new MenuParentDTO();
-        menuParentDto.setMenuName("Parent1");
-        menuParentDto.setSort(1);
-        ArrayList<MenuParentDTO> menuParentDtos1 = new ArrayList<>();
-        MenuParentDTO childMenuParentD = new MenuParentDTO();
-        childMenuParentD.setMenuName("Child1");
-        childMenuParentD.setSort(1);
-        ArrayList<MenuParentDTO> menuParentDtos2 = new ArrayList<>();
-        MenuParentDTO childMenuParent2 = new MenuParentDTO();
-        childMenuParent2.setMenuName("Child11");
-        childMenuParent2.setSort(1);
-        menuParentDtos2.add(childMenuParent2);
-
-        menuParentDtos.add(menuParentDto);
-//        menuInsertDTO.setMenuList(menuParentDtos);
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        System.out.println(objectMapper.writeValueAsString(menuInsertDTO));
-    }
+    
 }
