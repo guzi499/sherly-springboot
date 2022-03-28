@@ -29,4 +29,7 @@ mybatis-plus:
 
 logging:
   level:
+    # mysql日志
     -com.guzi.upr.mapper: debug
+    # knife4j日志
+    -springfox: warn

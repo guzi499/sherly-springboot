@@ -1,7 +1,20 @@
+CREATE TABLE `sys_department`  (
+                                   `dept_id` bigint UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '部门id',
+                                   `dept_name` varchar(255) NULL COMMENT '部门名称',
+                                   `description` varchar(255) NULL COMMENT '描述',
+                                   `parent_id` bigint UNSIGNED NULL DEFAULT 0 COMMENT '父部门id',
+                                   `create_time` datetime NULL COMMENT '创建时间',
+                                   `update_time` datetime NULL COMMENT '更新时间',
+                                   `create_user_id` bigint UNSIGNED NULL COMMENT '创建人id',
+                                   `update_user_id` bigint UNSIGNED NULL COMMENT '更新人id',
+                                   `is_deleted` tinyint UNSIGNED NULL DEFAULT 0 COMMENT '0未删除 1已删除',
+                                   PRIMARY KEY (`dept_id`)
+);
+
 CREATE TABLE `sys_menu`  (
                              `menu_id` bigint UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '菜单id',
                              `menu_name` varchar(255) NULL COMMENT '菜单名',
-                             `parent_id` bigint UNSIGNED NULL COMMENT '父菜单id',
+                             `parent_id` bigint UNSIGNED NULL DEFAULT 0 COMMENT '父菜单id',
                              `link` varchar(255) NULL COMMENT '菜单路径',
                              `icon` varchar(255) NULL COMMENT '菜单图标',
                              `sort` int NULL COMMENT '排序',
@@ -15,8 +28,9 @@ CREATE TABLE `sys_menu`  (
 
 CREATE TABLE `sys_permission`  (
                                    `permission_id` bigint UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '权限id',
-                                   `permission_name` varchar(255) NULL COMMENT '权限名',
+                                   `permission_name` varchar(255) NULL COMMENT '权限名称',
                                    `description` varchar(255) NULL COMMENT '描述',
+                                   `parent_id` bigint UNSIGNED NULL DEFAULT 0 COMMENT '父权限id',
                                    `create_time` datetime NULL COMMENT '创建时间',
                                    `update_time` datetime NULL COMMENT '更新时间',
                                    `create_user_id` bigint UNSIGNED NULL COMMENT '创建人id',
@@ -63,9 +77,11 @@ CREATE TABLE `sys_role_permission`  (
 
 CREATE TABLE `sys_tenant`  (
                                `tenant_id` bigint UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '租户id',
-                               `tneant_name` varchar(255) NULL COMMENT '租户名称',
+                               `tenant_code` varchar(255) NULL COMMENT '租户code',
+                               `tenant_name` varchar(255) NULL COMMENT '租户名称',
                                `contact_user_id` bigint UNSIGNED NULL COMMENT '联系人id',
                                `expire_time` datetime NULL COMMENT '过期时间',
+                               `user_limit` bigint(255) NULL COMMENT '用户上限',
                                `create_time` datetime NULL COMMENT '创建时间',
                                `update_time` datetime NULL COMMENT '更新时间',
                                `create_user_id` bigint UNSIGNED NULL COMMENT '创建人id',
@@ -80,7 +96,7 @@ CREATE TABLE `sys_user`  (
                              `real_name` varchar(255) NULL COMMENT '姓名',
                              `phone` char(11) NULL COMMENT '手机号',
                              `password` varchar(255) NULL COMMENT '密码',
-                             `avator` varchar(255) NULL COMMENT '用户头像',
+                             `avater` varchar(255) NULL COMMENT '用户头像',
                              `email` varchar(255) NULL COMMENT '用户邮箱',
                              `gender` tinyint UNSIGNED NULL COMMENT '性别',
                              `dept_id` bigint UNSIGNED NULL COMMENT '部门id',

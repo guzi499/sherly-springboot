@@ -28,7 +28,7 @@ public class Menu extends BaseModel {
 
     /** 父菜单id */
     @ApiModelProperty("父菜单id")
-    private Long parentId;
+    private Long parentId = 0L;
 
     /** 菜单路径 */
     @ApiModelProperty("菜单路径")
