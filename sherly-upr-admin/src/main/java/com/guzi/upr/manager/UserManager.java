@@ -11,6 +11,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author 谷子毅
  * @date 2022/3/25
@@ -31,7 +34,7 @@ public class UserManager extends ServiceImpl<UserMapper, User> {
 
         return userMapper.selectOne(wrapper);
     }
-
+    
 
     /**
      * 新增用户及对应角色信息
@@ -43,9 +46,7 @@ public class UserManager extends ServiceImpl<UserMapper, User> {
         BeanUtils.copyProperties(dto, user);
         save(user);
         // 用户角色
-        UserRole userRole = new UserRole(null, user.getUserId(), dto.getRoleId());
-        userRoleManager.save(userRole);
-
+        updateUserRole(user, dto.getRoleIds());
     }
 
     /**
@@ -58,7 +59,18 @@ public class UserManager extends ServiceImpl<UserMapper, User> {
         BeanUtils.copyProperties(dto, user);
         updateById(user);
         // 用户角色
-        UserRole userRole = new UserRole(null, user.getUserId(), dto.getRoleId());
-        userRoleManager.save(userRole);
+        updateUserRole(user, dto.getRoleIds());
+    }
+
+    private void updateUserRole(User user, List<Long> roleIds) {
+        // 清除角色权限
+        userRoleManager.remove(new LambdaQueryWrapper<UserRole>().eq(UserRole::getUserId, user.getUserId()));
+        List<UserRole> userRoles = new ArrayList<>();
+        for (Long roleId : roleIds) {
+            UserRole userRole = new UserRole(null, user.getUserId(), roleId);
+            userRoles.add(userRole);
+        }
+        // 更新用户权限
+        userRoleManager.saveBatch(userRoles);
     }
 }

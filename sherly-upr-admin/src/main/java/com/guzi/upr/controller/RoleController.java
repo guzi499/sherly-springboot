@@ -1,7 +1,8 @@
 package com.guzi.upr.controller;
 
+import com.guzi.upr.model.PageQuery;
+import com.guzi.upr.model.PageResult;
 import com.guzi.upr.model.Result;
-import com.guzi.upr.model.admin.Role;
 import com.guzi.upr.model.dto.RoleInsertDTO;
 import com.guzi.upr.model.dto.RoleUpdateDTO;
 import com.guzi.upr.service.RoleService;
@@ -9,8 +10,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * @author 谷子毅
@@ -27,15 +26,15 @@ public class RoleController {
 
     @PostMapping("/list/role")
     @ApiOperation("查询角色列表")
-    public Result<List<Role>> list() {
-        List<Role> roles = roleService.list();
+    public Result<PageResult> list(PageQuery pageQuery) {
+        PageResult roles = roleService.list(pageQuery);
         return Result.success(roles);
     }
 
     @PostMapping("/save/one")
     @ApiOperation("新增角色")
     public Result saveOne(@RequestBody RoleInsertDTO dto) {
-        
+
         roleService.saveOne(dto);
         return Result.success();
     }

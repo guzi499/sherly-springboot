@@ -1,16 +1,19 @@
 package com.guzi.upr.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.guzi.upr.enums.ResultAdminEnum;
+import com.guzi.upr.exception.BizException;
 import com.guzi.upr.manager.RoleManager;
 import com.guzi.upr.manager.RolePermissionManager;
+import com.guzi.upr.model.PageQuery;
+import com.guzi.upr.model.PageResult;
 import com.guzi.upr.model.admin.Role;
 import com.guzi.upr.model.dto.RoleInsertDTO;
 import com.guzi.upr.model.dto.RoleUpdateDTO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * @author 谷子毅
@@ -29,9 +32,11 @@ public class RoleService {
      *
      * @return
      */
-    public List<Role> list() {
-        // TODO: 2022/3/27 分页
-        return roleManager.list();
+    public PageResult<Role> list(PageQuery pageQuery) {
+        
+        IPage<Role> page = roleManager.page(pageQuery.getPage());
+
+        return new PageResult<Role>(page.getRecords(), page.getCurrent(), page.getSize(), page.getTotal());
     }
 
     /**
@@ -42,7 +47,7 @@ public class RoleService {
     public void saveOne(RoleInsertDTO dto) {
         // 角色名重复
         if (roleManager.count(new LambdaQueryWrapper<Role>().eq(Role::getRoleName, dto.getRoleName())) > 0) {
-            return;
+            throw new BizException(ResultAdminEnum.ROLE_REPEAT);
         }
         Role role = new Role();
         BeanUtils.copyProperties(dto, role);

@@ -1,5 +1,7 @@
 package com.guzi.upr.controller;
 
+import com.guzi.upr.model.PageQuery;
+import com.guzi.upr.model.PageResult;
 import com.guzi.upr.model.Result;
 import com.guzi.upr.model.admin.User;
 import com.guzi.upr.model.dto.UserInsertDTO;
@@ -9,8 +11,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * @author 谷子毅
@@ -27,21 +27,21 @@ public class UserController {
 
     @GetMapping("/list")
     @ApiOperation(value = "获取所有用户")
-    public Result<List<User>> getAll() {
+    public PageResult<User> getAll(PageQuery pageQuery) {
         // 分页
-        return null;
+        return userService.page(pageQuery);
     }
 
     @PostMapping("/save")
     @ApiOperation(value = "新增用户")
-    public Result saveOne(UserInsertDTO dto) {
+    public Result saveOne(@RequestBody UserInsertDTO dto) {
         userService.saveOne(dto);
         return Result.success();
     }
 
     @PutMapping("/update")
     @ApiOperation("更新")
-    public Result updateOne(UserUpdateDTO dto) {
+    public Result updateOne(@RequestBody UserUpdateDTO dto) {
         userService.updateOne(dto);
         return Result.success();
     }

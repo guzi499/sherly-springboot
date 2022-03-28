@@ -1,6 +1,13 @@
 package com.guzi.upr.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.guzi.upr.enums.ResultAdminEnum;
+import com.guzi.upr.exception.BizException;
 import com.guzi.upr.manager.UserManager;
+import com.guzi.upr.model.PageQuery;
+import com.guzi.upr.model.PageResult;
+import com.guzi.upr.model.admin.User;
 import com.guzi.upr.model.dto.UserInsertDTO;
 import com.guzi.upr.model.dto.UserUpdateDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +29,11 @@ public class UserService {
      * @param dto
      */
     public void saveOne(UserInsertDTO dto) {
+        // 重复检查
+
+        if (userManager.count(new LambdaQueryWrapper<User>().eq(User::getPhone, dto.getPhone())) > 0) {
+            throw new BizException(ResultAdminEnum.USER_REPEAT);
+        }
         userManager.saveOne(dto);
     }
 
@@ -42,5 +54,11 @@ public class UserService {
      */
     public void removeOne(Long userId) {
         userManager.removeById(userId);
+    }
+
+    public PageResult<User> page(PageQuery pageQuery) {
+        IPage<User> page = userManager.page(pageQuery.getPage());
+
+        return new PageResult<User>(page.getRecords(), page.getCurrent(), page.getSize(), page.getTotal());
     }
 }

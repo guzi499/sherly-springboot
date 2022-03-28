@@ -3,6 +3,8 @@ package com.guzi.upr.model.dto;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * @author fudon
  * @version 1.0
@@ -52,5 +54,5 @@ public class UserUpdateDTO {
     private Integer enable;
 
     @ApiModelProperty("角色id")
-    private Long roleId;
+    private List<Long> roleIds;
 }
