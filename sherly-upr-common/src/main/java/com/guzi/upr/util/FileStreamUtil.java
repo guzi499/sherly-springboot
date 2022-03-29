@@ -1,6 +1,5 @@
 package com.guzi.upr.util;
 
-import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
 import org.apache.commons.io.IOUtils;
 
@@ -24,7 +23,6 @@ public class FileStreamUtil {
     public static BufferedReader getBufferedReader(byte[] bytes) throws IOException {
         ByteOutputStream byteOutputStream = new ByteOutputStream(bytes.length);
         IOUtils.write(bytes, byteOutputStream);
-        ByteInputStream byteInputStream1 = byteOutputStream.newInputStream();
-        return new BufferedReader(new InputStreamReader(byteInputStream1));
+        return new BufferedReader(new InputStreamReader(byteOutputStream.newInputStream()));
     }
 }

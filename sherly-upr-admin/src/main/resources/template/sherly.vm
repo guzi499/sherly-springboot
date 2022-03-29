@@ -1,7 +1,5 @@
 CREATE DATABASE IF NOT EXISTS ${database};
 USE ${database};
-
-
 CREATE TABLE if NOT EXISTS `sys_department`  (
 `dept_id` bigint UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '部门id',
 `dept_name` varchar(255) NULL COMMENT '部门名称',
