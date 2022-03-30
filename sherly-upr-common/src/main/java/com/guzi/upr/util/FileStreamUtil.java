@@ -1,11 +1,8 @@
 package com.guzi.upr.util;
 
-import com.sun.xml.internal.messaging.saaj.util.ByteOutputStream;
 import org.apache.commons.io.IOUtils;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 
 /**
  * @author fudon
@@ -21,8 +18,8 @@ public class FileStreamUtil {
      * 传入字节数组获取inputStream
      */
     public static BufferedReader getBufferedReader(byte[] bytes) throws IOException {
-        ByteOutputStream byteOutputStream = new ByteOutputStream(bytes.length);
+        ByteArrayOutputStream byteOutputStream = new ByteArrayOutputStream(bytes.length);
         IOUtils.write(bytes, byteOutputStream);
-        return new BufferedReader(new InputStreamReader(byteOutputStream.newInputStream()));
+        return new BufferedReader(new InputStreamReader(new ByteArrayInputStream(byteOutputStream.toByteArray())));
     }
 }
