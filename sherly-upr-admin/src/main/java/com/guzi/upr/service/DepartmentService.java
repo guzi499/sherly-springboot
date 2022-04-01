@@ -7,6 +7,8 @@ import com.guzi.upr.exception.BizException;
 import com.guzi.upr.manager.DepartmentManager;
 import com.guzi.upr.model.PageQuery;
 import com.guzi.upr.model.PageResult;
+import com.guzi.upr.model.admin.Department;
+import com.guzi.upr.model.admin.Permission;
 import com.guzi.upr.model.admin.User;
 import com.guzi.upr.model.dto.DepartmentInsertDTO;
 import com.guzi.upr.model.dto.UserUpdateDTO;
@@ -31,10 +33,20 @@ public class DepartmentService {
     }
 
     public void saveOne(DepartmentInsertDTO dto) {
+        // 查重
+        Department one = departmentManager.getByDeptName(dto.getDeptName(), dto.getParentId());
+        if (one != null) {
+            throw new BizException(ResultAdminEnum.PERMISSION_REPEAT);
+        }
         departmentManager.saveOne(dto);
     }
 
     public void updateOne(DepartmentInsertDTO dto) {
+        // 检测是否存在
+        Department one = departmentManager.getByDeptName(dto.getDeptName(), dto.getParentId());
+        if (one == null) {
+            throw new BizException(ResultAdminEnum.PERMISSION_REPEAT);
+        }
         departmentManager.updateOne(dto);
     }
 
