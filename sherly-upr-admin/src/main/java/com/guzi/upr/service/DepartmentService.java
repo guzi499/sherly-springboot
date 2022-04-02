@@ -2,6 +2,7 @@ package com.guzi.upr.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.guzi.upr.enums.DepartmentEnum;
 import com.guzi.upr.enums.ResultAdminEnum;
 import com.guzi.upr.exception.BizException;
 import com.guzi.upr.manager.DepartmentManager;
@@ -36,7 +37,7 @@ public class DepartmentService {
         // 查重
         Department one = departmentManager.getByDeptName(dto.getDeptName(), dto.getParentId());
         if (one != null) {
-            throw new BizException(ResultAdminEnum.PERMISSION_REPEAT);
+            throw new BizException(DepartmentEnum.DEPARTMENT_IS_EXIST);
         }
         departmentManager.saveOne(dto);
     }
@@ -45,7 +46,7 @@ public class DepartmentService {
         // 检测是否存在
         Department one = departmentManager.getByDeptName(dto.getDeptName(), dto.getParentId());
         if (one == null) {
-            throw new BizException(ResultAdminEnum.PERMISSION_REPEAT);
+            throw new BizException(DepartmentEnum.DEPARTMENT_NOT_EXIST);
         }
         departmentManager.updateOne(dto);
     }
