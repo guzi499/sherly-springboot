@@ -25,7 +25,7 @@ public class AppRun {
         String serviceName = environment.getProperty("spring.application.name");
 
         log.info("\n----------------------------------------------------------\n\t" +
-                serviceName + " is running! Here are URLs:\n\t" +
+                serviceName + " is running! There are some useful urls:\n\t" +
                 "System:\t http://127.0.0.1:" + port + "\n\t" +
                 "knife4j: http://127.0.0.1" + ":" + port + "/doc.html\n" +
                 "----------------------------------------------------------");

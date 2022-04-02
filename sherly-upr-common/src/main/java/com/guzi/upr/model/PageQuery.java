@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
+ * 分页请求对象，所有分页请求DTO都需继承此类
  * @author 谷子毅
  * @date 2022/3/27
  */

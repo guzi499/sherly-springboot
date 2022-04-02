@@ -6,14 +6,12 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.guzi.upr.model.BaseModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 /**
  * @author 谷子毅
  * @email guzyc@digitalchina.com
  * @date 2022/3/17
  */
-@EqualsAndHashCode(callSuper = true)
 @Data
 @TableName("sys_menu")
 public class Menu extends BaseModel {

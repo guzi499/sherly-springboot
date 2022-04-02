@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
+ * 登录拦截器
  * @author 谷子毅
  * @email guzyc@digitalchina.com
  * @date 2022/3/24
@@ -20,9 +21,12 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
+    private final String DEFAULT_RELEASE = "/login";
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        if ("/login".equals(request.getRequestURI())) {
+        // 登录接口不需要token校验
+        if (DEFAULT_RELEASE.equals(request.getRequestURI())) {
             return true;
         }
 
@@ -30,8 +34,10 @@ public class LoginInterceptor implements HandlerInterceptor {
         if (StringUtils.isBlank(token)) {
             throw new BizException(ResultAdminEnum.TOKEN_NOT_FOUND);
         }
+
         try {
             String tokenParamJson = JwtUtil.parseToken(token);
+            // 将token内容解析存储到threadLocal中
             ThreadLocalUtil.set(OBJECT_MAPPER.readValue(tokenParamJson, TokenParam.class));
         }catch (Exception e) {
             throw new BizException(ResultAdminEnum.TOKEN_ERROR);
@@ -42,6 +48,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
+        // threadLocal使用完后必须remove，防止内存泄漏
         ThreadLocalUtil.remove();
     }
 }

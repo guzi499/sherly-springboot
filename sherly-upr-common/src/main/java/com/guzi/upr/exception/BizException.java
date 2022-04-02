@@ -1,6 +1,7 @@
 package com.guzi.upr.exception;
 
 /**
+ * 业务异常
  * @author 谷子毅
  * @email guzyc@digitalchina.com
  * @date 2022/3/23

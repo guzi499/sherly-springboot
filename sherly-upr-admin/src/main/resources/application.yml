@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: UPR-后台管理系统
+    name: sherly-后台管理系统
     dev-flag: true
 
 

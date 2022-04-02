@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
+ * 全局异常处理器
  * @author 谷子毅
  * @email guzyc@digitalchina.com
  * @date 2022/3/23

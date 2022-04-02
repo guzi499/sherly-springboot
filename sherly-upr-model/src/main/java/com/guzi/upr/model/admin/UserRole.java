@@ -20,16 +20,12 @@ import lombok.NoArgsConstructor;
 @Data
 @TableName("sys_user_role")
 public class UserRole extends BaseModel {
-    /**
-     * id
-     */
+    /** id */
     @ApiModelProperty("id")
     @TableId(type = IdType.AUTO)
     private Long id;
 
-    /**
-     * 用户id
-     */
+    /** 用户id */
     @ApiModelProperty("用户id")
     private Long userId;
 
