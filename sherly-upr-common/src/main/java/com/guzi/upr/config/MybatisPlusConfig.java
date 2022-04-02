@@ -7,9 +7,13 @@ import com.baomidou.mybatisplus.extension.plugins.inner.DynamicTableNameInnerInt
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.guzi.upr.model.ThreadLocalModel;
 import com.guzi.upr.util.ThreadLocalUtil;
+import org.apache.ibatis.jdbc.ScriptRunner;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.sql.DataSource;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +25,9 @@ import java.util.List;
 
 @Configuration
 public class MybatisPlusConfig {
+
+    @Autowired
+    private DataSource dataSource;
 
     private List<String> DEFAULT_TABLE = new ArrayList<>();
 
@@ -40,5 +47,10 @@ public class MybatisPlusConfig {
         interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
 
         return interceptor;
+    }
+
+    @Bean
+    public ScriptRunner scriptRunner() throws SQLException {
+        return new ScriptRunner(dataSource.getConnection());
     }
 }

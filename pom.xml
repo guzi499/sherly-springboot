@@ -29,8 +29,7 @@
         <knife4j>2.0.7</knife4j>
         <java.jwt>3.19.0</java.jwt>
         <common.lang3>3.12.0</common.lang3>
-        <commons.io.version>1.3.2</commons.io.version>
-        <velocity-engine-core.version>2.3</velocity-engine-core.version>
+        <dom4j>1.6.1</dom4j>
     </properties>
 
     <dependencies>
@@ -99,7 +98,11 @@
                 <artifactId>commons-lang3</artifactId>
                 <version>${common.lang3}</version>
             </dependency>
-
+            <dependency>
+                <groupId>dom4j</groupId>
+                <artifactId>dom4j</artifactId>
+                <version>${dom4j}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

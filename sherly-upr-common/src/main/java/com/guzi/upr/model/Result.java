@@ -18,7 +18,7 @@ public class Result<T> {
 
     private static final String ERROR_MSG = "服务器异常，请联系服务商！";
 
-    private static final String DEFAULT_CODE = "100000";
+    private static final String DEFAULT_CODE = "000000";
 
     private static final String ERROR_CODE = "999999";
 
