@@ -23,10 +23,15 @@ public class ExecSqlUtil {
     private ScriptRunner scriptRunner;
 
     public void execSql(String key, Map<String, String> replaceMap) {
+        // 获取SQL脚本模板
         String sql = execSqlConfig.get(key);
+
+        // 替换模板变量
         for (Map.Entry<String, String> entity : replaceMap.entrySet()) {
             sql = sql.replace(entity.getKey(), entity.getValue());
         }
+
+        // 执行SQL
         scriptRunner.runScript(new StringReader(sql));
     }
 

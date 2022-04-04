@@ -20,9 +20,9 @@ public class TenantInsertDTO {
     @ApiModelProperty("租户名称")
     private String tenantName;
 
-    /** 联系人id */
-    @ApiModelProperty("联系人id")
-    private Long contactUserId;
+    /** 手机号 */
+    @ApiModelProperty("手机号")
+    private String phone;
 
     /** 过期时间 */
     @ApiModelProperty("过期时间")

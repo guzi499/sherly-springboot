@@ -1,18 +1,14 @@
 package com.guzi.upr.service;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.guzi.upr.enums.DepartmentEnum;
 import com.guzi.upr.enums.ResultAdminEnum;
 import com.guzi.upr.exception.BizException;
 import com.guzi.upr.manager.DepartmentManager;
 import com.guzi.upr.model.PageQuery;
 import com.guzi.upr.model.PageResult;
 import com.guzi.upr.model.admin.Department;
-import com.guzi.upr.model.admin.Permission;
 import com.guzi.upr.model.admin.User;
 import com.guzi.upr.model.dto.DepartmentInsertDTO;
-import com.guzi.upr.model.dto.UserUpdateDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,7 +33,7 @@ public class DepartmentService {
         // 查重
         Department one = departmentManager.getByDeptName(dto.getDeptName(), dto.getParentId());
         if (one != null) {
-            throw new BizException(DepartmentEnum.DEPARTMENT_IS_EXIST);
+            throw new BizException(ResultAdminEnum.DEPARTMENT_REPEAT);
         }
         departmentManager.saveOne(dto);
     }
@@ -46,7 +42,7 @@ public class DepartmentService {
         // 检测是否存在
         Department one = departmentManager.getByDeptName(dto.getDeptName(), dto.getParentId());
         if (one == null) {
-            throw new BizException(DepartmentEnum.DEPARTMENT_NOT_EXIST);
+            throw new BizException(ResultAdminEnum.DEPARTMENT_REPEAT);
         }
         departmentManager.updateOne(dto);
     }

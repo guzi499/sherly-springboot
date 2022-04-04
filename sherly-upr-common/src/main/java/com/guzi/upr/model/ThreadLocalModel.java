@@ -6,17 +6,12 @@ package com.guzi.upr.model;
  * @email guzyc@digitalchina.com
  * @date 2022/3/24
  */
-public abstract class ThreadLocalModel {
+public interface ThreadLocalModel {
 
-    private String tenantCode;
+    String getTenantCode();
 
-    private Long userId;
+    Long getUserId();
 
-    public String getTenantCode() {
-        return tenantCode;
-    }
+    String getOperateTenantCode();
 
-    public Long getUserId() {
-        return userId;
-    }
 }

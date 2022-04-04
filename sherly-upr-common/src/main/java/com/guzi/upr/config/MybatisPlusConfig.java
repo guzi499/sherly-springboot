@@ -39,6 +39,9 @@ public class MybatisPlusConfig {
         DynamicTableNameInnerInterceptor dynamicTableNameInnerInterceptor = new DynamicTableNameInnerInterceptor();
         dynamicTableNameInnerInterceptor.setTableNameHandler((sql, tableName) -> {
             ThreadLocalModel threadLocalModel = ThreadLocalUtil.get();
+            if (threadLocalModel.getOperateTenantCode() != null) {
+                return threadLocalModel.getOperateTenantCode() + "." + tableName;
+            }
             return threadLocalModel.getTenantCode() + "." + tableName;
         });
         interceptor.addInnerInterceptor(dynamicTableNameInnerInterceptor);
