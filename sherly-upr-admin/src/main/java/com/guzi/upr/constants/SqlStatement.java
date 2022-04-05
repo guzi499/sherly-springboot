@@ -7,7 +7,7 @@ package com.guzi.upr.constants;
  * @date 2022/4/2
  */
 public class SqlStatement {
-
+    /** 创建租户 */
     public static final String CREATE_TENANT = "create-tenant";
 
 }
