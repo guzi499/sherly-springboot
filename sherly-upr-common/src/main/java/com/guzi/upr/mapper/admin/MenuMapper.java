@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.guzi.upr.model.admin.Menu;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * @author 谷子毅
  * @email guzyc@digitalchina.com
@@ -11,4 +13,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface MenuMapper extends BaseMapper<Menu> {
+
+    List<Menu> listByRoleIds(List<Long> roleIds);
 }
