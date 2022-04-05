@@ -3,9 +3,10 @@ package com.guzi.upr.config;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
-import org.springframework.util.ResourceUtils;
 
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -24,7 +25,8 @@ public class ExecSqlConfig {
         //1.创建Reader对象
         SAXReader reader = new SAXReader();
         //2.加载xml
-        Document document = reader.read(ResourceUtils.getFile("classpath:sql-script.xml"));
+        InputStream inputStream = new ClassPathResource("sql-script.xml").getInputStream();
+        Document document = reader.read(inputStream);
         //3.获取根节点
         Element root = document.getRootElement();
 
