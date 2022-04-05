@@ -25,11 +25,11 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/list")
+    @GetMapping("/page")
     @ApiOperation(value = "获取所有用户")
-    public PageResult<User> getAll(PageQuery pageQuery) {
+    public Result<PageResult<User>> getAll(PageQuery pageQuery) {
         // 分页
-        return userService.page(pageQuery);
+        return Result.success(userService.page(pageQuery));
     }
 
     @PostMapping("/save")
