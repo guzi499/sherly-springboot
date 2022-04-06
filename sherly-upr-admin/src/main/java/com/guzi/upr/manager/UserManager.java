@@ -1,6 +1,7 @@
 package com.guzi.upr.manager;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.guzi.upr.mapper.admin.UserMapper;
 import com.guzi.upr.model.admin.User;
@@ -34,7 +35,7 @@ public class UserManager extends ServiceImpl<UserMapper, User> {
 
         return userMapper.selectOne(wrapper);
     }
-    
+
 
     /**
      * 新增用户及对应角色信息
@@ -72,5 +73,16 @@ public class UserManager extends ServiceImpl<UserMapper, User> {
         }
         // 更新用户权限
         userRoleManager.saveBatch(userRoles);
+    }
+
+    /**
+     * 更新用户部门
+     * @param departmentId
+     */
+    public void updateDepartmentId(Long departmentId) {
+        LambdaUpdateWrapper<User> wrapper = new LambdaUpdateWrapper<>();
+        wrapper.set(User::getDeptId, null)
+                .eq(User::getDeptId, departmentId);
+        this.update(wrapper);
     }
 }

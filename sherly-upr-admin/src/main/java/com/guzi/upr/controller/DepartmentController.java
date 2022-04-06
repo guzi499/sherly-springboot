@@ -1,10 +1,8 @@
 package com.guzi.upr.controller;
 
-import com.guzi.upr.model.PageQuery;
-import com.guzi.upr.model.PageResult;
 import com.guzi.upr.model.Result;
-import com.guzi.upr.model.admin.User;
 import com.guzi.upr.model.dto.DepartmentInsertDTO;
+import com.guzi.upr.model.dto.DepartmentUpdateDTO;
 import com.guzi.upr.service.DepartmentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -26,31 +24,30 @@ public class DepartmentController {
     @Autowired
     private DepartmentService departmentService;
 
-    @GetMapping("/list")
-    @ApiOperation(value = "获取所有部门")
-    public PageResult<User> getAll(PageQuery pageQuery) {
-        // 分页
-        return departmentService.page(pageQuery);
+    @GetMapping("/list/tree")
+    @ApiOperation("查询部门树")
+    public Result listTree() {
+        return Result.success(departmentService.listTree());
     }
 
-    @PostMapping("/save")
-    @ApiOperation(value = "新增部门")
+    @PostMapping("/save/one")
+    @ApiOperation("部门新增")
     public Result saveOne(@RequestBody DepartmentInsertDTO dto) {
         departmentService.saveOne(dto);
         return Result.success();
     }
 
-    @PutMapping("/update")
-    @ApiOperation("更新")
-    public Result updateOne(@RequestBody DepartmentInsertDTO dto) {
+    @PutMapping("/update/one")
+    @ApiOperation("部门更新")
+    public Result updateOne(@RequestBody DepartmentUpdateDTO dto) {
         departmentService.updateOne(dto);
         return Result.success();
     }
 
-    @DeleteMapping("/remove")
-    @ApiOperation("移除部门")
-    public Result removeOne(@RequestParam Long id) {
-        departmentService.removeOne(id);
+    @DeleteMapping("/remove/one")
+    @ApiOperation("部门删除")
+    public Result removeOne(@RequestParam Long departmentId) {
+        departmentService.removeOne(departmentId);
         return Result.success();
     }
 }

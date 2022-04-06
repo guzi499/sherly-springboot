@@ -22,9 +22,9 @@ public class ExecSqlUtil {
     @Autowired
     private ScriptRunner scriptRunner;
 
-    public void execSql(String key, Map<String, String> replaceMap) {
+    public void execSql(String name, Map<String, String> replaceMap) {
         // 获取SQL脚本模板
-        String sql = execSqlConfig.get(key);
+        String sql = execSqlConfig.get(name);
 
         // 替换模板变量
         for (Map.Entry<String, String> entity : replaceMap.entrySet()) {

@@ -4,13 +4,16 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
- * @ClassName: DepartmentDTO
- * @author: 冰焰
- * @date: 2022/3/30
- * @Version: V1.0
- **/
+ * @author 谷子毅
+ * @email guzyc@digitalchina.com
+ * @date 2022/4/6
+ */
 @Data
-public class DepartmentInsertDTO {
+public class DepartmentUpdateDTO {
+    /** 部门id */
+    @ApiModelProperty("部门id")
+    private Long deptId;
+
     /** 部门名 */
     @ApiModelProperty("部门名")
     private String deptName;
@@ -22,4 +25,5 @@ public class DepartmentInsertDTO {
     /** 父部门id */
     @ApiModelProperty("父部门id")
     private Long parentId;
+
 }
