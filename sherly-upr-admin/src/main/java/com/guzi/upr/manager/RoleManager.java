@@ -18,6 +18,11 @@ public class RoleManager extends ServiceImpl<RoleMapper, Role> {
     @Autowired
     private RoleMapper roleMapper;
 
+    /**
+     * 根据用户id获取角色列表
+     * @param userId
+     * @return
+     */
     public List<Role> listByUserId(Long userId) {
         return roleMapper.listByUserId(userId);
     }

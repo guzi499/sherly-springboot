@@ -1,10 +1,11 @@
 package com.guzi.upr.service;
 
 import com.guzi.upr.manager.MenuManager;
+import com.guzi.upr.manager.RoleMenuManager;
 import com.guzi.upr.model.admin.Menu;
 import com.guzi.upr.model.dto.MenuInsertDTO;
 import com.guzi.upr.model.dto.MenuUpdateDTO;
-import com.guzi.upr.model.vo.MenuParentVO;
+import com.guzi.upr.model.vo.MenuVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,45 +25,40 @@ public class MenuService {
     @Autowired
     private MenuManager menuManager;
 
+    @Autowired
+    private RoleMenuManager roleMenuManager;
+
     /**
      * 查询菜单树
      *
      * @return
      */
-    public List<MenuParentVO> listTree() {
-        // 缓存
-        // 所有菜单对象
-        List<MenuParentVO> menuList = menuManager.list().stream().map(
-                e -> {
-                    MenuParentVO menuParentDTO = new MenuParentVO();
-                    BeanUtils.copyProperties(e, menuParentDTO);
-                    return menuParentDTO;
-                }
-        ).collect(Collectors.toList());
-        // 子节点
-        // 获取子集
-        return menuList.stream().filter(
-                        e -> e.getParentId() == 0
-                ).sorted(Comparator.comparing(MenuParentVO::getSort))
-                .peek(e -> {
-                    e.setChildren(getListTree(e, menuList));
-                })
+    public List<MenuVO> listTree() {
+        List<Menu> list = menuManager.list();
+
+        // 对象转换成vo类型
+        List<MenuVO> all = list.stream().map(e -> {
+            MenuVO menuVO = new MenuVO();
+            BeanUtils.copyProperties(e, menuVO);
+            return menuVO;
+        }).collect(Collectors.toList());
+
+        return all.stream().filter(e -> e.getParentId() == 0).sorted(Comparator.comparing(MenuVO::getSort))
+                .peek(e -> e.setChildren(getChildren(e, all)))
                 .collect(Collectors.toList());
-
-
     }
 
     /**
-     * 获取根节点下所有元素
+     * 递归拼装子结点
      *
      * @param parent
-     * @param childList
+     * @param all
      * @return
      */
-    private List<MenuParentVO> getListTree(MenuParentVO parent, List<MenuParentVO> childList) {
-        return childList.stream()
-                .filter(child -> child.getParentId().equals(parent.getMenuId()))
-                .peek(e -> e.setChildren(getListTree(e, childList)))
+    private List<MenuVO> getChildren(MenuVO parent, List<MenuVO> all) {
+        return all.stream()
+                .filter(e -> e.getParentId().equals(parent.getMenuId()))
+                .peek(e -> e.setChildren(getChildren(e, all)))
                 .collect(Collectors.toList());
     }
 
@@ -72,7 +68,6 @@ public class MenuService {
      * @param dto
      */
     public void saveOne(MenuInsertDTO dto) {
-        // 参数检查
         Menu menu = new Menu();
         BeanUtils.copyProperties(dto, menu);
         menuManager.save(menu);
@@ -82,10 +77,11 @@ public class MenuService {
     /**
      * 菜单删除
      *
-     * @param id
+     * @param menuId
      */
-    public void removeOne(Long id) {
-        menuManager.removeById(id);
+    public void removeOne(Long menuId) {
+        menuManager.removeById(menuId);
+        roleMenuManager.removeRoleMenuByMenuId(menuId);
     }
 
     /**
@@ -97,7 +93,6 @@ public class MenuService {
         Menu menu = new Menu();
         BeanUtils.copyProperties(dto, menu);
         menuManager.updateById(menu);
-
     }
 
 }

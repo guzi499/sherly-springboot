@@ -37,7 +37,7 @@ public class BasicUserInfoVO {
     @ApiModelProperty("性别")
     private Integer gender;
 
-    /** 部门名称 */
-    @ApiModelProperty("部门名称")
-    private Long deptName;
+    /** 部门id */
+    @ApiModelProperty("部门id")
+    private Long deptId;
 }

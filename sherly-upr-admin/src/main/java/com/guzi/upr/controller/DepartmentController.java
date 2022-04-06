@@ -3,11 +3,14 @@ package com.guzi.upr.controller;
 import com.guzi.upr.model.Result;
 import com.guzi.upr.model.dto.DepartmentInsertDTO;
 import com.guzi.upr.model.dto.DepartmentUpdateDTO;
+import com.guzi.upr.model.vo.DepartmentVO;
 import com.guzi.upr.service.DepartmentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @ClassName: DepartmentController
@@ -26,7 +29,7 @@ public class DepartmentController {
 
     @GetMapping("/list/tree")
     @ApiOperation("查询部门树")
-    public Result listTree() {
+    public Result<List<DepartmentVO>> listTree() {
         return Result.success(departmentService.listTree());
     }
 

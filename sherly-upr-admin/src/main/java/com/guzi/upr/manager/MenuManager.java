@@ -18,6 +18,11 @@ public class MenuManager extends ServiceImpl<MenuMapper, Menu> {
     @Autowired
     private MenuMapper menuMapper;
 
+    /**
+     * 根据角色ids获取菜单列表
+     * @param roleIds
+     * @return
+     */
     public List<Menu> listByRoleIds(List<Long> roleIds) {
         return menuMapper.listByRoleIds(roleIds);
     }

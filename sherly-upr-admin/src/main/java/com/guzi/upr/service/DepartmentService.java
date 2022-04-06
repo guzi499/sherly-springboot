@@ -35,6 +35,7 @@ public class DepartmentService {
      */
     public List<DepartmentVO> listTree() {
         List<Department> list = departmentManager.list();
+
         // 对象转换成vo类型
         List<DepartmentVO> all = list.stream().map(e -> {
             DepartmentVO vo = new DepartmentVO();

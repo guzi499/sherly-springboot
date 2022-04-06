@@ -17,6 +17,7 @@ public class DepartmentManager extends ServiceImpl<DepartmentMapper, Department>
 
     /**
      * 部门名查重
+     *
      * @param departmentName
      * @return
      */

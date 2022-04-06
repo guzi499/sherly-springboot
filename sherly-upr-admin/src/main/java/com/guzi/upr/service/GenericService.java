@@ -35,16 +35,18 @@ public class GenericService {
     private MenuManager menuManager;
 
     /**
-     *
+     * 获取登录基本信息
      * @return
      */
     public BasicInfoVO getBasicData() {
         Long userId = ThreadLocalUtil.get().getUserId();
 
+        // 用户信息收集
         User user = userManager.getById(userId);
         BasicUserInfoVO userVO = new BasicUserInfoVO();
         BeanUtils.copyProperties(user, userVO);
 
+        // 角色信息收集
         List<Role> roles = roleManager.listByUserId(userId);
         List<BasicRoleInfoVO> roleVOList = roles.stream().map(e -> {
             BasicRoleInfoVO basicRoleInfoVO = new BasicRoleInfoVO();
@@ -52,6 +54,7 @@ public class GenericService {
             return basicRoleInfoVO;
         }).collect(Collectors.toList());
 
+        // 菜单信息收集
         List<Long> roleIds = roles.stream().map(Role::getRoleId).collect(Collectors.toList());
         List<Menu> menus = menuManager.listByRoleIds(roleIds);
         List<BasicMenuInfoVO> menuVOList = menus.stream().filter(e -> e.getParentId() == 0).map(e -> {
@@ -61,6 +64,7 @@ public class GenericService {
             return basicMenuInfoVO;
         }).collect(Collectors.toList());
 
+        // 组装结果
         BasicInfoVO basicInfoVO = new BasicInfoVO();
         basicInfoVO.setBasicUserInfoVO(userVO);
         basicInfoVO.setBasicRoleInfoVO(roleVOList);
@@ -69,6 +73,12 @@ public class GenericService {
         return basicInfoVO;
     }
 
+    /**
+     * 递归拼装子结点
+     * @param parent
+     * @param all
+     * @return
+     */
     private List<BasicMenuInfoVO> getChildren(Menu parent, List<Menu> all) {
         return all.stream()
                 .filter(e -> e.getParentId().equals(parent.getMenuId()))

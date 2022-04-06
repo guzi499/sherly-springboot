@@ -28,6 +28,12 @@ public class UserManager extends ServiceImpl<UserMapper, User> {
     @Autowired
     private UserRoleManager userRoleManager;
 
+    /**
+     * 根据手机号和密码查询用户
+     * @param phone
+     * @param password
+     * @return
+     */
     public User getOneByPhoneAndPwd(String phone, String password) {
         LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(User::getPhone, phone)
