@@ -59,6 +59,7 @@ public class UserService {
     public PageResult<User> page(PageQuery pageQuery) {
         IPage<User> page = userManager.page(pageQuery.getPage());
 
-        return new PageResult<User>(page.getRecords(), page.getCurrent(), page.getSize(), page.getTotal());
+        // return new PageResult<User>(page.getRecords(), page.getCurrent(), page.getSize(), page.getTotal());
+        return null;
     }
 }

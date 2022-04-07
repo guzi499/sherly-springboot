@@ -12,19 +12,19 @@ import java.util.List;
  */
 @Data
 public class RoleInsertDTO {
-
-    /**
-     * 角色名
-     */
+    /** 角色名 */
     @ApiModelProperty("角色名")
     private String roleName;
-    /**
-     * 描述
-     */
+
+    /** 描述 */
     @ApiModelProperty("描述")
     private String description;
 
-    @ApiModelProperty("权限ids")
-    private List<Long> permissions;
+    /** 菜单ids */
+    @ApiModelProperty("菜单ids")
+    private List<Long> menuIds;
 
+    /** 权限ids */
+    @ApiModelProperty("权限ids")
+    private List<Long> permissionsIds;
 }

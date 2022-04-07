@@ -21,7 +21,7 @@ public class PageResult<T> {
 
     private Long total;
 
-    public PageResult(List<T> result, Long current, Long size, Long total) {
+    private PageResult(List<T> result, Long current, Long size, Long total) {
         this.result = result;
         this.current = current;
         this.size = size;

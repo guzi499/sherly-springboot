@@ -1,4 +1,4 @@
-package com.guzi.upr.model.dto;
+package com.guzi.upr.model.vo;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -6,12 +6,12 @@ import lombok.Data;
 import java.util.List;
 
 /**
- * @author fudon
- * @version 1.0
- * @date 2022/3/26 19:14
+ * @author 谷子毅
+ * @email guzyc@digitalchina.com
+ * @date 2022/4/7
  */
 @Data
-public class RoleUpdateDTO {
+public class RoleVO {
     /** 角色id */
     @ApiModelProperty("角色id")
     private Long roleId;
@@ -31,5 +31,4 @@ public class RoleUpdateDTO {
     /** 权限ids */
     @ApiModelProperty("权限ids")
     private List<Long> permissionsIds;
-
 }

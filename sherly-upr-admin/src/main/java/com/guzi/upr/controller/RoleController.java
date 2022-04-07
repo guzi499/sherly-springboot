@@ -1,9 +1,9 @@
 package com.guzi.upr.controller;
 
-import com.guzi.upr.model.PageQuery;
 import com.guzi.upr.model.PageResult;
 import com.guzi.upr.model.Result;
 import com.guzi.upr.model.dto.RoleInsertDTO;
+import com.guzi.upr.model.dto.RolePageDTO;
 import com.guzi.upr.model.dto.RoleUpdateDTO;
 import com.guzi.upr.service.RoleService;
 import io.swagger.annotations.Api;
@@ -24,34 +24,37 @@ public class RoleController {
     @Autowired
     private RoleService roleService;
 
-    @PostMapping("/list/role")
-    @ApiOperation("查询角色列表")
-    public Result<PageResult> list(PageQuery pageQuery) {
-        PageResult roles = roleService.list(pageQuery);
-        return Result.success(roles);
+    @GetMapping("/list/page")
+    @ApiOperation("角色分页")
+    public Result<PageResult> list(RolePageDTO dto) {
+        return Result.success(roleService.listPage(dto));
+    }
+
+    @GetMapping("/get/one")
+    @ApiOperation("角色详情")
+    public Result getOne(@RequestParam Long roleId) {
+        return Result.success(roleService.getOne(roleId));
     }
 
     @PostMapping("/save/one")
-    @ApiOperation("新增角色")
+    @ApiOperation("角色新增")
     public Result saveOne(@RequestBody RoleInsertDTO dto) {
-
         roleService.saveOne(dto);
         return Result.success();
     }
 
-    @DeleteMapping("/remove/one")
-    @ApiOperation("删除角色")
-    public Result removeOne(@RequestParam Long id) {
-        roleService.removeOne(id);
-        return Result.success();
-    }
-
     @PutMapping("/update/one")
-    @ApiOperation("角色修改")
+    @ApiOperation("角色更新")
     public Result updateOne(@RequestBody RoleUpdateDTO dto) {
         roleService.updateOne(dto);
         return Result.success();
     }
 
+    @DeleteMapping("/remove/one")
+    @ApiOperation("角色删除")
+    public Result removeOne(@RequestParam Long roleId) {
+        roleService.removeOne(roleId);
+        return Result.success();
+    }
 
 }

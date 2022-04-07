@@ -95,9 +95,9 @@ public class PermissionService {
 
     /**
      * 权限删除
-     * @param id
+     * @param permissionId
      */
-    public void removeOne(Long id) {
-        permissionManager.removeById(id);
+    public void removeOne(Long permissionId) {
+        permissionManager.removeById(permissionId);
     }
 }

@@ -44,8 +44,8 @@ public class PermissionController {
 
     @DeleteMapping("/remove/one")
     @ApiOperation("权限删除")
-    public Result removeOne(@RequestParam Long id) {
-        permissionService.removeOne(id);
+    public Result removeOne(@RequestParam Long permissionId) {
+        permissionService.removeOne(permissionId);
         return Result.success();
     }
 }

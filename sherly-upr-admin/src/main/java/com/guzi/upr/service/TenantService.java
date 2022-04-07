@@ -21,9 +21,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 /**
@@ -50,14 +50,13 @@ public class TenantService {
      */
     public PageResult listPage(TenantPageDTO dto) {
 
-        IPage page = tenantManager.listPage(dto);
+        IPage<Tenant> page = tenantManager.listPage(dto.getPage(), dto.getTenantName(), dto.getTenantCode());
 
-        List<TenantPageVO> result = new ArrayList<>();
-        page.getRecords().forEach(e -> {
+        List<TenantPageVO> result = page.getRecords().stream().map(e -> {
             TenantPageVO vo = new TenantPageVO();
             BeanUtils.copyProperties(e, vo);
-            result.add(vo);
-        });
+            return vo;
+        }).collect(Collectors.toList());
 
         return PageResult.build(result, page.getCurrent(), page.getSize(), page.getTotal());
     }

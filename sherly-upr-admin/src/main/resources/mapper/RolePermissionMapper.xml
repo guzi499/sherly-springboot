@@ -3,4 +3,10 @@
 <mapper namespace="com.guzi.upr.mapper.admin.RolePermissionMapper">
 
 
+    <insert id="saveRolePermission">
+        INSERT INTO sys_role_permission (role_id, permission_id) VALUES
+        <foreach collection="permissionIds" item="permissionId" separator=",">
+            (${roleId}, ${permissionId})
+        </foreach>
+    </insert>
 </mapper>

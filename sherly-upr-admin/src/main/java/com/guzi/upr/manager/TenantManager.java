@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.guzi.upr.mapper.admin.TenantMapper;
 import com.guzi.upr.model.admin.Tenant;
-import com.guzi.upr.model.dto.TenantPageDTO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +17,7 @@ public class TenantManager extends ServiceImpl<TenantMapper, Tenant> {
 
     /**
      * 租户查重
+     *
      * @param tenantName
      * @param tenantCode
      * @return
@@ -32,20 +32,23 @@ public class TenantManager extends ServiceImpl<TenantMapper, Tenant> {
 
     /**
      * 租户条件分页
-     * @param dto
+     *
+     * @param page
+     * @param tenantName
+     * @param tenantCode
      * @return
      */
-    public IPage listPage(TenantPageDTO dto) {
+    public IPage<Tenant> listPage(IPage page, String tenantName, String tenantCode) {
         LambdaQueryWrapper<Tenant> wrapper = new LambdaQueryWrapper<>();
 
-        if (StringUtils.isNoneBlank(dto.getTenantCode())) {
-            wrapper.eq(Tenant::getTenantCode, dto.getTenantCode());
+        if (StringUtils.isNoneBlank(tenantCode)) {
+            wrapper.eq(Tenant::getTenantCode, tenantCode);
         }
 
-        if (StringUtils.isNoneBlank(dto.getTenantName())) {
-            wrapper.eq(Tenant::getTenantName, dto.getTenantName());
+        if (StringUtils.isNoneBlank(tenantName)) {
+            wrapper.eq(Tenant::getTenantName, tenantName);
         }
 
-        return page(dto.getPage(), wrapper);
+        return page(page, wrapper);
     }
 }

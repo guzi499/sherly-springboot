@@ -3,4 +3,10 @@
 <mapper namespace="com.guzi.upr.mapper.admin.RoleMenuMapper">
 
 
+    <insert id="saveRoleMenu">
+        INSERT INTO sys_role_menu (role_id, menu_id) VALUES
+        <foreach collection="menuIds" item="menuId" separator=",">
+            (${roleId}, ${menuId})
+        </foreach>
+    </insert>
 </mapper>
