@@ -8,7 +8,9 @@ import com.guzi.upr.exception.IBaseError;
  */
 public enum ResultAdminEnum implements IBaseError {
 
-    /** 错误示例 */
+    /**
+     * 错误示例
+     */
     ERROR("999999", "服务器错误"),
 
     TOKEN_NOT_FOUND("100001", "TOKEN不存在，请检查！"),
@@ -18,7 +20,8 @@ public enum ResultAdminEnum implements IBaseError {
     TENANT_REPEAT("100005", "该租户已存在！"),
     USER_REPEAT("100006", "该用户已存在！"),
     ROLE_REPEAT("100007", "该角色已存在！"),
-    DEPARTMENT_REPEAT("100008", "该部门已存在！");
+    DEPARTMENT_REPEAT("100008", "该部门已存在！"),
+    USER_NOT_FOUND("200001", "用户不存在");
 
     private final String code;
     private final String message;
