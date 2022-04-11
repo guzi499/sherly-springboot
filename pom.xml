@@ -17,7 +17,6 @@
     <modules>
         <module>sherly-upr-model</module>
         <module>sherly-upr-common</module>
-        <module>sherly-upr-admin-gateway</module>
         <module>sherly-upr-admin</module>
     </modules>
     <packaging>pom</packaging>
@@ -31,15 +30,6 @@
         <common.lang3>3.12.0</common.lang3>
         <dom4j>1.6.1</dom4j>
     </properties>
-
-    <dependencies>
-        <!-- lombok -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
-    </dependencies>
-
 
     <dependencyManagement>
         <dependencies>
@@ -58,46 +48,57 @@
                 <artifactId>sherly-upr-admin</artifactId>
                 <version>${project.version}</version>
             </dependency>
-            <dependency>
-                <groupId>com.guzi.upr</groupId>
-                <artifactId>sherly-upr-admin-gateway</artifactId>
-                <version>${project.version}</version>
-            </dependency>
+
+            <!-- springboot -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter</artifactId>
                 <version>${spring.boot.version}</version>
             </dependency>
+
+            <!-- springboot-web -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-web</artifactId>
                 <version>${spring.boot.version}</version>
             </dependency>
+
+            <!-- mysql -->
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
                 <version>${mysql.version}</version>
             </dependency>
+
+            <!-- mybatis-plus -->
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${mybatis.plus}</version>
             </dependency>
+
+            <!-- knife4j -->
             <dependency>
                 <groupId>com.github.xiaoymin</groupId>
                 <artifactId>knife4j-spring-boot-starter</artifactId>
                 <version>${knife4j}</version>
             </dependency>
+
+            <!-- java-jwt -->
             <dependency>
                 <groupId>com.auth0</groupId>
                 <artifactId>java-jwt</artifactId>
                 <version>${java.jwt}</version>
             </dependency>
+
+            <!-- commons-lang3 -->
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
                 <version>${common.lang3}</version>
             </dependency>
+
+            <!-- dom4j -->
             <dependency>
                 <groupId>dom4j</groupId>
                 <artifactId>dom4j</artifactId>

@@ -8,11 +8,16 @@ import java.util.List;
 
 /**
  * @author 谷子毅
- * @email guzyc@digitalchina.com
  * @date 2022/3/22
  */
 @Repository
 public interface MenuMapper extends BaseMapper<Menu> {
 
+    /**
+     * 根据角色ids获取菜单列表
+     *
+     * @param roleIds
+     * @return
+     */
     List<Menu> listByRoleIds(List<Long> roleIds);
 }

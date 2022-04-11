@@ -4,7 +4,6 @@ import com.guzi.upr.model.ThreadLocalModel;
 
 /**
  * @author 谷子毅
- * @email guzyc@digitalchina.com
  * @date 2022/3/24
  */
 public class ThreadLocalUtil {
@@ -19,9 +18,7 @@ public class ThreadLocalUtil {
         return paramModel.get();
     }
 
-    /**
-     * 防止内存泄漏
-     */
+    /** 防止内存泄漏 */
     public static void remove() {
         paramModel.remove();
     }

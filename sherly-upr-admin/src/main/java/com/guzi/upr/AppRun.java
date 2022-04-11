@@ -10,7 +10,6 @@ import org.springframework.core.env.ConfigurableEnvironment;
 
 /**
  * @author 谷子毅
- * @email guzyc@digitalchina.com
  * @date 2022/3/18
  */
 @Slf4j

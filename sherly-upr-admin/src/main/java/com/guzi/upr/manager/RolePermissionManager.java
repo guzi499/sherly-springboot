@@ -10,9 +10,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * @author fudon
- * @version 1.0
- * @date 2022/3/26 19:01
+ * @author 付东辉
+ * @date 2022/3/26
  */
 @Service
 public class RolePermissionManager extends ServiceImpl<RolePermissionMapper, RolePermission> {

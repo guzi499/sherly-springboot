@@ -6,10 +6,14 @@ import com.guzi.upr.util.ThreadLocalUtil;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
-
+/**
+ * mybatis-plus字段自动填充
+ *
+ * @author 谷子毅
+ * @date 2022/4/2
+ */
 @Component
 public class MyMetaObjectHandler implements MetaObjectHandler {
 

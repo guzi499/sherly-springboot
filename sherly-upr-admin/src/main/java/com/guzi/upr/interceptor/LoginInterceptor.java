@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * 登录拦截器
+ *
  * @author 谷子毅
- * @email guzyc@digitalchina.com
  * @date 2022/3/24
  */
 public class LoginInterceptor implements HandlerInterceptor {
@@ -39,7 +39,7 @@ public class LoginInterceptor implements HandlerInterceptor {
             String tokenParamJson = JwtUtil.parseToken(token);
             // 将token内容解析存储到threadLocal中
             ThreadLocalUtil.set(OBJECT_MAPPER.readValue(tokenParamJson, TokenParam.class));
-        }catch (Exception e) {
+        } catch (Exception e) {
             throw new BizException(ResultAdminEnum.TOKEN_ERROR);
         }
 

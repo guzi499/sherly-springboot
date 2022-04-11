@@ -6,9 +6,8 @@ import lombok.Data;
 import java.util.List;
 
 /**
- * @author fudon
- * @version 1.0
- * @date 2022/3/26 18:52
+ * @author 付东辉
+ * @date 2022/3/26
  */
 @Data
 public class RoleInsertDTO {

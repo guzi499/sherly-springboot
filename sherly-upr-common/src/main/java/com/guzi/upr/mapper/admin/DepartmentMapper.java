@@ -5,11 +5,9 @@ import com.guzi.upr.model.admin.Department;
 import org.springframework.stereotype.Repository;
 
 /**
- * @ClassName: DepartmentMapper
- * @author: 冰焰
- * @date: 2022/3/30
- * @Version: V1.0
- **/
+ * @author 周孟凡
+ * @date 2022/3/30
+ */
 @Repository
 public interface DepartmentMapper extends BaseMapper<Department> {
 }

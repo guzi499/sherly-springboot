@@ -6,7 +6,6 @@ import lombok.Data;
 
 /**
  * @author 谷子毅
- * @email guzyc@digitalchina.com
  * @date 2022/4/7
  */
 @Data

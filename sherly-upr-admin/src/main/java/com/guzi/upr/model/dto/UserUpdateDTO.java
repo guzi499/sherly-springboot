@@ -6,56 +6,42 @@ import lombok.Data;
 import java.util.List;
 
 /**
- * @author fudon
- * @version 1.0
- * @date 2022/3/27 21:51
+ * @author 付东辉
+ * @date 2022/3/27
  */
 @Data
 public class UserUpdateDTO {
-    /**
-     * 用户id
-     */
+    /** 用户id */
     @ApiModelProperty("用户id")
     private Long userId;
-    /**昵称*/
+
+    /** 昵称 */
     @ApiModelProperty("昵称")
     private String nickname;
 
-    /**姓名*/
-    @ApiModelProperty("姓名")
-    private String realName;
-
-    /**手机号*/
-    @ApiModelProperty("手机号")
-    private String phone;
-
-    /**密码*/
+    /** 密码 */
     @ApiModelProperty("密码")
     private String password;
 
-    /**用户头像*/
+    /** 用户头像 */
     @ApiModelProperty("用户头像")
     private String avater;
 
-    /**用户邮箱*/
+    /** 用户邮箱 */
     @ApiModelProperty("用户邮箱")
     private String email;
 
-    /**性别*/
+    /** 性别 */
     @ApiModelProperty("性别")
     private Integer gender;
 
-    /**部门id*/
+    /** 部门id */
     @ApiModelProperty("部门id")
     private Long deptId;
 
-    /**0超级管理员 1管理员 2普通用户*/
-    @ApiModelProperty("0超级管理员 1管理员 2普通用户")
-    private Integer identity;
-    /**是否禁用0不可用 1可用*/
+    /** 0不可用 1可用 */
     @ApiModelProperty("0不可用 1可用")
     private Integer enable;
-    /** 角色列表*/
-    @ApiModelProperty("角色id")
+
     private List<Long> roleIds;
 }

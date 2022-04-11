@@ -14,12 +14,9 @@ import org.springframework.context.annotation.Configuration;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author 谷子毅
- * @email guzyc@digitalchina.com
  * @date 2022/3/22
  */
 
@@ -28,8 +25,6 @@ public class MybatisPlusConfig {
 
     @Autowired
     private DataSource dataSource;
-
-    private List<String> DEFAULT_TABLE = new ArrayList<>();
 
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor() {

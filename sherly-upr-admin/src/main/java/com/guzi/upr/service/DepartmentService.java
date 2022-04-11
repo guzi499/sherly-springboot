@@ -16,11 +16,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * @ClassName: DepartmentService
- * @author: 冰焰
- * @date: 2022/3/30
- * @Version: V1.0
- **/
+ * @author 周孟凡
+ * @date 2022/3/30
+ */
 @Service
 public class DepartmentService {
     @Autowired

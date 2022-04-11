@@ -7,7 +7,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * @author 谷子毅
- * @email guzyc@digitalchina.com
  * @date 2022/3/24
  */
 @Configuration

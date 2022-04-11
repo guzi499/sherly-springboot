@@ -7,7 +7,6 @@ import java.util.List;
 /**
  * 通用结果分页返回类
  * @author 谷子毅
- * @email guzyc@digitalchina.com
  * @date 2022/3/22
  */
 @Data

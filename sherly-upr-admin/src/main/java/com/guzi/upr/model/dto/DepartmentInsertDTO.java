@@ -4,11 +4,9 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
- * @ClassName: DepartmentDTO
- * @author: 冰焰
- * @date: 2022/3/30
- * @Version: V1.0
- **/
+ * @author 周孟凡
+ * @date 2022/3/30
+ */
 @Data
 public class DepartmentInsertDTO {
     /** 部门名 */

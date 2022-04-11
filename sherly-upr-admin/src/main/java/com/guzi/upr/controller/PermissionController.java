@@ -3,15 +3,17 @@ package com.guzi.upr.controller;
 import com.guzi.upr.model.Result;
 import com.guzi.upr.model.dto.PermissionInsertDTO;
 import com.guzi.upr.model.dto.PermissionUpdateDTO;
+import com.guzi.upr.model.vo.PermissionVO;
 import com.guzi.upr.service.PermissionService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * @author 谷子毅
- * @email guzyc@digitalchina.com
  * @date 2022/3/24
  */
 @RestController
@@ -24,7 +26,7 @@ public class PermissionController {
 
     @GetMapping("/list/tree")
     @ApiOperation("查询权限树")
-    public Result listTree() {
+    public Result<List<PermissionVO>> listTree() {
         return Result.success(permissionService.listTree());
     }
 

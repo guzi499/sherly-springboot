@@ -13,12 +13,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * @ClassName: DepartmentController
- * @author: 冰焰
- * @date: 2022/3/30
- * @Version: V1.0
- **/
-
+ * @author 周孟凡
+ * @date 2022/3/30
+ */
 @RestController
 @RequestMapping("/department")
 @Api(tags = "部门相关")

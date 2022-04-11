@@ -9,7 +9,6 @@ import java.util.List;
 
 /**
  * @author 谷子毅
- * @email guzyc@digitalchina.com
  * @date 2022/3/22
  */
 @Repository
@@ -17,6 +16,7 @@ public interface RoleMenuMapper extends BaseMapper<RoleMenu> {
 
     /**
      * 保存角色菜单数据
+     *
      * @param roleId
      * @param menuIds
      */

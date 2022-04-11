@@ -5,6 +5,7 @@ import com.guzi.upr.model.Result;
 import com.guzi.upr.model.dto.RoleInsertDTO;
 import com.guzi.upr.model.dto.RolePageDTO;
 import com.guzi.upr.model.dto.RoleUpdateDTO;
+import com.guzi.upr.model.vo.RolePageVO;
 import com.guzi.upr.service.RoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 /**
  * @author 谷子毅
- * @email guzyc@digitalchina.com
  * @date 2022/3/24
  */
 @RestController
@@ -26,7 +26,7 @@ public class RoleController {
 
     @GetMapping("/list/page")
     @ApiOperation("角色分页")
-    public Result<PageResult> list(RolePageDTO dto) {
+    public Result<PageResult<RolePageVO>> list(RolePageDTO dto) {
         return Result.success(roleService.listPage(dto));
     }
 

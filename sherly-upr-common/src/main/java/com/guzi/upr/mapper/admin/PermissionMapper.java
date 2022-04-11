@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 
 /**
  * @author 谷子毅
- * @email guzyc@digitalchina.com
  * @date 2022/3/22
  */
 @Repository

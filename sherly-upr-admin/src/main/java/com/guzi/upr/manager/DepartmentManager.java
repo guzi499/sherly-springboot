@@ -7,11 +7,9 @@ import com.guzi.upr.model.admin.Department;
 import org.springframework.stereotype.Service;
 
 /**
- * @ClassName: DepartmentManager
- * @author: 冰焰
- * @date: 2022/3/30
- * @Version: V1.0
- **/
+ * @author 周孟凡
+ * @date 2022/3/30
+ */
 @Service
 public class DepartmentManager extends ServiceImpl<DepartmentMapper, Department> {
 
