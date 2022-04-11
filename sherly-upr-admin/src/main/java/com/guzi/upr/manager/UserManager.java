@@ -113,7 +113,7 @@ public class UserManager extends ServiceImpl<UserMapper, User> {
      * @param id
      * @return
      */
-    public UserInfoVo getUserInfo(Integer id) {
+    public UserInfoVo getUserInfo(Long id) {
         UserInfoVo userInfoVo = new UserInfoVo();
         // 获取用户信息
         User user = Optional.of(getById(id)).orElseThrow(() -> new BizException(ResultAdminEnum.USER_NOT_FOUND));

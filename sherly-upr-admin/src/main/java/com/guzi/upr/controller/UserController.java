@@ -35,9 +35,9 @@ public class UserController {
     }
 
 
-    @GetMapping("/{id}")
+    @GetMapping("/")
     @ApiOperation(value = "用户详情")
-    public Result<UserInfoVo> getOne(@PathVariable("id") Integer id) {
+    public Result<UserInfoVo> getOne(@RequestParam("id") Long id) {
 
         return Result.success(userService.getById(id));
     }

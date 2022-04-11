@@ -87,7 +87,7 @@ public class UserService {
      * 获取用户信息
      * @date 2022/4/9 1:10
      */
-    public UserInfoVo getById(Integer id) {
+    public UserInfoVo getById(Long id) {
 
         return userManager.getUserInfo(id);
     }
