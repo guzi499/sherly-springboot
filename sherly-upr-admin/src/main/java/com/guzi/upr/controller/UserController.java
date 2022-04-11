@@ -24,12 +24,6 @@ import org.springframework.web.bind.annotation.*;
 @Api(tags = "用户相关")
 public class UserController {
 
-    //   2022/4/8  基础PageQuery需要DTO继承
-    //    PageResult 使用build
-    // FIXME: 2022/4/8 增删改查  禁用
-    //  返回信息单独VO 去掉敏感信息
-
-
     @Autowired
     private UserService userService;
 
