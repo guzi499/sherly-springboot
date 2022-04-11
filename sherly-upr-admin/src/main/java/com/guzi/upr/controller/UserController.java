@@ -34,7 +34,7 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/page")
-    @ApiOperation(value = "获取所有用户")
+    @ApiOperation(value = "用户分页")
     public Result<PageResult<UserVo>> getAll(UserPageDTO dto) {
         // 分页
         return Result.success(userService.page(dto));
@@ -42,7 +42,7 @@ public class UserController {
 
 
     @GetMapping("/{id}")
-    @ApiOperation(value = "获取所有用户")
+    @ApiOperation(value = "用户详情")
     public Result<UserInfoVo> getOne(@PathVariable("id") Integer id) {
 
         return Result.success(userService.getById(id));
@@ -51,26 +51,26 @@ public class UserController {
     @PutMapping("/ban")
     @ApiOperation(value = "禁用用户")
     public Result<UserInfoVo> banUserById(@RequestBody UserBanDTO dto) {
-        userService.banUserById(dto.getUserId());
+        userService.banUserById(dto);
         return Result.success();
     }
 
     @PostMapping("/save")
-    @ApiOperation(value = "新增用户")
+    @ApiOperation(value = "用户新增")
     public Result saveOne(@RequestBody UserInsertDTO dto) {
         userService.saveOne(dto);
         return Result.success();
     }
 
     @PutMapping("/update")
-    @ApiOperation("更新")
+    @ApiOperation("用户修改")
     public Result updateOne(@RequestBody UserUpdateDTO dto) {
         userService.updateOne(dto);
         return Result.success();
     }
 
     @DeleteMapping("/remove")
-    @ApiOperation("移除用户")
+    @ApiOperation("用户删除")
     public Result removeOne(@RequestParam Long userId) {
         userService.removeOne(userId);
         return Result.success();

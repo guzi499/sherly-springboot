@@ -10,6 +10,7 @@ import com.guzi.upr.model.admin.Department;
 import com.guzi.upr.model.admin.Role;
 import com.guzi.upr.model.admin.User;
 import com.guzi.upr.model.admin.UserRole;
+import com.guzi.upr.model.dto.UserBanDTO;
 import com.guzi.upr.model.dto.UserInsertDTO;
 import com.guzi.upr.model.dto.UserUpdateDTO;
 import com.guzi.upr.model.vo.UserInfoVo;
@@ -133,9 +134,13 @@ public class UserManager extends ServiceImpl<UserMapper, User> {
      * 禁用用户
      * @date 2022/4/9 1:09
      */
-    public void banUserById(Integer userId) {
-        User user = Optional.of(getById(userId)).orElseThrow(() -> new BizException(ResultAdminEnum.USER_NOT_FOUND));
+    public void banUserById(UserBanDTO dto) {
+        User user = Optional.of(getById(dto.getUserId())).orElseThrow(() -> new BizException(ResultAdminEnum.USER_NOT_FOUND));
         user.setEnable(0);
         updateById(user);
+    }
+
+    public boolean getCount(String phone) {
+        return count(new LambdaQueryWrapper<User>().eq(User::getPhone, phone)) > 0;
     }
 }

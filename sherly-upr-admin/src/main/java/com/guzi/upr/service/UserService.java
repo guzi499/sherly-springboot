@@ -1,12 +1,12 @@
 package com.guzi.upr.service;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.guzi.upr.enums.ResultAdminEnum;
 import com.guzi.upr.exception.BizException;
 import com.guzi.upr.manager.UserManager;
 import com.guzi.upr.model.PageResult;
 import com.guzi.upr.model.admin.User;
+import com.guzi.upr.model.dto.UserBanDTO;
 import com.guzi.upr.model.dto.UserInsertDTO;
 import com.guzi.upr.model.dto.UserPageDTO;
 import com.guzi.upr.model.dto.UserUpdateDTO;
@@ -37,7 +37,7 @@ public class UserService {
     public void saveOne(UserInsertDTO dto) {
         // 重复检查
 
-        if (userManager.count(new LambdaQueryWrapper<User>().eq(User::getPhone, dto.getPhone())) > 0) {
+        if (userManager.getCount(dto.getPhone())) {
             throw new BizException(ResultAdminEnum.USER_REPEAT);
         }
         userManager.saveOne(dto);
@@ -99,8 +99,8 @@ public class UserService {
      * 禁用用户
      * @date 2022/4/9 1:10
      */
-    public void banUserById(Integer userId) {
-        userManager.banUserById(userId);
+    public void banUserById(UserBanDTO dto) {
+        userManager.banUserById(dto);
 
     }
 }
