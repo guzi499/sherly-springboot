@@ -9,5 +9,6 @@ import lombok.Data;
  */
 @Data
 public class UserBanDTO {
+    /**用户id*/
     private Integer userId;
 }
