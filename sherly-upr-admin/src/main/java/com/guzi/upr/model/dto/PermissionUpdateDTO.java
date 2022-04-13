@@ -14,8 +14,8 @@ public class PermissionUpdateDTO {
     @ApiModelProperty("权限id")
     private Long permissionId;
 
-    /** 权限名 */
-    @ApiModelProperty("权限名")
+    /** 权限名称 */
+    @ApiModelProperty("权限名称")
     private String permissionName;
 
     /** 描述 */

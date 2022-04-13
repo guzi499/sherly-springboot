@@ -2,6 +2,7 @@ package com.guzi.upr.mapper.admin;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.guzi.upr.model.admin.Menu;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -19,5 +20,5 @@ public interface MenuMapper extends BaseMapper<Menu> {
      * @param roleIds
      * @return
      */
-    List<Menu> listByRoleIds(List<Long> roleIds);
+    List<Menu> listByRoleIds(@Param("roleIds") List<Long> roleIds);
 }

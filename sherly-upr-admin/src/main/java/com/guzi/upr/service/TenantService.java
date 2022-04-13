@@ -44,6 +44,7 @@ public class TenantService {
 
     /**
      * 租户条件分页
+     *
      * @param dto
      * @return
      */
@@ -62,6 +63,7 @@ public class TenantService {
 
     /**
      * 租户新增
+     *
      * @param dto
      */
     public void saveOne(TenantInsertDTO dto) {
@@ -92,6 +94,7 @@ public class TenantService {
 
     /**
      * 租户更新
+     *
      * @param dto
      */
     public void updateOne(TenantUpdateDTO dto) {
@@ -102,6 +105,7 @@ public class TenantService {
 
     /**
      * 租户删除
+     *
      * @param id
      */
     public void removeOne(Long id) {

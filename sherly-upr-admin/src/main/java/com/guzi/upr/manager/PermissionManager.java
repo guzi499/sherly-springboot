@@ -14,7 +14,8 @@ import org.springframework.stereotype.Service;
 public class PermissionManager extends ServiceImpl<PermissionMapper, Permission> {
 
     /**
-     * 权限名查重
+     * 权限名称查重
+     *
      * @param permissionName
      * @param parentId
      * @return

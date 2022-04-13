@@ -10,7 +10,7 @@ import lombok.Data;
  */
 @Data
 public class RolePageDTO extends PageQuery {
-    /** 角色名 */
-    @ApiModelProperty("角色名")
+    /** 角色名称 */
+    @ApiModelProperty("角色名称")
     private String roleName;
 }

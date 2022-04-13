@@ -37,11 +37,13 @@ public class UserUpdateDTO {
 
     /** 部门id */
     @ApiModelProperty("部门id")
-    private Long deptId;
+    private Long departmentId;
 
     /** 0不可用 1可用 */
     @ApiModelProperty("0不可用 1可用")
     private Integer enable;
 
+    /** 角色ids */
+    @ApiModelProperty("角色ids")
     private List<Long> roleIds;
 }

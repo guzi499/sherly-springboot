@@ -29,6 +29,7 @@ public class DepartmentService {
 
     /**
      * 查询部门树
+     *
      * @return
      */
     public List<DepartmentVO> listTree() {
@@ -50,24 +51,26 @@ public class DepartmentService {
 
     /**
      * 递归拼装子结点
+     *
      * @param parent
      * @param all
      * @return
      */
     private List<DepartmentVO> getChildren(DepartmentVO parent, List<DepartmentVO> all) {
         return all.stream()
-                .filter(e -> e.getParentId().equals(parent.getDeptId()))
+                .filter(e -> e.getParentId().equals(parent.getDepartmentId()))
                 .peek(e -> e.setChildren(getChildren(e, all)))
                 .collect(Collectors.toList());
     }
 
     /**
      * 部门新增
+     *
      * @param dto
      */
     public void saveOne(DepartmentInsertDTO dto) {
         // 查重
-        Department one = departmentManager.getByDepartmentName(dto.getDeptName());
+        Department one = departmentManager.getByDepartmentName(dto.getDepartmentName());
         if (one != null) {
             throw new BizException(ResultAdminEnum.DEPARTMENT_REPEAT);
         }
@@ -80,12 +83,13 @@ public class DepartmentService {
 
     /**
      * 部门更新
+     *
      * @param dto
      */
     public void updateOne(DepartmentUpdateDTO dto) {
         // 查重 排除自身
-        Department one = departmentManager.getByDepartmentName(dto.getDeptName());
-        if (one != null && !one.getDeptId().equals(dto.getDeptId())) {
+        Department one = departmentManager.getByDepartmentName(dto.getDepartmentName());
+        if (one != null && !one.getDepartmentId().equals(dto.getDepartmentId())) {
             throw new BizException(ResultAdminEnum.DEPARTMENT_REPEAT);
         }
 
@@ -96,6 +100,7 @@ public class DepartmentService {
 
     /**
      * 部门删除
+     *
      * @param departmentId
      */
     public void removeOne(Long departmentId) {

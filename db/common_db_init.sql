@@ -15,7 +15,7 @@ CREATE TABLE `sys_department`
 CREATE TABLE `sys_menu`
 (
     `menu_id`        bigint UNSIGNED  NOT NULL AUTO_INCREMENT COMMENT '菜单id',
-    `menu_name`      varchar(255)     NULL COMMENT '菜单名',
+    `menu_name`      varchar(255)     NULL COMMENT '菜单名称',
     `parent_id`      bigint UNSIGNED  NULL DEFAULT 0 COMMENT '父菜单id',
     `link`           varchar(255)     NULL COMMENT '菜单路径',
     `icon`           varchar(255)     NULL COMMENT '菜单图标',
@@ -45,7 +45,7 @@ CREATE TABLE `sys_permission`
 CREATE TABLE `sys_role`
 (
     `role_id`        bigint UNSIGNED  NOT NULL AUTO_INCREMENT COMMENT '角色id',
-    `role_name`      varchar(255)     NULL COMMENT '角色名',
+    `role_name`      varchar(255)     NULL COMMENT '角色名称',
     `description`    varchar(255)     NULL COMMENT '描述',
     `create_time`    datetime         NULL COMMENT '创建时间',
     `update_time`    datetime         NULL COMMENT '更新时间',

@@ -3,6 +3,7 @@ package com.guzi.upr.util;
 import com.guzi.upr.model.ThreadLocalModel;
 
 /**
+ * threadLocal工具类
  * @author 谷子毅
  * @date 2022/3/24
  */

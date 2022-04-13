@@ -10,10 +10,12 @@ import java.util.List;
  */
 @Data
 public class BasicInfoVO {
-
+    /** 用户信息 */
     private BasicUserInfoVO basicUserInfoVO;
 
+    /** 角色信息 */
     private List<BasicRoleInfoVO> basicRoleInfoVO;
 
+    /** 菜单信息 */
     private List<BasicMenuInfoVO> basicMenuInfoVO;
 }

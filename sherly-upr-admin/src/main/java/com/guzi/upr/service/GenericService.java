@@ -36,6 +36,7 @@ public class GenericService {
 
     /**
      * 获取登录基本信息
+     *
      * @return
      */
     public BasicInfoVO getBasicData() {
@@ -75,6 +76,7 @@ public class GenericService {
 
     /**
      * 递归拼装子结点
+     *
      * @param parent
      * @param all
      * @return

@@ -9,6 +9,7 @@ import java.io.StringReader;
 import java.util.Map;
 
 /**
+ * sql脚本执行工具
  * @author 谷子毅
  * @date 2022/4/2
  */

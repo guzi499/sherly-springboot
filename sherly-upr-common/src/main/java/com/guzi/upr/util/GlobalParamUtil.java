@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 
 /**
+ * springboot全局配置工具
  * @author 谷子毅
  * @date 2022/3/23
  */

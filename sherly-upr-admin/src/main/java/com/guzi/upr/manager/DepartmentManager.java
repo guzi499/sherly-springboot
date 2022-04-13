@@ -14,14 +14,14 @@ import org.springframework.stereotype.Service;
 public class DepartmentManager extends ServiceImpl<DepartmentMapper, Department> {
 
     /**
-     * 部门名查重
+     * 部门名称查重
      *
      * @param departmentName
      * @return
      */
     public Department getByDepartmentName(String departmentName) {
         LambdaQueryWrapper<Department> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(Department::getDeptName, departmentName);
+        wrapper.eq(Department::getDepartmentName, departmentName);
         return this.getOne(wrapper);
     }
 }

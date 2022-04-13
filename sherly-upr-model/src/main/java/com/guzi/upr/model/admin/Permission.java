@@ -19,8 +19,8 @@ public class Permission extends BaseModel {
     @TableId(type = IdType.AUTO)
     private Long permissionId;
 
-    /** 权限名 */
-    @ApiModelProperty("权限名")
+    /** 权限名称 */
+    @ApiModelProperty("权限名称")
     private String permissionName;
 
     /** 描述 */

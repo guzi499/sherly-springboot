@@ -26,7 +26,7 @@ public class PermissionService {
 
 
     /**
-     * 权限查询
+     * 查询权限树
      * @return
      */
     public List<PermissionVO> listTree() {

@@ -33,8 +33,10 @@ public class UserInsertDTO {
 
     /** 部门id */
     @ApiModelProperty("部门id")
-    private Long deptId;
+    private Long departmentId;
 
+    /** 角色ids */
+    @ApiModelProperty("角色ids")
     private List<Long> roleIds;
 
 

@@ -39,5 +39,5 @@ public class BasicUserInfoVO {
 
     /** 部门id */
     @ApiModelProperty("部门id")
-    private Long deptId;
+    private Long departmentId;
 }

@@ -13,11 +13,7 @@ public class BasicRoleInfoVO {
     @ApiModelProperty("角色id")
     private Long roleId;
 
-    /** 角色名 */
-    @ApiModelProperty("角色名")
+    /** 角色名称 */
+    @ApiModelProperty("角色名称")
     private String roleName;
-
-    /** 描述 */
-    @ApiModelProperty("描述")
-    private String description;
 }

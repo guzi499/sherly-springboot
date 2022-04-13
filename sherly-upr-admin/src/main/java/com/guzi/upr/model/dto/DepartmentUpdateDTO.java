@@ -11,11 +11,11 @@ import lombok.Data;
 public class DepartmentUpdateDTO {
     /** 部门id */
     @ApiModelProperty("部门id")
-    private Long deptId;
+    private Long departmentId;
 
-    /** 部门名 */
-    @ApiModelProperty("部门名")
-    private String deptName;
+    /** 部门名称 */
+    @ApiModelProperty("部门名称")
+    private String departmentName;
 
     /** 描述 */
     @ApiModelProperty("描述")

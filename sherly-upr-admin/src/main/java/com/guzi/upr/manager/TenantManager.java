@@ -49,6 +49,6 @@ public class TenantManager extends ServiceImpl<TenantMapper, Tenant> {
             wrapper.eq(Tenant::getTenantName, tenantName);
         }
 
-        return page(page, wrapper);
+        return this.page(page, wrapper);
     }
 }
