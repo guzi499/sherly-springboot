@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
  * @date 2022/3/24
  */
 @RestController
-@RequestMapping("/role")
+@RequestMapping("/api/role")
 @Api(tags = "角色相关")
 public class RoleController {
 

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
  * @date 2022/3/22
  */
 @RestController
-@RequestMapping("/tenant")
+@RequestMapping("/api/tenant")
 @Api(tags = "租户相关")
 public class TenantController {
 

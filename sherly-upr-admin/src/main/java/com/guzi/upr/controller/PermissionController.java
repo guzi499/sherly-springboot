@@ -17,7 +17,7 @@ import java.util.List;
  * @date 2022/3/24
  */
 @RestController
-@RequestMapping("/permission")
+@RequestMapping("/api/permission")
 @Api(tags = "权限相关")
 public class PermissionController {
 

@@ -17,7 +17,7 @@ import java.util.List;
  * @date 2022/3/30
  */
 @RestController
-@RequestMapping("/department")
+@RequestMapping("/api/department")
 @Api(tags = "部门相关")
 public class DepartmentController {
 

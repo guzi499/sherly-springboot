@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @Api(tags = "通用控制器")
-@RequestMapping("/generic")
+@RequestMapping("/api/generic")
 public class GenericController {
 
     @Autowired

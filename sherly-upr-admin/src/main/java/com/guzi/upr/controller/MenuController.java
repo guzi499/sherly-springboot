@@ -17,7 +17,7 @@ import java.util.List;
  * @date 2022/3/24
  */
 @RestController
-@RequestMapping("/menu")
+@RequestMapping("/api/menu")
 @Api(tags = "菜单相关")
 public class MenuController {
 
