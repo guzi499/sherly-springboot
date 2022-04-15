@@ -21,7 +21,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
-    private final String DEFAULT_RELEASE = "/login";
+    private final String DEFAULT_RELEASE = "/api/login";
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
