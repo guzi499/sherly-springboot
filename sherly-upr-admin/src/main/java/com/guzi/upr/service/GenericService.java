@@ -1,15 +1,9 @@
 package com.guzi.upr.service;
 
-import com.guzi.upr.manager.MenuManager;
-import com.guzi.upr.manager.RoleManager;
-import com.guzi.upr.manager.UserManager;
-import com.guzi.upr.model.admin.Menu;
-import com.guzi.upr.model.admin.Role;
-import com.guzi.upr.model.admin.User;
-import com.guzi.upr.model.vo.BasicInfoVO;
-import com.guzi.upr.model.vo.BasicMenuInfoVO;
-import com.guzi.upr.model.vo.BasicRoleInfoVO;
-import com.guzi.upr.model.vo.BasicUserInfoVO;
+import com.guzi.upr.manager.*;
+import com.guzi.upr.model.admin.*;
+import com.guzi.upr.model.vo.*;
+import com.guzi.upr.util.SherlyBeanUtil;
 import com.guzi.upr.util.ThreadLocalUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +27,12 @@ public class GenericService {
 
     @Autowired
     private MenuManager menuManager;
+
+    @Autowired
+    private PermissionManager permissionManager;
+
+    @Autowired
+    private DepartmentManager departmentManager;
 
     /**
      * 获取登录基本信息
@@ -90,5 +90,75 @@ public class GenericService {
                     basicMenuInfoVO.setChildren(getChildren(e, all));
                     return basicMenuInfoVO;
                 }).collect(Collectors.toList());
+    }
+
+    /**
+     * 菜单下拉框
+     *
+     * @return
+     */
+    public List<MenuSelectVO> getBasicMenu() {
+        List<Menu> list = menuManager.list();
+
+        // 对象转换成vo类型
+        List<MenuSelectVO> all = list.stream().map(e -> {
+            MenuSelectVO vo = new MenuSelectVO();
+            BeanUtils.copyProperties(e, vo);
+            return vo;
+        }).collect(Collectors.toList());
+
+        return SherlyBeanUtil.convert(all);
+    }
+
+    /**
+     * 权限下拉框
+     *
+     * @return
+     */
+    public List<PermissionSelectVO> getBasicPermission() {
+        List<Permission> list = permissionManager.list();
+
+        // 对象转换成vo类型
+        List<PermissionSelectVO> all = list.stream().map(e -> {
+            PermissionSelectVO vo = new PermissionSelectVO();
+            BeanUtils.copyProperties(e, vo);
+            return vo;
+        }).collect(Collectors.toList());
+
+        return SherlyBeanUtil.convert(all);
+    }
+
+    /**
+     * 角色下拉框
+     *
+     * @return
+     */
+    public List<RoleSelectVO> getBasicRole() {
+        List<Role> list = roleManager.list();
+
+        // 对象转换成vo类型
+        return list.stream().map(e -> {
+            RoleSelectVO vo = new RoleSelectVO();
+            BeanUtils.copyProperties(e, vo);
+            return vo;
+        }).collect(Collectors.toList());
+    }
+
+    /**
+     * 部门下拉框
+     *
+     * @return
+     */
+    public List<DepartmentSelectVO> getBasicDepartment() {
+        List<Department> list = departmentManager.list();
+
+        // 对象转换成vo类型
+        List<DepartmentSelectVO> all = list.stream().map(e -> {
+            DepartmentSelectVO vo = new DepartmentSelectVO();
+            BeanUtils.copyProperties(e, vo);
+            return vo;
+        }).collect(Collectors.toList());
+
+        return SherlyBeanUtil.convert(all);
     }
 }

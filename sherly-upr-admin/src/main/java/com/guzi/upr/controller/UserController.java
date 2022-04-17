@@ -39,7 +39,7 @@ public class UserController {
     }
 
     @PutMapping("/ban/one")
-    @ApiOperation(value = "用户禁用/解禁")
+    @ApiOperation(value = "用户禁用/启用")
     public Result banOne(@RequestParam Long userId, @RequestParam Integer enable) {
         userService.banOne(userId, enable);
         return Result.success();

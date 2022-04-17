@@ -1,18 +1,19 @@
 package com.guzi.upr.model.vo;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.guzi.upr.model.TreeAble;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import java.util.Date;
 import java.util.List;
 
 /**
  * @author 谷子毅
- * @date 2022/4/6
+ * @date 2022/4/17
  */
 @Data
-public class DepartmentVO {
+public class DepartmentSelectVO implements TreeAble {
+
     /** 部门id */
     @ApiModelProperty("部门id")
     private Long departmentId;
@@ -20,10 +21,6 @@ public class DepartmentVO {
     /** 部门名称 */
     @ApiModelProperty("部门名称")
     private String departmentName;
-
-    /** 描述 */
-    @ApiModelProperty("描述")
-    private String description;
 
     /** 父部门id */
     @ApiModelProperty("父部门id")
@@ -33,10 +30,16 @@ public class DepartmentVO {
     @ApiModelProperty("排序")
     private Integer sort;
 
-    /** 创建时间 */
-    @ApiModelProperty("创建时间")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    private Date createTime;
+    private List<? extends TreeAble> children;
 
-    private List<DepartmentVO> children;
+    @Override
+    @JsonIgnore
+    public Long getId() {
+        return this.departmentId;
+    }
+
+    @Override
+    public void setChildren(List<? extends TreeAble> list) {
+        this.children = list;
+    }
 }

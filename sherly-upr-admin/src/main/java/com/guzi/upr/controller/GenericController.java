@@ -26,4 +26,28 @@ public class GenericController {
     public Result getBasicData() {
         return Result.success(genericService.getBasicData());
     }
+
+    @GetMapping("basic/menu")
+    @ApiOperation("菜单下拉框")
+    public Result getBasicMenu() {
+        return Result.success(genericService.getBasicMenu());
+    }
+
+    @GetMapping("basic/permission")
+    @ApiOperation("权限下拉框")
+    public Result getBasicPermission() {
+        return Result.success(genericService.getBasicPermission());
+    }
+
+    @GetMapping("basic/role")
+    @ApiOperation("角色下拉框")
+    public Result getBasicRole() {
+        return Result.success(genericService.getBasicRole());
+    }
+
+    @GetMapping("basic/department")
+    @ApiOperation("部门下拉框")
+    public Result getBasicDepartment() {
+        return Result.success(genericService.getBasicDepartment());
+    }
 }

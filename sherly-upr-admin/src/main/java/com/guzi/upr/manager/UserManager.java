@@ -46,7 +46,7 @@ public class UserManager extends ServiceImpl<UserMapper, User> {
     }
 
     /**
-     * 用户禁用/解禁
+     * 用户禁用/启用
      *
      * @param userId
      * @param enable

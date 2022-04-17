@@ -125,7 +125,7 @@ public class UserService {
     }
 
     /**
-     * 用户禁用/解禁
+     * 用户禁用/启用
      *
      * @param userId
      */

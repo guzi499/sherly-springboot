@@ -29,7 +29,7 @@ public class Department extends BaseModel {
 
     /** 父部门id */
     @ApiModelProperty("父部门id")
-    private Long parentId = 0L;
+    private Long parentId;
 
     /** 排序 */
     @ApiModelProperty("排序")

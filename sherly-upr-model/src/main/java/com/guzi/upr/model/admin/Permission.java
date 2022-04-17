@@ -29,5 +29,5 @@ public class Permission extends BaseModel {
 
     /** 父权限id */
     @ApiModelProperty("父权限id")
-    private Long parentId = 0L;
+    private Long parentId;
 }
