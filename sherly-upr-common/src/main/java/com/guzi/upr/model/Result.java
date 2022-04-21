@@ -60,6 +60,11 @@ public class Result<T> {
         return Result.success(null);
     }
 
+
+    public static Result error(String message, Exception e) {
+        return new Result(ERROR_CODE, message, parseException(e));
+    }
+
     public static Result error(BizException e) {
         return new Result(e.getCode(), e.getMessage());
     }
