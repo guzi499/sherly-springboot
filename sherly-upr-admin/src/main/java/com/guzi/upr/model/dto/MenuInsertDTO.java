@@ -2,6 +2,10 @@ package com.guzi.upr.model.dto;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.hibernate.validator.constraints.Range;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author 谷子毅
@@ -12,10 +16,12 @@ public class MenuInsertDTO {
 
     /** 菜单名称 */
     @ApiModelProperty("菜单名称")
+    @NotBlank
     private String menuName;
 
     /** 父菜单id */
     @ApiModelProperty("父菜单id")
+    @NotNull
     private Long parentId;
 
     /** 菜单路径  */
@@ -28,6 +34,7 @@ public class MenuInsertDTO {
 
     /** 排序 */
     @ApiModelProperty("排序")
+    @Range(min = 1, max = 999)
     private Integer sort;
 
 }

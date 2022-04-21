@@ -8,6 +8,7 @@ import com.guzi.upr.service.MenuService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,7 +33,7 @@ public class MenuController {
 
     @PostMapping("/save/one")
     @ApiOperation("菜单新增")
-    public Result saveOne(@RequestBody MenuInsertDTO dto) {
+    public Result saveOne(@RequestBody @Validated MenuInsertDTO dto) {
         menuService.saveOne(dto);
         return Result.success();
     }
@@ -46,7 +47,7 @@ public class MenuController {
 
     @PutMapping("/update/one")
     @ApiOperation("菜单修改")
-    public Result updateOne(@RequestBody MenuUpdateDTO dto) {
+    public Result updateOne(@RequestBody @Validated MenuUpdateDTO dto) {
         menuService.updateOne(dto);
         return Result.success();
     }

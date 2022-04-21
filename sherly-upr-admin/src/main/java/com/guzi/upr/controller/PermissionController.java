@@ -8,6 +8,7 @@ import com.guzi.upr.service.PermissionService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,14 +33,14 @@ public class PermissionController {
 
     @PostMapping("/save/one")
     @ApiOperation("权限新增")
-    public Result saveOne(@RequestBody PermissionInsertDTO dto) {
+    public Result saveOne(@RequestBody @Validated PermissionInsertDTO dto) {
         permissionService.saveOne(dto);
         return Result.success();
     }
 
     @PutMapping("/update/one")
     @ApiOperation("权限更新")
-    public Result updateOne(@RequestBody PermissionUpdateDTO dto) {
+    public Result updateOne(@RequestBody @Validated PermissionUpdateDTO dto) {
         permissionService.updateOne(dto);
         return Result.success();
     }

@@ -10,6 +10,7 @@ import com.guzi.upr.service.TenantService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -33,14 +34,14 @@ public class TenantController {
 
     @PostMapping("/save/one")
     @ApiOperation("租户新增")
-    public Result saveOne(@RequestBody TenantInsertDTO dto) {
+    public Result saveOne(@RequestBody @Validated TenantInsertDTO dto) {
         tenantService.saveOne(dto);
         return Result.success();
     }
 
     @PutMapping("/update/one")
     @ApiOperation("租户更新")
-    public Result updateOne(@RequestBody TenantUpdateDTO dto) {
+    public Result updateOne(@RequestBody @Validated TenantUpdateDTO dto) {
         tenantService.updateOne(dto);
         return Result.success();
     }

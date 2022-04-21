@@ -5,12 +5,14 @@ import com.guzi.upr.model.Result;
 import com.guzi.upr.model.dto.UserInsertDTO;
 import com.guzi.upr.model.dto.UserPageDTO;
 import com.guzi.upr.model.dto.UserUpdateDTO;
-import com.guzi.upr.model.vo.UserVo;
 import com.guzi.upr.model.vo.UserPageVo;
+import com.guzi.upr.model.vo.UserVo;
 import com.guzi.upr.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.hibernate.validator.constraints.Range;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -40,21 +42,21 @@ public class UserController {
 
     @PutMapping("/ban/one")
     @ApiOperation(value = "用户禁用/启用")
-    public Result banOne(@RequestParam Long userId, @RequestParam Integer enable) {
+    public Result banOne(@RequestParam Long userId, @RequestParam @Range(min = 0, max = 1) Integer enable) {
         userService.banOne(userId, enable);
         return Result.success();
     }
 
     @PostMapping("/save/one")
     @ApiOperation(value = "用户新增")
-    public Result saveOne(@RequestBody UserInsertDTO dto) {
+    public Result saveOne(@RequestBody @Validated UserInsertDTO dto) {
         userService.saveOne(dto);
         return Result.success();
     }
 
     @PutMapping("/update/one")
     @ApiOperation("用户更新")
-    public Result updateOne(@RequestBody UserUpdateDTO dto) {
+    public Result updateOne(@RequestBody @Validated UserUpdateDTO dto) {
         userService.updateOne(dto);
         return Result.success();
     }

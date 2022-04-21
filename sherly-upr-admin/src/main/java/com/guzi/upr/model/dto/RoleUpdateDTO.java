@@ -3,6 +3,7 @@ package com.guzi.upr.model.dto;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -13,6 +14,7 @@ import java.util.List;
 public class RoleUpdateDTO {
     /** 角色id */
     @ApiModelProperty("角色id")
+    @NotNull
     private Long roleId;
 
     /** 角色名称 */

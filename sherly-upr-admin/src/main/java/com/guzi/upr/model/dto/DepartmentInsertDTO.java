@@ -3,6 +3,9 @@ package com.guzi.upr.model.dto;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 /**
  * @author 周孟凡
  * @date 2022/3/30
@@ -11,6 +14,7 @@ import lombok.Data;
 public class DepartmentInsertDTO {
     /** 部门名称 */
     @ApiModelProperty("部门名称")
+    @NotBlank
     private String departmentName;
 
     /** 描述 */
@@ -19,5 +23,6 @@ public class DepartmentInsertDTO {
 
     /** 父部门id */
     @ApiModelProperty("父部门id")
+    @NotNull
     private Long parentId;
 }

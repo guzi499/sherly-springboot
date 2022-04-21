@@ -10,6 +10,7 @@ import com.guzi.upr.service.RoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -38,14 +39,14 @@ public class RoleController {
 
     @PostMapping("/save/one")
     @ApiOperation("角色新增")
-    public Result saveOne(@RequestBody RoleInsertDTO dto) {
+    public Result saveOne(@RequestBody @Validated RoleInsertDTO dto) {
         roleService.saveOne(dto);
         return Result.success();
     }
 
     @PutMapping("/update/one")
     @ApiOperation("角色更新")
-    public Result updateOne(@RequestBody RoleUpdateDTO dto) {
+    public Result updateOne(@RequestBody @Validated RoleUpdateDTO dto) {
         roleService.updateOne(dto);
         return Result.success();
     }

@@ -1,15 +1,13 @@
 package com.guzi.upr.exception;
 
 import com.guzi.upr.model.Result;
-import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.validation.BindException;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
-import java.util.stream.Collectors;
 
 /**
  * 全局异常处理器
@@ -30,22 +28,26 @@ public class GlobalExceptionHandler {
     public Result validateExceptionHandler(Exception e) {
         e.printStackTrace();
 
-        String message;
+        StringBuilder message = new StringBuilder();
         if (e instanceof MethodArgumentNotValidException) {
             // @RequestBody 方式校验
             MethodArgumentNotValidException ex = (MethodArgumentNotValidException) e;
-            message = ex.getBindingResult().getAllErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage).collect(Collectors.joining(","));
+            for (FieldError fieldError : ex.getBindingResult().getFieldErrors()) {
+                message.append(fieldError.getField()).append(fieldError.getDefaultMessage()).append(",");
+            }
         } else if (e instanceof ConstraintViolationException) {
             // @RequestParam 方式校验
             ConstraintViolationException ex = (ConstraintViolationException) e;
-            message = ex.getConstraintViolations().stream().map(ConstraintViolation::getMessage).collect(Collectors.joining("; "));
+            message.append(ex.getMessage());
         } else {
             // get Model 方式校验
             BindException ex = (BindException) e;
-            message = ex.getAllErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage).collect(Collectors.joining(","));
+            for (FieldError fieldError : ex.getFieldErrors()) {
+                message.append(fieldError.getField()).append(fieldError.getDefaultMessage()).append(",");
+            }
         }
 
-        return Result.error(message, e);
+        return Result.error(message.toString(), e);
     }
 
     /**

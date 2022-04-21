@@ -3,6 +3,8 @@ package com.guzi.upr.model.dto;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * @author 谷子毅
  * @date 2022/3/24
@@ -12,6 +14,7 @@ public class MenuUpdateDTO {
 
     /** 菜单id */
     @ApiModelProperty("菜单id")
+    @NotNull
     private Long menuId;
 
     /** 菜单名称 */

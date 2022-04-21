@@ -8,6 +8,7 @@ import com.guzi.upr.service.DepartmentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,14 +33,14 @@ public class DepartmentController {
 
     @PostMapping("/save/one")
     @ApiOperation("部门新增")
-    public Result saveOne(@RequestBody DepartmentInsertDTO dto) {
+    public Result saveOne(@RequestBody @Validated DepartmentInsertDTO dto) {
         departmentService.saveOne(dto);
         return Result.success();
     }
 
     @PutMapping("/update/one")
     @ApiOperation("部门更新")
-    public Result updateOne(@RequestBody DepartmentUpdateDTO dto) {
+    public Result updateOne(@RequestBody @Validated DepartmentUpdateDTO dto) {
         departmentService.updateOne(dto);
         return Result.success();
     }

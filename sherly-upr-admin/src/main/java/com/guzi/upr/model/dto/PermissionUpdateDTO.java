@@ -3,6 +3,8 @@ package com.guzi.upr.model.dto;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * @author 谷子毅
  * @date 2022/3/26
@@ -12,6 +14,7 @@ public class PermissionUpdateDTO {
 
     /** 权限id */
     @ApiModelProperty("权限id")
+    @NotNull
     private Long permissionId;
 
     /** 权限名称 */
