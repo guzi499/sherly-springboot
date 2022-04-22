@@ -100,10 +100,6 @@ public class RoleService {
         Role role = new Role();
         BeanUtils.copyProperties(dto, role);
         roleManager.save(role);
-
-        // 保存角色菜单、角色权限数据
-        roleMenuManager.saveRoleMenu(role.getRoleId(), dto.getMenuIds());
-        rolePermissionManager.saveRolePermission(role.getRoleId(), dto.getPermissionsIds());
     }
 
     /**

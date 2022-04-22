@@ -10,9 +10,9 @@ spring:
   # mysql配置
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: mpw:8rub2V/NIqTiAtA5pUrk/pz6OLx7HvWqwg/3JIdDFB76y+Ze67UWNXNcVBE2b1sZIBvIbi5+p1xH4hF8x9ZBUztNRKfe4Ir8oBSsCeBiW5JayBtBSuKQWa/FVG1TPOFSyB8SUsLtqmwkp7w8VBaz+65WOGU3xss6ffDphLleJkw=
-    username: mpw:p3OX+TtwtRao5GE119Qvog==
-    password: mpw:p3OX+TtwtRao5GE119Qvog==
+    url: mpw:2/v3aZvMNujUAwYq09lmjpY/kCU9UjM+bGWUgAg9IxbCAlSBryxryapeNxN3epjg8T57tHS0t4hstpxevRQs+sT2WxThPGiMaTFr1Ri5+0RbxRowXWtWK4oEJLnUfDyiYAkT588s6b47WW//uCVcyNc+VenJKCMq6sC2uycqUeVnC3dWPOEP2lnJsSAGpkEJBFRWFhfmRsORI6bNg30fHxMpJBArEu54gk+Ty1iazcU=
+    username: mpw:tNvIJM/7zuhDi3RoOr2KAA==
+    password: mpw:tNvIJM/7zuhDi3RoOr2KAA==
 
   # 适配knife4j高版本
   mvc:
