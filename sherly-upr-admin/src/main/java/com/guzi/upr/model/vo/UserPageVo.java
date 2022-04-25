@@ -1,5 +1,6 @@
 package com.guzi.upr.model.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -27,7 +28,6 @@ public class UserPageVo {
     @ApiModelProperty("手机号")
     private String phone;
 
-
     /** 用户头像 */
     @ApiModelProperty("用户头像")
     private String avater;
@@ -44,19 +44,12 @@ public class UserPageVo {
     @ApiModelProperty("部门id")
     private Long departmentId;
 
-    /** 0超级管理员 1管理员 2普通用户 */
-    @ApiModelProperty("0超级管理员 1管理员 2普通用户")
-    private Integer identity;
-
     /** 0不可用 1可用 */
     @ApiModelProperty("0不可用 1可用")
     private Integer enable;
 
-    /** 最后登录时间 */
-    @ApiModelProperty("最后登录时间")
-    private Date lastLoginTime;
-
-    /** 最后登录IP */
-    @ApiModelProperty("最后登录IP")
-    private String lastLoginIp;
+    /** 创建时间 */
+    @ApiModelProperty("创建时间")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date createTime;
 }
