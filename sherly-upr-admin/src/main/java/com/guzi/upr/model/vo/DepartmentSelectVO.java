@@ -26,16 +26,18 @@ public class DepartmentSelectVO implements TreeAble {
     @ApiModelProperty("父部门id")
     private Long parentId;
 
-    /** 排序 */
-    @ApiModelProperty("排序")
-    private Integer sort;
-
     private List<? extends TreeAble> children;
 
     @Override
     @JsonIgnore
     public Long getId() {
         return this.departmentId;
+    }
+
+    @Override
+    @JsonIgnore
+    public Integer getSort() {
+        return 0;
     }
 
     @Override

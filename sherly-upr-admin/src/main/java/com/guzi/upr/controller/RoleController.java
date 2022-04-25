@@ -6,6 +6,7 @@ import com.guzi.upr.model.dto.RoleInsertDTO;
 import com.guzi.upr.model.dto.RolePageDTO;
 import com.guzi.upr.model.dto.RoleUpdateDTO;
 import com.guzi.upr.model.vo.RolePageVO;
+import com.guzi.upr.model.vo.RoleVO;
 import com.guzi.upr.service.RoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -33,7 +34,7 @@ public class RoleController {
 
     @GetMapping("/get/one")
     @ApiOperation("角色详情")
-    public Result getOne(@RequestParam Long roleId) {
+    public Result<RoleVO> getOne(@RequestParam Long roleId) {
         return Result.success(roleService.getOne(roleId));
     }
 
