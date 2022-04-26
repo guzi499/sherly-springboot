@@ -4,7 +4,6 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
-import java.util.List;
 
 /**
  * @author 付东辉
@@ -20,12 +19,4 @@ public class RoleInsertDTO {
     /** 描述 */
     @ApiModelProperty("描述")
     private String description;
-
-    /** 菜单ids */
-    @ApiModelProperty("菜单ids")
-    private List<Long> menuIds;
-
-    /** 权限ids */
-    @ApiModelProperty("权限ids")
-    private List<Long> permissionsIds;
 }
