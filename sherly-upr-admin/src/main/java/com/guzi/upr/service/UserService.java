@@ -3,6 +3,8 @@ package com.guzi.upr.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.guzi.upr.enums.ResultAdminEnum;
 import com.guzi.upr.exception.BizException;
+import com.guzi.upr.interceptor.LoginUserDetails;
+import com.guzi.upr.interceptor.TokenParam;
 import com.guzi.upr.manager.RoleManager;
 import com.guzi.upr.manager.UserManager;
 import com.guzi.upr.manager.UserRoleManager;
@@ -16,6 +18,11 @@ import com.guzi.upr.model.vo.UserPageVo;
 import com.guzi.upr.model.vo.UserVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,7 +33,7 @@ import java.util.stream.Collectors;
  * @date 2022/3/24
  */
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
 
     @Autowired
     private UserManager userManager;
@@ -131,5 +138,20 @@ public class UserService {
      */
     public void banOne(Long userId, Integer enable) {
         userManager.banOne(userId, enable);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String loginParams) throws UsernameNotFoundException {
+        String[] loginParamArray = loginParams.split(":");
+        String tenantCode = loginParamArray[0];
+        String phone = loginParamArray[1];
+
+        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(new TokenParam(), null));
+
+        User user = userManager.getByPhone(phone);
+
+        LoginUserDetails loginUserDetails = new LoginUserDetails();
+        loginUserDetails.setUser(user);
+        return loginUserDetails;
     }
 }

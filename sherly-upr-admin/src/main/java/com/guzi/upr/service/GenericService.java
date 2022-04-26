@@ -4,7 +4,6 @@ import com.guzi.upr.manager.*;
 import com.guzi.upr.model.admin.*;
 import com.guzi.upr.model.vo.*;
 import com.guzi.upr.util.SherlyBeanUtil;
-import com.guzi.upr.util.ThreadLocalUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,7 +39,8 @@ public class GenericService {
      * @return
      */
     public BasicInfoVO getBasicData() {
-        Long userId = ThreadLocalUtil.get().getUserId();
+        // Long userId = ThreadLocalUtil.get().getUserId();
+        Long userId = 1L;
 
         // 用户信息收集
         User user = userManager.getById(userId);

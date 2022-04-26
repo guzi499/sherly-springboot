@@ -1,6 +1,5 @@
 package com.guzi.upr.interceptor;
 
-import com.guzi.upr.model.ThreadLocalModel;
 import lombok.Data;
 
 /**
@@ -10,7 +9,7 @@ import lombok.Data;
  * @date 2022/3/24
  */
 @Data
-public class TokenParam implements ThreadLocalModel {
+public class TokenParam {
 
     private Long userId;
 

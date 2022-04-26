@@ -70,6 +70,13 @@
                 <version>${spring.boot.version}</version>
             </dependency>
 
+            <!-- springboot-security -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-security</artifactId>
+                <version>${spring.boot.version}</version>
+            </dependency>
+
             <!-- mysql -->
             <dependency>
                 <groupId>mysql</groupId>

@@ -1,6 +1,5 @@
 package com.guzi.upr.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.guzi.upr.model.Result;
 import com.guzi.upr.model.dto.LoginDTO;
 import com.guzi.upr.model.vo.LoginVO;
@@ -27,7 +26,7 @@ public class LoginController {
 
     @PostMapping("/login")
     @ApiOperation("登录")
-    public Result<LoginVO> login(@RequestBody LoginDTO dto) throws JsonProcessingException {
+    public Result<LoginVO> login(@RequestBody LoginDTO dto) {
         return Result.success(loginService.login(dto));
     }
 }
