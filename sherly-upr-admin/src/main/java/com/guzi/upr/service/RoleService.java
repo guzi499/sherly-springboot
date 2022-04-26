@@ -5,12 +5,10 @@ import com.guzi.upr.enums.ResultAdminEnum;
 import com.guzi.upr.exception.BizException;
 import com.guzi.upr.manager.RoleManager;
 import com.guzi.upr.manager.RoleMenuManager;
-import com.guzi.upr.manager.RolePermissionManager;
 import com.guzi.upr.manager.UserRoleManager;
 import com.guzi.upr.model.PageResult;
 import com.guzi.upr.model.admin.Role;
 import com.guzi.upr.model.admin.RoleMenu;
-import com.guzi.upr.model.admin.RolePermission;
 import com.guzi.upr.model.dto.RoleInsertDTO;
 import com.guzi.upr.model.dto.RolePageDTO;
 import com.guzi.upr.model.dto.RoleUpdateDTO;
@@ -32,9 +30,6 @@ import java.util.stream.Collectors;
 public class RoleService {
     @Autowired
     private RoleManager roleManager;
-
-    @Autowired
-    private RolePermissionManager rolePermissionManager;
 
     @Autowired
     private RoleMenuManager roleMenuManager;
@@ -71,17 +66,14 @@ public class RoleService {
     public RoleVO getOne(Long roleId) {
         Role role = roleManager.getById(roleId);
 
-        // 查询菜单和权限
+        // 查询菜单
         List<RoleMenu> roleMenus = roleMenuManager.listByRoleId(roleId);
-        List<RolePermission> rolePermissions = rolePermissionManager.listByRoleId(roleId);
         List<Long> menuIds = roleMenus.stream().map(RoleMenu::getMenuId).collect(Collectors.toList());
-        List<Long> permissionIds = rolePermissions.stream().map(RolePermission::getPermissionId).collect(Collectors.toList());
 
         // 组装vo
         RoleVO vo = new RoleVO();
         BeanUtils.copyProperties(role, vo);
         vo.setMenuIds(menuIds);
-        vo.setPermissionIds(permissionIds);
 
         return vo;
     }
@@ -119,16 +111,12 @@ public class RoleService {
         BeanUtils.copyProperties(dto, role);
         roleManager.updateById(role);
 
-        // 先全部删除角色菜单、角色权限数据
+        // 先全部删除角色菜单数据
         roleMenuManager.removeRoleMenuByRoleId(dto.getRoleId());
-        rolePermissionManager.removeRolePermissionByRoleId(dto.getRoleId());
 
-        // 再保存角色菜单、角色权限数据
+        // 再保存角色菜单数据
         if (!CollectionUtils.isEmpty(dto.getMenuIds())) {
             roleMenuManager.saveRoleMenu(dto.getRoleId(), dto.getMenuIds());
-        }
-        if (!CollectionUtils.isEmpty(dto.getPermissionIds())) {
-            rolePermissionManager.saveRolePermission(dto.getRoleId(), dto.getPermissionIds());
         }
     }
 
@@ -140,9 +128,8 @@ public class RoleService {
     public void removeOne(Long roleId) {
         roleManager.removeById(roleId);
 
-        // 删除角色菜单、角色权限、用户角色数据
+        // 删除角色菜单、用户角色数据
         roleMenuManager.removeRoleMenuByRoleId(roleId);
-        rolePermissionManager.removeRolePermissionByRoleId(roleId);
         userRoleManager.removeUserRoleByRoleId(roleId);
     }
 }

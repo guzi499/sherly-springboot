@@ -4,12 +4,12 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.guzi.upr.enums.ResultAdminEnum;
 import com.guzi.upr.exception.BizException;
 import com.guzi.upr.interceptor.LoginUserDetails;
-import com.guzi.upr.interceptor.TokenParam;
-import com.guzi.upr.manager.RoleManager;
-import com.guzi.upr.manager.UserManager;
-import com.guzi.upr.manager.UserRoleManager;
+import com.guzi.upr.interceptor.ThreadLocalModel;
+import com.guzi.upr.manager.*;
 import com.guzi.upr.model.PageResult;
+import com.guzi.upr.model.admin.Menu;
 import com.guzi.upr.model.admin.Role;
+import com.guzi.upr.model.admin.RoleMenu;
 import com.guzi.upr.model.admin.User;
 import com.guzi.upr.model.dto.UserInsertDTO;
 import com.guzi.upr.model.dto.UserPageDTO;
@@ -26,6 +26,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -40,6 +41,12 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private RoleManager roleManager;
+
+    @Autowired
+    private MenuManager menuManager;
+
+    @Autowired
+    private RoleMenuManager roleMenuManager;
 
     @Autowired
     private UserRoleManager userRoleManager;
@@ -142,16 +149,31 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String loginParams) throws UsernameNotFoundException {
+        // 获取用户查询参数 [tenantCode:phone]
         String[] loginParamArray = loginParams.split(":");
         String tenantCode = loginParamArray[0];
         String phone = loginParamArray[1];
 
-        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(new TokenParam(), null));
+        // 设置当前操作租户存入当前执行线程
+        ThreadLocalModel threadLocalModel = new ThreadLocalModel();
+        threadLocalModel.setOperateTenantCode(tenantCode);
+        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(threadLocalModel, null));
 
+        // 根据查询参数查询用户信息
         User user = userManager.getByPhone(phone);
 
+        List<Role> roles = roleManager.listByUserId(user.getUserId());
+        List<Long> roleIds = roles.stream().map(Role::getRoleId).collect(Collectors.toList());
+        List<RoleMenu> roleMenus = roleMenuManager.listByRoleIds(roleIds);
+        List<Long> menuIds = roleMenus.stream().map(RoleMenu::getMenuId).distinct().collect(Collectors.toList());
+        List<Menu> menus = menuManager.listByIds(menuIds);
+        List<String> permissions = menus.stream().map(Menu::getPermission).filter(Objects::nonNull).collect(Collectors.toList());
+
+        // 响应userDetails用于登录校验
         LoginUserDetails loginUserDetails = new LoginUserDetails();
         loginUserDetails.setUser(user);
+        loginUserDetails.setPermissions(permissions);
+
         return loginUserDetails;
     }
 }

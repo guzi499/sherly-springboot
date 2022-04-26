@@ -9,7 +9,7 @@ import lombok.Data;
  * @date 2022/3/24
  */
 @Data
-public class TokenParam {
+public class ThreadLocalModel {
 
     private Long userId;
 

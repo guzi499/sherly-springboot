@@ -26,8 +26,4 @@ public class RoleVO {
     /** 菜单ids */
     @ApiModelProperty("菜单ids")
     private List<Long> menuIds;
-
-    /** 权限ids */
-    @ApiModelProperty("权限ids")
-    private List<Long> permissionIds;
 }

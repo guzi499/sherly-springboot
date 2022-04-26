@@ -5,6 +5,7 @@ import com.guzi.upr.constants.SqlParam;
 import com.guzi.upr.constants.SqlStatement;
 import com.guzi.upr.enums.ResultAdminEnum;
 import com.guzi.upr.exception.BizException;
+import com.guzi.upr.interceptor.ThreadLocalModel;
 import com.guzi.upr.manager.TenantManager;
 import com.guzi.upr.manager.UserManager;
 import com.guzi.upr.model.PageResult;
@@ -17,6 +18,9 @@ import com.guzi.upr.model.vo.TenantPageVO;
 import com.guzi.upr.util.ExecSqlUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -79,9 +83,10 @@ public class TenantService {
         execSqlUtil.execSql(SqlStatement.CREATE_TENANT, Collections.singletonMap(SqlParam.DATABASE, dto.getTenantCode()));
 
         // 设置要操作的租户数据库
-        //TokenParam tokenParam = (TokenParam) ThreadLocalUtil.get();
-        //tokenParam.setOperateTenantCode(dto.getTenantCode());
-        //ThreadLocalUtil.set(tokenParam);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        ThreadLocalModel threadLocalModel = (ThreadLocalModel) authentication.getPrincipal();
+        threadLocalModel.setOperateTenantCode(dto.getTenantCode());
+        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(threadLocalModel, null, authentication.getAuthorities()));
 
         // 添加租户数据
         User user = new User();

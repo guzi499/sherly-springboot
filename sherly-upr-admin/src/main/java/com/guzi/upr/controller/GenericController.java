@@ -36,12 +36,6 @@ public class GenericController {
         return Result.success(genericService.getBasicMenu());
     }
 
-    @GetMapping("basic/permission")
-    @ApiOperation("权限下拉框")
-    public Result<List<PermissionSelectVO>> getBasicPermission() {
-        return Result.success(genericService.getBasicPermission());
-    }
-
     @GetMapping("basic/role")
     @ApiOperation("角色下拉框")
     public Result<List<RoleSelectVO>> getBasicRole() {

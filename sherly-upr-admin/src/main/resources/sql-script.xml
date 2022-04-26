@@ -37,20 +37,6 @@
             PRIMARY KEY (`menu_id`)
             );
 
-            CREATE TABLE `sys_permission`
-            (
-            `permission_id`   bigint UNSIGNED  NOT NULL AUTO_INCREMENT COMMENT '权限id',
-            `permission_name` varchar(255)     NULL COMMENT '权限名称',
-            `description`     varchar(255)     NULL COMMENT '描述',
-            `parent_id`       bigint UNSIGNED  NULL DEFAULT 0 COMMENT '父权限id',
-            `create_time`     datetime         NULL COMMENT '创建时间',
-            `update_time`     datetime         NULL COMMENT '更新时间',
-            `create_user_id`  bigint UNSIGNED  NULL COMMENT '创建人id',
-            `update_user_id`  bigint UNSIGNED  NULL COMMENT '更新人id',
-            `is_deleted`      tinyint UNSIGNED NULL DEFAULT 0 COMMENT '0未删除 1已删除',
-            PRIMARY KEY (`permission_id`)
-            );
-
             CREATE TABLE `sys_role`
             (
             `role_id`        bigint UNSIGNED  NOT NULL AUTO_INCREMENT COMMENT '角色id',
@@ -69,19 +55,6 @@
             `id`             bigint UNSIGNED  NOT NULL AUTO_INCREMENT COMMENT 'id',
             `role_id`        bigint UNSIGNED  NULL COMMENT '角色id',
             `menu_id`        bigint UNSIGNED  NULL COMMENT '菜单id',
-            `create_time`    datetime         NULL COMMENT '创建时间',
-            `update_time`    datetime         NULL COMMENT '更新时间',
-            `create_user_id` bigint UNSIGNED  NULL COMMENT '创建人id',
-            `update_user_id` bigint UNSIGNED  NULL COMMENT '更新人id',
-            `is_deleted`     tinyint UNSIGNED NULL DEFAULT 0 COMMENT '0未删除 1已删除',
-            PRIMARY KEY (`id`)
-            );
-
-            CREATE TABLE `sys_role_permission`
-            (
-            `id`             bigint UNSIGNED  NOT NULL AUTO_INCREMENT COMMENT 'id',
-            `user_id`        bigint UNSIGNED  NULL COMMENT '角色id',
-            `role_id`        bigint UNSIGNED  NULL COMMENT '权限id',
             `create_time`    datetime         NULL COMMENT '创建时间',
             `update_time`    datetime         NULL COMMENT '更新时间',
             `create_user_id` bigint UNSIGNED  NULL COMMENT '创建人id',

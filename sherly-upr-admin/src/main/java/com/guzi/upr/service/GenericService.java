@@ -1,11 +1,19 @@
 package com.guzi.upr.service;
 
-import com.guzi.upr.manager.*;
-import com.guzi.upr.model.admin.*;
+import com.guzi.upr.interceptor.ThreadLocalModel;
+import com.guzi.upr.manager.DepartmentManager;
+import com.guzi.upr.manager.MenuManager;
+import com.guzi.upr.manager.RoleManager;
+import com.guzi.upr.manager.UserManager;
+import com.guzi.upr.model.admin.Department;
+import com.guzi.upr.model.admin.Menu;
+import com.guzi.upr.model.admin.Role;
+import com.guzi.upr.model.admin.User;
 import com.guzi.upr.model.vo.*;
 import com.guzi.upr.util.SherlyBeanUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,9 +36,6 @@ public class GenericService {
     private MenuManager menuManager;
 
     @Autowired
-    private PermissionManager permissionManager;
-
-    @Autowired
     private DepartmentManager departmentManager;
 
     /**
@@ -39,8 +44,8 @@ public class GenericService {
      * @return
      */
     public BasicInfoVO getBasicData() {
-        // Long userId = ThreadLocalUtil.get().getUserId();
-        Long userId = 1L;
+        ThreadLocalModel threadLocalModel = (ThreadLocalModel) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Long userId = threadLocalModel.getUserId();
 
         // 用户信息收集
         User user = userManager.getById(userId);
@@ -103,24 +108,6 @@ public class GenericService {
         // 对象转换成vo类型
         List<MenuSelectVO> all = list.stream().map(e -> {
             MenuSelectVO vo = new MenuSelectVO();
-            BeanUtils.copyProperties(e, vo);
-            return vo;
-        }).collect(Collectors.toList());
-
-        return SherlyBeanUtil.convert(all);
-    }
-
-    /**
-     * 权限下拉框
-     *
-     * @return
-     */
-    public List<PermissionSelectVO> getBasicPermission() {
-        List<Permission> list = permissionManager.list();
-
-        // 对象转换成vo类型
-        List<PermissionSelectVO> all = list.stream().map(e -> {
-            PermissionSelectVO vo = new PermissionSelectVO();
             BeanUtils.copyProperties(e, vo);
             return vo;
         }).collect(Collectors.toList());

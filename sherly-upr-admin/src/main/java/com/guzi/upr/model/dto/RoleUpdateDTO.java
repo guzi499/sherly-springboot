@@ -29,8 +29,4 @@ public class RoleUpdateDTO {
     @ApiModelProperty("菜单ids")
     private List<Long> menuIds;
 
-    /** 权限ids */
-    @ApiModelProperty("权限ids")
-    private List<Long> permissionIds;
-
 }
