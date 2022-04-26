@@ -18,7 +18,7 @@ public interface RolePermissionMapper extends BaseMapper<RolePermission> {
      * 保存角色权限数据
      *
      * @param roleId
-     * @param permissionsIds
+     * @param permissionIds
      */
-    void saveRolePermission(@Param("roleId") Long roleId, @Param("permissionsIds") List<Long> permissionsIds);
+    void saveRolePermission(@Param("roleId") Long roleId, @Param("permissionIds") List<Long> permissionIds);
 }

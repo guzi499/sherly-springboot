@@ -31,6 +31,6 @@ public class RoleUpdateDTO {
 
     /** 权限ids */
     @ApiModelProperty("权限ids")
-    private List<Long> permissionsIds;
+    private List<Long> permissionIds;
 
 }

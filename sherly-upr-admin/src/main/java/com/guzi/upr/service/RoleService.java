@@ -19,6 +19,7 @@ import com.guzi.upr.model.vo.RoleVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -80,7 +81,7 @@ public class RoleService {
         RoleVO vo = new RoleVO();
         BeanUtils.copyProperties(role, vo);
         vo.setMenuIds(menuIds);
-        vo.setPermissionsIds(permissionIds);
+        vo.setPermissionIds(permissionIds);
 
         return vo;
     }
@@ -110,7 +111,7 @@ public class RoleService {
     public void updateOne(RoleUpdateDTO dto) {
         // 去重
         Role one = roleManager.getByRoleName(dto.getRoleName());
-        if (one != null) {
+        if (one != null && !one.getRoleId().equals(dto.getRoleId())) {
             throw new BizException(ResultAdminEnum.ROLE_REPEAT);
         }
 
@@ -123,8 +124,12 @@ public class RoleService {
         rolePermissionManager.removeRolePermissionByRoleId(dto.getRoleId());
 
         // 再保存角色菜单、角色权限数据
-        roleMenuManager.saveRoleMenu(dto.getRoleId(), dto.getMenuIds());
-        rolePermissionManager.saveRolePermission(dto.getRoleId(), dto.getPermissionsIds());
+        if (!CollectionUtils.isEmpty(dto.getMenuIds())) {
+            roleMenuManager.saveRoleMenu(dto.getRoleId(), dto.getMenuIds());
+        }
+        if (!CollectionUtils.isEmpty(dto.getPermissionIds())) {
+            rolePermissionManager.saveRolePermission(dto.getRoleId(), dto.getPermissionIds());
+        }
     }
 
     /**

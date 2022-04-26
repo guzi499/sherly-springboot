@@ -34,10 +34,10 @@ public class RolePermissionManager extends ServiceImpl<RolePermissionMapper, Rol
      * 保存角色权限数据
      *
      * @param roleId
-     * @param permissionsIds
+     * @param permissionIds
      */
-    public void saveRolePermission(Long roleId, List<Long> permissionsIds) {
-        rolePermissionMapper.saveRolePermission(roleId, permissionsIds);
+    public void saveRolePermission(Long roleId, List<Long> permissionIds) {
+        rolePermissionMapper.saveRolePermission(roleId, permissionIds);
     }
 
     /**
