@@ -81,7 +81,7 @@ public class RoleService {
         RoleVO vo = new RoleVO();
         BeanUtils.copyProperties(role, vo);
         vo.setMenuIds(menuIds);
-        vo.setPermissionsIds(permissionIds);
+        vo.setPermissionIds(permissionIds);
 
         return vo;
     }
