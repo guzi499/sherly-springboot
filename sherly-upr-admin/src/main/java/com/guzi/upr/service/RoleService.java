@@ -110,7 +110,7 @@ public class RoleService {
     public void updateOne(RoleUpdateDTO dto) {
         // 去重
         Role one = roleManager.getByRoleName(dto.getRoleName());
-        if (one != null) {
+        if (one != null && !one.getRoleId().equals(dto.getRoleId())) {
             throw new BizException(ResultAdminEnum.ROLE_REPEAT);
         }
 
