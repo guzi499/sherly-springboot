@@ -6,6 +6,10 @@ spring:
     name: sherly-后台管理系统
     dev-flag: true
 
+  # redis配置
+  redis:
+    host: 101.34.169.185
+    port: 6379
 
   # mysql配置
   datasource:

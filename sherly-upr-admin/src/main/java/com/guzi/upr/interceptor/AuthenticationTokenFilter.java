@@ -66,6 +66,10 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
             throw new BizException(ResultAdminEnum.TOKEN_ERROR);
         }
 
+        UsernamePasswordAuthenticationToken authenticationToken =
+                new UsernamePasswordAuthenticationToken(threadLocalModel,null);
+        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+
         List<Role> roles = roleManager.listByUserId(threadLocalModel.getUserId());
         List<Long> roleIds = roles.stream().map(Role::getRoleId).collect(Collectors.toList());
         List<RoleMenu> roleMenus = roleMenuManager.listByRoleIds(roleIds);
@@ -75,7 +79,7 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
         List<SimpleGrantedAuthority> authorities = permissions.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
 
         // threadLocalModel存入当前执行线程
-        UsernamePasswordAuthenticationToken authenticationToken =
+        authenticationToken =
                 new UsernamePasswordAuthenticationToken(threadLocalModel,null, authorities);
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
