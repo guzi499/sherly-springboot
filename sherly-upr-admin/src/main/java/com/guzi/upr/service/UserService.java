@@ -7,10 +7,7 @@ import com.guzi.upr.interceptor.LoginUserDetails;
 import com.guzi.upr.interceptor.ThreadLocalModel;
 import com.guzi.upr.manager.*;
 import com.guzi.upr.model.PageResult;
-import com.guzi.upr.model.admin.Menu;
-import com.guzi.upr.model.admin.Role;
-import com.guzi.upr.model.admin.RoleMenu;
-import com.guzi.upr.model.admin.User;
+import com.guzi.upr.model.admin.*;
 import com.guzi.upr.model.dto.UserInsertDTO;
 import com.guzi.upr.model.dto.UserPageDTO;
 import com.guzi.upr.model.dto.UserUpdateDTO;
@@ -50,6 +47,9 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private UserRoleManager userRoleManager;
+
+    @Autowired
+    private AccountUserManager accountUserManager;
 
     /**
      * 用户分页
@@ -148,15 +148,19 @@ public class UserService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String loginParams) throws UsernameNotFoundException {
-        // 获取用户查询参数 [tenantCode:phone]
-        String[] loginParamArray = loginParams.split(":");
-        String tenantCode = loginParamArray[0];
-        String phone = loginParamArray[1];
+    public UserDetails loadUserByUsername(String phone) throws UsernameNotFoundException {
 
         // 设置当前操作租户存入当前执行线程
         ThreadLocalModel threadLocalModel = new ThreadLocalModel();
-        threadLocalModel.setOperateTenantCode(tenantCode);
+        threadLocalModel.setOperateTenantCode("sherly");
+        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(threadLocalModel, null));
+
+        // 查询用户租户信息
+        AccountUser accountUser = accountUserManager.getByPhone(phone);
+        String lastLoginTenantCode = accountUser.getLastLoginTenantCode();
+
+        // 设置当前操作租户存入当前执行线程
+        threadLocalModel.setOperateTenantCode(lastLoginTenantCode);
         SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(threadLocalModel, null));
 
         // 根据查询参数查询用户信息
@@ -172,6 +176,7 @@ public class UserService implements UserDetailsService {
         // 响应userDetails用于登录校验
         LoginUserDetails loginUserDetails = new LoginUserDetails();
         loginUserDetails.setUser(user);
+        loginUserDetails.setAccountUser(accountUser);
         loginUserDetails.setPermissions(permissions);
 
         return loginUserDetails;

@@ -1,17 +1,17 @@
 package com.guzi.upr.interceptor;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.guzi.upr.enums.RedisKeyTemplateEnum;
 import com.guzi.upr.enums.ResultAdminEnum;
 import com.guzi.upr.exception.BizException;
 import com.guzi.upr.manager.MenuManager;
 import com.guzi.upr.manager.RoleManager;
 import com.guzi.upr.manager.RoleMenuManager;
-import com.guzi.upr.model.admin.Menu;
-import com.guzi.upr.model.admin.Role;
-import com.guzi.upr.model.admin.RoleMenu;
 import com.guzi.upr.util.JwtUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
@@ -44,6 +44,9 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
 
     @Autowired
     private MenuManager menuManager;
+
+    @Autowired
+    private RedisTemplate<String, String> redisTemplate;
 
 
     @Override
@@ -66,17 +69,20 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
             throw new BizException(ResultAdminEnum.TOKEN_ERROR);
         }
 
+        String redisString = redisTemplate.opsForValue().get(RedisKeyTemplateEnum.USER_DETAILS.getKey() + threadLocalModel.getPhone());
+        if (redisString == null) {
+            throw new BizException(ResultAdminEnum.LOGIN_EXPIRE);
+        }
+
+        redisTemplate.expire(RedisKeyTemplateEnum.USER_DETAILS.getKey() + threadLocalModel.getPhone(), 24, TimeUnit.HOURS);
+
+        LoginUserDetails loginUserDetails = OBJECTMAPPER.readValue(redisString, new TypeReference<LoginUserDetails>() {});
+        threadLocalModel.setTenantCode(loginUserDetails.getAccountUser().getLastLoginTenantCode());
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(threadLocalModel,null);
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
-        List<Role> roles = roleManager.listByUserId(threadLocalModel.getUserId());
-        List<Long> roleIds = roles.stream().map(Role::getRoleId).collect(Collectors.toList());
-        List<RoleMenu> roleMenus = roleMenuManager.listByRoleIds(roleIds);
-        List<Long> menuIds = roleMenus.stream().map(RoleMenu::getMenuId).distinct().collect(Collectors.toList());
-        List<Menu> menus = menuManager.listByIds(menuIds);
-        List<String> permissions = menus.stream().map(Menu::getPermission).filter(Objects::nonNull).collect(Collectors.toList());
-        List<SimpleGrantedAuthority> authorities = permissions.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+        List<SimpleGrantedAuthority> authorities = loginUserDetails.getPermissions().stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
 
         // threadLocalModel存入当前执行线程
         authenticationToken =

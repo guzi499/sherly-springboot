@@ -11,10 +11,6 @@ import javax.validation.constraints.NotBlank;
  */
 @Data
 public class LoginDTO {
-    /** 租户code */
-    @ApiModelProperty("租户code")
-    @NotBlank
-    private String tenantCode;
 
     /** 手机号 */
     @ApiModelProperty("手机号")

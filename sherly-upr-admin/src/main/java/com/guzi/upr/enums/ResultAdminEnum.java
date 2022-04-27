@@ -14,12 +14,13 @@ public enum ResultAdminEnum implements IBaseError {
     ERROR("999999", "服务器错误"),
 
     TOKEN_NOT_FOUND("100001", "TOKEN不存在，请检查！"),
-    TOKEN_ERROR("100002", "登录参数异常，请重试！"),
-    LOGIN_ERROR("100003", "用户名或密码错误！"),
-    TENANT_REPEAT("100004", "该租户已存在！"),
-    USER_REPEAT("100005", "该用户已存在！"),
-    ROLE_REPEAT("100006", "该角色已存在！"),
-    DEPARTMENT_REPEAT("100007", "该部门已存在！");
+    LOGIN_EXPIRE("100002", "登录状态过期，请重新登录！"),
+    TOKEN_ERROR("100003", "登录参数异常，请重试！"),
+    LOGIN_ERROR("100004", "用户名或密码错误！"),
+    TENANT_REPEAT("100005", "该租户已存在！"),
+    USER_REPEAT("100006", "该用户已存在！"),
+    ROLE_REPEAT("100007", "该角色已存在！"),
+    DEPARTMENT_REPEAT("100008", "该部门已存在！");
 
     private final String code;
     private final String message;

@@ -59,7 +59,7 @@ public class UserManager extends ServiceImpl<UserMapper, User> {
     }
 
     /**
-     * 根据手机号获取用户
+     * 根据手机号查询用户
      * @param phone
      * @return
      */
