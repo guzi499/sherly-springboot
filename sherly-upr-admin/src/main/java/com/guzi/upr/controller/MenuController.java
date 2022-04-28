@@ -8,6 +8,7 @@ import com.guzi.upr.service.MenuService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,12 +27,14 @@ public class MenuController {
     private MenuService menuService;
 
     @PostMapping("/list/tree")
+    @PreAuthorize("hasAnyAuthority('menu:list:tree')")
     @ApiOperation("查询菜单树")
     public Result<List<MenuVO>> listTree() {
         return Result.success(menuService.listTree());
     }
 
     @PostMapping("/save/one")
+    @PreAuthorize("hasAnyAuthority('menu:save:one')")
     @ApiOperation("菜单新增")
     public Result saveOne(@RequestBody @Validated MenuInsertDTO dto) {
         menuService.saveOne(dto);
@@ -39,6 +42,7 @@ public class MenuController {
     }
 
     @DeleteMapping("/remove/one")
+    @PreAuthorize("hasAnyAuthority('menu:remove:one')")
     @ApiOperation("菜单删除")
     public Result removeOne(@RequestParam Long menuId) {
         menuService.removeOne(menuId);
@@ -46,6 +50,7 @@ public class MenuController {
     }
 
     @PutMapping("/update/one")
+    @PreAuthorize("hasAnyAuthority('menu:update:one')")
     @ApiOperation("菜单修改")
     public Result updateOne(@RequestBody @Validated MenuUpdateDTO dto) {
         menuService.updateOne(dto);

@@ -8,6 +8,7 @@ import com.guzi.upr.service.DepartmentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,12 +27,14 @@ public class DepartmentController {
     private DepartmentService departmentService;
 
     @GetMapping("/list/tree")
+    @PreAuthorize("hasAnyAuthority('department:list:tree')")
     @ApiOperation("查询部门树")
     public Result<List<DepartmentVO>> listTree() {
         return Result.success(departmentService.listTree());
     }
 
     @PostMapping("/save/one")
+    @PreAuthorize("hasAnyAuthority('department:save:one')")
     @ApiOperation("部门新增")
     public Result saveOne(@RequestBody @Validated DepartmentInsertDTO dto) {
         departmentService.saveOne(dto);
@@ -39,6 +42,7 @@ public class DepartmentController {
     }
 
     @PutMapping("/update/one")
+    @PreAuthorize("hasAnyAuthority('department:update:one')")
     @ApiOperation("部门更新")
     public Result updateOne(@RequestBody @Validated DepartmentUpdateDTO dto) {
         departmentService.updateOne(dto);
@@ -46,6 +50,7 @@ public class DepartmentController {
     }
 
     @DeleteMapping("/remove/one")
+    @PreAuthorize("hasAnyAuthority('department:remove:one')")
     @ApiOperation("部门删除")
     public Result removeOne(@RequestParam Long departmentId) {
         departmentService.removeOne(departmentId);

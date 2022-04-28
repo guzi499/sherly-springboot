@@ -11,6 +11,7 @@ import com.guzi.upr.service.RoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,18 +28,21 @@ public class RoleController {
     private RoleService roleService;
 
     @GetMapping("/list/page")
+    @PreAuthorize("hasAnyAuthority('role:list:page')")
     @ApiOperation("角色分页")
     public Result<PageResult<RolePageVO>> list(RolePageDTO dto) {
         return Result.success(roleService.listPage(dto));
     }
 
     @GetMapping("/get/one")
+    @PreAuthorize("hasAnyAuthority('role:get:one')")
     @ApiOperation("角色详情")
     public Result<RoleVO> getOne(@RequestParam Long roleId) {
         return Result.success(roleService.getOne(roleId));
     }
 
     @PostMapping("/save/one")
+    @PreAuthorize("hasAnyAuthority('role:save:one')")
     @ApiOperation("角色新增")
     public Result saveOne(@RequestBody @Validated RoleInsertDTO dto) {
         roleService.saveOne(dto);
@@ -46,6 +50,7 @@ public class RoleController {
     }
 
     @PutMapping("/update/one")
+    @PreAuthorize("hasAnyAuthority('role:update:one')")
     @ApiOperation("角色更新")
     public Result updateOne(@RequestBody @Validated RoleUpdateDTO dto) {
         roleService.updateOne(dto);
@@ -53,6 +58,7 @@ public class RoleController {
     }
 
     @DeleteMapping("/remove/one")
+    @PreAuthorize("hasAnyAuthority('role:remove:one')")
     @ApiOperation("角色删除")
     public Result removeOne(@RequestParam Long roleId) {
         roleService.removeOne(roleId);

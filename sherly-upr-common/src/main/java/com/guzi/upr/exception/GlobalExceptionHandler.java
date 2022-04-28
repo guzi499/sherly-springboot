@@ -1,6 +1,8 @@
 package com.guzi.upr.exception;
 
 import com.guzi.upr.model.Result;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -59,7 +61,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(BizException.class)
     public Result bizExceptionHandler(BizException e) {
         e.printStackTrace();
-        return Result.error(e);
+        return Result.error(e.getCode(), e.getMessage(), e);
     }
 
     /**
@@ -72,6 +74,25 @@ public class GlobalExceptionHandler {
     public Result nullPointExceptionHandler(NullPointerException e) {
         e.printStackTrace();
         return Result.error(e);
+    }
+
+    /**
+     * security认证异常
+     *
+     * @param e
+     * @return
+     */
+    @ExceptionHandler({BadCredentialsException.class, AccessDeniedException.class})
+    public Result badCredentialsExceptionHandler(Exception e) {
+        e.printStackTrace();
+
+        String message = null;
+        if (e instanceof BadCredentialsException) {
+            message = "手机号或密码错误！";
+        } else if (e instanceof AccessDeniedException) {
+            message = "访问未授权！";
+        }
+        return Result.error(message, e);
     }
 
     /**

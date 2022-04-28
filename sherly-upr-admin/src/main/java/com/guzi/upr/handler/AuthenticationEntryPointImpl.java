@@ -22,7 +22,7 @@ public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint {
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        Result result = new Result("999999", "你个吊毛无权限！");
+        Result result = Result.error("访问未授权！");
         String jsonResult = OBJECTMAPPER.writeValueAsString(result);
 
         response.setStatus(200);

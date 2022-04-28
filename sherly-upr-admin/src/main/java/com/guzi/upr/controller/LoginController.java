@@ -8,10 +8,7 @@ import com.guzi.upr.service.LoginService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author 谷子毅
@@ -29,5 +26,12 @@ public class LoginController {
     @ApiOperation("登录")
     public Result<LoginVO> login(@RequestBody LoginDTO dto) throws JsonProcessingException {
         return Result.success(loginService.login(dto));
+    }
+
+    @GetMapping("/logout")
+    @ApiOperation("登出")
+    public Result logout() {
+        loginService.logout();
+        return Result.success();
     }
 }

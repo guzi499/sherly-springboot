@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.guzi.upr.constants.RedisKey;
 import com.guzi.upr.interceptor.LoginUserDetails;
+import com.guzi.upr.interceptor.ThreadLocalModel;
 import com.guzi.upr.model.dto.LoginDTO;
 import com.guzi.upr.model.vo.LoginVO;
 import com.guzi.upr.util.JwtUtil;
@@ -12,6 +13,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.TimeUnit;
@@ -43,7 +45,7 @@ public class LoginService {
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(dto.getPhone(), dto.getPassword());
 
-        // 登录校验 todo 这里的异常要使用全局异常处理器抓取
+        // 登录校验
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
 
         // 获取登录用户信息
@@ -60,5 +62,16 @@ public class LoginService {
         String token = JwtUtil.generateToken(keyLabel);
 
         return new LoginVO(token);
+    }
+
+    /**
+     * 登出
+     */
+    public void logout() {
+        ThreadLocalModel threadLocalModel = (ThreadLocalModel)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String phone = threadLocalModel.getPhone();
+
+        redisTemplate.delete(RedisKey.GENERATE_USER + phone);
+
     }
 }

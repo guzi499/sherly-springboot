@@ -11,6 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * @author 谷子毅
+ * @date 2022/4/27
+ */
 @Component
 public class AccessDeniedHandlerImpl implements AccessDeniedHandler {
 
@@ -18,13 +22,12 @@ public class AccessDeniedHandlerImpl implements AccessDeniedHandler {
 
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
-        Result result = new Result("999999", "访问无权限！");
+        Result result = Result.error("访问未授权！");
         String jsonResult = OBJECTMAPPER.writeValueAsString(result);
 
         response.setStatus(200);
         response.setContentType("application/json");
         response.setCharacterEncoding("utf-8");
         response.getWriter().print(jsonResult);
-
     }
 }

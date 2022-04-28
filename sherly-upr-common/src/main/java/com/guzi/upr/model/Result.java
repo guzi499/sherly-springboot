@@ -1,6 +1,5 @@
 package com.guzi.upr.model;
 
-import com.guzi.upr.exception.BizException;
 import com.guzi.upr.util.GlobalParamUtil;
 
 import java.util.ArrayList;
@@ -61,16 +60,16 @@ public class Result<T> {
     }
 
 
-    public static Result error(String message, Exception e) {
+    public static Result error(String message) {
+        return new Result(ERROR_CODE, message);
+    }
+
+    public static Result error(String code, String message, Exception e) {
         return new Result(ERROR_CODE, message, parseException(e));
     }
 
-    public static Result error(BizException e) {
-        return new Result(e.getCode(), e.getMessage());
-    }
-
-    public static Result error(NullPointerException e) {
-        return new Result(ERROR_CODE, ERROR_MSG, parseException(e));
+    public static Result error(String message, Exception e) {
+        return new Result(ERROR_CODE, message, parseException(e));
     }
 
     public static Result error(Exception e) {

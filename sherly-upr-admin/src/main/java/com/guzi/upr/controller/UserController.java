@@ -12,6 +12,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +29,7 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/list/page")
+    @PreAuthorize("hasAnyAuthority('user:list:page')")
     @ApiOperation(value = "用户分页")
     public Result<PageResult<UserPageVo>> listPage(UserPageDTO dto) {
         return Result.success(userService.listPage(dto));
@@ -35,12 +37,14 @@ public class UserController {
 
 
     @GetMapping("/get/one")
+    @PreAuthorize("hasAnyAuthority('user:get:one')")
     @ApiOperation(value = "用户详情")
     public Result<UserVo> getOne(@RequestParam Long userId) {
         return Result.success(userService.getOne(userId));
     }
 
     @PutMapping("/ban/one")
+    @PreAuthorize("hasAnyAuthority('user:ban:one')")
     @ApiOperation(value = "用户禁用/启用")
     public Result banOne(@RequestParam Long userId, @RequestParam @Range(min = 0, max = 1) Integer enable) {
         userService.banOne(userId, enable);
@@ -48,6 +52,7 @@ public class UserController {
     }
 
     @PostMapping("/save/one")
+    @PreAuthorize("hasAnyAuthority('user:save:one')")
     @ApiOperation(value = "用户新增")
     public Result saveOne(@RequestBody @Validated UserInsertDTO dto) {
         userService.saveOne(dto);
@@ -55,6 +60,7 @@ public class UserController {
     }
 
     @PutMapping("/update/one")
+    @PreAuthorize("hasAnyAuthority('user:update:one')")
     @ApiOperation("用户更新")
     public Result updateOne(@RequestBody @Validated UserUpdateDTO dto) {
         userService.updateOne(dto);
@@ -62,6 +68,7 @@ public class UserController {
     }
 
     @DeleteMapping("/remove/one")
+    @PreAuthorize("hasAnyAuthority('user:remove:one')")
     @ApiOperation("用户删除")
     public Result removeOne(@RequestParam Long userId) {
         userService.removeOne(userId);

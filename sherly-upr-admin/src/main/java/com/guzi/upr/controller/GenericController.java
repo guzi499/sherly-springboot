@@ -1,7 +1,10 @@
 package com.guzi.upr.controller;
 
 import com.guzi.upr.model.Result;
-import com.guzi.upr.model.vo.*;
+import com.guzi.upr.model.vo.BasicInfoVO;
+import com.guzi.upr.model.vo.DepartmentSelectVO;
+import com.guzi.upr.model.vo.MenuSelectVO;
+import com.guzi.upr.model.vo.RoleSelectVO;
 import com.guzi.upr.service.GenericService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
