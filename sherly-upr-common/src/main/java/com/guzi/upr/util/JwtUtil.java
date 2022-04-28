@@ -3,8 +3,6 @@ package com.guzi.upr.util;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 
-import java.util.Calendar;
-
 /**
  * Java.Jwt工具类
  * @author 谷子毅
@@ -12,8 +10,7 @@ import java.util.Calendar;
  */
 public class JwtUtil {
 
-    public static final String SIGN = "sherly";
-
+    public static final String SIGN = "sherlyspringboot";
 
     /**
      * 生成token
@@ -21,11 +18,9 @@ public class JwtUtil {
      * @return 生成的token
      */
     public static String generateToken(String data){
-        Calendar instance = Calendar.getInstance();
-        instance.add(Calendar.DATE, 1);
+
         return JWT.create()
                 .withClaim("data", data)
-                .withExpiresAt(instance.getTime())
                 .sign(Algorithm.HMAC256(SIGN));
     }
 

@@ -2,14 +2,10 @@ package com.guzi.upr.interceptor;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.guzi.upr.enums.RedisKeyTemplateEnum;
-import com.guzi.upr.enums.ResultAdminEnum;
-import com.guzi.upr.exception.BizException;
-import com.guzi.upr.manager.MenuManager;
-import com.guzi.upr.manager.RoleManager;
-import com.guzi.upr.manager.RoleMenuManager;
+import com.guzi.upr.constants.RedisKey;
 import com.guzi.upr.util.JwtUtil;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -37,20 +33,11 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
     private static final ObjectMapper OBJECTMAPPER = new ObjectMapper();
 
     @Autowired
-    private RoleManager roleManager;
-
-    @Autowired
-    private RoleMenuManager roleMenuManager;
-
-    @Autowired
-    private MenuManager menuManager;
-
-    @Autowired
     private RedisTemplate<String, String> redisTemplate;
 
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException {
         // 获取token
         String token = request.getHeader("token");
 
@@ -60,32 +47,40 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
             return;
         }
 
-        // 如果token存在则解析token
-        ThreadLocalModel threadLocalModel;
+        // 解析token数据
+        String keyLabel;
         try {
-            String jwtParamString = JwtUtil.parseToken(token);
-            threadLocalModel = OBJECTMAPPER.readValue(jwtParamString, ThreadLocalModel.class);
+            keyLabel = JwtUtil.parseToken(token);
         } catch(Exception e) {
-            throw new BizException(ResultAdminEnum.TOKEN_ERROR);
+            filterChain.doFilter(request, response);
+            return;
         }
 
-        String redisString = redisTemplate.opsForValue().get(RedisKeyTemplateEnum.USER_DETAILS.getKey() + threadLocalModel.getPhone());
+        // 获取手机号
+        String phone = keyLabel.split("#")[0];
+
+        // 从redis获取loginUser信息
+        String redisString = redisTemplate.opsForValue().get(RedisKey.GENERATE_USER + phone);
         if (redisString == null) {
-            throw new BizException(ResultAdminEnum.LOGIN_EXPIRE);
+            filterChain.doFilter(request, response);
+            return;
         }
 
-        redisTemplate.expire(RedisKeyTemplateEnum.USER_DETAILS.getKey() + threadLocalModel.getPhone(), 24, TimeUnit.HOURS);
+        // redis续期
+        redisTemplate.expire(RedisKey.GENERATE_USER + phone, 6, TimeUnit.HOURS);
 
-        LoginUserDetails loginUserDetails = OBJECTMAPPER.readValue(redisString, new TypeReference<LoginUserDetails>() {});
-        threadLocalModel.setTenantCode(loginUserDetails.getAccountUser().getLastLoginTenantCode());
-        UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(threadLocalModel,null);
-        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+        // loginUser类型转换
+        LoginUserDetails loginUser = OBJECTMAPPER.readValue(redisString, new TypeReference<LoginUserDetails>() {});
 
-        List<SimpleGrantedAuthority> authorities = loginUserDetails.getPermissions().stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+        // 设置threadLocalModel
+        ThreadLocalModel threadLocalModel = new ThreadLocalModel();
+        BeanUtils.copyProperties(loginUser.getUser(), threadLocalModel);
+        threadLocalModel.setTenantCode(loginUser.getAccountUser().getLastLoginTenantCode());
+
+        List<SimpleGrantedAuthority> authorities = loginUser.getPermissions().stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
 
         // threadLocalModel存入当前执行线程
-        authenticationToken =
+        UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(threadLocalModel,null, authorities);
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
