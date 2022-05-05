@@ -22,6 +22,10 @@ public class User extends BaseModel {
     @TableId(type = IdType.AUTO)
     private Long userId;
 
+    /** 账户用户id */
+    @ApiModelProperty("账户用户id")
+    private Long accountUserId;
+
     /** 昵称 */
     @ApiModelProperty("昵称")
     private String nickname;
@@ -40,7 +44,7 @@ public class User extends BaseModel {
 
     /** 用户头像 */
     @ApiModelProperty("用户头像")
-    private String avater;
+    private String avatar;
 
     /** 用户邮箱 */
     @ApiModelProperty("用户邮箱")
@@ -53,10 +57,6 @@ public class User extends BaseModel {
     /** 部门id */
     @ApiModelProperty("部门id")
     private Long departmentId;
-
-    /** 0超级管理员 1管理员 2普通用户 */
-    @ApiModelProperty("0超级管理员 1管理员 2普通用户")
-    private Integer identity;
 
     /** 0不可用 1可用 */
     @ApiModelProperty("0不可用 1可用")

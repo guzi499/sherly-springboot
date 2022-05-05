@@ -1,6 +1,6 @@
-package com.guzi.upr.config;
+package com.guzi.upr.security.config;
 
-import com.guzi.upr.interceptor.AuthenticationTokenFilter;
+import com.guzi.upr.security.filter.AuthenticationTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

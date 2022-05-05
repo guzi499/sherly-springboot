@@ -1,9 +1,9 @@
-package com.guzi.upr.handler;
+package com.guzi.upr.security.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.guzi.upr.model.Result;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
@@ -16,12 +16,12 @@ import java.io.IOException;
  * @date 2022/4/27
  */
 @Component
-public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint {
+public class AccessDeniedHandlerImpl implements AccessDeniedHandler {
 
     private static final ObjectMapper OBJECTMAPPER = new ObjectMapper();
 
     @Override
-    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
+    public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
         Result result = Result.error("访问未授权！");
         String jsonResult = OBJECTMAPPER.writeValueAsString(result);
 

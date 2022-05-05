@@ -1,7 +1,7 @@
 package com.guzi.upr.config;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
-import com.guzi.upr.interceptor.ThreadLocalModel;
+import com.guzi.upr.security.ThreadLocalModel;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;

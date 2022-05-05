@@ -1,6 +1,6 @@
 package com.guzi.upr.service;
 
-import com.guzi.upr.interceptor.ThreadLocalModel;
+import com.guzi.upr.security.ThreadLocalModel;
 import com.guzi.upr.manager.DepartmentManager;
 import com.guzi.upr.manager.MenuManager;
 import com.guzi.upr.manager.RoleManager;

@@ -19,8 +19,8 @@ public class Menu extends BaseModel {
     @TableId(type = IdType.AUTO)
     private Long menuId;
 
-    /** 菜单类型 */
-    @ApiModelProperty("菜单类型")
+    /** 菜单类型 1目录 2菜单 3按钮 */
+    @ApiModelProperty("菜单类型 1目录 2菜单 3按钮")
     private Integer menuType;
 
     /** 权限 */

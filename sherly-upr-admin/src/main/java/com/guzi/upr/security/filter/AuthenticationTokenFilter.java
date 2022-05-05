@@ -1,8 +1,10 @@
-package com.guzi.upr.interceptor;
+package com.guzi.upr.security.filter;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.guzi.upr.constants.RedisKey;
+import com.guzi.upr.security.LoginUserDetails;
+import com.guzi.upr.security.ThreadLocalModel;
 import com.guzi.upr.util.JwtUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;

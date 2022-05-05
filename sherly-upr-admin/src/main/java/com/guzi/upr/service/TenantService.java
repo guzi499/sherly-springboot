@@ -5,7 +5,7 @@ import com.guzi.upr.constants.SqlParam;
 import com.guzi.upr.constants.SqlStatement;
 import com.guzi.upr.enums.ResultAdminEnum;
 import com.guzi.upr.exception.BizException;
-import com.guzi.upr.interceptor.ThreadLocalModel;
+import com.guzi.upr.security.ThreadLocalModel;
 import com.guzi.upr.manager.TenantManager;
 import com.guzi.upr.manager.UserManager;
 import com.guzi.upr.model.PageResult;

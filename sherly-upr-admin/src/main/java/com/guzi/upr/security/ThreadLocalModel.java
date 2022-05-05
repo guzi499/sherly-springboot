@@ -1,4 +1,4 @@
-package com.guzi.upr.interceptor;
+package com.guzi.upr.security;
 
 import lombok.Data;
 

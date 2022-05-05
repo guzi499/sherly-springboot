@@ -10,11 +10,12 @@ spring:
   redis:
     host: 101.34.169.185
     port: 6379
+    password: mpw:tNvIJM/7zuhDi3RoOr2KAA==
 
   # mysql配置
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: mpw:2/v3aZvMNujUAwYq09lmjpY/kCU9UjM+bGWUgAg9IxbCAlSBryxryapeNxN3epjg8T57tHS0t4hstpxevRQs+sT2WxThPGiMaTFr1Ri5+0RbxRowXWtWK4oEJLnUfDyiYAkT588s6b47WW//uCVcyNc+VenJKCMq6sC2uycqUeVnC3dWPOEP2lnJsSAGpkEJBFRWFhfmRsORI6bNg30fHxMpJBArEu54gk+Ty1iazcU=
+    url: jdbc:mysql://101.34.169.185:3306/sherly?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai&allowMultiQueries=true&rewriteBatchedStatements=true
     username: mpw:tNvIJM/7zuhDi3RoOr2KAA==
     password: mpw:tNvIJM/7zuhDi3RoOr2KAA==
 

@@ -15,10 +15,10 @@ import java.util.Date;
 @TableName("ge_account_user")
 public class AccountUser {
 
-    /** id */
-    @ApiModelProperty("用户id")
+    /** 账户用户id */
+    @ApiModelProperty("账户用户id")
     @TableId(type = IdType.AUTO)
-    private Long id;
+    private Long accountUserId;
 
     /** 手机号 */
     @ApiModelProperty("手机号")

@@ -1,4 +1,4 @@
-package com.guzi.upr.interceptor;
+package com.guzi.upr.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.guzi.upr.model.admin.AccountUser;
