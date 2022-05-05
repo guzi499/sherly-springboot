@@ -6,6 +6,8 @@
     <select id="listByRoleIds" resultType="com.guzi.upr.model.admin.Menu">
         SELECT
             t2.menu_id,
+            t2.menu_type,
+            t2.permission,
             t2.menu_name,
             t2.parent_id,
             t2.link,

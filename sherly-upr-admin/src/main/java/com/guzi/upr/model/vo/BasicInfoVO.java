@@ -18,4 +18,7 @@ public class BasicInfoVO {
 
     /** 菜单信息 */
     private List<BasicMenuInfoVO> basicMenuInfoVO;
+
+    /** 权限信息 */
+    private List<String> basicPermissionVO;
 }

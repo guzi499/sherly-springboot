@@ -63,18 +63,28 @@ public class GenericService {
         // 菜单信息收集
         List<Long> roleIds = roles.stream().map(Role::getRoleId).collect(Collectors.toList());
         List<Menu> menus = menuManager.listByRoleIds(roleIds);
-        List<BasicMenuInfoVO> menuVOList = menus.stream().filter(e -> e.getParentId() == 0).map(e -> {
+
+        // 跳转相关
+        List<Menu> jumps = menus.stream().filter(e -> e.getMenuType() == 1 || e.getMenuType() == 2).collect(Collectors.toList());
+        // 权限相关
+        List<Menu> permissions = menus.stream().filter(e -> e.getMenuType() == 2 || e.getMenuType() == 3).collect(Collectors.toList());
+
+        // 跳转相关数据转换成树
+        List<BasicMenuInfoVO> menuVOList = jumps.stream().filter(e -> e.getParentId() == 0).map(e -> {
             BasicMenuInfoVO basicMenuInfoVO = new BasicMenuInfoVO();
             BeanUtils.copyProperties(e, basicMenuInfoVO);
             basicMenuInfoVO.setChildren(getChildren(e, menus));
             return basicMenuInfoVO;
         }).collect(Collectors.toList());
 
+        List<String> permissionVOList = permissions.stream().map(Menu::getPermission).collect(Collectors.toList());
+
         // 组装结果
         BasicInfoVO basicInfoVO = new BasicInfoVO();
         basicInfoVO.setBasicUserInfoVO(userVO);
         basicInfoVO.setBasicRoleInfoVO(roleVOList);
         basicInfoVO.setBasicMenuInfoVO(menuVOList);
+        basicInfoVO.setBasicPermissionVO(permissionVOList);
 
         return basicInfoVO;
     }
@@ -104,6 +114,9 @@ public class GenericService {
      */
     public List<MenuSelectVO> getBasicMenu() {
         List<Menu> list = menuManager.list();
+
+        // 过滤掉按钮
+        list = list.stream().filter(e -> e.getMenuType() == 1 ||e.getMenuType() == 2).collect(Collectors.toList());
 
         // 对象转换成vo类型
         List<MenuSelectVO> all = list.stream().map(e -> {

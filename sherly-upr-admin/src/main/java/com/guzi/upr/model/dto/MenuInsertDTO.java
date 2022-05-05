@@ -19,6 +19,15 @@ public class MenuInsertDTO {
     @NotBlank
     private String menuName;
 
+    /** 菜单类型 1目录 2菜单 3按钮 */
+    @ApiModelProperty("菜单类型 1目录 2菜单 3按钮")
+    @Range(min = 1, max = 3)
+    private Integer menuType;
+
+    /** 权限 */
+    @ApiModelProperty("权限")
+    private String permission;
+
     /** 父菜单id */
     @ApiModelProperty("父菜单id")
     @NotNull
