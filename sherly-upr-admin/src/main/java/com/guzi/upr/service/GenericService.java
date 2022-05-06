@@ -65,15 +65,15 @@ public class GenericService {
         List<Menu> menus = menuManager.listByRoleIds(roleIds);
 
         // 跳转相关
-        List<Menu> jumps = menus.stream().filter(e -> e.getMenuType() == 1 || e.getMenuType() == 2).collect(Collectors.toList());
+        List<Menu> jumps = menus.stream().filter(e -> e.getMenuType() != 3).collect(Collectors.toList());
         // 权限相关
-        List<Menu> permissions = menus.stream().filter(e -> e.getMenuType() == 2 || e.getMenuType() == 3).collect(Collectors.toList());
+        List<Menu> permissions = menus.stream().filter(e -> e.getMenuType() != 1).collect(Collectors.toList());
 
         // 跳转相关数据转换成树
         List<BasicMenuInfoVO> menuVOList = jumps.stream().filter(e -> e.getParentId() == 0).map(e -> {
             BasicMenuInfoVO basicMenuInfoVO = new BasicMenuInfoVO();
             BeanUtils.copyProperties(e, basicMenuInfoVO);
-            basicMenuInfoVO.setChildren(getChildren(e, menus));
+            basicMenuInfoVO.setChildren(getChildren(e, jumps));
             return basicMenuInfoVO;
         }).collect(Collectors.toList());
 
@@ -116,7 +116,7 @@ public class GenericService {
         List<Menu> list = menuManager.list();
 
         // 过滤掉按钮
-        list = list.stream().filter(e -> e.getMenuType() == 1 ||e.getMenuType() == 2).collect(Collectors.toList());
+        list = list.stream().filter(e -> e.getMenuType() != 3).collect(Collectors.toList());
 
         // 对象转换成vo类型
         List<MenuSelectVO> all = list.stream().map(e -> {
