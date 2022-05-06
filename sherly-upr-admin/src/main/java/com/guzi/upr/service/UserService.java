@@ -1,9 +1,12 @@
 package com.guzi.upr.service;
 
+import com.alibaba.excel.EasyExcel;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.guzi.upr.enums.ResultAdminEnum;
 import com.guzi.upr.exception.BizException;
-import com.guzi.upr.manager.*;
+import com.guzi.upr.manager.RoleManager;
+import com.guzi.upr.manager.UserManager;
+import com.guzi.upr.manager.UserRoleManager;
 import com.guzi.upr.model.PageResult;
 import com.guzi.upr.model.admin.Role;
 import com.guzi.upr.model.admin.User;
@@ -16,6 +19,10 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -53,6 +60,25 @@ public class UserService {
         }).collect(Collectors.toList());
 
         return PageResult.build(result, page.getCurrent(), page.getSize(), page.getTotal());
+    }
+
+    /**
+     * 用户导出
+     *
+     * @param response
+     */
+    public void listExport(HttpServletResponse response) throws IOException {
+        List<User> list = new ArrayList<>();
+        User user = new User();
+        user.setPhone("13227500030");
+        list.add(user);
+
+        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        response.setCharacterEncoding("utf-8");
+        String fileName = URLEncoder.encode("用户列表", "UTF-8").replaceAll("\\+", "%20");
+        response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
+
+        EasyExcel.write(response.getOutputStream()).sheet("用户列表").doWrite(list);
     }
 
     /**

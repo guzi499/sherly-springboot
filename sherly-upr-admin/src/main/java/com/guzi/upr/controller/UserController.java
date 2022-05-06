@@ -16,6 +16,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
 /**
  * @author 谷子毅
  * @date 2022/3/18
@@ -33,6 +36,13 @@ public class UserController {
     @ApiOperation(value = "用户分页")
     public Result<PageResult<UserPageVo>> listPage(UserPageDTO dto) {
         return Result.success(userService.listPage(dto));
+    }
+
+    @GetMapping("/list/export")
+    @PreAuthorize("hasAnyAuthority('user:list:export')")
+    @ApiOperation(value = "用户导出", produces = "application/octet-stream")
+    public void listExport(HttpServletResponse response) throws IOException {
+        userService.listExport(response);
     }
 
 
