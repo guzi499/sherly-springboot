@@ -131,10 +131,10 @@
                 <version>${dom4j}</version>
             </dependency>
 
-            <!-- hutool -->
+            <!-- hutool-core -->
             <dependency>
                 <groupId>cn.hutool</groupId>
-                <artifactId>hutool-all</artifactId>
+                <artifactId>hutool-core</artifactId>
                 <version>${hutool}</version>
             </dependency>
 
