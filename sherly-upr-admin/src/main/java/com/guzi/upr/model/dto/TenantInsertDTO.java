@@ -23,10 +23,13 @@ public class TenantInsertDTO {
     @NotBlank
     private String tenantName;
 
-    /** 手机号 */
-    @ApiModelProperty("手机号")
-    @NotBlank
-    private String phone;
+    /** 联系人 */
+    @ApiModelProperty("联系人")
+    private String contactUser;
+
+    /** 联系电话 */
+    @ApiModelProperty("联系电话")
+    private String contactPhone;
 
     /** 过期时间 */
     @ApiModelProperty("过期时间")

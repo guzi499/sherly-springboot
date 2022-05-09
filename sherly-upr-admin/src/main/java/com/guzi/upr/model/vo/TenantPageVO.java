@@ -24,9 +24,13 @@ public class TenantPageVO {
     @ApiModelProperty("租户名称")
     private String tenantName;
 
-    /** 联系人id */
-    @ApiModelProperty("联系人id")
-    private Long contactUserId;
+    /** 联系人 */
+    @ApiModelProperty("联系人")
+    private String contactUser;
+
+    /** 联系电话 */
+    @ApiModelProperty("联系电话")
+    private String contactPhone;
 
     /** 过期时间 */
     @ApiModelProperty("过期时间")
