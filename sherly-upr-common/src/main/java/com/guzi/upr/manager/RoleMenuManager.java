@@ -7,6 +7,7 @@ import com.guzi.upr.model.admin.RoleMenu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -48,7 +49,14 @@ public class RoleMenuManager extends ServiceImpl<RoleMenuMapper, RoleMenu> {
      * @param menuIds
      */
     public void saveRoleMenu(Long roleId, List<Long> menuIds) {
-        roleMenuMapper.saveRoleMenu(roleId, menuIds);
+        List<RoleMenu> list = new ArrayList<>();
+        for (Long menuId : menuIds) {
+            RoleMenu roleMenu = new RoleMenu();
+            roleMenu.setRoleId(roleId);
+            roleMenu.setMenuId(menuId);
+            list.add(roleMenu);
+        }
+        this.saveBatch(list);
     }
 
     /**

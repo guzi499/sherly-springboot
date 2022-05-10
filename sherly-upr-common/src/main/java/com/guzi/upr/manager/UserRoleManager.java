@@ -7,6 +7,7 @@ import com.guzi.upr.model.admin.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -48,6 +49,13 @@ public class UserRoleManager extends ServiceImpl<UserRoleMapper, UserRole> {
      * @param roleIds
      */
     public void saveUserRole(Long userId, List<Long> roleIds) {
-        userRoleMapper.saveUserRole(userId, roleIds);
+        List<UserRole> list = new ArrayList<>();
+        for (Long roleId : roleIds) {
+            UserRole userRole = new UserRole();
+            userRole.setUserId(userId);
+            userRole.setRoleId(roleId);
+            list.add(userRole);
+        }
+        this.saveBatch(list);
     }
 }
