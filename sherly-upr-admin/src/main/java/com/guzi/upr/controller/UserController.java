@@ -39,7 +39,7 @@ public class UserController {
     }
 
     @GetMapping("/list/export")
-    @PreAuthorize("hasAnyAuthority('user:list:export')")
+    // @PreAuthorize("hasAnyAuthority('user:list:export')")
     @ApiOperation(value = "用户导出", produces = "application/octet-stream")
     public void listExport(HttpServletResponse response) throws IOException {
         userService.listExport(response);

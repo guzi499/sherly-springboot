@@ -1,6 +1,7 @@
 package com.guzi.upr.service;
 
 import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.write.style.column.LongestMatchColumnWidthStyleStrategy;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.guzi.upr.enums.ResultAdminEnum;
 import com.guzi.upr.exception.BizException;
@@ -13,6 +14,7 @@ import com.guzi.upr.model.admin.User;
 import com.guzi.upr.model.dto.UserInsertDTO;
 import com.guzi.upr.model.dto.UserPageDTO;
 import com.guzi.upr.model.dto.UserUpdateDTO;
+import com.guzi.upr.model.eo.UserEO;
 import com.guzi.upr.model.vo.UserPageVo;
 import com.guzi.upr.model.vo.UserVo;
 import org.springframework.beans.BeanUtils;
@@ -22,7 +24,6 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLEncoder;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -68,17 +69,22 @@ public class UserService {
      * @param response
      */
     public void listExport(HttpServletResponse response) throws IOException {
-        List<User> list = new ArrayList<>();
-        User user = new User();
-        user.setPhone("13227500030");
-        list.add(user);
+        List<User> list = userManager.list();
+        List<UserEO> result = list.stream().map(e -> {
+            UserEO userEO = new UserEO();
+            BeanUtils.copyProperties(e, userEO);
+            return userEO;
+        }).collect(Collectors.toList());
 
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
         response.setCharacterEncoding("utf-8");
         String fileName = URLEncoder.encode("用户列表", "UTF-8").replaceAll("\\+", "%20");
         response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
 
-        EasyExcel.write(response.getOutputStream()).sheet("用户列表").doWrite(list);
+        EasyExcel.write(response.getOutputStream(), UserEO.class)
+                .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())
+                .sheet("用户列表")
+                .doWrite(result);
     }
 
     /**
