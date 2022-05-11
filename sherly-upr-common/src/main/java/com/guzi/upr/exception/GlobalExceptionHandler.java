@@ -88,7 +88,7 @@ public class GlobalExceptionHandler {
 
         String message = null;
         if (e instanceof BadCredentialsException) {
-            message = "手机号或密码错误！";
+            message = e.getMessage();
         } else if (e instanceof AccessDeniedException) {
             message = "访问未授权！";
         }

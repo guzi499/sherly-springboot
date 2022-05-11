@@ -2,9 +2,10 @@ package com.guzi.upr.security.service;
 
 import com.guzi.upr.manager.*;
 import com.guzi.upr.model.admin.*;
-import com.guzi.upr.security.LoginUserDetails;
+import com.guzi.upr.security.SherlyUserDetails;
 import com.guzi.upr.security.ThreadLocalModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,7 +21,7 @@ import java.util.stream.Collectors;
  * @date 2022/5/5
  */
 @Service
-public class LoginUserDetailsService implements UserDetailsService {
+public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
     private UserManager userManager;
@@ -47,6 +48,9 @@ public class LoginUserDetailsService implements UserDetailsService {
 
         // 查询用户租户信息
         AccountUser accountUser = accountUserManager.getByPhone(phone);
+        if (accountUser == null) {
+            throw new BadCredentialsException("当前账号未注册！");
+        }
         String lastLoginTenantCode = accountUser.getLastLoginTenantCode();
 
         // 设置当前操作租户存入当前执行线程
@@ -64,11 +68,11 @@ public class LoginUserDetailsService implements UserDetailsService {
         List<String> permissions = menus.stream().filter(e -> e.getMenuType() != 1).map(Menu::getPermission).collect(Collectors.toList());
 
         // 响应userDetails用于登录校验
-        LoginUserDetails loginUserDetails = new LoginUserDetails();
-        loginUserDetails.setUser(user);
-        loginUserDetails.setAccountUser(accountUser);
-        loginUserDetails.setPermissions(permissions);
+        SherlyUserDetails sherlyUserDetails = new SherlyUserDetails();
+        sherlyUserDetails.setUser(user);
+        sherlyUserDetails.setAccountUser(accountUser);
+        sherlyUserDetails.setPermissions(permissions);
 
-        return loginUserDetails;
+        return sherlyUserDetails;
     }
 }

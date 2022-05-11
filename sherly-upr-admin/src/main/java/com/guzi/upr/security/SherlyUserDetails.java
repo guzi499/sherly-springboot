@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
  * @date 2022/4/26
  */
 @Data
-public class LoginUserDetails implements UserDetails {
+public class SherlyUserDetails implements UserDetails {
 
     private User user;
 

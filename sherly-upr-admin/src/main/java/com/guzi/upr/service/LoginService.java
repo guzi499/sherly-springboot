@@ -3,14 +3,14 @@ package com.guzi.upr.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.guzi.upr.constants.RedisKey;
-import com.guzi.upr.security.LoginUserDetails;
-import com.guzi.upr.security.ThreadLocalModel;
 import com.guzi.upr.model.dto.LoginDTO;
 import com.guzi.upr.model.vo.LoginVO;
+import com.guzi.upr.security.SherlyUserDetails;
+import com.guzi.upr.security.ThreadLocalModel;
 import com.guzi.upr.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -28,7 +28,7 @@ public class LoginService {
     private static final ObjectMapper OBJECTMAPPER = new ObjectMapper();
 
     @Autowired
-    private AuthenticationManager authenticationManager;
+    private AuthenticationProvider authenticationProvider;
 
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
@@ -46,10 +46,10 @@ public class LoginService {
                 new UsernamePasswordAuthenticationToken(dto.getPhone(), dto.getPassword());
 
         // 登录校验
-        Authentication authentication = authenticationManager.authenticate(authenticationToken);
+        Authentication authentication = authenticationProvider.authenticate(authenticationToken);
 
         // 获取登录用户信息
-        LoginUserDetails loginUser = (LoginUserDetails) authentication.getPrincipal();
+        SherlyUserDetails loginUser = (SherlyUserDetails) authentication.getPrincipal();
 
         // 生成key标签
         String keyLabel = dto.getPhone() + "#" + System.currentTimeMillis();

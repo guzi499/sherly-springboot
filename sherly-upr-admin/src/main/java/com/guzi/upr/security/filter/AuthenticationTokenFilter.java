@@ -3,7 +3,7 @@ package com.guzi.upr.security.filter;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.guzi.upr.constants.RedisKey;
-import com.guzi.upr.security.LoginUserDetails;
+import com.guzi.upr.security.SherlyUserDetails;
 import com.guzi.upr.security.ThreadLocalModel;
 import com.guzi.upr.util.JwtUtil;
 import org.apache.commons.lang3.StringUtils;
@@ -72,7 +72,7 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
         redisTemplate.expire(RedisKey.GENERATE_USER + phone, 6, TimeUnit.HOURS);
 
         // loginUser类型转换
-        LoginUserDetails loginUser = OBJECTMAPPER.readValue(redisString, new TypeReference<LoginUserDetails>() {});
+        SherlyUserDetails loginUser = OBJECTMAPPER.readValue(redisString, new TypeReference<SherlyUserDetails>() {});
 
         // 设置threadLocalModel
         ThreadLocalModel threadLocalModel = new ThreadLocalModel();
