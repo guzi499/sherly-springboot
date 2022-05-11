@@ -5,10 +5,12 @@ import com.alibaba.excel.write.style.column.LongestMatchColumnWidthStyleStrategy
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.guzi.upr.enums.ResultAdminEnum;
 import com.guzi.upr.exception.BizException;
+import com.guzi.upr.manager.DepartmentManager;
 import com.guzi.upr.manager.RoleManager;
 import com.guzi.upr.manager.UserManager;
 import com.guzi.upr.manager.UserRoleManager;
 import com.guzi.upr.model.PageResult;
+import com.guzi.upr.model.admin.Department;
 import com.guzi.upr.model.admin.Role;
 import com.guzi.upr.model.admin.User;
 import com.guzi.upr.model.dto.UserInsertDTO;
@@ -43,6 +45,9 @@ public class UserService {
     @Autowired
     private UserRoleManager userRoleManager;
 
+    @Autowired
+    private DepartmentManager departmentManager;
+
     /**
      * 用户分页
      *
@@ -52,11 +57,13 @@ public class UserService {
     public PageResult listPage(UserPageDTO dto) {
         // 分页查询
         IPage<User> page = userManager.page(dto.getPage());
+        List<Department> departmentList = departmentManager.list();
 
         // 对象转换成vo类型
         List<UserPageVo> result = page.getRecords().stream().map(e -> {
             UserPageVo userPageVo = new UserPageVo();
             BeanUtils.copyProperties(e, userPageVo);
+            userPageVo.setDepartmentName(departmentList.stream().filter(x -> x.getDepartmentId().equals(e.getDepartmentId())).map(Department::getDepartmentName).collect(Collectors.joining(",")));
             return userPageVo;
         }).collect(Collectors.toList());
 
@@ -70,9 +77,14 @@ public class UserService {
      */
     public void listExport(HttpServletResponse response) throws IOException {
         List<User> list = userManager.list();
+        List<Department> departmentList = departmentManager.list();
+
         List<UserEO> result = list.stream().map(e -> {
             UserEO userEO = new UserEO();
             BeanUtils.copyProperties(e, userEO);
+            userEO.setEnable(e.getEnable() == 1 ? "启用" : "禁用");
+            userEO.setDepartmentName(departmentList.stream().filter(x -> x.getDepartmentId().equals(e.getDepartmentId())).map(Department::getDepartmentName).collect(Collectors.joining(",")));
+            userEO.setGender(e.getGender() == 1 ? "男" : "女");
             return userEO;
         }).collect(Collectors.toList());
 

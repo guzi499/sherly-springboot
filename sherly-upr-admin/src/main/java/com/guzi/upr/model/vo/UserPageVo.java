@@ -38,11 +38,11 @@ public class UserPageVo {
 
     /** 性别 */
     @ApiModelProperty("性别")
-    private Integer gender;
+    private String gender;
 
-    /** 部门id */
-    @ApiModelProperty("部门id")
-    private Long departmentId;
+    /** 部门名称 */
+    @ApiModelProperty("部门名称")
+    private String departmentName;
 
     /** 0不可用 1可用 */
     @ApiModelProperty("0不可用 1可用")

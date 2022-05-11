@@ -17,10 +17,6 @@ public class UserEO {
     @ExcelProperty("用户id")
     private Long userId;
 
-    /** 账户用户id */
-    @ExcelProperty("账户用户id")
-    private Long accountUserId;
-
     /** 昵称 */
     @ExcelProperty("昵称")
     private String nickname;
@@ -33,25 +29,21 @@ public class UserEO {
     @ExcelProperty("手机号")
     private String phone;
 
-    /** 用户头像 */
-    @ExcelProperty("用户头像")
-    private String avatar;
-
     /** 用户邮箱 */
     @ExcelProperty("用户邮箱")
     private String email;
 
     /** 性别 */
     @ExcelProperty("性别")
-    private Integer gender;
+    private String gender;
 
-    /** 部门id */
-    @ExcelProperty("部门id")
-    private Long departmentId;
+    /** 部门名称 */
+    @ExcelProperty("部门名称")
+    private String departmentName;
 
-    /** 0不可用 1可用 */
-    @ExcelProperty("0不可用 1可用")
-    private Integer enable;
+    /** 状态 */
+    @ExcelProperty("状态")
+    private String enable;
 
     /** 最后登录时间 */
     @ExcelProperty("最后登录时间")
