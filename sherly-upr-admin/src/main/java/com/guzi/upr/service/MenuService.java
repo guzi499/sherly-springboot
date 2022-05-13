@@ -1,5 +1,7 @@
 package com.guzi.upr.service;
 
+import com.guzi.upr.enums.ResultAdminEnum;
+import com.guzi.upr.exception.BizException;
 import com.guzi.upr.manager.MenuManager;
 import com.guzi.upr.manager.RoleMenuManager;
 import com.guzi.upr.model.admin.Menu;
@@ -70,7 +72,6 @@ public class MenuService {
         Menu menu = new Menu();
         BeanUtils.copyProperties(dto, menu);
         menuManager.save(menu);
-        // 传递节点
     }
 
     /**
@@ -79,8 +80,13 @@ public class MenuService {
      * @param menuId
      */
     public void removeOne(Long menuId) {
+        if (roleMenuManager.countByMenuId(menuId) > 0) {
+            throw new BizException(ResultAdminEnum.MENU_BOUND_ROLE);
+        }
+        if (menuManager.countChildrenByMenuId(menuId) > 0) {
+            throw new BizException(ResultAdminEnum.MENU_HAS_CHILDREN);
+        }
         menuManager.removeById(menuId);
-        roleMenuManager.removeRoleMenuByMenuId(menuId);
     }
 
     /**
@@ -89,6 +95,9 @@ public class MenuService {
      * @param dto
      */
     public void updateOne(MenuUpdateDTO dto) {
+        if (!dto.getParentId().equals(dto.getMenuId())) {
+            throw new BizException(ResultAdminEnum.MENU_PARENT_SELF);
+        }
         Menu menu = new Menu();
         BeanUtils.copyProperties(dto, menu);
         menuManager.updateById(menu);

@@ -35,7 +35,7 @@ public class GlobalExceptionHandler {
             // @RequestBody 方式校验
             MethodArgumentNotValidException ex = (MethodArgumentNotValidException) e;
             for (FieldError fieldError : ex.getBindingResult().getFieldErrors()) {
-                message.append(fieldError.getField()).append(fieldError.getDefaultMessage()).append(",");
+                message.append(fieldError.getField()).append(fieldError.getDefaultMessage()).append(";");
             }
         } else if (e instanceof ConstraintViolationException) {
             // @RequestParam 方式校验
@@ -45,7 +45,7 @@ public class GlobalExceptionHandler {
             // get Model 方式校验
             BindException ex = (BindException) e;
             for (FieldError fieldError : ex.getFieldErrors()) {
-                message.append(fieldError.getField()).append(fieldError.getDefaultMessage()).append(",");
+                message.append(fieldError.getField()).append(fieldError.getDefaultMessage()).append(";");
             }
         }
 

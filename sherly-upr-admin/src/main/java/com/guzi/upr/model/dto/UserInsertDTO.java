@@ -2,8 +2,10 @@ package com.guzi.upr.model.dto;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -33,17 +35,16 @@ public class UserInsertDTO {
 
     /** 性别 */
     @ApiModelProperty("性别")
-    @NotBlank
+    @Range(min = 0, max = 1)
+    @NotNull
     private Integer gender;
 
     /** 部门id */
     @ApiModelProperty("部门id")
-    @NotBlank
     private Long departmentId;
 
     /** 角色ids */
     @ApiModelProperty("角色ids")
-    @NotBlank
     private List<Long> roleIds;
 
 

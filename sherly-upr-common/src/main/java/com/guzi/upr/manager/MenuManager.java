@@ -1,5 +1,6 @@
 package com.guzi.upr.manager;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.guzi.upr.mapper.admin.MenuMapper;
 import com.guzi.upr.model.admin.Menu;
@@ -26,5 +27,17 @@ public class MenuManager extends ServiceImpl<MenuMapper, Menu> {
      */
     public List<Menu> listByRoleIds(List<Long> roleIds) {
         return menuMapper.listByRoleIds(roleIds);
+    }
+
+    /**
+     * 根据菜单id获取子菜单数量
+     *
+     * @param menuId
+     * @return
+     */
+    public Long countChildrenByMenuId(Long menuId) {
+        LambdaQueryWrapper<Menu> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(Menu::getParentId, menuId);
+        return this.count(wrapper);
     }
 }

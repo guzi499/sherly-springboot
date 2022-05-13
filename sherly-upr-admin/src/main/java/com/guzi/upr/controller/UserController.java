@@ -26,6 +26,7 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/api/user")
 @Api(tags = "用户相关")
+@Validated
 public class UserController {
 
     @Autowired

@@ -82,4 +82,16 @@ public class RoleMenuManager extends ServiceImpl<RoleMenuMapper, RoleMenu> {
         wrapper.in(RoleMenu::getRoleId, roleIds);
         return this.list(wrapper);
     }
+
+    /**
+     * 根据菜单id查询角色菜单数量
+     *
+     * @param menuId
+     * @return
+     */
+    public Long countByMenuId(Long menuId) {
+        LambdaQueryWrapper<RoleMenu> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(RoleMenu::getMenuId, menuId);
+        return this.count(wrapper);
+    }
 }

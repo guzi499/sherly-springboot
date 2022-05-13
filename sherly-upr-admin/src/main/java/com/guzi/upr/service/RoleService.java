@@ -17,6 +17,7 @@ import com.guzi.upr.model.vo.RoleVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
@@ -100,6 +101,7 @@ public class RoleService {
      *
      * @param dto
      */
+    @Transactional(rollbackFor = Exception.class)
     public void updateOne(RoleUpdateDTO dto) {
         // 去重
         Role one = roleManager.getByRoleName(dto.getRoleName());
@@ -125,7 +127,12 @@ public class RoleService {
      *
      * @param roleId
      */
+    @Transactional(rollbackFor = Exception.class)
     public void removeOne(Long roleId) {
+        if (userRoleManager.countByRoleId(roleId) > 0) {
+            throw new BizException(ResultAdminEnum.ROLE_BOUND_USER);
+        }
+
         roleManager.removeById(roleId);
 
         // 删除角色菜单、用户角色数据

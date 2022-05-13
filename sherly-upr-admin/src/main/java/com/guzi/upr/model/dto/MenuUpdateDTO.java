@@ -45,5 +45,6 @@ public class MenuUpdateDTO {
 
     /** 排序 */
     @ApiModelProperty("排序")
+    @Range(min = 1, max = 999)
     private Integer sort;
 }

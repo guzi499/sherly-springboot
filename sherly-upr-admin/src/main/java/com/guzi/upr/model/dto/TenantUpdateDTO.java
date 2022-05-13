@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
@@ -25,5 +26,6 @@ public class TenantUpdateDTO {
 
     /** 用户上限 */
     @ApiModelProperty("用户上限")
+    @Min(10)
     private Long userLimit;
 }

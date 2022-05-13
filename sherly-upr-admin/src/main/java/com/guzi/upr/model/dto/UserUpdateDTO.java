@@ -22,10 +22,6 @@ public class UserUpdateDTO {
     @ApiModelProperty("昵称")
     private String nickname;
 
-    /** 密码 */
-    @ApiModelProperty("密码")
-    private String password;
-
     /** 用户头像 */
     @ApiModelProperty("用户头像")
     private String avater;
@@ -36,16 +32,12 @@ public class UserUpdateDTO {
 
     /** 性别 */
     @ApiModelProperty("性别")
+    @Range(min = 0, max = 1)
     private Integer gender;
 
     /** 部门id */
     @ApiModelProperty("部门id")
     private Long departmentId;
-
-    /** 0不可用 1可用 */
-    @ApiModelProperty("0不可用 1可用")
-    @Range(min = 0, max = 1)
-    private Integer enable;
 
     /** 角色ids */
     @ApiModelProperty("角色ids")

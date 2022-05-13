@@ -58,4 +58,16 @@ public class UserRoleManager extends ServiceImpl<UserRoleMapper, UserRole> {
         }
         this.saveBatch(list);
     }
+
+    /**
+     * 根据菜单id查询角色菜单数量
+     *
+     * @return
+     * @param roleId
+     */
+    public Long countByRoleId(Long roleId) {
+        LambdaQueryWrapper<UserRole> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(UserRole::getRoleId, roleId);
+        return this.count(wrapper);
+    }
 }

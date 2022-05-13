@@ -21,7 +21,9 @@ import com.guzi.upr.model.vo.UserPageVo;
 import com.guzi.upr.model.vo.UserVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -35,6 +37,9 @@ import java.util.stream.Collectors;
  */
 @Service
 public class UserService {
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private UserManager userManager;
@@ -126,6 +131,7 @@ public class UserService {
      *
      * @param dto
      */
+    @Transactional(rollbackFor = Exception.class)
     public void saveOne(UserInsertDTO dto) {
         // 去重
         User one = userManager.getByPhone(dto.getPhone());
@@ -135,8 +141,8 @@ public class UserService {
 
         User user = new User();
         BeanUtils.copyProperties(dto, user);
-        user.setEnable(0);
-        user.setPassword("123456");
+        user.setEnable(1);
+        user.setPassword(passwordEncoder.encode("123456"));
         userManager.save(user);
 
         // 保存用户角色数据
@@ -148,6 +154,7 @@ public class UserService {
      *
      * @param dto
      */
+    @Transactional(rollbackFor = Exception.class)
     public void updateOne(UserUpdateDTO dto) {
         User user = new User();
         BeanUtils.copyProperties(dto, user);

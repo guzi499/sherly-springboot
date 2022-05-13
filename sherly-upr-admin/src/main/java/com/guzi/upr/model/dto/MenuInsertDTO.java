@@ -22,6 +22,7 @@ public class MenuInsertDTO {
     /** 菜单类型 1目录 2菜单 3按钮 */
     @ApiModelProperty("菜单类型 1目录 2菜单 3按钮")
     @Range(min = 1, max = 3)
+    @NotNull
     private Integer menuType;
 
     /** 权限 */
@@ -44,6 +45,7 @@ public class MenuInsertDTO {
     /** 排序 */
     @ApiModelProperty("排序")
     @Range(min = 1, max = 999)
+    @NotNull
     private Integer sort;
 
 }
