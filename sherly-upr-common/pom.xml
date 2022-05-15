@@ -41,6 +41,12 @@
             <artifactId>dom4j</artifactId>
         </dependency>
 
+        <!-- qiniu -->
+        <dependency>
+            <groupId>com.qiniu</groupId>
+            <artifactId>qiniu-java-sdk</artifactId>
+        </dependency>
+
     </dependencies>
 
 

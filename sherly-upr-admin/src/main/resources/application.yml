@@ -38,3 +38,9 @@ logging:
     -com.guzi.upr.mapper: debug
     # knife4j日志
     -springfox: warn
+
+qiniu:
+  accessKey: 9RBoeAOR9jS4A2FgEidZCYgUQ5F0mwFh8lE94AGq
+  secretKey: 1qvBQCEjzoXgtPUS1gRY4O9PVBk3gZEi44cGC1mQ
+  preUrl: http://rbtgmyclf.hn-bkt.clouddn.com
+  bucket: sherly-springboot
