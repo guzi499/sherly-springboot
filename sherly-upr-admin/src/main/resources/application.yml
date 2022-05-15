@@ -40,7 +40,7 @@ logging:
     -springfox: warn
 
 qiniu:
-  accessKey: 9RBoeAOR9jS4A2FgEidZCYgUQ5F0mwFh8lE94AGq
-  secretKey: 1qvBQCEjzoXgtPUS1gRY4O9PVBk3gZEi44cGC1mQ
-  preUrl: http://rbtgmyclf.hn-bkt.clouddn.com
-  bucket: sherly-springboot
+  accessKey: mpw:C1w2szpDQqf4uijVVSKHqkILIG+t7CtJv2/E7yUrKhwu/uoNzzqzaOXTdmj3pjDa
+  secretKey: mpw:ox+Km4pN7PXUp6lVylVuPGwvWXde7woVaYLflKRmnAw9SIYS5XrPxWt53dbd82eC
+  preUrl: mpw:cqbqoDKQbzM4/uqAyPfXMCJsSiAtI0uH6vVcOS3j5/DoMlfRElR4hMcHVCRxrRET
+  bucket: mpw:/21cfcf0uqi4Nkp7ZFaDw+iu9c2QFx6ic6ouXX65qbs=

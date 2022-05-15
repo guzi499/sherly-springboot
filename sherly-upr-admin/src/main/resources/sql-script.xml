@@ -70,7 +70,7 @@
             `real_name`       varchar(255)     NULL COMMENT '姓名',
             `phone`           char(11)         NULL COMMENT '手机号',
             `password`        varchar(255)     NULL COMMENT '密码',
-            `avater`          varchar(255)     NULL COMMENT '用户头像',
+            `avatar`          varchar(255)     NULL COMMENT '用户头像',
             `email`           varchar(255)     NULL COMMENT '用户邮箱',
             `gender`          tinyint UNSIGNED NULL COMMENT '性别',
             `dept_id`         bigint UNSIGNED  NULL COMMENT '部门id',

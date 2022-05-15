@@ -143,6 +143,7 @@ public class UserService {
         BeanUtils.copyProperties(dto, user);
         user.setEnable(1);
         user.setPassword(passwordEncoder.encode("123456"));
+        user.setAvatar("avatar/hello499.jpg");
         userManager.save(user);
 
         // 保存用户角色数据

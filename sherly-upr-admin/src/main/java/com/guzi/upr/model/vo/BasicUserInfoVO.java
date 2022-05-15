@@ -27,7 +27,7 @@ public class BasicUserInfoVO {
 
     /** 用户头像 */
     @ApiModelProperty("用户头像")
-    private String avater;
+    private String avatar;
 
     /** 用户邮箱 */
     @ApiModelProperty("用户邮箱")
