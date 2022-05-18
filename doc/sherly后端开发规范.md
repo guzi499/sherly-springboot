@@ -89,7 +89,7 @@
 1. 根据业务架构，将系统分为四层。controller、service、manager、mapper。
     - 其中controller层只做接DTO，调用service层获取VO,并返回Result。
     - 其中service层只做业务逻辑，service层不允许有数据库相关内容，与操作数据库相关代码一律编写在manager层。
-    - 其中manager层只做数据库CRUD，继承mybatis-plus的ServiceImpl，可直接调用简单增删改查。否则一律使用wrapper包装生成sql。禁止使用batch操作，一律编写xml，使用一条sql语句，特殊情况除外。
+    - 其中manager层只做数据库CRUD，继承mybatis-plus的ServiceImpl，可直接调用简单增删改查。否则一律使用wrapper包装生成sql。
     - 其中mapper层只参与对应xml文件，无其他作用。
 
 ### 版本记录
