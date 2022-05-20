@@ -29,6 +29,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -68,7 +69,7 @@ public class UserService {
         List<UserPageVo> result = page.getRecords().stream().map(e -> {
             UserPageVo userPageVo = new UserPageVo();
             BeanUtils.copyProperties(e, userPageVo);
-            userPageVo.setDepartmentName(departmentList.stream().filter(x -> x.getDepartmentId().equals(e.getDepartmentId())).map(Department::getDepartmentName).collect(Collectors.joining(",")));
+            userPageVo.setDepartmentName(departmentList.stream().filter(x -> Objects.equals(x.getDepartmentId(), e.getDepartmentId())).map(Department::getDepartmentName).collect(Collectors.joining(",")));
             return userPageVo;
         }).collect(Collectors.toList());
 
@@ -88,7 +89,7 @@ public class UserService {
             UserEO userEO = new UserEO();
             BeanUtils.copyProperties(e, userEO);
             userEO.setEnable(e.getEnable() == 1 ? "启用" : "禁用");
-            userEO.setDepartmentName(departmentList.stream().filter(x -> x.getDepartmentId().equals(e.getDepartmentId())).map(Department::getDepartmentName).collect(Collectors.joining(",")));
+            userEO.setDepartmentName(departmentList.stream().filter(x -> Objects.equals(x.getDepartmentId(), e.getDepartmentId())).map(Department::getDepartmentName).collect(Collectors.joining(",")));
             userEO.setGender(e.getGender() == 1 ? "男" : "女");
             return userEO;
         }).collect(Collectors.toList());

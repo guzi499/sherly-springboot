@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -105,7 +106,8 @@ public class RoleService {
     public void updateOne(RoleUpdateDTO dto) {
         // 去重
         Role one = roleManager.getByRoleName(dto.getRoleName());
-        if (one != null && !one.getRoleId().equals(dto.getRoleId())) {
+        // 如果待修改名称已存在且不为自身
+        if (one != null && !Objects.equals(one.getRoleId(), dto.getRoleId())) {
             throw new BizException(ResultAdminEnum.ROLE_REPEAT);
         }
 

@@ -27,7 +27,6 @@
         <mybatis.plus>3.5.1</mybatis.plus>
         <knife4j>2.0.7</knife4j>
         <java.jwt>3.19.0</java.jwt>
-        <common.lang3>3.12.0</common.lang3>
         <dom4j>1.6.1</dom4j>
         <hutool>5.8.0</hutool>
         <easyexcel>3.0.5</easyexcel>
@@ -116,13 +115,6 @@
                 <groupId>com.auth0</groupId>
                 <artifactId>java-jwt</artifactId>
                 <version>${java.jwt}</version>
-            </dependency>
-
-            <!-- commons-lang3 -->
-            <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-lang3</artifactId>
-                <version>${common.lang3}</version>
             </dependency>
 
             <!-- dom4j -->

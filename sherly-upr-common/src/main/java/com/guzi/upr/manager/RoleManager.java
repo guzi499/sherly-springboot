@@ -5,9 +5,9 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.guzi.upr.mapper.admin.RoleMapper;
 import com.guzi.upr.model.admin.Role;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -40,7 +40,7 @@ public class RoleManager extends ServiceImpl<RoleMapper, Role> {
      */
     public IPage<Role> listPage(IPage page, String roleName) {
         LambdaQueryWrapper<Role> wrapper = new LambdaQueryWrapper<>();
-        if (StringUtils.isNotBlank(roleName)) {
+        if (StringUtils.hasText(roleName)) {
             wrapper.like(Role::getRoleName, roleName);
         }
         return this.page(page, wrapper);

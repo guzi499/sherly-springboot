@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -58,7 +59,7 @@ public class DepartmentService {
      */
     private List<DepartmentVO> getChildren(DepartmentVO parent, List<DepartmentVO> all) {
         return all.stream()
-                .filter(e -> e.getParentId().equals(parent.getDepartmentId()))
+                .filter(e -> Objects.equals(e.getParentId(), parent.getDepartmentId()))
                 .peek(e -> e.setChildren(getChildren(e, all)))
                 .collect(Collectors.toList());
     }
@@ -89,7 +90,8 @@ public class DepartmentService {
     public void updateOne(DepartmentUpdateDTO dto) {
         // 查重 排除自身
         Department one = departmentManager.getByDepartmentName(dto.getDepartmentName());
-        if (one != null && !one.getDepartmentId().equals(dto.getDepartmentId())) {
+        // 如果待修改名称已存在且不为自身
+        if (one != null && !Objects.equals(one.getDepartmentId(), dto.getDepartmentId())) {
             throw new BizException(ResultAdminEnum.DEPARTMENT_REPEAT);
         }
 

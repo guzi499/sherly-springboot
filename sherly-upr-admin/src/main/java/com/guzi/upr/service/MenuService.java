@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -58,7 +59,7 @@ public class MenuService {
      */
     private List<MenuVO> getChildren(MenuVO parent, List<MenuVO> all) {
         return all.stream()
-                .filter(e -> e.getParentId().equals(parent.getMenuId()))
+                .filter(e -> Objects.equals(e.getParentId(), parent.getMenuId()))
                 .peek(e -> e.setChildren(getChildren(e, all)))
                 .collect(Collectors.toList());
     }
@@ -95,7 +96,7 @@ public class MenuService {
      * @param dto
      */
     public void updateOne(MenuUpdateDTO dto) {
-        if (!dto.getParentId().equals(dto.getMenuId())) {
+        if (!Objects.equals(dto.getParentId(), dto.getMenuId())) {
             throw new BizException(ResultAdminEnum.MENU_PARENT_SELF);
         }
         Menu menu = new Menu();

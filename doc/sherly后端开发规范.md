@@ -75,8 +75,8 @@
 1. 增删改时必填字段：如果为字符串类型使用@NotBlank注解，如果为其他类型使用@NotNull注解
 2. 规定了范围的字段：必须使用@Range(min = x, max = x)进行约束，同时如果为必填还需加上@NotNull注解；如果为单方向限制，则用@Min或@Max注解
 #### 【10】其他
-1. 属性拷贝请使用springframework下copyProperties()
-2. 字符串判断请使用common.lang3下StringUtils方法
+1. 基础代码统一使用jdk与springframework下的工具类。
+2. 业务代码统一使用hutool下的工具类。
 4. 不要在视图模板中加入任何复杂的逻辑，即前端只负责展示，不参与任何业务处理！
 ### 异常日志
 #### 【1】错误码

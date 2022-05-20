@@ -18,6 +18,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -100,7 +101,7 @@ public class GenericService {
      */
     private List<BasicMenuInfoVO> getChildren(Menu parent, List<Menu> all) {
         return all.stream()
-                .filter(e -> e.getParentId().equals(parent.getMenuId()))
+                .filter(e -> Objects.equals(e.getParentId(), parent.getMenuId()))
                 .map(e -> {
                     BasicMenuInfoVO basicMenuInfoVO = new BasicMenuInfoVO();
                     BeanUtils.copyProperties(e, basicMenuInfoVO);

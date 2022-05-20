@@ -5,8 +5,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.guzi.upr.mapper.admin.TenantMapper;
 import com.guzi.upr.model.admin.Tenant;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 /**
  * @author 谷子毅
@@ -41,11 +41,11 @@ public class TenantManager extends ServiceImpl<TenantMapper, Tenant> {
     public IPage<Tenant> listPage(IPage page, String tenantName, String tenantCode) {
         LambdaQueryWrapper<Tenant> wrapper = new LambdaQueryWrapper<>();
 
-        if (StringUtils.isNoneBlank(tenantCode)) {
+        if (StringUtils.hasText(tenantCode)) {
             wrapper.eq(Tenant::getTenantCode, tenantCode);
         }
 
-        if (StringUtils.isNoneBlank(tenantName)) {
+        if (StringUtils.hasText(tenantName)) {
             wrapper.eq(Tenant::getTenantName, tenantName);
         }
 

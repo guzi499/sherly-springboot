@@ -4,6 +4,7 @@ import com.guzi.upr.model.TreeAble;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -21,7 +22,7 @@ public class SherlyBeanUtil<T> {
 
     private static <T extends TreeAble> List<TreeAble> getChildren(T parent, List<T> all) {
         return all.stream()
-                .filter(e -> e.getParentId().equals(parent.getId()))
+                .filter(e -> Objects.equals(e.getParentId(), parent.getId()))
                 .peek(e -> e.setChildren(getChildren(e, all)))
                 .sorted(Comparator.comparing(T::getSort))
                 .collect(Collectors.toList());

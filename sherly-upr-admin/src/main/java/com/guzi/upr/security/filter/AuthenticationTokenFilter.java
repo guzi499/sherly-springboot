@@ -6,7 +6,6 @@ import com.guzi.upr.constants.RedisKey;
 import com.guzi.upr.security.SherlyUserDetails;
 import com.guzi.upr.security.ThreadLocalModel;
 import com.guzi.upr.util.JwtUtil;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -14,6 +13,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -44,7 +44,7 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
         String token = request.getHeader("token");
 
         // 如果token不存在则放行
-        if (StringUtils.isBlank(token)) {
+        if (!StringUtils.hasText(token)) {
             filterChain.doFilter(request, response);
             return;
         }
