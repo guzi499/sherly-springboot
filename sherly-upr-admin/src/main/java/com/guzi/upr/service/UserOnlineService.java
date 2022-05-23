@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.guzi.upr.constants.RedisKey;
-import com.guzi.upr.security.SherlyUserDetails;
+import com.guzi.upr.security.model.LoginUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -36,7 +36,7 @@ public class UserOnlineService {
         List<String> redisStrings = redisTemplate.opsForValue().multiGet(keys);
 
         for (String redisString : redisStrings) {
-            SherlyUserDetails loginUser = OBJECTMAPPER.readValue(redisString, new TypeReference<SherlyUserDetails>() {});
+            LoginUserDetails loginUser = OBJECTMAPPER.readValue(redisString, new TypeReference<LoginUserDetails>() {});
         }
 
         return null;

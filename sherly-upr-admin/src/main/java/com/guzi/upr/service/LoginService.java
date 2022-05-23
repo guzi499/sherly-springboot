@@ -5,15 +5,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.guzi.upr.constants.RedisKey;
 import com.guzi.upr.model.dto.LoginDTO;
 import com.guzi.upr.model.vo.LoginVO;
-import com.guzi.upr.security.SherlyUserDetails;
-import com.guzi.upr.security.SecurityModel;
+import com.guzi.upr.security.model.LoginUserDetails;
+import com.guzi.upr.security.model.RedisSecurityModel;
+import com.guzi.upr.security.util.SecurityUtil;
 import com.guzi.upr.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.TimeUnit;
@@ -49,29 +49,28 @@ public class LoginService {
         Authentication authentication = authenticationProvider.authenticate(authenticationToken);
 
         // 获取登录用户信息
-        SherlyUserDetails loginUser = (SherlyUserDetails) authentication.getPrincipal();
+        LoginUserDetails loginUserDetails = (LoginUserDetails) authentication.getPrincipal();
 
-        // 生成key标签
-        String keyLabel = dto.getPhone() + "#" + System.currentTimeMillis();
+        // redis缓存登录用户信息
+        RedisSecurityModel redisSecurityModel = loginUserDetails.getSecurityModel();
 
         // 权限信息更新到redis
-        String redisString = OBJECTMAPPER.writeValueAsString(loginUser);
+        String redisString = OBJECTMAPPER.writeValueAsString(redisSecurityModel);
         redisTemplate.opsForValue().set(RedisKey.GENERATE_USER + dto.getPhone(), redisString, 6, TimeUnit.HOURS);
 
-        // 生成token返回前端
-        String token = JwtUtil.generateToken(keyLabel);
+        // 生成key标签作为token内容
+        String keyLabel = dto.getPhone() + "#" + System.currentTimeMillis();
 
-        return new LoginVO(token);
+        // 生成token返回前端
+        return new LoginVO(JwtUtil.generateToken(keyLabel));
     }
 
     /**
      * 登出
      */
     public void logout() {
-        SecurityModel securityModel = (SecurityModel)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String phone = securityModel.getPhone();
 
-        redisTemplate.delete(RedisKey.GENERATE_USER + phone);
+        redisTemplate.delete(RedisKey.GENERATE_USER + SecurityUtil.getPhone());
 
     }
 }

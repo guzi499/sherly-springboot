@@ -1,6 +1,6 @@
 package com.guzi.upr.security.manager;
 
-import com.guzi.upr.security.SherlyUserDetails;
+import com.guzi.upr.security.model.LoginUserDetails;
 import com.guzi.upr.security.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -32,10 +32,10 @@ public class SherlyAuthenticationManager implements AuthenticationProvider {
         String phone = authentication.getName();
         String password = authentication.getCredentials().toString();
 
-        SherlyUserDetails sherlyUserDetails = (SherlyUserDetails) userDetailsServiceImpl.loadUserByUsername(phone);
+        LoginUserDetails loginUserDetails = (LoginUserDetails) userDetailsServiceImpl.loadUserByUsername(phone);
 
-        if (passwordEncoder.matches(password, sherlyUserDetails.getPassword())) {
-            return new UsernamePasswordAuthenticationToken(sherlyUserDetails, null, sherlyUserDetails.getAuthorities());
+        if (passwordEncoder.matches(password, loginUserDetails.getPassword())) {
+            return new UsernamePasswordAuthenticationToken(loginUserDetails, null, loginUserDetails.getAuthorities());
         } else {
             throw new BadCredentialsException("用户名或密码错误!");
         }

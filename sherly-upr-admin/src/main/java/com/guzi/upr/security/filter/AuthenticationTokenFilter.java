@@ -3,10 +3,9 @@ package com.guzi.upr.security.filter;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.guzi.upr.constants.RedisKey;
-import com.guzi.upr.security.SherlyUserDetails;
-import com.guzi.upr.security.SecurityModel;
+import com.guzi.upr.security.model.RedisSecurityModel;
+import com.guzi.upr.security.model.SecurityModel;
 import com.guzi.upr.util.JwtUtil;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -61,7 +60,7 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
         // 获取手机号
         String phone = keyLabel.split("#")[0];
 
-        // 从redis获取loginUser信息
+        // 从redis获取redisSecurityModel
         String redisString = redisTemplate.opsForValue().get(RedisKey.GENERATE_USER + phone);
         if (redisString == null) {
             filterChain.doFilter(request, response);
@@ -71,15 +70,10 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
         // redis续期
         redisTemplate.expire(RedisKey.GENERATE_USER + phone, 6, TimeUnit.HOURS);
 
-        // loginUser类型转换
-        SherlyUserDetails loginUser = OBJECTMAPPER.readValue(redisString, new TypeReference<SherlyUserDetails>() {});
+        RedisSecurityModel redisSecurityModel = OBJECTMAPPER.readValue(redisString, new TypeReference<RedisSecurityModel>() {});
 
-        // 设置threadLocalModel
-        SecurityModel securityModel = new SecurityModel();
-        BeanUtils.copyProperties(loginUser.getUser(), securityModel);
-        securityModel.setTenantCode(loginUser.getAccountUser().getLastLoginTenantCode());
-
-        List<SimpleGrantedAuthority> authorities = loginUser.getPermissions().stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+        SecurityModel securityModel = redisSecurityModel.getSecurityModel();
+        List<SimpleGrantedAuthority> authorities = redisSecurityModel.getPermissions().stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
 
         // threadLocalModel存入当前执行线程
         UsernamePasswordAuthenticationToken authentication =

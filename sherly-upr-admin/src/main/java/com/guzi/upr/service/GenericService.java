@@ -1,6 +1,6 @@
 package com.guzi.upr.service;
 
-import com.guzi.upr.security.SecurityModel;
+import com.guzi.upr.security.model.SecurityModel;
 import com.guzi.upr.manager.DepartmentManager;
 import com.guzi.upr.manager.MenuManager;
 import com.guzi.upr.manager.RoleManager;
