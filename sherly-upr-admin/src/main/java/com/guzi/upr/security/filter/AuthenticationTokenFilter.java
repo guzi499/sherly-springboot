@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.guzi.upr.constants.RedisKey;
 import com.guzi.upr.security.SherlyUserDetails;
-import com.guzi.upr.security.ThreadLocalModel;
+import com.guzi.upr.security.SecurityModel;
 import com.guzi.upr.util.JwtUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,16 +75,16 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
         SherlyUserDetails loginUser = OBJECTMAPPER.readValue(redisString, new TypeReference<SherlyUserDetails>() {});
 
         // 设置threadLocalModel
-        ThreadLocalModel threadLocalModel = new ThreadLocalModel();
-        BeanUtils.copyProperties(loginUser.getUser(), threadLocalModel);
-        threadLocalModel.setTenantCode(loginUser.getAccountUser().getLastLoginTenantCode());
+        SecurityModel securityModel = new SecurityModel();
+        BeanUtils.copyProperties(loginUser.getUser(), securityModel);
+        securityModel.setTenantCode(loginUser.getAccountUser().getLastLoginTenantCode());
 
         List<SimpleGrantedAuthority> authorities = loginUser.getPermissions().stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
 
         // threadLocalModel存入当前执行线程
-        UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(threadLocalModel,null, authorities);
-        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+        UsernamePasswordAuthenticationToken authentication =
+                new UsernamePasswordAuthenticationToken(securityModel,null, authorities);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
 
         filterChain.doFilter(request, response);
     }

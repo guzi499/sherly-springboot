@@ -6,7 +6,7 @@ import com.guzi.upr.constants.RedisKey;
 import com.guzi.upr.model.dto.LoginDTO;
 import com.guzi.upr.model.vo.LoginVO;
 import com.guzi.upr.security.SherlyUserDetails;
-import com.guzi.upr.security.ThreadLocalModel;
+import com.guzi.upr.security.SecurityModel;
 import com.guzi.upr.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -68,8 +68,8 @@ public class LoginService {
      * 登出
      */
     public void logout() {
-        ThreadLocalModel threadLocalModel = (ThreadLocalModel)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String phone = threadLocalModel.getPhone();
+        SecurityModel securityModel = (SecurityModel)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String phone = securityModel.getPhone();
 
         redisTemplate.delete(RedisKey.GENERATE_USER + phone);
 

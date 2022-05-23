@@ -3,7 +3,7 @@ package com.guzi.upr.security.service;
 import com.guzi.upr.manager.*;
 import com.guzi.upr.model.admin.*;
 import com.guzi.upr.security.SherlyUserDetails;
-import com.guzi.upr.security.ThreadLocalModel;
+import com.guzi.upr.security.SecurityModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -42,9 +42,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String phone) throws UsernameNotFoundException {
 
         // 设置当前操作租户存入当前执行线程
-        ThreadLocalModel threadLocalModel = new ThreadLocalModel();
-        threadLocalModel.setOperateTenantCode("sherly");
-        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(threadLocalModel, null));
+        SecurityModel securityModel = new SecurityModel();
+        securityModel.setOperateTenantCode("sherly");
+        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(securityModel, null));
 
         // 查询用户租户信息
         AccountUser accountUser = accountUserManager.getByPhone(phone);
@@ -54,8 +54,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         String lastLoginTenantCode = accountUser.getLastLoginTenantCode();
 
         // 设置当前操作租户存入当前执行线程
-        threadLocalModel.setOperateTenantCode(lastLoginTenantCode);
-        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(threadLocalModel, null));
+        securityModel.setOperateTenantCode(lastLoginTenantCode);
+        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(securityModel, null));
 
         // 根据查询参数查询用户信息
         User user = userManager.getByPhone(phone);

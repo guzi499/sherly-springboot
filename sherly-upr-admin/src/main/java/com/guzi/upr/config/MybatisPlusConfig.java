@@ -5,12 +5,11 @@ import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.DynamicTableNameInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
-import com.guzi.upr.security.ThreadLocalModel;
+import com.guzi.upr.security.util.SecurityUtil;
 import org.apache.ibatis.jdbc.ScriptRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
@@ -34,11 +33,11 @@ public class MybatisPlusConfig {
         DynamicTableNameInnerInterceptor dynamicTableNameInnerInterceptor = new DynamicTableNameInnerInterceptor();
         dynamicTableNameInnerInterceptor.setTableNameHandler((sql, tableName) -> {
 
-            ThreadLocalModel threadLocalModel = (ThreadLocalModel) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            if (threadLocalModel.getOperateTenantCode() != null) {
-                return threadLocalModel.getOperateTenantCode() + "." + tableName;
+            String operateTenantCode = SecurityUtil.getOperateTenantCode();
+            if (operateTenantCode != null) {
+                return operateTenantCode + "." + tableName;
             }
-            return threadLocalModel.getTenantCode() + "." + tableName;
+            return SecurityUtil.getTenantCode() + "." + tableName;
         });
         interceptor.addInnerInterceptor(dynamicTableNameInnerInterceptor);
 

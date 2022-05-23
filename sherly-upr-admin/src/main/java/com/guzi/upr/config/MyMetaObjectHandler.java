@@ -1,9 +1,8 @@
 package com.guzi.upr.config;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
-import com.guzi.upr.security.ThreadLocalModel;
+import com.guzi.upr.security.util.SecurityUtil;
 import org.apache.ibatis.reflection.MetaObject;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -19,16 +18,14 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
 
     @Override
     public void insertFill(MetaObject metaObject) {
-        ThreadLocalModel threadLocalModel = (ThreadLocalModel) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         this.strictInsertFill(metaObject, "createTime", Date::new, Date.class);
-        this.strictInsertFill(metaObject, "createUserId", Long.class, threadLocalModel.getUserId());
+        this.strictInsertFill(metaObject, "createUserId", Long.class, SecurityUtil.getUserId());
     }
 
 
     @Override
     public void updateFill(MetaObject metaObject) {
-        ThreadLocalModel threadLocalModel = (ThreadLocalModel) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         this.strictUpdateFill(metaObject, "updateTime", Date::new, Date.class);
-        this.strictUpdateFill(metaObject, "updateUserId", Long.class, threadLocalModel.getUserId());
+        this.strictUpdateFill(metaObject, "updateUserId", Long.class, SecurityUtil.getUserId());
     }
 }

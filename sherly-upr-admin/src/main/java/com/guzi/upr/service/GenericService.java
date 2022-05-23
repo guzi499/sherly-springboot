@@ -1,6 +1,6 @@
 package com.guzi.upr.service;
 
-import com.guzi.upr.security.ThreadLocalModel;
+import com.guzi.upr.security.SecurityModel;
 import com.guzi.upr.manager.DepartmentManager;
 import com.guzi.upr.manager.MenuManager;
 import com.guzi.upr.manager.RoleManager;
@@ -46,8 +46,8 @@ public class GenericService {
      * @return
      */
     public BasicInfoVO getBasicData() {
-        ThreadLocalModel threadLocalModel = (ThreadLocalModel) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Long userId = threadLocalModel.getUserId();
+        SecurityModel securityModel = (SecurityModel) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Long userId = securityModel.getUserId();
 
         // 用户信息收集
         User user = userManager.getById(userId);
