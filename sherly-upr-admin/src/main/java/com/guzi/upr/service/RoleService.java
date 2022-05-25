@@ -47,7 +47,7 @@ public class RoleService {
      */
     public PageResult listPage(RolePageDTO dto) {
         // 分页查询
-        IPage<Role> page = roleManager.listPage(dto.getPage(), dto.getRoleName());
+        IPage<Role> page = roleManager.listPage(dto.pageInfo(), dto.getRoleName());
 
         // 对象转换成vo类型
         List<RolePageVO> result = page.getRecords().stream().map(e -> {

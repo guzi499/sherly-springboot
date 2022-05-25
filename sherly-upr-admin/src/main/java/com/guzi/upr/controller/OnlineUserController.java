@@ -2,13 +2,17 @@ package com.guzi.upr.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.guzi.upr.model.Result;
-import com.guzi.upr.service.UserOnlineService;
+import com.guzi.upr.model.admin.OnlineUser;
+import com.guzi.upr.model.dto.OnlineUserQueryDTO;
+import com.guzi.upr.service.OnlineUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * @author 谷子毅
@@ -17,14 +21,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/user/online")
 @Api(tags = "在线用户相关")
-public class UserOnlineController {
+public class OnlineUserController {
 
     @Autowired
-    private UserOnlineService userOnlineService;
+    private OnlineUserService onlineUserService;
 
     @GetMapping("/list")
-    @ApiOperation("在线用户相关")
-    public Result list() throws JsonProcessingException {
-        return Result.success(userOnlineService.list());
+    @ApiOperation("在线用户列表")
+    public Result<List<OnlineUser>> list(OnlineUserQueryDTO dto) throws JsonProcessingException {
+        return Result.success(onlineUserService.list(dto));
     }
 }

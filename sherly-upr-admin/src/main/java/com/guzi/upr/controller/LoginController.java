@@ -10,6 +10,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author 谷子毅
  * @date 2022/3/24
@@ -24,8 +26,8 @@ public class LoginController {
 
     @PostMapping("/login")
     @ApiOperation("登录")
-    public Result<LoginVO> login(@RequestBody LoginDTO dto) throws JsonProcessingException {
-        return Result.success(loginService.login(dto));
+    public Result<LoginVO> login(@RequestBody LoginDTO dto, HttpServletRequest request) throws JsonProcessingException {
+        return Result.success(loginService.login(dto, request));
     }
 
     @GetMapping("/logout")

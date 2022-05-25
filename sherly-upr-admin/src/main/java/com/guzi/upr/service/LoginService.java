@@ -3,6 +3,8 @@ package com.guzi.upr.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.guzi.upr.constants.RedisKey;
+import com.guzi.upr.manager.UserManager;
+import com.guzi.upr.model.admin.User;
 import com.guzi.upr.model.dto.LoginDTO;
 import com.guzi.upr.model.vo.LoginVO;
 import com.guzi.upr.security.model.LoginUserDetails;
@@ -15,7 +17,10 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -33,14 +38,19 @@ public class LoginService {
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
 
+    @Autowired
+    private UserManager userManager;
+
 
     /**
      * 登录
-     *
      * @param dto
+     * @param request
      * @return
+     * @throws JsonProcessingException
      */
-    public LoginVO login(LoginDTO dto) throws JsonProcessingException {
+    @Transactional(rollbackFor = Exception.class)
+    public LoginVO login(LoginDTO dto, HttpServletRequest request) throws JsonProcessingException {
         // 封装登录参数
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(dto.getPhone(), dto.getPassword());
@@ -52,17 +62,31 @@ public class LoginService {
         LoginUserDetails loginUserDetails = (LoginUserDetails) authentication.getPrincipal();
 
         // redis缓存登录用户信息
-        RedisSecurityModel redisSecurityModel = loginUserDetails.getSecurityModel();
+        RedisSecurityModel redisSecurityModel = loginUserDetails.getRedisSecurityModel(request);
 
         // 权限信息更新到redis
         String redisString = OBJECTMAPPER.writeValueAsString(redisSecurityModel);
         redisTemplate.opsForValue().set(RedisKey.GENERATE_USER + dto.getPhone(), redisString, 6, TimeUnit.HOURS);
+
+        // 更新用户信息
+        this.updateUser(loginUserDetails.getUser(), request);
 
         // 生成key标签作为token内容
         String keyLabel = dto.getPhone() + "#" + System.currentTimeMillis();
 
         // 生成token返回前端
         return new LoginVO(JwtUtil.generateToken(keyLabel));
+    }
+
+    /**
+     * 更新用户登录信息
+     * @param user
+     * @param request
+     */
+    private void updateUser(User user, HttpServletRequest request) {
+        user.setLastLoginTime(new Date());
+        user.setLastLoginIp(request.getRemoteAddr());
+        userManager.updateById(user);
     }
 
     /**

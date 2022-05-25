@@ -24,7 +24,7 @@ public class PageQuery {
      * 获取mybatis-plus分页对象
      * @return
      */
-    public IPage getPage() {
+    public IPage pageInfo() {
         return new Page(current, size);
     }
 }

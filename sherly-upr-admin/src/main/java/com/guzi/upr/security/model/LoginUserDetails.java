@@ -1,12 +1,15 @@
 package com.guzi.upr.security.model;
 
 import com.guzi.upr.model.admin.AccountUser;
+import com.guzi.upr.model.admin.OnlineUser;
 import com.guzi.upr.model.admin.User;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,15 +35,26 @@ public class LoginUserDetails implements UserDetails {
      * 获取用户登录缓存对象
      *
      * @return
+     * @param request
      */
-    public RedisSecurityModel getSecurityModel() {
+    public RedisSecurityModel getRedisSecurityModel(HttpServletRequest request) {
         RedisSecurityModel redisSecurityModel = new RedisSecurityModel();
 
         SecurityModel securityModel = new SecurityModel();
         BeanUtils.copyProperties(user, securityModel);
         securityModel.setTenantCode(accountUser.getLastLoginTenantCode());
 
+        OnlineUser onlineUser = new OnlineUser();
+        BeanUtils.copyProperties(user, onlineUser);
+        onlineUser.setLoginTenantCode(accountUser.getLastLoginTenantCode());
+        onlineUser.setLoginTime(new Date());
+        onlineUser.setIp(request.getRemoteAddr());
+        onlineUser.setOs(null);
+        onlineUser.setAddress(null);
+        onlineUser.setBrowser(null);
+
         redisSecurityModel.setSecurityModel(securityModel);
+        redisSecurityModel.setOnlineUser(onlineUser);
         redisSecurityModel.setPermissions(permissions);
 
         return redisSecurityModel;

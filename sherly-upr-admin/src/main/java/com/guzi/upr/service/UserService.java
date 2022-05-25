@@ -62,7 +62,7 @@ public class UserService {
      */
     public PageResult listPage(UserPageDTO dto) {
         // 分页查询
-        IPage<User> page = userManager.page(dto.getPage());
+        IPage<User> page = userManager.page(dto.pageInfo());
         List<Department> departmentList = departmentManager.list();
 
         // 对象转换成vo类型
