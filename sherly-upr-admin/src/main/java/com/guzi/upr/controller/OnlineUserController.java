@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -30,5 +31,12 @@ public class OnlineUserController {
     @ApiOperation("在线用户列表")
     public Result<List<OnlineUser>> list(OnlineUserQueryDTO dto) throws JsonProcessingException {
         return Result.success(onlineUserService.list(dto));
+    }
+
+    @GetMapping("/force/quit")
+    @ApiOperation("强制退出")
+    public Result forceQuit(@RequestParam String phone) {
+        onlineUserService.forceQuit(phone);
+        return Result.success();
     }
 }

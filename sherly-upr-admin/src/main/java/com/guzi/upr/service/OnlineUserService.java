@@ -55,4 +55,12 @@ public class OnlineUserService {
         }
         return result;
     }
+
+    /**
+     * 强制退出
+     * @param phone
+     */
+    public void forceQuit(String phone) {
+        redisTemplate.delete(RedisKey.GENERATE_USER + phone);
+    }
 }
