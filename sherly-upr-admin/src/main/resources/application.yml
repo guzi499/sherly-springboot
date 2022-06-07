@@ -42,5 +42,5 @@ logging:
 qiniu:
   accessKey: mpw:C1w2szpDQqf4uijVVSKHqkILIG+t7CtJv2/E7yUrKhwu/uoNzzqzaOXTdmj3pjDa
   secretKey: mpw:ox+Km4pN7PXUp6lVylVuPGwvWXde7woVaYLflKRmnAw9SIYS5XrPxWt53dbd82eC
-  preUrl: mpw:cqbqoDKQbzM4/uqAyPfXMCJsSiAtI0uH6vVcOS3j5/DoMlfRElR4hMcHVCRxrRET
+  preUrl: rbtgmyclf.hn-bkt.clouddn.com
   bucket: mpw:/21cfcf0uqi4Nkp7ZFaDw+iu9c2QFx6ic6ouXX65qbs=
