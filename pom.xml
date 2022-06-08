@@ -29,6 +29,7 @@
         <java.jwt>3.19.0</java.jwt>
         <dom4j>1.6.1</dom4j>
         <hutool>5.8.0</hutool>
+        <javax.mail>1.6.2</javax.mail>
         <easyexcel>3.0.5</easyexcel>
         <qiniu>[7.7.0, 7.10.99]</qiniu>
     </properties>
@@ -129,6 +130,19 @@
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-core</artifactId>
                 <version>${hutool}</version>
+            </dependency>
+
+            <!-- hutool-extra -->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-extra</artifactId>
+                <version>${hutool}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.sun.mail</groupId>
+                <artifactId>javax.mail</artifactId>
+                <version>${javax.mail}</version>
             </dependency>
 
             <!-- easy-excel -->

@@ -35,6 +35,18 @@
             <artifactId>dom4j</artifactId>
         </dependency>
 
+        <!-- hutool-core -->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-core</artifactId>
+        </dependency>
+
+        <!-- hutool-extra -->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-extra</artifactId>
+        </dependency>
+
         <!-- qiniu -->
         <dependency>
             <groupId>com.qiniu</groupId>
