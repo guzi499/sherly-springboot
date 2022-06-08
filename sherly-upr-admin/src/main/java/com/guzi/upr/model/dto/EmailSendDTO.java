@@ -11,12 +11,15 @@ import java.util.List;
  */
 @Data
 public class EmailSendDTO {
-    @ApiModelProperty("收件人")
+    /** 收件人邮箱 */
+    @ApiModelProperty("收件人邮箱")
     private List<String> tos;
 
+    /** 主题 */
     @ApiModelProperty("主题")
     private String subject;
 
+    /** 正文 */
     @ApiModelProperty("正文")
     private String content;
 }
