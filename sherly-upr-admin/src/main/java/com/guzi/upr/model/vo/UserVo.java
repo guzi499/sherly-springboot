@@ -46,6 +46,10 @@ public class UserVo {
     @ApiModelProperty("部门id")
     private Long departmentId;
 
+    /** 部门名称 */
+    @ApiModelProperty("部门名称")
+    private String departmentName;
+
     /** 0超级管理员 1管理员 2普通用户 */
     @ApiModelProperty("0超级管理员 1管理员 2普通用户")
     private Integer identity;
