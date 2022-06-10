@@ -14,10 +14,6 @@ import java.util.List;
  */
 @Data
 public class UserInsertDTO {
-    /** 昵称 */
-    @ApiModelProperty("昵称")
-    @NotBlank
-    private String nickname;
 
     /** 姓名 */
     @ApiModelProperty("姓名")
@@ -28,10 +24,6 @@ public class UserInsertDTO {
     @ApiModelProperty("手机号")
     @NotBlank
     private String phone;
-
-    /** 用户邮箱 */
-    @ApiModelProperty("用户邮箱")
-    private String email;
 
     /** 性别 */
     @ApiModelProperty("性别")

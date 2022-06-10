@@ -18,17 +18,9 @@ public class UserUpdateDTO {
     @NotNull
     private Long userId;
 
-    /** 昵称 */
-    @ApiModelProperty("昵称")
-    private String nickname;
-
-    /** 用户头像 */
-    @ApiModelProperty("用户头像")
-    private String avatar;
-
-    /** 用户邮箱 */
-    @ApiModelProperty("用户邮箱")
-    private String email;
+    /** 姓名 */
+    @ApiModelProperty("姓名")
+    private String realName;
 
     /** 性别 */
     @ApiModelProperty("性别")

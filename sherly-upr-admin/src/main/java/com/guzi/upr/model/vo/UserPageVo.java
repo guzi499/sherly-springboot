@@ -28,21 +28,21 @@ public class UserPageVo {
     @ApiModelProperty("手机号")
     private String phone;
 
-    /** 用户头像 */
-    @ApiModelProperty("用户头像")
-    private String avatar;
-
     /** 用户邮箱 */
     @ApiModelProperty("用户邮箱")
     private String email;
 
     /** 性别 */
     @ApiModelProperty("性别")
-    private String gender;
+    private Integer gender;
 
     /** 部门名称 */
     @ApiModelProperty("部门名称")
     private String departmentName;
+
+    /** 部门id */
+    @ApiModelProperty("部门id")
+    private Long departmentId;
 
     /** 0不可用 1可用 */
     @ApiModelProperty("0不可用 1可用")
