@@ -2,10 +2,12 @@ package com.guzi.upr.manager;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.guzi.upr.mapper.admin.UserMapper;
 import com.guzi.upr.model.admin.User;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.guzi.upr.model.dto.UserPageDTO;
+import com.guzi.upr.util.SherlyLambdaQueryWrapper;
 import org.springframework.stereotype.Service;
 
 /**
@@ -15,8 +17,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserManager extends ServiceImpl<UserMapper, User> {
 
-    @Autowired
-    private UserMapper userMapper;
+    public IPage<User> page(UserPageDTO dto) {
+        SherlyLambdaQueryWrapper<User> wrapper = new SherlyLambdaQueryWrapper<>();
+        wrapper.likeIfExist(User::getPhone, dto.getPhone())
+                .likeIfExist(User::getRealName, dto.getRealName())
+                .likeIfExist(User::getNickname, dto.getNickname())
+                .likeIfExist(User::getEmail, dto.getEmail())
+                .eqIfExist(User::getDepartmentId, dto.getDepartmentId())
+                .eqIfExist(User::getEnable, dto.getEnable())
+                .betweenIfExist(User::getCreateTime, dto.getBeginTime(), dto.getEndTime());
+        return this.page(dto.pageInfo(), wrapper);
+    }
 
     /**
      * 根据手机号和密码查询用户
@@ -30,7 +41,7 @@ public class UserManager extends ServiceImpl<UserMapper, User> {
         wrapper.eq(User::getPhone, phone)
                 .eq(User::getPassword, password);
 
-        return userMapper.selectOne(wrapper);
+        return this.getOne(wrapper);
     }
 
     /**
