@@ -59,22 +59,44 @@
     - POST请求和PUT请求必须使用@RequestBody 定义DTO，application/json方式传输数据。
     - 接口命名统一为XX新增、XX删除、XX修改、XX分页、XX详情等。
 2. 禁止使用pathVariable，即{id}方式，如果没有校验，可能会导致路径跳转错误。
-2. 前后端的时间格式统一为"yyyy-MM-dd HH:mm:ss"，统一为GMT。
-#### 【6】knife4j文档
+3. 前后端的时间格式统一为"yyyy-MM-dd HH:mm:ss"，统一为GMT。
+#### 【6】Git提交规范
+1. git提交时需要填写message，内容格式如下
+   ```text
+      【需求编号】类型:描述
+   ```
+   多个提交则换行，例如
+   ```text
+      【1000024】feat:实现用户的导出功能
+      【1000007】fix:解决查看用户页面空指针问题
+      【0000000】doc:更新后端开发规范文档
+   ```
+2. 下面列举所有的git提交类型
+   ```text
+      feat -> 新功能
+      fix -> bug修复
+      doc -> 文档更新
+      style -> 代码格式变更
+      refactor -> 重构
+      perf -> 性能优化
+      test -> 新增测试
+      revert -> 回滚
+   ```
+#### 【7】knife4j文档
 1. 所有VO/DTO/MODEL都需要加**行形式**文档注释和@ApiModelProperty注解
 2. 所有Controller类上需要加@Api(tags = "xxx")注解
 3. 所有Controller方法需要加@ApiOperation("xxx")注解
 4. 如果Result中data有数据，Controller方法中返回值必须写完整的类型。如 Result<List<UserVO>>。
-#### 【7】mybatis-plus
+#### 【8】mybatis-plus
 1. 因为加了mybatis-plus逻辑删除。所有逻辑删除不要使用update更新，而是直接删除。
 2. 所有自增主键一律加注解 @TableId(type = IdType.AUTO)。
 3. 所有日期格式的VO对象上必须加上注解 @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-#### 【8】lombok
+#### 【9】lombok
 1. @Data：注解在类上，相当于同时使用了@ToString、@EqualsAndHashCode、@Getter、@Setter和@RequiredArgsConstrutor这些注解，对于POJO类十分有用。除特殊情况，不要再添加其他lombok注解。
-#### 【9】validation
+#### 【10】validation
 1. 增删改时必填字段：如果为字符串类型使用@NotBlank注解，如果为其他类型使用@NotNull注解
 2. 规定了范围的字段：必须使用@Range(min = x, max = x)进行约束，同时如果为必填还需加上@NotNull注解；如果为单方向限制，则用@Min或@Max注解
-#### 【10】其他
+#### 【11】其他
 1. 基础代码统一使用jdk与springframework下的工具类。
 2. 业务代码统一使用hutool下的工具类。
 4. 不要在视图模板中加入任何复杂的逻辑，即前端只负责展示，不参与任何业务处理！
@@ -96,3 +118,4 @@
 - `v1.0 & 2022-03-31 : 初稿编写完成。`
 - `v1.1 & 2022-04-11 : 更新完善`
 - `v1.2 & 2022-05-13 : 更新校验注解的使用`
+- `v1.3 & 2022-06-16 : 更新git提交规范`
