@@ -1,4 +1,4 @@
-<h1 align="center">后端开发规范</h1>
+<h1 align="center">sherly后端开发规范</h1>
 <p align="center">
 	<a href='https://gitee.com/guzi499/universal-practice-repository/stargazers'>
         <img src='https://gitee.com/guzi499/universal-practice-repository/badge/star.svg?theme=dark' alt='star'/>

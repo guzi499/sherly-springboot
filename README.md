@@ -1,4 +1,4 @@
-<h1 align="center">Sherly 1.0-SNAPSHOT</h1>
+<h1 align="center">sherly-springboot</h1>
 <p align="center">
 	<a href='https://gitee.com/guzi499/universal-practice-repository/stargazers'><img src='https://gitee.com/guzi499/universal-practice-repository/badge/star.svg?theme=dark' alt='star'></img></a>
 </p>
@@ -13,13 +13,11 @@
 
 主租户实现功能后，可以根据需求将菜单、权限分给下属购入租户，购入租户拥有这些菜单、权限后，就可以使用对应的菜单、权限功能。
 
-### 框架学习
-
-编写中
-
-### 项目结构
-
-梳理中
-
 ### 反馈交流
-联系QQ：504305797加入企业微信外部交流群
+<img src=".sherly-springboot/wx.jpg" height="200"/>
+添加我的企业微信，邀请您加入企业微信外部交流群
+
+### 特别鸣谢
+<img width="120" src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.png" alt="JetBrains Logo (Main) logo.">
+
+感谢 [jetbrains](https://jb.gg/OpenSourceSupport/?from=sherly-springboot "jetbrains") 为团队提供的免费授权，希望大家能够支持jetbrains及其正版产品。
