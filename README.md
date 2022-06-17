@@ -14,7 +14,8 @@
 主租户实现功能后，可以根据需求将菜单、权限分给下属购入租户，购入租户拥有这些菜单、权限后，就可以使用对应的菜单、权限功能。
 
 ### 反馈交流
-<img src=".sherly-springboot/wx.jpg" height="200"/>
+<img src="https://gitee.com/guzi499/sherly-springboot/raw/develop/.sherly-springboot/wx.jpg" height="100"/>
+
 添加我的企业微信，邀请您加入企业微信外部交流群
 
 ### 特别鸣谢
