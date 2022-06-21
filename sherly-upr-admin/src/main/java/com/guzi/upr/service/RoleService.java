@@ -24,6 +24,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static com.guzi.upr.enums.ResultAdminEnum.ROLE_BOUND_USER;
+
 /**
  * @author 谷子毅
  * @date 2022/3/24
@@ -132,7 +134,7 @@ public class RoleService {
     @Transactional(rollbackFor = Exception.class)
     public void removeOne(Long roleId) {
         if (userRoleManager.countByRoleId(roleId) > 0) {
-            throw new BizException(ResultAdminEnum.ROLE_BOUND_USER);
+            throw new BizException(ROLE_BOUND_USER);
         }
 
         roleManager.removeById(roleId);

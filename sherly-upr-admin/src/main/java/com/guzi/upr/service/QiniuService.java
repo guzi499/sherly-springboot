@@ -24,7 +24,7 @@ public class QiniuService {
     @Autowired
     private QiniuConfig qiniuConfig;
 
-    public void upload(MultipartFile file) {
+    public String upload(MultipartFile file) {
 
         Configuration cfg = new Configuration(Region.huanan());
         UploadManager uploadManager = new UploadManager(cfg);
@@ -38,6 +38,8 @@ public class QiniuService {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        return qiniuConfig.getBucket() + "/" + file.getOriginalFilename();
     }
 
     public String download(String fileName) throws UnsupportedEncodingException {

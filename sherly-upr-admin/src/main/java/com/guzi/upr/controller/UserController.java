@@ -2,9 +2,7 @@ package com.guzi.upr.controller;
 
 import com.guzi.upr.model.PageResult;
 import com.guzi.upr.model.Result;
-import com.guzi.upr.model.dto.UserInsertDTO;
-import com.guzi.upr.model.dto.UserPageDTO;
-import com.guzi.upr.model.dto.UserUpdateDTO;
+import com.guzi.upr.model.dto.*;
 import com.guzi.upr.model.vo.UserPageVo;
 import com.guzi.upr.model.vo.UserVo;
 import com.guzi.upr.service.UserService;
@@ -82,6 +80,37 @@ public class UserController {
     @ApiOperation("用户删除")
     public Result removeOne(@RequestParam Long userId) {
         userService.removeOne(userId);
+        return Result.success();
+    }
+
+    @GetMapping("/get/self")
+    // @PreAuthorize("hasAnyAuthority('user:get:self')")
+    @ApiOperation("用户个人中心")
+    public Result getSelf(@RequestParam Long userId) {
+        return Result.success(userService.getSelf(userId));
+    }
+
+    @PutMapping("/update/self")
+    // @PreAuthorize("hasAnyAuthority('user:update:self')")
+    @ApiOperation("用户个人中心更新")
+    public Result updateSelf(@RequestBody @Validated UserSelfUpdateDTO dto) {
+        userService.updateSelf(dto);
+        return Result.success();
+    }
+
+    @PutMapping("/update/password")
+    // @PreAuthorize("hasAnyAuthority('user:update:password')")
+    @ApiOperation("用户修改密码")
+    public Result updatePassword(@RequestBody @Validated UserUpdatePasswordDTO dto) {
+        userService.updatePassword(dto);
+        return Result.success();
+    }
+
+    @PutMapping("/update/avatar")
+    // @PreAuthorize("hasAnyAuthority('user:update:avatar')")
+    @ApiOperation("用户修改头像")
+    public Result updateAvatar(@RequestBody @Validated UserUpdateAvatarDTO dto) {
+        userService.updateAvatar(dto);
         return Result.success();
     }
 }

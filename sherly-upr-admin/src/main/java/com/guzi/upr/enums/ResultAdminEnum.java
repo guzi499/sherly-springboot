@@ -20,8 +20,10 @@ public enum ResultAdminEnum implements IBaseError {
     MENU_BOUND_ROLE("100009", "当前菜单已绑定角色，禁止删除！"),
     MENU_HAS_CHILDREN("100010", "当前菜单存在子菜单，禁止删除！"),
     MENU_PARENT_SELF("100011", "上级菜单不可为当前编辑菜单！"),
-    ROLE_BOUND_USER("100012", "当前角色已绑定用户，禁止删除！");
-
+    ROLE_BOUND_USER("100012", "当前角色已绑定用户，禁止删除！"),
+    USER_PASSWORD_ERROR("100013", "旧密码错误！"),
+    USER_PASSWORD_REPEAT("100013", "新旧密码相同，禁止修改！"),
+    ;
     private final String code;
     private final String message;
 

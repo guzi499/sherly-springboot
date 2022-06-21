@@ -1,6 +1,5 @@
 package com.guzi.upr.service;
 
-import com.guzi.upr.enums.ResultAdminEnum;
 import com.guzi.upr.exception.BizException;
 import com.guzi.upr.manager.MenuManager;
 import com.guzi.upr.manager.RoleMenuManager;
@@ -16,6 +15,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+
+import static com.guzi.upr.enums.ResultAdminEnum.*;
 
 /**
  * @author 谷子毅
@@ -82,10 +83,10 @@ public class MenuService {
      */
     public void removeOne(Long menuId) {
         if (roleMenuManager.countByMenuId(menuId) > 0) {
-            throw new BizException(ResultAdminEnum.MENU_BOUND_ROLE);
+            throw new BizException(MENU_BOUND_ROLE);
         }
         if (menuManager.countChildrenByMenuId(menuId) > 0) {
-            throw new BizException(ResultAdminEnum.MENU_HAS_CHILDREN);
+            throw new BizException(MENU_HAS_CHILDREN);
         }
         menuManager.removeById(menuId);
     }
@@ -97,7 +98,7 @@ public class MenuService {
      */
     public void updateOne(MenuUpdateDTO dto) {
         if (!Objects.equals(dto.getParentId(), dto.getMenuId())) {
-            throw new BizException(ResultAdminEnum.MENU_PARENT_SELF);
+            throw new BizException(MENU_PARENT_SELF);
         }
         Menu menu = new Menu();
         BeanUtils.copyProperties(dto, menu);

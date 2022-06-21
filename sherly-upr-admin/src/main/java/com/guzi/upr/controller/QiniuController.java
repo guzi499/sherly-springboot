@@ -25,10 +25,8 @@ public class QiniuController {
 
     @ApiOperation("文件上传")
     @PostMapping("/upload/one")
-    public Result upload(@RequestParam MultipartFile file){
-        qiniuService.upload(file);
-
-        return Result.success();
+    public Result<String> upload(@RequestParam MultipartFile file){
+        return Result.success(qiniuService.upload(file));
     }
 
     @ApiOperation("文件下载")

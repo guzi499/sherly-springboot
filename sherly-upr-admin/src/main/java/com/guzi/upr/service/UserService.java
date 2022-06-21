@@ -3,7 +3,6 @@ package com.guzi.upr.service;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.write.style.column.LongestMatchColumnWidthStyleStrategy;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.guzi.upr.enums.ResultAdminEnum;
 import com.guzi.upr.exception.BizException;
 import com.guzi.upr.manager.DepartmentManager;
 import com.guzi.upr.manager.RoleManager;
@@ -13,12 +12,13 @@ import com.guzi.upr.model.PageResult;
 import com.guzi.upr.model.admin.Department;
 import com.guzi.upr.model.admin.Role;
 import com.guzi.upr.model.admin.User;
-import com.guzi.upr.model.dto.UserInsertDTO;
-import com.guzi.upr.model.dto.UserPageDTO;
-import com.guzi.upr.model.dto.UserUpdateDTO;
+import com.guzi.upr.model.dto.*;
 import com.guzi.upr.model.eo.UserEO;
 import com.guzi.upr.model.vo.UserPageVo;
+import com.guzi.upr.model.vo.UserSelfVO;
 import com.guzi.upr.model.vo.UserVo;
+import com.guzi.upr.security.util.SecurityUtil;
+import com.guzi.upr.util.QiniuUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -31,6 +31,8 @@ import java.net.URLEncoder;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+
+import static com.guzi.upr.enums.ResultAdminEnum.*;
 
 /**
  * @author 谷子毅
@@ -137,7 +139,7 @@ public class UserService {
         // 去重
         User one = userManager.getByPhone(dto.getPhone());
         if (one != null) {
-            throw new BizException(ResultAdminEnum.USER_REPEAT);
+            throw new BizException(USER_REPEAT);
         }
 
         User user = new User();
@@ -182,5 +184,76 @@ public class UserService {
      */
     public void banOne(Long userId, Integer enable) {
         userManager.banOne(userId, enable);
+    }
+
+    /**
+     * 用户个人中心
+     *
+     * @return
+     */
+    public UserSelfVO getSelf(Long userId) {
+        User user = userManager.getById(userId);
+
+        // 查询角色
+        List<Role> roles = roleManager.listByUserId(userId);
+        List<Long> roleIds = roles.stream().map(Role::getRoleId).collect(Collectors.toList());
+        List<String> roleNames = roles.stream().map(Role::getRoleName).collect(Collectors.toList());
+
+        // 查询部门
+        List<Department> departmentList = departmentManager.list();
+        List<Long> departmentIds = departmentList.stream().map(Department::getDepartmentId).collect(Collectors.toList());
+
+        // 组装vo
+        UserSelfVO vo = new UserSelfVO();
+        BeanUtils.copyProperties(user, vo);
+        vo.setRoleIds(roleIds);
+        vo.setRoleNames(roleNames);
+        vo.setAvatar(QiniuUtil.getPrivateUrl(vo.getAvatar()));
+        vo.setGenderStr(vo.getGender() == 1 ? "男" : "女");
+        vo.setDepartmentName(departmentList.stream().filter(x -> Objects.equals(x.getDepartmentId(), vo.getDepartmentId())).map(Department::getDepartmentName).collect(Collectors.joining(",")));
+        vo.setTenantName(SecurityUtil.getTenantCode());
+
+        return vo;
+    }
+
+    /**
+     * 用户修改密码
+     * @param dto
+     */
+    public void updatePassword(UserUpdatePasswordDTO dto) {
+        Long userId = SecurityUtil.getUserId();
+        User user = userManager.getById(userId);
+
+        if (Objects.equals(dto.getNewPassword(), dto.getOldPassword())) {
+            // 新旧密码相同
+            throw new BizException(USER_PASSWORD_REPEAT);
+        }
+        boolean match = passwordEncoder.matches(dto.getOldPassword(), user.getPassword());
+        if (!match) {
+            // 旧密码不正确
+            throw new BizException(USER_PASSWORD_ERROR);
+        }
+        user.setPassword(passwordEncoder.encode(dto.getNewPassword()));
+        userManager.updateById(user);
+    }
+
+    /**
+     * 用户个人中心更新
+     * @param dto
+     */
+    public void updateSelf(UserSelfUpdateDTO dto) {
+        User user = new User();
+        BeanUtils.copyProperties(dto, user);
+        userManager.updateById(user);
+    }
+
+    /**
+     * 用户修改头像
+     * @param dto
+     */
+    public void updateAvatar(UserUpdateAvatarDTO dto) {
+        User user = new User();
+        BeanUtils.copyProperties(dto, user);
+        userManager.updateById(user);
     }
 }
