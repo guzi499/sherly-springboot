@@ -1,6 +1,7 @@
-package com.guzi.upr.service;
+package com.guzi.upr.service.impl;
 
 import com.guzi.upr.config.QiniuConfig;
+import com.guzi.upr.service.OssService;
 import com.qiniu.http.Response;
 import com.qiniu.storage.Configuration;
 import com.qiniu.storage.Region;
@@ -15,17 +16,23 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 /**
+ * 七牛云对象存储服务
  * @author 谷子毅
- * @date 2022/5/15
+ * @date 2022/6/24
  */
 @Service
-public class QiniuService {
+public class QiniuServiceImpl implements OssService {
 
     @Autowired
     private QiniuConfig qiniuConfig;
 
+    /**
+     * 文件上传
+     * @param file
+     * @return
+     */
+    @Override
     public String upload(MultipartFile file) {
-
         Configuration cfg = new Configuration(Region.huanan());
         UploadManager uploadManager = new UploadManager(cfg);
 
@@ -42,9 +49,20 @@ public class QiniuService {
         return qiniuConfig.getBucket() + "/" + file.getOriginalFilename();
     }
 
-    public String download(String fileName) throws UnsupportedEncodingException {
+    /**
+     * 文件下载
+     * @param fileName
+     * @return
+     */
+    @Override
+    public String download(String fileName) {
         String domainOfBucket = qiniuConfig.getPreUrl();
-        String encodedFileName = URLEncoder.encode(fileName, "utf-8").replace("+", "%20");
+        String encodedFileName = null;
+        try {
+            encodedFileName = URLEncoder.encode(fileName, "utf-8").replace("+", "%20");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
 
         String publicUrl = String.format("%s/%s", domainOfBucket, encodedFileName);
 
