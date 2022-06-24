@@ -1,21 +1,17 @@
-package com.guzi.upr.model.admin;
+package com.guzi.upr.model.vo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
-import com.guzi.upr.model.BaseModel;
+import com.guzi.upr.model.admin.OssClientConfig;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
  * @author 谷子毅
- * @date 2022/6/11
+ * @date 2022/6/25
  */
 @Data
-@TableName(value = "sys_oss_config", autoResultMap = true)
-public class OssConfig extends BaseModel {
+public class OssConfigVO {
     /** 配置id */
     @ApiModelProperty("配置id")
     @TableId(type = IdType.AUTO)
@@ -33,12 +29,7 @@ public class OssConfig extends BaseModel {
     @ApiModelProperty("描述")
     private String description;
 
-    /** 0不可用 1可用 */
-    @ApiModelProperty("0不可用 1可用")
-    private Integer enable;
-
     /** 具体配置 */
     @ApiModelProperty("具体配置")
-    @TableField(typeHandler = JacksonTypeHandler.class)
     private OssClientConfig config;
 }
