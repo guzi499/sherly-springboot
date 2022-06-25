@@ -10,7 +10,7 @@ import java.util.Objects;
  */
 public abstract class AbstractOssClient<Config extends OssClientConfig> implements OssClient{
 
-    private Long clientId;
+    private final Long clientId;
 
     protected Config config;
 

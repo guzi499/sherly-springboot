@@ -18,13 +18,13 @@ public interface OssClient {
      * @param path
      * @return
      */
-    String upload(byte[] fileBytes, String path);
+    String upload(byte[] fileBytes, String path) throws Exception;
 
     /**
      * 删除文件
      * @param path
      */
-    void delete(String path);
+    void delete(String path) throws Exception;
 
     /**
      * 下载文件
@@ -32,5 +32,5 @@ public interface OssClient {
      * @param path
      * @return
      */
-    byte[] download(String path);
+    byte[] download(String path) throws Exception;
 }

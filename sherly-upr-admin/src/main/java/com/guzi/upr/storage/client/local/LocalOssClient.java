@@ -20,19 +20,18 @@ public class LocalOssClient extends AbstractOssClient<LocalOssClientConfig> {
 
     @Override
     public String upload(byte[] fileBytes, String path) {
-        String finalPath = config.getPrefixPath() + "/" + path;
-        FileUtil.writeBytes(fileBytes, finalPath);
-        return config.getDomainName() + path;
+        FileUtil.writeBytes(fileBytes,  config.getLocalPath() + "oss/" + path);
+        return config.getDomainName() + "oss/" + path;
     }
 
     @Override
     public void delete(String path) {
-        FileUtil.del(config.getPrefixPath() + "/" + path);
+        FileUtil.del(config.getLocalPath() + "oss/" + path);
     }
 
     @Override
     public byte[] download(String path) {
-        return FileUtil.readBytes(config.getPrefixPath() + "/" + path);
+        return FileUtil.readBytes(config.getLocalPath() + "oss/" + path);
     }
 
 }

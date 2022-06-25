@@ -10,9 +10,17 @@ import lombok.Data;
 @Data
 public class LocalOssClientConfig implements OssClientConfig {
 
-    /** 前缀路径 */
-    private String prefixPath;
+    /** 本地绝对路径前缀
+     *  - 格式如下：
+     *      linux    -> "/root/nginx/html/"
+     *      windows  -> "D://"
+     */
+    private String localPath;
 
-    /** 域名 */
+    /** 远程访问域名
+     *  - 格式如下：
+     *      linux    -> "http://127.0.0.1/"
+     *      windows  -> "D://"
+     */
     private String domainName;
 }
