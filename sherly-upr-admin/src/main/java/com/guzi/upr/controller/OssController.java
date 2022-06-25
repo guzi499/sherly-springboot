@@ -10,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author 谷子毅
- * @date 2022/5/15
+ * @date 2022/6/26
  */
 @RestController
 @RequestMapping("/api/oss")
@@ -20,17 +20,27 @@ public class OssController {
     @Autowired
     private OssService ossService;
 
-
-    @ApiOperation("文件上传")
-    @PostMapping("/upload/one")
-    public Result<String> upload(@RequestParam MultipartFile file){
-        return Result.success(ossService.upload(file));
+    @GetMapping("/list/page")
+    @ApiOperation("文件分页")
+    public Result listPage() {
+        return Result.success();
     }
 
-    @ApiOperation("文件下载")
-    @GetMapping("/download/one")
-    public Result download(@RequestParam String fileName) {
+    @PostMapping("/upload/one")
+    @ApiOperation("文件上传")
+    public Result uploadOne(@RequestParam MultipartFile file, @RequestParam String path) {
+        return Result.success();
+    }
 
-        return Result.success(ossService.download(fileName));
+    @GetMapping("/download/one")
+    @ApiOperation("文件下载")
+    public Result downloadOne(@RequestParam String path) {
+        return Result.success();
+    }
+
+    @DeleteMapping("/remove/one")
+    @ApiOperation("文件删除")
+    public Result removeOne() {
+        return Result.success();
     }
 }

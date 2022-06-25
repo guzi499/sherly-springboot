@@ -4,6 +4,7 @@ import com.guzi.upr.model.PageResult;
 import com.guzi.upr.model.Result;
 import com.guzi.upr.model.dto.OssConfigInsertDTO;
 import com.guzi.upr.model.dto.OssConfigPageDTO;
+import com.guzi.upr.model.dto.OssConfigUpdateDTO;
 import com.guzi.upr.model.vo.OssConfigPageVO;
 import com.guzi.upr.model.vo.OssConfigVO;
 import com.guzi.upr.service.OssConfigService;
@@ -41,8 +42,15 @@ public class OssConfigController {
 
     @PostMapping("/save/one")
     @ApiOperation("对象存储配置新增")
-    public Result saveOne(@RequestBody @Validated OssConfigInsertDTO dto) {
+    public Result saveOne(@RequestBody @Validated OssConfigInsertDTO dto) throws Exception {
         ossConfigService.saveOne(dto);
+        return Result.success();
+    }
+
+    @PutMapping("/update/one")
+    @ApiOperation("对象存储配置更新")
+    public Result updateOne(@RequestBody @Validated OssConfigUpdateDTO dto) throws Exception {
+        ossConfigService.updateOne(dto);
         return Result.success();
     }
 

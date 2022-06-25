@@ -1,6 +1,5 @@
 package com.guzi.upr.service;
 
-import com.guzi.upr.security.model.SecurityModel;
 import com.guzi.upr.manager.DepartmentManager;
 import com.guzi.upr.manager.MenuManager;
 import com.guzi.upr.manager.RoleManager;
@@ -10,7 +9,7 @@ import com.guzi.upr.model.admin.Menu;
 import com.guzi.upr.model.admin.Role;
 import com.guzi.upr.model.admin.User;
 import com.guzi.upr.model.vo.*;
-import com.guzi.upr.util.QiniuUtil;
+import com.guzi.upr.security.model.SecurityModel;
 import com.guzi.upr.util.SherlyBeanUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +52,6 @@ public class GenericService {
         User user = userManager.getById(userId);
         BasicUserInfoVO userVO = new BasicUserInfoVO();
         BeanUtils.copyProperties(user, userVO);
-        userVO.setAvatar(QiniuUtil.getPrivateUrl(userVO.getAvatar()));
 
         // 角色信息收集
         List<Role> roles = roleManager.listByUserId(userId);
