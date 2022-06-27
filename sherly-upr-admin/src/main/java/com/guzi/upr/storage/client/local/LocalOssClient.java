@@ -9,8 +9,8 @@ import com.guzi.upr.storage.model.AbstractOssClient;
  */
 public class LocalOssClient extends AbstractOssClient<LocalOssClientConfig> {
 
-    public LocalOssClient(Long clientId, LocalOssClientConfig config) {
-        super(clientId, config);
+    public LocalOssClient(Long clientId, String tenantCode, LocalOssClientConfig config) {
+        super(clientId, tenantCode, config);
     }
 
     @Override

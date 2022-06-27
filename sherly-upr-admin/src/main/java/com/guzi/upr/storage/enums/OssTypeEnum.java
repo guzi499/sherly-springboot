@@ -3,6 +3,8 @@ package com.guzi.upr.storage.enums;
 import com.guzi.upr.model.admin.OssClientConfig;
 import com.guzi.upr.storage.client.local.LocalOssClient;
 import com.guzi.upr.storage.client.local.LocalOssClientConfig;
+import com.guzi.upr.storage.client.s3.S3OssClient;
+import com.guzi.upr.storage.client.s3.S3OssClientConfig;
 import com.guzi.upr.storage.model.OssClient;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,7 +28,7 @@ public enum OssTypeEnum {
     /** SFTP */
     SFTP(4, null, null),
     /** S3规范 */
-    S3(5, null, null),
+    S3(5, S3OssClientConfig.class, S3OssClient.class),
     ;
 
     /** 存储类型 */

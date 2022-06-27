@@ -12,10 +12,13 @@ public abstract class AbstractOssClient<Config extends OssClientConfig> implemen
 
     private final Long clientId;
 
+    private final String tenantCode;
+
     protected Config config;
 
-    public AbstractOssClient(Long clientId, Config config) {
+    public AbstractOssClient(Long clientId, String tenantCode, Config config) {
         this.clientId = clientId;
+        this.tenantCode = tenantCode;
         this.config = config;
     }
 

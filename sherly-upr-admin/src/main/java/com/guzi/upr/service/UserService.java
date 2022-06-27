@@ -18,7 +18,6 @@ import com.guzi.upr.model.vo.UserPageVo;
 import com.guzi.upr.model.vo.UserSelfVO;
 import com.guzi.upr.model.vo.UserVo;
 import com.guzi.upr.security.util.SecurityUtil;
-import com.guzi.upr.util.QiniuUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -208,7 +207,6 @@ public class UserService {
         BeanUtils.copyProperties(user, vo);
         vo.setRoleIds(roleIds);
         vo.setRoleNames(roleNames);
-        vo.setAvatar(QiniuUtil.getPrivateUrl(vo.getAvatar()));
         vo.setGenderStr(vo.getGender() == 1 ? "男" : "女");
         vo.setDepartmentName(departmentList.stream().filter(x -> Objects.equals(x.getDepartmentId(), vo.getDepartmentId())).map(Department::getDepartmentName).collect(Collectors.joining(",")));
         vo.setTenantName(SecurityUtil.getTenantCode());

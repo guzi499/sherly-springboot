@@ -53,7 +53,7 @@ public final class SecurityUtil {
     }
 
     /**
-     * 获取租户id
+     * 获取租户code
      *
      * @return
      */

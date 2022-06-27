@@ -17,12 +17,14 @@ public interface OssClient {
      * @param fileBytes
      * @param path
      * @return
+     * @throws Exception
      */
     String upload(byte[] fileBytes, String path) throws Exception;
 
     /**
      * 删除文件
      * @param path
+     * @throws Exception
      */
     void delete(String path) throws Exception;
 
@@ -31,6 +33,7 @@ public interface OssClient {
      *
      * @param path
      * @return
+     * @throws Exception
      */
     byte[] download(String path) throws Exception;
 }

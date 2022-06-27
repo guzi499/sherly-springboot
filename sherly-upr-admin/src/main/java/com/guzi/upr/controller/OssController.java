@@ -28,8 +28,8 @@ public class OssController {
 
     @PostMapping("/upload/one")
     @ApiOperation("文件上传")
-    public Result uploadOne(@RequestParam MultipartFile file, @RequestParam String path) {
-        return Result.success();
+    public Result<String> uploadOne(@RequestParam MultipartFile file, @RequestParam String path) throws Exception {
+        return Result.success(ossService.uploadOne(file.getBytes(), path));
     }
 
     @GetMapping("/download/one")
