@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.guzi.upr.model.BaseModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,15 +19,12 @@ import lombok.NoArgsConstructor;
 @TableName("sys_user_role")
 public class UserRole extends BaseModel {
     /** id */
-    @ApiModelProperty("id")
     @TableId(type = IdType.AUTO)
     private Long id;
 
     /** 用户id */
-    @ApiModelProperty("用户id")
     private Long userId;
 
     /** 角色id */
-    @ApiModelProperty("角色id")
     private Long roleId;
 }

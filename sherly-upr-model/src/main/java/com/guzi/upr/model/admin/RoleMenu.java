@@ -15,15 +15,12 @@ import lombok.Data;
 @TableName("sys_role_menu")
 public class RoleMenu extends BaseModel {
     /** id */
-    @ApiModelProperty("id")
     @TableId(type = IdType.AUTO)
     private Long id;
 
     /** 角色id */
-    @ApiModelProperty("角色id")
     private Long roleId;
 
     /** 菜单id */
-    @ApiModelProperty("菜单id")
     private Long menuId;
 }
