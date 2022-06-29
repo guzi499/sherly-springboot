@@ -14,8 +14,8 @@ public class S3OssClient extends AbstractOssClient<S3OssClientConfig> {
 
     private MinioClient client;
 
-    public S3OssClient(Long clientId, String tenantCode, S3OssClientConfig config) {
-        super(clientId, tenantCode, config);
+    public S3OssClient(Long clientId, S3OssClientConfig config) {
+        super(clientId, config);
     }
 
     @Override

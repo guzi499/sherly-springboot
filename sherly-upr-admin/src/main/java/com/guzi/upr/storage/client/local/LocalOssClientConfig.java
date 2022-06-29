@@ -4,23 +4,20 @@ import com.guzi.upr.model.admin.OssClientConfig;
 import lombok.Data;
 
 /**
+ * 本地对象存储配置
  * @author 谷子毅
  * @date 2022/6/24
  */
 @Data
 public class LocalOssClientConfig implements OssClientConfig {
 
-    /** 本地绝对路径前缀
-     *  - 格式如下：
-     *      linux    -> "/root/nginx/html/"
-     *      windows  -> "D://"
+    /**
+     * 路径前缀（需要搭配 nginx使用）
      */
-    private String localPath;
+    private String prefix;
 
-    /** 远程访问域名
-     *  - 格式如下：
-     *      linux    -> "http://127.0.0.1/"
-     *      windows  -> "D://"
+    /**
+     * 访问域名
      */
     private String domainName;
 }

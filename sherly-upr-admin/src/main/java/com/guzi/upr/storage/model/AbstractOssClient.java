@@ -12,14 +12,12 @@ import java.util.Objects;
 public abstract class AbstractOssClient<Config extends OssClientConfig> implements OssClient{
     /** 当前对象存储服务配置id */
     private final Long configId;
-    /** 当前对象存储服务客户端对应的使用租户代码 */
-    private final String tenantCode;
+
     /** 当前对象存储服务配置 */
     protected Config config;
 
-    public AbstractOssClient(Long configId, String tenantCode, Config config) {
+    public AbstractOssClient(Long configId, Config config) {
         this.configId = configId;
-        this.tenantCode = tenantCode;
         this.config = config;
     }
 

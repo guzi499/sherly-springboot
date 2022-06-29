@@ -17,6 +17,11 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 public class OssClientFactory {
 
+    /**
+     * 客户端容器
+     * key: tenantCode
+     * value: client
+     */
     private final ConcurrentHashMap<String, OssClient> clients = new ConcurrentHashMap<>();
 
     public OssClient getOssClient() {
@@ -25,7 +30,7 @@ public class OssClientFactory {
 
     public AbstractOssClient createOssClient(String tenantCode, Integer type, Long configId, OssClientConfig config) {
         OssTypeEnum ossTypeEnum = OssTypeEnum.getByType(type);
-        AbstractOssClient ossClient = (AbstractOssClient) ReflectUtil.newInstance(ossTypeEnum.getClientClass(), configId, tenantCode, config);
+        AbstractOssClient ossClient = (AbstractOssClient) ReflectUtil.newInstance(ossTypeEnum.getClientClass(), configId, config);
         ossClient.init();
         clients.put(SecurityUtil.getTenantCode(), ossClient);
         return ossClient;

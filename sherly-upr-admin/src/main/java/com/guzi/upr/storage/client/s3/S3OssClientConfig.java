@@ -4,16 +4,17 @@ import com.guzi.upr.model.admin.OssClientConfig;
 import lombok.Data;
 
 /**
+ * S3对象存储配置
  * @author 谷子毅
  * @date 2022/6/25
  */
 @Data
 public class S3OssClientConfig implements OssClientConfig {
 
-    /** 节点地址 */
+    /** 上传地址 */
     private String endpoint;
 
-    /** 域名 */
+    /** 访问域名 */
     private String domainName;
 
     /** 存储桶 */
@@ -25,7 +26,7 @@ public class S3OssClientConfig implements OssClientConfig {
     /** 访问Secret */
     private String accessSecret;
 
-    /** 地区 */
+    /** 存储区域 */
     private String region;
 
 }
