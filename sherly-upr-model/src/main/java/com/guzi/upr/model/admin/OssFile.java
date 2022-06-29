@@ -28,7 +28,7 @@ public class OssFile {
     /** 文件类型 */
     private String fileType;
 
-    /** 访问url */
-    private Long size;
+    /** 文件大小 */
+    private Integer size;
 
 }
