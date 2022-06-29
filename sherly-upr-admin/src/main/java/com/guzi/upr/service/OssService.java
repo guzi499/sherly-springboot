@@ -55,7 +55,7 @@ public class OssService {
 
         OssFile ossFile = new OssFile();
         ossFile.setFileType(type);
-        ossFile.setConfigId(ossClient.getClientId());
+        ossFile.setConfigId(ossClient.getConfigId());
         ossFile.setPath(path);
         ossFile.setSize(fileBytes.length);
         ossFile.setUrl(url);
