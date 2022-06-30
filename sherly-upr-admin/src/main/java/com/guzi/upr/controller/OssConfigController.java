@@ -40,6 +40,13 @@ public class OssConfigController {
         return Result.success(ossConfigService.getOne(configId));
     }
 
+    @PutMapping("/enable/one")
+    @ApiOperation("对象存储配置激活")
+    public Result enableOne(@RequestParam Long configId) {
+        ossConfigService.enableOne(configId);
+        return Result.success();
+    }
+
     @PostMapping("/save/one")
     @ApiOperation("对象存储配置新增")
     public Result saveOne(@RequestBody @Validated OssConfigInsertDTO dto) throws Exception {

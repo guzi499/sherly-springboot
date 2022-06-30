@@ -9,6 +9,7 @@ import com.guzi.upr.model.admin.OssConfig;
 import com.guzi.upr.model.admin.OssFile;
 import com.guzi.upr.model.dto.OssFilePageDTO;
 import com.guzi.upr.model.vo.OssFilePageVO;
+import com.guzi.upr.security.util.SecurityUtil;
 import com.guzi.upr.storage.OssClientFactory;
 import com.guzi.upr.storage.model.OssClient;
 import org.springframework.beans.BeanUtils;
@@ -36,13 +37,13 @@ public class OssService {
     private OssFileManager ossFileManager;
 
     private OssClient getOssClient() {
-        OssClient ossClient = ossClientFactory.getOssClient();
+        OssClient ossClient = ossClientFactory.getOssClient(SecurityUtil.getTenantCode());
         if (ossClient == null) {
             OssConfig ossConfig = ossConfigManager.getEnable();
             if (ossConfig == null) {
                 System.out.println("没有可用的config");
             }
-            return ossClientFactory.createOssClient(ossConfig.getConfigId(), ossConfig.getType(), ossConfig.getConfig());
+            return ossClientFactory.createOssClient(SecurityUtil.getTenantCode(), ossConfig.getConfigId(), ossConfig.getType(), ossConfig.getConfig());
         }
         return ossClient;
     }
