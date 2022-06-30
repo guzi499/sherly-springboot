@@ -26,7 +26,7 @@ public class S3OssClientConfig implements OssClientConfig {
     /** 访问Secret */
     private String accessSecret;
 
-    /** 存储区域 */
+    /** 存储地区 */
     private String region;
 
 }

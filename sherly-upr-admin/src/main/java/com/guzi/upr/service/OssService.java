@@ -58,18 +58,22 @@ public class OssService {
      * @param path
      * @throws Exception
      */
-    public void uploadOne(byte[] fileBytes, String path) throws Exception {
+    public String uploadOne(byte[] fileBytes, String path) throws Exception {
+        String newPath = System.currentTimeMillis() + "$" + path;
+
         String type = FileTypeUtil.getType(new ByteArrayInputStream(fileBytes));
+
         OssClient ossClient = this.getOssClient();
-        ossClient.upload(fileBytes, path);
+        ossClient.upload(fileBytes, newPath);
 
         OssFile ossFile = new OssFile();
         ossFile.setFileType(type);
         ossFile.setConfigId(ossClient.getConfigId());
-        ossFile.setPath(path);
+        ossFile.setPath(newPath);
         ossFile.setSize(fileBytes.length);
-        ossFile.setUrl(path);
         ossFileManager.save(ossFile);
+
+        return newPath;
     }
 
     /**

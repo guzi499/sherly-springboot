@@ -8,6 +8,7 @@ import com.guzi.upr.service.LoginService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +27,7 @@ public class LoginController {
 
     @PostMapping("/login")
     @ApiOperation("登录")
-    public Result<LoginVO> login(@RequestBody LoginDTO dto, HttpServletRequest request) throws JsonProcessingException {
+    public Result<LoginVO> login(@RequestBody @Validated LoginDTO dto, HttpServletRequest request) throws JsonProcessingException {
         return Result.success(loginService.login(dto, request));
     }
 

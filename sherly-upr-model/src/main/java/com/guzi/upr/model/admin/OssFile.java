@@ -3,6 +3,7 @@ package com.guzi.upr.model.admin;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.guzi.upr.model.BaseModel;
 import lombok.Data;
 
 /**
@@ -11,7 +12,7 @@ import lombok.Data;
  */
 @Data
 @TableName("sys_oss_file")
-public class OssFile {
+public class OssFile extends BaseModel {
     /** 文件id */
     @TableId(type = IdType.AUTO)
     private Long fileId;
@@ -21,9 +22,6 @@ public class OssFile {
 
     /** 文件相对路径 */
     private String path;
-
-    /** 访问url */
-    private String url;
 
     /** 文件类型 */
     private String fileType;
