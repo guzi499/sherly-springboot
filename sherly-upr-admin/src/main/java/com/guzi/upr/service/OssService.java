@@ -9,7 +9,6 @@ import com.guzi.upr.model.admin.OssConfig;
 import com.guzi.upr.model.admin.OssFile;
 import com.guzi.upr.model.dto.OssFilePageDTO;
 import com.guzi.upr.model.vo.OssFilePageVO;
-import com.guzi.upr.security.util.SecurityUtil;
 import com.guzi.upr.storage.OssClientFactory;
 import com.guzi.upr.storage.model.OssClient;
 import org.springframework.beans.BeanUtils;
@@ -43,25 +42,23 @@ public class OssService {
             if (ossConfig == null) {
                 System.out.println("没有可用的config");
             }
-            return ossClientFactory.createOssClient(SecurityUtil.getTenantCode(), ossConfig.getType(), ossConfig.getConfigId(), ossConfig.getConfig());
+            return ossClientFactory.createOssClient(ossConfig.getConfigId(), ossConfig.getType(), ossConfig.getConfig());
         }
         return ossClient;
     }
 
-    public String uploadOne(byte[] fileBytes, String path) throws Exception {
+    public void uploadOne(byte[] fileBytes, String path) throws Exception {
         String type = FileTypeUtil.getType(new ByteArrayInputStream(fileBytes));
         OssClient ossClient = getOssClient();
-        String url = ossClient.upload(fileBytes, path);
+        ossClient.upload(fileBytes, path);
 
         OssFile ossFile = new OssFile();
         ossFile.setFileType(type);
         ossFile.setConfigId(ossClient.getConfigId());
         ossFile.setPath(path);
         ossFile.setSize(fileBytes.length);
-        ossFile.setUrl(url);
+        ossFile.setUrl(path);
         ossFileManager.save(ossFile);
-
-        return url;
     }
 
     public void removeOne(Long fileId) throws Exception {
@@ -84,5 +81,10 @@ public class OssService {
 
         return PageResult.build(result, page.getCurrent(), page.getSize(), page.getTotal());
 
+    }
+
+    public String accessUrl(String path) throws Exception {
+        OssClient ossClient = getOssClient();
+        return ossClient.getAccessUrl(path);
     }
 }

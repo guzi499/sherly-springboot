@@ -3,10 +3,13 @@ package com.guzi.upr.storage.client.s3;
 import cn.hutool.core.io.IoUtil;
 import com.guzi.upr.storage.model.AbstractOssClient;
 import io.minio.*;
+import io.minio.http.Method;
 
 import java.io.ByteArrayInputStream;
+import java.util.concurrent.TimeUnit;
 
 /**
+ * S3对象存储客户端
  * @author 谷子毅
  * @date 2022/6/25
  */
@@ -29,15 +32,13 @@ public class S3OssClient extends AbstractOssClient<S3OssClientConfig> {
     }
 
     @Override
-    public String upload(byte[] fileBytes, String path) throws Exception {
+    public void upload(byte[] fileBytes, String path) throws Exception {
         // 执行上传
         client.putObject(PutObjectArgs.builder()
                 .bucket(config.getBucket())
                 .object(path)
                 .stream(new ByteArrayInputStream(fileBytes), fileBytes.length, -1)
                 .build());
-        // 拼接返回路径
-        return config.getDomainName() + "/" + path;
     }
 
     @Override
@@ -55,5 +56,15 @@ public class S3OssClient extends AbstractOssClient<S3OssClientConfig> {
                 .object(path)
                 .build());
         return IoUtil.readBytes(response);
+    }
+
+    @Override
+    public String getAccessUrl(String path) throws Exception {
+        return client.getPresignedObjectUrl(GetPresignedObjectUrlArgs.builder()
+                .method(Method.GET)
+                .expiry(6, TimeUnit.HOURS)
+                .bucket(config.getBucket())
+                .object(path)
+                .build());
     }
 }

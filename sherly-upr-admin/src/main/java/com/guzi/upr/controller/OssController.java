@@ -36,8 +36,9 @@ public class OssController {
 
     @PostMapping("/upload/one")
     @ApiOperation("文件上传")
-    public Result<String> uploadOne(@RequestParam MultipartFile file, @RequestParam String path) throws Exception {
-        return Result.success(ossService.uploadOne(file.getBytes(), path));
+    public Result uploadOne(@RequestParam MultipartFile file, @RequestParam String path) throws Exception {
+        ossService.uploadOne(file.getBytes(), path);
+        return Result.success();
     }
 
     @GetMapping("/download/one")
@@ -46,8 +47,13 @@ public class OssController {
         byte[] fileBytes = ossService.downloadOne(path);
         response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(path, "UTF-8"));
         response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
-        // 输出附件
         IoUtil.write(response.getOutputStream(), false, fileBytes);
+    }
+
+    @GetMapping("/access/url")
+    @ApiOperation("文件链接（如果是S3的话是带过期时间、带url参数签名认证的url）")
+    public Result<String> accessUrl(@RequestParam String path) throws Exception {
+        return Result.success(ossService.accessUrl(path));
     }
 
     @DeleteMapping("/remove/one")

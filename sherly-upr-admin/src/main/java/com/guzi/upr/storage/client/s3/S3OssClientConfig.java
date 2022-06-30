@@ -4,7 +4,7 @@ import com.guzi.upr.model.admin.OssClientConfig;
 import lombok.Data;
 
 /**
- * S3对象存储配置
+ * S3对象存储客户端配置
  * @author 谷子毅
  * @date 2022/6/25
  */

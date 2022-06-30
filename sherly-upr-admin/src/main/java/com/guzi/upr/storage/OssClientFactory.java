@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
+ * 对象存储服务客户端工厂
  * @author 谷子毅
  * @date 2022/6/27
  */
@@ -22,17 +23,28 @@ public class OssClientFactory {
      * key: tenantCode
      * value: client
      */
-    private final ConcurrentHashMap<String, OssClient> clients = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String, AbstractOssClient<?>> clients = new ConcurrentHashMap<>();
 
+    /**
+     * 获取oss客户端对象
+     * @return oss客户端对象
+     */
     public OssClient getOssClient() {
         return clients.get(SecurityUtil.getTenantCode());
     }
 
-    public AbstractOssClient createOssClient(String tenantCode, Integer type, Long configId, OssClientConfig config) {
+    /**
+     * 创建oss客户端
+     * @param configId 配置id
+     * @param type 存储方式
+     * @param config oss客户端配置
+     * @return 被创建的oss客户端对象
+     */
+    public AbstractOssClient createOssClient(Long configId, Integer type, OssClientConfig config) {
         OssTypeEnum ossTypeEnum = OssTypeEnum.getByType(type);
-        AbstractOssClient ossClient = (AbstractOssClient) ReflectUtil.newInstance(ossTypeEnum.getClientClass(), configId, config);
-        ossClient.init();
-        clients.put(SecurityUtil.getTenantCode(), ossClient);
-        return ossClient;
+        AbstractOssClient client = (AbstractOssClient) ReflectUtil.newInstance(ossTypeEnum.getClientClass(), configId, config);
+        client.init();
+        clients.put(SecurityUtil.getTenantCode(), client);
+        return client;
     }
 }

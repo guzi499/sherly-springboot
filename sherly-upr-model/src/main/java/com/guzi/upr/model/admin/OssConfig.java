@@ -22,7 +22,7 @@ public class OssConfig extends BaseModel {
     /** 配置名称 */
     private String configName;
 
-    /** 存储类型 */
+    /** 存储方式 */
     private Integer type;
 
     /** 描述 */

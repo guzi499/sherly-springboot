@@ -16,10 +16,9 @@ public interface OssClient {
      * 上传文件
      * @param fileBytes 文件的字节流
      * @param path 相对路径
-     * @return 文件url访问路径
      * @throws Exception 上传文件时抛出的异常
      */
-    String upload(byte[] fileBytes, String path) throws Exception;
+    void upload(byte[] fileBytes, String path) throws Exception;
 
     /**
      * 删除文件
@@ -35,4 +34,12 @@ public interface OssClient {
      * @throws Exception 下载文件时抛出的异常
      */
     byte[] download(String path) throws Exception;
+
+    /**
+     * 获取访问url（如果是S3的话是带过期时间、带url参数签名认证的url）
+     * @param path 相对路径
+     * @return 访问url
+     * @throws Exception
+     */
+    String getAccessUrl(String path) throws Exception;
 }
