@@ -36,21 +36,31 @@ public class OssService {
     @Autowired
     private OssFileManager ossFileManager;
 
+    /**
+     * 获取对象存储服务客户端
+     * @return
+     */
     private OssClient getOssClient() {
         OssClient ossClient = ossClientFactory.getOssClient(SecurityUtil.getTenantCode());
         if (ossClient == null) {
             OssConfig ossConfig = ossConfigManager.getEnable();
             if (ossConfig == null) {
-                System.out.println("没有可用的config");
+                return null;
             }
             return ossClientFactory.createOssClient(SecurityUtil.getTenantCode(), ossConfig.getConfigId(), ossConfig.getType(), ossConfig.getConfig());
         }
         return ossClient;
     }
 
+    /**
+     * 文件上传
+     * @param fileBytes
+     * @param path
+     * @throws Exception
+     */
     public void uploadOne(byte[] fileBytes, String path) throws Exception {
         String type = FileTypeUtil.getType(new ByteArrayInputStream(fileBytes));
-        OssClient ossClient = getOssClient();
+        OssClient ossClient = this.getOssClient();
         ossClient.upload(fileBytes, path);
 
         OssFile ossFile = new OssFile();
@@ -62,15 +72,31 @@ public class OssService {
         ossFileManager.save(ossFile);
     }
 
+    /**
+     * 文件删除
+     * @param fileId
+     * @throws Exception
+     */
     public void removeOne(Long fileId) throws Exception {
         ossFileManager.removeById(fileId);
     }
 
+    /**
+     * 文件下载
+     * @param path
+     * @return
+     * @throws Exception
+     */
     public byte[] downloadOne(String path) throws Exception {
-        OssClient ossClient = getOssClient();
+        OssClient ossClient = this.getOssClient();
         return ossClient.download(path);
     }
 
+    /**
+     * 文件分页
+     * @param dto
+     * @return
+     */
     public PageResult listPage(OssFilePageDTO dto) {
         IPage<OssFile> page = ossFileManager.page(dto.pageInfo());
 
@@ -84,8 +110,14 @@ public class OssService {
 
     }
 
+    /**
+     * 文件链接（如果是S3的话是带过期时间、带url参数签名认证的url）
+     * @param path
+     * @return
+     * @throws Exception
+     */
     public String accessUrl(String path) throws Exception {
-        OssClient ossClient = getOssClient();
+        OssClient ossClient = this.getOssClient();
         return ossClient.getAccessUrl(path);
     }
 }
