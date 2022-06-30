@@ -12,6 +12,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -21,6 +22,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/menu")
 @Api(tags = "菜单相关")
+@Validated
 public class MenuController {
 
     @Autowired
@@ -36,7 +38,7 @@ public class MenuController {
     @PostMapping("/save/one")
     @PreAuthorize("hasAnyAuthority('menu:save:one')")
     @ApiOperation("菜单新增")
-    public Result saveOne(@RequestBody @Validated MenuInsertDTO dto) {
+    public Result saveOne(@RequestBody @Valid MenuInsertDTO dto) {
         menuService.saveOne(dto);
         return Result.success();
     }
@@ -52,7 +54,7 @@ public class MenuController {
     @PutMapping("/update/one")
     @PreAuthorize("hasAnyAuthority('menu:update:one')")
     @ApiOperation("菜单修改")
-    public Result updateOne(@RequestBody @Validated MenuUpdateDTO dto) {
+    public Result updateOne(@RequestBody @Valid MenuUpdateDTO dto) {
         menuService.updateOne(dto);
         return Result.success();
     }

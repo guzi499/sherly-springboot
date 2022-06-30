@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 /**
  * @author 谷子毅
  * @date 2022/6/24
@@ -49,14 +51,14 @@ public class OssConfigController {
 
     @PostMapping("/save/one")
     @ApiOperation("对象存储配置新增")
-    public Result saveOne(@RequestBody @Validated OssConfigInsertDTO dto) throws Exception {
+    public Result saveOne(@RequestBody @Valid OssConfigInsertDTO dto) throws Exception {
         ossConfigService.saveOne(dto);
         return Result.success();
     }
 
     @PutMapping("/update/one")
     @ApiOperation("对象存储配置更新")
-    public Result updateOne(@RequestBody @Validated OssConfigUpdateDTO dto) throws Exception {
+    public Result updateOne(@RequestBody @Valid OssConfigUpdateDTO dto) throws Exception {
         ossConfigService.updateOne(dto);
         return Result.success();
     }

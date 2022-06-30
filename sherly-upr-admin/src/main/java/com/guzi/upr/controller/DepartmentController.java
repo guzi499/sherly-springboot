@@ -12,6 +12,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -21,6 +22,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/department")
 @Api(tags = "部门相关")
+@Validated
 public class DepartmentController {
 
     @Autowired
@@ -36,7 +38,7 @@ public class DepartmentController {
     @PostMapping("/save/one")
     @PreAuthorize("hasAnyAuthority('department:save:one')")
     @ApiOperation("部门新增")
-    public Result saveOne(@RequestBody @Validated DepartmentInsertDTO dto) {
+    public Result saveOne(@RequestBody @Valid DepartmentInsertDTO dto) {
         departmentService.saveOne(dto);
         return Result.success();
     }
@@ -44,7 +46,7 @@ public class DepartmentController {
     @PutMapping("/update/one")
     @PreAuthorize("hasAnyAuthority('department:update:one')")
     @ApiOperation("部门更新")
-    public Result updateOne(@RequestBody @Validated DepartmentUpdateDTO dto) {
+    public Result updateOne(@RequestBody @Valid DepartmentUpdateDTO dto) {
         departmentService.updateOne(dto);
         return Result.success();
     }

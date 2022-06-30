@@ -26,5 +26,6 @@ public class UserSelfUpdateDTO {
 
     /** 性别 */
     @ApiModelProperty("性别")
+    @NotNull
     private Integer gender;
 }

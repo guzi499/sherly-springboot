@@ -29,5 +29,6 @@ public class OssConfigInsertDTO {
 
     /** 具体配置 */
     @ApiModelProperty("具体配置")
+    @NotNull
     private Map<String, Object> config;
 }

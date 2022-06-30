@@ -12,6 +12,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 /**
  * @author 谷子毅
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 @Api(tags = "登录相关")
 @RequestMapping("/api")
+@Validated
 public class LoginController {
 
     @Autowired
@@ -27,7 +29,7 @@ public class LoginController {
 
     @PostMapping("/login")
     @ApiOperation("登录")
-    public Result<LoginVO> login(@RequestBody @Validated LoginDTO dto, HttpServletRequest request) throws JsonProcessingException {
+    public Result<LoginVO> login(@RequestBody @Valid LoginDTO dto, HttpServletRequest request) throws JsonProcessingException {
         return Result.success(loginService.login(dto, request));
     }
 

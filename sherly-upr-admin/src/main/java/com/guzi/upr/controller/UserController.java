@@ -8,13 +8,13 @@ import com.guzi.upr.model.vo.UserVo;
 import com.guzi.upr.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.hibernate.validator.constraints.Range;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.IOException;
 
 /**
@@ -54,7 +54,7 @@ public class UserController {
     @PutMapping("/ban/one")
     @PreAuthorize("hasAnyAuthority('user:ban:one')")
     @ApiOperation(value = "用户禁用/启用")
-    public Result banOne(@RequestParam Long userId, @RequestParam @Range(min = 0, max = 1) Integer enable) {
+    public Result banOne(@RequestParam Long userId, @RequestParam Integer enable) {
         userService.banOne(userId, enable);
         return Result.success();
     }
@@ -62,7 +62,7 @@ public class UserController {
     @PostMapping("/save/one")
     @PreAuthorize("hasAnyAuthority('user:save:one')")
     @ApiOperation(value = "用户新增")
-    public Result saveOne(@RequestBody @Validated UserInsertDTO dto) {
+    public Result saveOne(@RequestBody @Valid UserInsertDTO dto) {
         userService.saveOne(dto);
         return Result.success();
     }
@@ -70,7 +70,7 @@ public class UserController {
     @PutMapping("/update/one")
     @PreAuthorize("hasAnyAuthority('user:update:one')")
     @ApiOperation("用户更新")
-    public Result updateOne(@RequestBody @Validated UserUpdateDTO dto) {
+    public Result updateOne(@RequestBody @Valid UserUpdateDTO dto) {
         userService.updateOne(dto);
         return Result.success();
     }
@@ -93,7 +93,7 @@ public class UserController {
     @PutMapping("/update/self")
     // @PreAuthorize("hasAnyAuthority('user:update:self')")
     @ApiOperation("用户个人中心更新")
-    public Result updateSelf(@RequestBody @Validated UserSelfUpdateDTO dto) {
+    public Result updateSelf(@RequestBody @Valid UserSelfUpdateDTO dto) {
         userService.updateSelf(dto);
         return Result.success();
     }
@@ -101,7 +101,7 @@ public class UserController {
     @PutMapping("/update/password")
     // @PreAuthorize("hasAnyAuthority('user:update:password')")
     @ApiOperation("用户修改密码")
-    public Result updatePassword(@RequestBody @Validated UserUpdatePasswordDTO dto) {
+    public Result updatePassword(@RequestBody @Valid UserUpdatePasswordDTO dto) {
         userService.updatePassword(dto);
         return Result.success();
     }
@@ -109,7 +109,7 @@ public class UserController {
     @PutMapping("/update/avatar")
     // @PreAuthorize("hasAnyAuthority('user:update:avatar')")
     @ApiOperation("用户修改头像")
-    public Result updateAvatar(@RequestBody @Validated UserUpdateAvatarDTO dto) {
+    public Result updateAvatar(@RequestBody @Valid UserUpdateAvatarDTO dto) {
         userService.updateAvatar(dto);
         return Result.success();
     }

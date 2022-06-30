@@ -16,6 +16,7 @@ public class OssConfigUpdateDTO {
 
     /** 配置id */
     @ApiModelProperty("配置id")
+    @NotNull
     private Long configId;
 
     /** 配置名称 */
@@ -34,5 +35,6 @@ public class OssConfigUpdateDTO {
 
     /** 具体配置 */
     @ApiModelProperty("具体配置")
+    @NotNull
     private Map<String, Object> config;
 }

@@ -14,6 +14,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 /**
  * @author 谷子毅
  * @date 2022/3/22
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/tenant")
 @Api(tags = "租户相关")
+@Validated
 public class TenantController {
 
     @Autowired
@@ -37,7 +40,7 @@ public class TenantController {
     @PostMapping("/save/one")
     @PreAuthorize("hasAnyAuthority('tenant:save:one')")
     @ApiOperation("租户新增")
-    public Result saveOne(@RequestBody @Validated TenantInsertDTO dto) {
+    public Result saveOne(@RequestBody @Valid TenantInsertDTO dto) {
         tenantService.saveOne(dto);
         return Result.success();
     }
@@ -45,7 +48,7 @@ public class TenantController {
     @PutMapping("/update/one")
     @PreAuthorize("hasAnyAuthority('tenant:update:one')")
     @ApiOperation("租户更新")
-    public Result updateOne(@RequestBody @Validated TenantUpdateDTO dto) {
+    public Result updateOne(@RequestBody @Valid TenantUpdateDTO dto) {
         tenantService.updateOne(dto);
         return Result.success();
     }

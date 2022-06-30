@@ -8,7 +8,10 @@ import com.guzi.upr.service.EmailService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 /**
  * @author 谷子毅
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/email")
 @Api(tags = "邮件相关")
+@Validated
 public class EmailController {
 
     @Autowired
@@ -30,14 +34,14 @@ public class EmailController {
 
     @PostMapping("/saveOrUpdate/one")
     @ApiOperation("邮件配置保存或修改")
-    public Result saveOrUpdateOne(@RequestBody EmailConfigDTO dto) {
+    public Result saveOrUpdateOne(@RequestBody @Valid EmailConfigDTO dto) {
         emailService.saveOrUpdateOne(dto);
         return Result.success();
     }
 
     @PostMapping("/send")
     @ApiOperation("邮件发送")
-    public Result send(@RequestBody EmailSendDTO dto) {
+    public Result send(@RequestBody @Valid EmailSendDTO dto) {
         emailService.send(dto);
         return Result.success();
     }

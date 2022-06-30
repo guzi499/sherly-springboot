@@ -2,7 +2,6 @@ package com.guzi.upr.model.dto;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -27,7 +26,6 @@ public class UserInsertDTO {
 
     /** 性别 */
     @ApiModelProperty("性别")
-    @Range(min = 0, max = 1)
     @NotNull
     private Integer gender;
 

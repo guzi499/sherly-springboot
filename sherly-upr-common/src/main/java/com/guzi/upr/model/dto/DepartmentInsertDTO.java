@@ -2,7 +2,6 @@ package com.guzi.upr.model.dto;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -29,7 +28,6 @@ public class DepartmentInsertDTO {
 
     /** 排序 */
     @ApiModelProperty("排序")
-    @Range(min = 1, max = 999)
     @NotNull
     private Integer sort;
 }

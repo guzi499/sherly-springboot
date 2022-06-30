@@ -95,7 +95,6 @@
 1. @Data：注解在类上，相当于同时使用了@ToString、@EqualsAndHashCode、@Getter、@Setter和@RequiredArgsConstrutor这些注解，对于POJO类十分有用。除特殊情况，不要再添加其他lombok注解。
 #### 【10】validation
 1. 增删改时必填字段：如果为字符串类型使用@NotBlank注解，如果为其他类型使用@NotNull注解
-2. 规定了范围的字段：必须使用@Range(min = x, max = x)进行约束，同时如果为必填还需加上@NotNull注解；如果为单方向限制，则用@Min或@Max注解
 #### 【11】其他
 1. 基础代码统一使用jdk与springframework下的工具类。
 2. 业务代码统一使用hutool下的工具类。
