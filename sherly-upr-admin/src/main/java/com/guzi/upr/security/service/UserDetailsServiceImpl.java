@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -63,7 +64,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         List<RoleMenu> roleMenus = roleMenuManager.listByRoleIds(roleIds);
         List<Long> menuIds = roleMenus.stream().map(RoleMenu::getMenuId).distinct().collect(Collectors.toList());
         List<Menu> menus = menuManager.listByIds(menuIds);
-        List<String> permissions = menus.stream().filter(e -> e.getMenuType() != 1).map(Menu::getPermission).collect(Collectors.toList());
+        List<String> permissions = menus.stream().filter(e -> e.getMenuType() != 1).map(Menu::getPermission).filter(StringUtils::hasText).collect(Collectors.toList());
 
         // 响应userDetails用于登录校验
         LoginUserDetails loginUserDetails = new LoginUserDetails();
