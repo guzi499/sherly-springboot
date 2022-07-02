@@ -6,14 +6,14 @@ pipeline {
         }
     }
     stages {
-        stage('Build') {
+        stage('maven构建') {
             steps {
                 sh 'mvn -B -DskipTests clean package'
             }
         }
-        stage('push jar') {
+        stage('远程ssh传输并启动jar') {
             steps{
-                sshPublisher(publishers: [sshPublisherDesc(configName: 'tencentcloud', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '/root/sherly-test/run.sh restart', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: 'sherly-upr-admin/target/', sourceFiles: 'sherly-upr-admin/target/*.jar')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+                sshPublisher(publishers: [sshPublisherDesc(configName: 'tencentcloud', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: 'cd /root/sherly-test; sh run.sh restart', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: 'sherly-upr-admin/target/', sourceFiles: 'sherly-upr-admin/target/*.jar')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
              }
         }
     }
