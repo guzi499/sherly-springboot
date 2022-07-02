@@ -241,6 +241,7 @@ public class UserService {
      */
     public void updateSelf(UserSelfUpdateDTO dto) {
         User user = new User();
+        user.setUserId(SecurityUtil.getUserId());
         BeanUtils.copyProperties(dto, user);
         userManager.updateById(user);
     }

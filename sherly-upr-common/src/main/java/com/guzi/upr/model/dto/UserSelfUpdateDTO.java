@@ -11,10 +11,6 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 public class UserSelfUpdateDTO {
-    /** 用户id */
-    @ApiModelProperty("用户id")
-    @NotNull
-    private Long userId;
 
     /** 昵称 */
     @ApiModelProperty("昵称")
