@@ -97,7 +97,7 @@ public class MenuService {
      * @param dto
      */
     public void updateOne(MenuUpdateDTO dto) {
-        if (!Objects.equals(dto.getParentId(), dto.getMenuId())) {
+        if (Objects.equals(dto.getParentId(), dto.getMenuId())) {
             throw new BizException(MENU_PARENT_SELF);
         }
         Menu menu = new Menu();
