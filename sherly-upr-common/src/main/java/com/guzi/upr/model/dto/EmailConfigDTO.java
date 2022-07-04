@@ -28,18 +28,18 @@ public class EmailConfigDTO {
     @NotBlank
     private String port;
 
-    /** 发件者用户名 */
-    @ApiModelProperty("发件者用户名")
+    /** 发件人名称 */
+    @ApiModelProperty("发件人名称")
     @NotBlank
-    private String user;
+    private String senderUser;
 
     /** 密码 */
     @ApiModelProperty("密码")
     @NotBlank
-    private String pass;
+    private String password;
 
     /** 发件人邮箱 */
     @ApiModelProperty("发件人邮箱")
     @Email
-    private String fromUser;
+    private String senderEmail;
 }

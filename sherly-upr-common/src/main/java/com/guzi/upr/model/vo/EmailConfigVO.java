@@ -24,17 +24,17 @@ public class EmailConfigVO {
     @ApiModelProperty("邮件服务器SMTP端口")
     private String port;
 
-    /** 发件者用户名 */
-    @ApiModelProperty("发件者用户名")
-    private String user;
+    /** 发件人名称 */
+    @ApiModelProperty("发件人名称")
+    private String senderUser;
 
     /** 密码 */
     @ApiModelProperty("密码")
-    private String pass;
+    private String password;
 
     /** 发件人邮箱 */
     @ApiModelProperty("发件人邮箱")
-    private String fromUser;
+    private String senderEmail;
 
     /** 创建时间 */
     @ApiModelProperty("创建时间")
