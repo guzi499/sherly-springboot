@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -66,7 +67,7 @@ public class GenericService {
         List<Menu> menus = menuManager.listByRoleIds(roleIds);
 
         // 跳转相关
-        List<Menu> jumps = menus.stream().filter(e -> e.getMenuType() != 3).collect(Collectors.toList());
+        List<Menu> jumps = menus.stream().filter(e -> e.getMenuType() != 3).sorted(Comparator.comparing(Menu::getSort)).collect(Collectors.toList());
         // 权限相关
         List<Menu> permissions = menus.stream().filter(e -> e.getMenuType() != 1).collect(Collectors.toList());
 
