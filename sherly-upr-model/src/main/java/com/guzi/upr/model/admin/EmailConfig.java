@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.guzi.upr.model.BaseModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
@@ -16,7 +15,7 @@ import lombok.Data;
 public class EmailConfig extends BaseModel {
     /** id */
     @TableId(type = IdType.AUTO)
-    private Long id;
+    private Integer id;
 
     /** 邮件服务器SMTP地址 */
     private String host;
@@ -24,12 +23,12 @@ public class EmailConfig extends BaseModel {
     /** 邮件服务器SMTP端口 */
     private String port;
 
-    /** 发件者用户名 */
-    private String user;
+    /** 发件人名称 */
+    private String senderUser;
 
     /** 密码 */
-    private String pass;
+    private String password;
 
     /** 发件人邮箱 */
-    private String fromUser;
+    private String senderEmail;
 }

@@ -25,6 +25,9 @@ public class EmailService {
     public EmailConfigVO getOne() {
         EmailConfig emailConfig = emailConfigManager.getOne(null);
         EmailConfigVO emailConfigVO = new EmailConfigVO();
+        if (emailConfig == null) {
+            return emailConfigVO;
+        }
         BeanUtils.copyProperties(emailConfig, emailConfigVO);
         return emailConfigVO;
     }
@@ -40,13 +43,13 @@ public class EmailService {
         // 封装
         MailAccount account = new MailAccount();
         // 设置用户
-        String user = emailConfig.getFromUser().split("@")[0];
+        String user = emailConfig.getSenderEmail().split("@")[0];
         account.setUser(user);
         account.setHost(emailConfig.getHost());
         account.setPort(Integer.parseInt(emailConfig.getPort()));
         account.setAuth(true);
-        account.setPass(emailConfig.getPass());
-        account.setFrom(emailConfig.getUser() + "<" + emailConfig.getFromUser() + ">");
+        account.setPass(emailConfig.getPassword());
+        account.setFrom(emailConfig.getSenderUser() + "<" + emailConfig.getSenderEmail() + ">");
         // ssl方式发送
         account.setSslEnable(true);
         // 使用STARTTLS安全连接
