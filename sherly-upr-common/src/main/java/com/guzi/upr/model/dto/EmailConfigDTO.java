@@ -5,7 +5,6 @@ import lombok.Data;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 /**
  * @author 谷子毅
@@ -15,7 +14,6 @@ import javax.validation.constraints.NotNull;
 public class EmailConfigDTO {
     /** id */
     @ApiModelProperty("id")
-    @NotNull
     private Long id;
 
     /** 邮件服务器SMTP地址 */

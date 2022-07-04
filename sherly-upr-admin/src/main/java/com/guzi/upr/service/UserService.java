@@ -190,11 +190,11 @@ public class UserService {
      *
      * @return
      */
-    public UserSelfVO getSelf(Long userId) {
-        User user = userManager.getById(userId);
+    public UserSelfVO getSelf() {
+        User user = userManager.getById(SecurityUtil.getUserId());
 
         // 查询角色
-        List<Role> roles = roleManager.listByUserId(userId);
+        List<Role> roles = roleManager.listByUserId(SecurityUtil.getUserId());
         List<Long> roleIds = roles.stream().map(Role::getRoleId).collect(Collectors.toList());
         List<String> roleNames = roles.stream().map(Role::getRoleName).collect(Collectors.toList());
 
@@ -252,6 +252,7 @@ public class UserService {
      */
     public void updateAvatar(UserUpdateAvatarDTO dto) {
         User user = new User();
+        user.setUserId(SecurityUtil.getUserId());
         BeanUtils.copyProperties(dto, user);
         userManager.updateById(user);
     }
