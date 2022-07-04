@@ -44,9 +44,9 @@ public class MenuService {
             MenuVO menuVO = new MenuVO();
             BeanUtils.copyProperties(e, menuVO);
             return menuVO;
-        }).collect(Collectors.toList());
+        }).sorted(Comparator.comparing(MenuVO::getSort)).collect(Collectors.toList());
 
-        return all.stream().filter(e -> e.getParentId() == 0).sorted(Comparator.comparing(MenuVO::getSort))
+        return all.stream().filter(e -> e.getParentId() == 0)
                 .peek(e -> e.setChildren(getChildren(e, all)))
                 .collect(Collectors.toList());
     }
