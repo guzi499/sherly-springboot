@@ -86,8 +86,8 @@ public class UserController {
     @GetMapping("/get/self")
     // @PreAuthorize("hasAnyAuthority('user:get:self')")
     @ApiOperation("用户个人中心")
-    public Result getSelf(@RequestParam Long userId) {
-        return Result.success(userService.getSelf(userId));
+    public Result getSelf() {
+        return Result.success(userService.getSelf());
     }
 
     @PutMapping("/update/self")
