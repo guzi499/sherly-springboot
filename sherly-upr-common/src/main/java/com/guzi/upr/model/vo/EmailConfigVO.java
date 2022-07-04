@@ -14,7 +14,7 @@ import java.util.Date;
 public class EmailConfigVO {
     /** id */
     @ApiModelProperty("id")
-    private Long id;
+    private Integer id;
 
     /** 邮件服务器SMTP地址 */
     @ApiModelProperty("邮件服务器SMTP地址")
