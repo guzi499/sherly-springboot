@@ -14,27 +14,27 @@ import java.util.List;
 @Data
 public class DepartmentVO {
     /** 部门id */
-    @ApiModelProperty("部门id")
+    @ApiModelProperty(value = "部门id")
     private Long departmentId;
 
     /** 部门名称 */
-    @ApiModelProperty("部门名称")
+    @ApiModelProperty(value = "部门名称")
     private String departmentName;
 
     /** 描述 */
-    @ApiModelProperty("描述")
+    @ApiModelProperty(value = "描述")
     private String description;
 
     /** 父部门id */
-    @ApiModelProperty("父部门id")
+    @ApiModelProperty(value = "父部门id")
     private Long parentId;
 
     /** 排序 */
-    @ApiModelProperty("排序")
+    @ApiModelProperty(value = "排序")
     private Integer sort;
 
     /** 创建时间 */
-    @ApiModelProperty("创建时间")
+    @ApiModelProperty(value = "创建时间")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
 

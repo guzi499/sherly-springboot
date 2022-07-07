@@ -11,11 +11,11 @@ import lombok.Data;
 public class RoleSelectVO {
 
     /** 角色id */
-    @ApiModelProperty("角色id")
+    @ApiModelProperty(value = "角色id")
     private Long roleId;
 
     /** 角色名称 */
-    @ApiModelProperty("角色名称")
+    @ApiModelProperty(value = "角色名称")
     private String roleName;
 
 }

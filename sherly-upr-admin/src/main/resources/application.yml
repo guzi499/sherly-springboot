@@ -38,3 +38,11 @@ logging:
     -com.guzi.upr.mapper: debug
     # knife4j日志
     -springfox: warn
+
+knife4j:
+  enable: true
+  documents:
+    - locations: classpath:markdown/*
+      name: 前后端联调文档
+      group: default
+

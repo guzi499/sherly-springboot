@@ -15,26 +15,26 @@ import java.util.List;
 public class UserInsertDTO {
 
     /** 姓名 */
-    @ApiModelProperty("姓名")
+    @ApiModelProperty(value = "姓名" , required = true)
     @NotBlank
     private String realName;
 
     /** 手机号 */
-    @ApiModelProperty("手机号")
+    @ApiModelProperty(value = "手机号", required = true)
     @NotBlank
     private String phone;
 
     /** 性别 */
-    @ApiModelProperty("性别")
+    @ApiModelProperty(value = "性别", required = true, allowableValues = "CommonConstants.java")
     @NotNull
     private Integer gender;
 
     /** 部门id */
-    @ApiModelProperty("部门id")
+    @ApiModelProperty(value = "部门id")
     private Long departmentId;
 
     /** 角色ids */
-    @ApiModelProperty("角色ids")
+    @ApiModelProperty(value = "角色ids")
     private List<Long> roleIds;
 
 

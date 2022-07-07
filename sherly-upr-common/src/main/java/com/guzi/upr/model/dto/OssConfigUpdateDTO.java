@@ -15,26 +15,26 @@ import java.util.Map;
 public class OssConfigUpdateDTO {
 
     /** 配置id */
-    @ApiModelProperty("配置id")
+    @ApiModelProperty(value = "配置id", required = true)
     @NotNull
     private Long configId;
 
     /** 配置名称 */
-    @ApiModelProperty("配置名称")
+    @ApiModelProperty(value = "配置名称", required = true)
     @NotBlank
     private String configName;
 
     /** 存储类型 */
-    @ApiModelProperty("存储类型")
+    @ApiModelProperty(value = "存储类型", required = true, allowableValues = "OssTypeEnum.java")
     @NotNull
     private Integer type;
 
     /** 描述 */
-    @ApiModelProperty("描述")
+    @ApiModelProperty(value = "描述")
     private String description;
 
     /** 具体配置 */
-    @ApiModelProperty("具体配置")
+    @ApiModelProperty(value = "具体配置", required = true, allowableValues = "OssClientConfig.java接口的实现")
     @NotNull
     private Map<String, Object> config;
 }

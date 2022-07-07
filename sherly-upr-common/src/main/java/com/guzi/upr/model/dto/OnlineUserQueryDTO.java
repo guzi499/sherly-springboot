@@ -11,6 +11,6 @@ import lombok.Data;
 public class OnlineUserQueryDTO {
 
     /** 手机号 */
-    @ApiModelProperty("手机号")
+    @ApiModelProperty(value = "手机号")
     private String phone;
 }

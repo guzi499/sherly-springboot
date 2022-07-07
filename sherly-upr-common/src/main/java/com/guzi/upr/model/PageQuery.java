@@ -13,11 +13,11 @@ import lombok.Data;
 @Data
 public class PageQuery {
     /** 当前页 */
-    @ApiModelProperty("当前页")
+    @ApiModelProperty(value = "当前页")
     private Long current = 0L;
 
     /** 页大小 */
-    @ApiModelProperty("页大小")
+    @ApiModelProperty(value = "页大小")
     private Long size = 10L;
 
     /**

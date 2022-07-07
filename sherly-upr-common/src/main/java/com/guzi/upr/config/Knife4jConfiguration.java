@@ -1,6 +1,8 @@
 package com.guzi.upr.config;
 
+import com.github.xiaoymin.knife4j.spring.extension.OpenApiExtensionResolver;
 import com.guzi.upr.util.GlobalParamUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -20,6 +22,13 @@ import java.util.List;
 @EnableSwagger2WebMvc
 public class Knife4jConfiguration {
 
+    private final OpenApiExtensionResolver openApiExtensionResolver;
+
+    @Autowired
+    public Knife4jConfiguration(OpenApiExtensionResolver openApiExtensionResolver) {
+        this.openApiExtensionResolver = openApiExtensionResolver;
+    }
+
     @Bean(value = "defaultApi2")
     public Docket defaultApi2() {
         // 设置token请求头为必填
@@ -38,7 +47,10 @@ public class Knife4jConfiguration {
                 //这里指定Controller扫描包路径
                 .apis(RequestHandlerSelectors.basePackage("com.guzi.upr.controller"))
                 .paths(PathSelectors.any())
-                .build().globalOperationParameters(params);
+                .build()
+                .globalOperationParameters(params)
+                .extensions(openApiExtensionResolver.buildExtensions("default"));;
+
         return docket;
     }
 }

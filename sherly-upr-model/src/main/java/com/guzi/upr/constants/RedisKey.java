@@ -1,6 +1,7 @@
 package com.guzi.upr.constants;
 
 /**
+ * redis key 常量
  * @author 谷子毅
  * @date 2022/4/28
  */

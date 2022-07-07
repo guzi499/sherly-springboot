@@ -4,8 +4,8 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.guzi.upr.constants.CommonConstants;
 import com.guzi.upr.model.BaseModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.util.Date;
@@ -42,13 +42,13 @@ public class User extends BaseModel {
     /** 用户邮箱 */
     private String email;
 
-    /** 性别 */
+    /** 性别 {@link CommonConstants} */
     private Integer gender;
 
     /** 部门id */
     private Long departmentId;
 
-    /** 0不可用 1可用 */
+    /** 启用禁用 {@link CommonConstants} */
     private Integer enable;
 
     /** 最后登录时间 */

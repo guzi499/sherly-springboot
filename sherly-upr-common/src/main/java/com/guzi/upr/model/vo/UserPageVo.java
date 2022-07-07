@@ -13,43 +13,43 @@ import java.util.Date;
 @Data
 public class UserPageVo {
     /** 用户id */
-    @ApiModelProperty("用户id")
+    @ApiModelProperty(value = "用户id")
     private Long userId;
 
     /** 昵称 */
-    @ApiModelProperty("昵称")
+    @ApiModelProperty(value = "昵称")
     private String nickname;
 
     /** 姓名 */
-    @ApiModelProperty("姓名")
+    @ApiModelProperty(value = "姓名")
     private String realName;
 
     /** 手机号 */
-    @ApiModelProperty("手机号")
+    @ApiModelProperty(value = "手机号")
     private String phone;
 
     /** 用户邮箱 */
-    @ApiModelProperty("用户邮箱")
+    @ApiModelProperty(value = "用户邮箱")
     private String email;
 
     /** 性别 */
-    @ApiModelProperty("性别")
+    @ApiModelProperty(value = "性别", allowableValues = "CommonConstants.java")
     private Integer gender;
 
     /** 部门名称 */
-    @ApiModelProperty("部门名称")
+    @ApiModelProperty(value = "部门名称")
     private String departmentName;
 
     /** 部门id */
-    @ApiModelProperty("部门id")
+    @ApiModelProperty(value = "部门id")
     private Long departmentId;
 
-    /** 0不可用 1可用 */
-    @ApiModelProperty("0不可用 1可用")
+    /** 启用禁用 */
+    @ApiModelProperty(value = "启用禁用", allowableValues = "CommonConstants.java")
     private Integer enable;
 
     /** 创建时间 */
-    @ApiModelProperty("创建时间")
+    @ApiModelProperty(value = "创建时间")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
 }

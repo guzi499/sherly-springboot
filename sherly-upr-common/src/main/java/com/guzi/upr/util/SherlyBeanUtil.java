@@ -7,14 +7,16 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static com.guzi.upr.constants.CommonConstants.ROOT_PARENT_ID;
+
 /**
  * @author 谷子毅
  * @date 2022/4/17
  */
-public class SherlyBeanUtil<T> {
+public class SherlyBeanUtil {
 
     public static <T extends TreeAble> List<T> convert(List<T> all) {
-        return all.stream().filter(e -> e.getParentId() == 0)
+        return all.stream().filter(e -> Objects.equals(e.getParentId(), ROOT_PARENT_ID))
                 .peek(e -> e.setChildren(getChildren(e, all)))
                 .sorted(Comparator.comparing(T::getSort))
                 .collect(Collectors.toList());

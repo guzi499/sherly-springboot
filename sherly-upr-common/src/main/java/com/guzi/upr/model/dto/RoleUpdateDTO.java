@@ -14,21 +14,21 @@ import java.util.List;
 @Data
 public class RoleUpdateDTO {
     /** 角色id */
-    @ApiModelProperty("角色id")
+    @ApiModelProperty(value = "角色id", required = true)
     @NotNull
     private Long roleId;
 
     /** 角色名称 */
-    @ApiModelProperty("角色名称")
+    @ApiModelProperty(value = "角色名称", required = true)
     @NotBlank
     private String roleName;
 
     /** 描述 */
-    @ApiModelProperty("描述")
+    @ApiModelProperty(value = "描述")
     private String description;
 
     /** 菜单ids */
-    @ApiModelProperty("菜单ids")
+    @ApiModelProperty(value = "菜单ids")
     private List<Long> menuIds;
 
 }

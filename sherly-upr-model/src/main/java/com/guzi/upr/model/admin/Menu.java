@@ -3,8 +3,8 @@ package com.guzi.upr.model.admin;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.guzi.upr.constants.CommonConstants;
 import com.guzi.upr.model.BaseModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
@@ -21,7 +21,7 @@ public class Menu extends BaseModel {
     /** 菜单名称 */
     private String menuName;
 
-    /** 菜单类型 1目录 2菜单 3按钮 */
+    /** 菜单类型 {@link CommonConstants} */
     private Integer menuType;
 
     /** 权限 */

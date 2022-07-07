@@ -13,12 +13,12 @@ import javax.validation.constraints.NotBlank;
 public class LoginDTO {
 
     /** 手机号 */
-    @ApiModelProperty("手机号")
+    @ApiModelProperty(value = "手机号", required = true)
     @NotBlank
     private String phone;
 
     /** 密码 */
-    @ApiModelProperty("密码")
+    @ApiModelProperty(value = "密码", required = true)
     @NotBlank
     private String password;
 }

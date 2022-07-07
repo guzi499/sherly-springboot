@@ -15,20 +15,20 @@ import java.util.Date;
 @Data
 public class RolePageVO {
     /** 角色id */
-    @ApiModelProperty("角色id")
+    @ApiModelProperty(value = "角色id")
     @TableId(type = IdType.AUTO)
     private Long roleId;
 
     /** 角色名称 */
-    @ApiModelProperty("角色名称")
+    @ApiModelProperty(value = "角色名称")
     private String roleName;
 
     /** 描述 */
-    @ApiModelProperty("描述")
+    @ApiModelProperty(value = "描述")
     private String description;
 
     /** 创建时间 */
-    @ApiModelProperty("创建时间")
+    @ApiModelProperty(value = "创建时间")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
 }
