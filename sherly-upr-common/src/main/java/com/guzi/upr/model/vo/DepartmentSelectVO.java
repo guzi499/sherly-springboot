@@ -15,19 +15,19 @@ import java.util.List;
 public class DepartmentSelectVO implements TreeAble {
 
     /** 部门id */
-    @ApiModelProperty("部门id")
+    @ApiModelProperty(value = "部门id")
     private Long departmentId;
 
     /** 部门名称 */
-    @ApiModelProperty("部门名称")
+    @ApiModelProperty(value = "部门名称")
     private String departmentName;
 
     /** 父部门id */
-    @ApiModelProperty("父部门id")
+    @ApiModelProperty(value = "父部门id")
     private Long parentId;
 
     /** 排序 */
-    @ApiModelProperty("排序")
+    @ApiModelProperty(value = "排序")
     private Integer sort;
 
     private List<? extends TreeAble> children;

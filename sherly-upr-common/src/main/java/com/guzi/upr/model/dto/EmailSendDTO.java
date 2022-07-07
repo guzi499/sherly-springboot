@@ -14,17 +14,17 @@ import java.util.List;
 @Data
 public class EmailSendDTO {
     /** 收件人邮箱 */
-    @ApiModelProperty("收件人邮箱")
+    @ApiModelProperty(value = "收件人邮箱", required = true)
     @NotEmpty
     private List<String> tos;
 
     /** 主题 */
-    @ApiModelProperty("主题")
+    @ApiModelProperty(value = "主题", required = true)
     @NotBlank
     private String subject;
 
     /** 正文 */
-    @ApiModelProperty("正文")
+    @ApiModelProperty(value = "正文", required = true)
     @NotBlank
     private String content;
 }

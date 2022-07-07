@@ -12,11 +12,11 @@ import javax.validation.constraints.NotBlank;
 @Data
 public class RoleInsertDTO {
     /** 角色名称 */
-    @ApiModelProperty("角色名称")
+    @ApiModelProperty(value = "角色名称", required = true)
     @NotBlank
     private String roleName;
 
     /** 描述 */
-    @ApiModelProperty("描述")
+    @ApiModelProperty(value = "描述")
     private String description;
 }

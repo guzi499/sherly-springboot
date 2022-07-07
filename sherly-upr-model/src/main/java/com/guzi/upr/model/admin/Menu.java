@@ -21,7 +21,7 @@ public class Menu extends BaseModel {
     /** 菜单名称 */
     private String menuName;
 
-    /** 菜单类型 1目录 2菜单 3按钮 {@link CommonConstants} */
+    /** 菜单类型 {@link CommonConstants} */
     private Integer menuType;
 
     /** 权限 */

@@ -14,34 +14,34 @@ import java.util.Date;
 @Data
 public class UserPageDTO extends PageQuery {
     /** 昵称 */
-    @ApiModelProperty("昵称")
+    @ApiModelProperty(value = "昵称")
     private String nickname;
 
     /** 姓名 */
-    @ApiModelProperty("姓名")
+    @ApiModelProperty(value = "姓名")
     private String realName;
 
     /** 手机号 */
-    @ApiModelProperty("手机号")
+    @ApiModelProperty(value = "手机号")
     private String phone;
 
     /** 用户邮箱 */
-    @ApiModelProperty("用户邮箱")
+    @ApiModelProperty(value = "用户邮箱")
     private String email;
 
     /** 部门id */
-    @ApiModelProperty("部门id")
+    @ApiModelProperty(value = "部门id")
     private Long departmentId;
 
-    /** 0不可用 1可用 */
-    @ApiModelProperty("0不可用 1可用")
+    /** 启用禁用 */
+    @ApiModelProperty(value = "启用禁用")
     private Integer enable;
 
-    @ApiModelProperty("开始时间")
+    @ApiModelProperty(value = "开始时间")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date beginTime;
 
-    @ApiModelProperty("结束时间")
+    @ApiModelProperty(value = "结束时间")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date endTime;
 }

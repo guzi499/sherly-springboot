@@ -13,23 +13,23 @@ import lombok.Data;
 @Data
 public class OssConfigVO {
     /** 配置id */
-    @ApiModelProperty("配置id")
+    @ApiModelProperty(value = "配置id")
     @TableId(type = IdType.AUTO)
     private Long configId;
 
     /** 配置名称 */
-    @ApiModelProperty("配置名称")
+    @ApiModelProperty(value = "配置名称")
     private String configName;
 
     /** 存储类型 */
-    @ApiModelProperty("存储类型")
+    @ApiModelProperty(value = "存储类型", allowableValues = "OssTypeEnum.java")
     private Integer type;
 
     /** 描述 */
-    @ApiModelProperty("描述")
+    @ApiModelProperty(value = "描述")
     private String description;
 
     /** 具体配置 */
-    @ApiModelProperty("具体配置")
+    @ApiModelProperty(value = "具体配置")
     private OssClientConfig config;
 }

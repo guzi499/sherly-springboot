@@ -13,31 +13,31 @@ import java.util.Date;
 @Data
 public class EmailConfigVO {
     /** id */
-    @ApiModelProperty("id")
+    @ApiModelProperty(value = "id")
     private Integer id;
 
     /** 邮件服务器SMTP地址 */
-    @ApiModelProperty("邮件服务器SMTP地址")
+    @ApiModelProperty(value = "邮件服务器SMTP地址")
     private String host;
 
     /** 邮件服务器SMTP端口 */
-    @ApiModelProperty("邮件服务器SMTP端口")
+    @ApiModelProperty(value = "邮件服务器SMTP端口")
     private String port;
 
     /** 发件人名称 */
-    @ApiModelProperty("发件人名称")
+    @ApiModelProperty(value = "发件人名称")
     private String senderUser;
 
     /** 密码 */
-    @ApiModelProperty("密码")
+    @ApiModelProperty(value = "密码")
     private String password;
 
     /** 发件人邮箱 */
-    @ApiModelProperty("发件人邮箱")
+    @ApiModelProperty(value = "发件人邮箱")
     private String senderEmail;
 
     /** 创建时间 */
-    @ApiModelProperty("创建时间")
+    @ApiModelProperty(value = "创建时间")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
 }

@@ -14,34 +14,34 @@ import javax.validation.constraints.NotNull;
 public class MenuInsertDTO {
 
     /** 菜单名称 */
-    @ApiModelProperty("菜单名称")
+    @ApiModelProperty(value = "菜单名称", required = true)
     @NotBlank
     private String menuName;
 
-    /** 菜单类型 1目录 2菜单 3按钮 */
-    @ApiModelProperty("菜单类型 1目录 2菜单 3按钮")
+    /** 菜单类型 */
+    @ApiModelProperty(value = "菜单类型", required = true, allowableValues = "CommonConstants.java")
     @NotNull
     private Integer menuType;
 
     /** 权限 */
-    @ApiModelProperty("权限")
+    @ApiModelProperty(value = "权限", example = "user:save:one")
     private String permission;
 
     /** 父菜单id */
-    @ApiModelProperty("父菜单id")
+    @ApiModelProperty(value = "父菜单id", required = true)
     @NotNull
     private Long parentId;
 
     /** 菜单路径  */
-    @ApiModelProperty("菜单路径")
+    @ApiModelProperty(value = "菜单路径", example = "/system/user", allowableValues = "必须为英文，且以'/'开头")
     private String link;
 
     /** 菜单图标 */
-    @ApiModelProperty("菜单图标")
+    @ApiModelProperty(value = "菜单图标")
     private String icon;
 
     /** 排序 */
-    @ApiModelProperty("排序")
+    @ApiModelProperty(value = "排序", required = true, allowableValues = "只能是从1到999的正整数")
     @NotNull
     private Integer sort;
 

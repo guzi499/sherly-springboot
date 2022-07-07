@@ -13,21 +13,21 @@ import javax.validation.constraints.NotNull;
 @Data
 public class DepartmentInsertDTO {
     /** 部门名称 */
-    @ApiModelProperty("部门名称")
+    @ApiModelProperty(value = "部门名称", required = true)
     @NotBlank
     private String departmentName;
 
     /** 描述 */
-    @ApiModelProperty("描述")
+    @ApiModelProperty(value = "描述")
     private String description;
 
     /** 父部门id */
-    @ApiModelProperty("父部门id")
+    @ApiModelProperty(value = "父部门id", required = true)
     @NotNull
     private Long parentId;
 
     /** 排序 */
-    @ApiModelProperty("排序")
+    @ApiModelProperty(value = "排序", required = true, allowableValues = "只能是从1到999的正整数")
     @NotNull
     private Integer sort;
 }

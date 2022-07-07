@@ -15,20 +15,20 @@ import java.util.List;
 public class MenuSelectVO implements TreeAble {
 
     /** 菜单id */
-    @ApiModelProperty("菜单id")
+    @ApiModelProperty(value = "菜单id")
     private Long menuId;
 
     /** 菜单名称 */
-    @ApiModelProperty("菜单名称")
+    @ApiModelProperty(value = "菜单名称")
     private String menuName;
 
     /** 父菜单id */
-    @ApiModelProperty("父菜单id")
+    @ApiModelProperty(value = "父菜单id")
     @JsonIgnore
     private Long parentId;
 
     /** 排序 */
-    @ApiModelProperty("排序")
+    @ApiModelProperty(value = "排序")
     @JsonIgnore
     private Integer sort;
 

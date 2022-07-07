@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -16,32 +15,33 @@ import java.util.Date;
 @Data
 public class TenantInsertDTO {
     /** 租户code */
-    @ApiModelProperty("租户code")
+    @ApiModelProperty(value = "租户code", required = true)
     @NotBlank
     private String tenantCode;
 
     /** 租户名称 */
-    @ApiModelProperty("租户名称")
+    @ApiModelProperty(value = "租户名称", required = true)
     @NotBlank
     private String tenantName;
 
     /** 联系人 */
-    @ApiModelProperty("联系人")
+    @ApiModelProperty(value = "联系人", required = true)
+    @NotBlank
     private String contactUser;
 
     /** 联系电话 */
-    @ApiModelProperty("联系电话")
+    @ApiModelProperty(value = "联系电话", required = true)
+    @NotBlank
     private String contactPhone;
 
     /** 过期时间 */
-    @ApiModelProperty("过期时间")
+    @ApiModelProperty(value = "过期时间", required = true)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     @NotNull
     private Date expireTime;
 
     /** 用户上限 */
-    @ApiModelProperty("用户上限")
-    @Min(100)
-    @NotBlank
+    @ApiModelProperty(value = "用户上限", required = true)
+    @NotNull
     private Long userLimit;
 }

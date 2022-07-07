@@ -13,31 +13,31 @@ import javax.validation.constraints.NotBlank;
 @Data
 public class EmailConfigDTO {
     /** id */
-    @ApiModelProperty("id")
+    @ApiModelProperty(value = "id")
     private Long id;
 
     /** 邮件服务器SMTP地址 */
-    @ApiModelProperty("邮件服务器SMTP地址")
+    @ApiModelProperty(value = "邮件服务器SMTP地址", required = true)
     @NotBlank
     private String host;
 
     /** 邮件服务器SMTP端口 */
-    @ApiModelProperty("邮件服务器SMTP端口")
+    @ApiModelProperty(value = "邮件服务器SMTP端口", required = true)
     @NotBlank
     private String port;
 
     /** 发件人名称 */
-    @ApiModelProperty("发件人名称")
+    @ApiModelProperty(value = "发件人名称", required = true)
     @NotBlank
     private String senderUser;
 
     /** 密码 */
-    @ApiModelProperty("密码")
+    @ApiModelProperty(value = "密码", required = true)
     @NotBlank
     private String password;
 
     /** 发件人邮箱 */
-    @ApiModelProperty("发件人邮箱")
+    @ApiModelProperty(value = "发件人邮箱", required = true)
     @Email
     private String senderEmail;
 }

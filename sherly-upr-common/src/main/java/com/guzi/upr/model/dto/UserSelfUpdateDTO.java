@@ -13,15 +13,15 @@ import javax.validation.constraints.NotNull;
 public class UserSelfUpdateDTO {
 
     /** 昵称 */
-    @ApiModelProperty("昵称")
+    @ApiModelProperty(value = "昵称")
     private String nickname;
 
     /** 用户邮箱 */
-    @ApiModelProperty("用户邮箱")
+    @ApiModelProperty(value = "用户邮箱")
     private String email;
 
     /** 性别 */
-    @ApiModelProperty("性别")
+    @ApiModelProperty(value = "性别", required = true, allowableValues = "CommonConstants.java")
     @NotNull
     private Integer gender;
 }

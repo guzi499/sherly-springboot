@@ -32,7 +32,7 @@ public abstract class BaseModel {
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Long updateUserId;
 
-    /** 0未删除 1已删除 {@link CommonConstants} */
+    /** 逻辑删除 {@link CommonConstants} */
     @TableField("is_deleted")
     @TableLogic
     private Integer deleted = 0;

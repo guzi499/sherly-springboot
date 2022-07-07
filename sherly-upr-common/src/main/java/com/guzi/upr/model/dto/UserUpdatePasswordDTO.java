@@ -12,12 +12,12 @@ import javax.validation.constraints.NotBlank;
 @Data
 public class UserUpdatePasswordDTO {
     /** 旧密码 */
-    @ApiModelProperty("旧密码")
+    @ApiModelProperty(value = "旧密码", required = true)
     @NotBlank
     private String oldPassword;
 
     /** 新密码 */
-    @ApiModelProperty("新密码")
+    @ApiModelProperty(value = "新密码", required = true)
     @NotBlank
     private String newPassword;
 }

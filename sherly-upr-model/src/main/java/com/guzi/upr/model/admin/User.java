@@ -48,7 +48,7 @@ public class User extends BaseModel {
     /** 部门id */
     private Long departmentId;
 
-    /** 0不可用 1可用 {@link CommonConstants} */
+    /** 启用禁用 {@link CommonConstants} */
     private Integer enable;
 
     /** 最后登录时间 */

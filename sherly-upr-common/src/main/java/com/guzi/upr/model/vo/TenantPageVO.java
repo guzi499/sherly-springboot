@@ -13,36 +13,36 @@ import java.util.Date;
 @Data
 public class TenantPageVO {
     /** 租户id */
-    @ApiModelProperty("租户id")
+    @ApiModelProperty(value = "租户id")
     private Long tenantId;
 
     /** 租户code */
-    @ApiModelProperty("租户code")
+    @ApiModelProperty(value = "租户code")
     private String tenantCode;
 
     /** 租户名称 */
-    @ApiModelProperty("租户名称")
+    @ApiModelProperty(value = "租户名称")
     private String tenantName;
 
     /** 联系人 */
-    @ApiModelProperty("联系人")
+    @ApiModelProperty(value = "联系人")
     private String contactUser;
 
     /** 联系电话 */
-    @ApiModelProperty("联系电话")
+    @ApiModelProperty(value = "联系电话")
     private String contactPhone;
 
     /** 过期时间 */
-    @ApiModelProperty("过期时间")
+    @ApiModelProperty(value = "过期时间")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date expireTime;
 
     /** 用户上限 */
-    @ApiModelProperty("用户上限")
+    @ApiModelProperty(value = "用户上限")
     private Long userLimit;
 
     /** 创建时间 */
-    @ApiModelProperty("创建时间")
+    @ApiModelProperty(value = "创建时间")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
 }
