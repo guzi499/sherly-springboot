@@ -47,6 +47,11 @@
             <artifactId>hutool-extra</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+        </dependency>
+
         <!-- qiniu -->
         <dependency>
             <groupId>com.qiniu</groupId>

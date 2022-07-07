@@ -66,7 +66,7 @@ public class GenericService {
 
         // 菜单信息收集
         List<Long> roleIds = roles.stream().map(Role::getRoleId).collect(Collectors.toList());
-        List<Menu> menus = menuManager.listByRoleIds(roleIds);
+        List<Menu> menus = menuManager.listByRoleIds(roleIds).stream().distinct().collect(Collectors.toList());
 
         // 跳转相关
         List<Menu> jumps = menus.stream().filter(e -> e.getMenuType() != 3).sorted(Comparator.comparing(Menu::getSort)).collect(Collectors.toList());
