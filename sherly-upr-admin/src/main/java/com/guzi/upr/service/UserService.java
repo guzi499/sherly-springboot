@@ -31,6 +31,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static com.guzi.upr.constants.CommonConstants.ENABLE;
+import static com.guzi.upr.constants.CommonConstants.MALE;
 import static com.guzi.upr.enums.ResultAdminEnum.*;
 
 /**
@@ -89,9 +91,9 @@ public class UserService {
         List<UserEO> result = list.stream().map(e -> {
             UserEO userEO = new UserEO();
             BeanUtils.copyProperties(e, userEO);
-            userEO.setEnable(e.getEnable() == 1 ? "启用" : "禁用");
+            userEO.setEnable(Objects.equals(e.getEnable(), ENABLE) ? "启用" : "禁用");
             userEO.setDepartmentName(departmentList.stream().filter(x -> Objects.equals(x.getDepartmentId(), e.getDepartmentId())).map(Department::getDepartmentName).collect(Collectors.joining(",")));
-            userEO.setGender(e.getGender() == 1 ? "男" : "女");
+            userEO.setGender(Objects.equals(e.getGender(), MALE) ? "男" : "女");
             return userEO;
         }).collect(Collectors.toList());
 
@@ -143,7 +145,7 @@ public class UserService {
 
         User user = new User();
         BeanUtils.copyProperties(dto, user);
-        user.setEnable(1);
+        user.setEnable(ENABLE);
         user.setPassword(passwordEncoder.encode("123456"));
         user.setAvatar("avatar/hello499.jpg");
         userManager.save(user);
@@ -207,7 +209,7 @@ public class UserService {
         BeanUtils.copyProperties(user, vo);
         vo.setRoleIds(roleIds);
         vo.setRoleNames(roleNames);
-        vo.setGenderStr(vo.getGender() == 1 ? "男" : "女");
+        vo.setGenderStr(Objects.equals(vo.getGender(), MALE) ? "男" : "女");
         vo.setDepartmentName(departmentList.stream().filter(x -> Objects.equals(x.getDepartmentId(), vo.getDepartmentId())).map(Department::getDepartmentName).collect(Collectors.joining(",")));
         vo.setTenantName(SecurityUtil.getTenantCode());
 
@@ -248,12 +250,12 @@ public class UserService {
 
     /**
      * 用户修改头像
-     * @param dto
+     * @param avatarPath
      */
-    public void updateAvatar(UserUpdateAvatarDTO dto) {
+    public void updateAvatar(String avatarPath) {
         User user = new User();
         user.setUserId(SecurityUtil.getUserId());
-        BeanUtils.copyProperties(dto, user);
+        user.setAvatar(avatarPath);
         userManager.updateById(user);
     }
 }

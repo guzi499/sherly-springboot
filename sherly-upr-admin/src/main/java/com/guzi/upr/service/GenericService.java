@@ -21,6 +21,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static com.guzi.upr.constants.CommonConstants.ROOT_PARENT_ID;
+
 /**
  * @author 谷子毅
  * @date 2022/4/5
@@ -72,7 +74,7 @@ public class GenericService {
         List<Menu> permissions = menus.stream().filter(e -> e.getMenuType() != 1).collect(Collectors.toList());
 
         // 跳转相关数据转换成树
-        List<BasicMenuInfoVO> menuVOList = jumps.stream().filter(e -> e.getParentId() == 0).map(e -> {
+        List<BasicMenuInfoVO> menuVOList = jumps.stream().filter(e -> Objects.equals(e.getParentId(), ROOT_PARENT_ID)).map(e -> {
             BasicMenuInfoVO basicMenuInfoVO = new BasicMenuInfoVO();
             BeanUtils.copyProperties(e, basicMenuInfoVO);
             basicMenuInfoVO.setChildren(getChildren(e, jumps));

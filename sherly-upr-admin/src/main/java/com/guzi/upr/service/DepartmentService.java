@@ -16,6 +16,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static com.guzi.upr.constants.CommonConstants.ROOT_PARENT_ID;
+
 /**
  * @author 周孟凡
  * @date 2022/3/30
@@ -45,7 +47,7 @@ public class DepartmentService {
 
         // 拼装子结点并返回
         return all.stream()
-                .filter(e -> e.getParentId() == 0)
+                .filter(e -> Objects.equals(e.getParentId(), ROOT_PARENT_ID))
                 .peek(e -> e.setChildren(getChildren(e, all)))
                 .collect(Collectors.toList());
     }

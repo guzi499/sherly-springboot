@@ -3,7 +3,7 @@ package com.guzi.upr.model;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableLogic;
-import io.swagger.annotations.ApiModelProperty;
+import com.guzi.upr.constants.CommonConstants;
 import lombok.Data;
 
 import java.util.Date;
@@ -32,7 +32,7 @@ public abstract class BaseModel {
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Long updateUserId;
 
-    /** 0未删除 1已删除 */
+    /** 0未删除 1已删除 {@link CommonConstants} */
     @TableField("is_deleted")
     @TableLogic
     private Integer deleted = 0;

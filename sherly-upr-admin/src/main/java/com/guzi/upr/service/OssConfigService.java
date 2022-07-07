@@ -23,6 +23,9 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static com.guzi.upr.constants.CommonConstants.DISABLE;
+import static com.guzi.upr.constants.CommonConstants.ENABLE;
+
 /**
  * @author 谷子毅
  * @date 2022/6/24
@@ -75,7 +78,7 @@ public class OssConfigService {
     public void saveOne(OssConfigInsertDTO dto) throws Exception {
         OssConfig ossConfig = new OssConfig();
         BeanUtils.copyProperties(dto, ossConfig);
-        ossConfig.setEnable(0);
+        ossConfig.setEnable(DISABLE);
         ossConfig.setConfig(parseConfig(dto.getType(), dto.getConfig()));
         ossConfigManager.save(ossConfig);
     }
@@ -92,7 +95,7 @@ public class OssConfigService {
         ossConfigManager.updateById(ossConfig);
 
         // 如果是激活状态那么需要从clients容器中删除该租户的client
-        if (ossConfig.getEnable() == 1) {
+        if (Objects.equals(ossConfig.getEnable(), ENABLE)) {
             ossClientFactory.removeOssClient(SecurityUtil.getTenantCode());
         }
     }
@@ -117,7 +120,7 @@ public class OssConfigService {
     public void removeOne(Long configId) {
         OssConfig config = ossConfigManager.getById(configId);
         ossConfigManager.removeById(configId);
-        if (config.getEnable() == 1) {
+        if (Objects.equals(config.getEnable(), ENABLE)) {
             // 从clients容器中删除该租户的client
             ossClientFactory.removeOssClient(SecurityUtil.getTenantCode());
         }
@@ -130,9 +133,9 @@ public class OssConfigService {
     public void enableOne(Long configId) {
         List<OssConfig> list = ossConfigManager.list();
         list = list.stream().peek(e -> {
-            e.setEnable(0);
+            e.setEnable(DISABLE);
             if (Objects.equals(configId, e.getConfigId())) {
-                e.setEnable(1);
+                e.setEnable(ENABLE);
             }
         }).collect(Collectors.toList());
 

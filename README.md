@@ -9,8 +9,8 @@
 
 | 项目名              | 说明                     | 传送门                                                                                                                                 |
 |--------------------|--------------------------|------------------------------------------------------|
-| `sherly-springboot`| sherly后端项目           | [gitee](https://gitee.com/guzi499/sherly-springboot) |
-| `sherly-vue3`      | sherly前端项目           | [gitee](https://gitee.com/guzi499/sherly-vue3)       |
+| `sherly-springboot`| sherly后端项目           | [sherly-springboot](https://gitee.com/guzi499/sherly-springboot) |
+| `sherly-vue3`      | sherly前端项目           | [sherly-vue3](https://gitee.com/guzi499/sherly-vue3)       |
 
 多租户实现方案为 mysql 分库，采用 mybatis-plus 动态表名功能实现。 解决了多租户数据隔离的问题，不同的租户使用不同的数据库，完美做到数据隔离。
 
@@ -29,4 +29,4 @@
 感谢 [jetbrains](https://jb.gg/OpenSourceSupport/?from=sherly-springboot "jetbrains") 为团队提供的免费授权，希望大家能够支持jetbrains及其正版产品。
 
 ### 创作支持
-如果觉得框架还不错，或者已经在使用了，希望你可以去 Github 或 Gitee 帮作者点个 ⭐ Star，这将是对作者极大的鼓励与支持！
+如果觉得框架还不错，或者已经在使用了，希望你可以去 gitee 帮作者点个 ⭐ Star，这将是对作者极大的鼓励与支持！

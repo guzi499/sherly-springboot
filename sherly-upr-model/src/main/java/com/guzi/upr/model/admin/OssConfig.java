@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
+import com.guzi.upr.constants.CommonConstants;
 import com.guzi.upr.model.BaseModel;
 import lombok.Data;
 
@@ -28,7 +29,7 @@ public class OssConfig extends BaseModel {
     /** 描述 */
     private String description;
 
-    /** 0不可用 1可用 */
+    /** 0不可用 1可用 {@link CommonConstants} */
     private Integer enable;
 
     /** 具体配置 */

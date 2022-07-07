@@ -5,6 +5,7 @@ import com.guzi.upr.model.Result;
 import com.guzi.upr.model.dto.*;
 import com.guzi.upr.model.vo.UserPageVo;
 import com.guzi.upr.model.vo.UserVo;
+import com.guzi.upr.service.OssService;
 import com.guzi.upr.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -29,6 +31,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private OssService ossService;
 
     @GetMapping("/list/page")
     @PreAuthorize("hasAnyAuthority('user:list:page')")
@@ -109,8 +114,9 @@ public class UserController {
     @PutMapping("/update/avatar")
     // @PreAuthorize("hasAnyAuthority('user:update:avatar')")
     @ApiOperation("用户修改头像")
-    public Result updateAvatar(@RequestBody @Valid UserUpdateAvatarDTO dto) {
-        userService.updateAvatar(dto);
+    public Result updateAvatar(@RequestParam MultipartFile file) throws Exception {
+        String avatarPath = ossService.uploadOne(file.getBytes(), "avatar$" + file.getName());
+        userService.updateAvatar(avatarPath);
         return Result.success();
     }
 }

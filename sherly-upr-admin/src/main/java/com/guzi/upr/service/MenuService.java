@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static com.guzi.upr.constants.CommonConstants.ROOT_PARENT_ID;
 import static com.guzi.upr.enums.ResultAdminEnum.*;
 
 /**
@@ -46,7 +47,7 @@ public class MenuService {
             return menuVO;
         }).sorted(Comparator.comparing(MenuVO::getSort)).collect(Collectors.toList());
 
-        return all.stream().filter(e -> e.getParentId() == 0)
+        return all.stream().filter(e -> Objects.equals(e.getParentId(), ROOT_PARENT_ID))
                 .peek(e -> e.setChildren(getChildren(e, all)))
                 .collect(Collectors.toList());
     }
