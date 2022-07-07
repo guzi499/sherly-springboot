@@ -14,7 +14,7 @@ import javax.validation.constraints.NotBlank;
 public class EmailConfigDTO {
     /** id */
     @ApiModelProperty(value = "id")
-    private Long id;
+    private Integer id;
 
     /** 邮件服务器SMTP地址 */
     @ApiModelProperty(value = "邮件服务器SMTP地址", required = true)
