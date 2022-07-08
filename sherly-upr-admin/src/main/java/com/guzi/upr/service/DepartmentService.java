@@ -12,6 +12,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -39,11 +40,13 @@ public class DepartmentService {
         List<Department> list = departmentManager.list();
 
         // 对象转换成vo类型
-        List<DepartmentVO> all = list.stream().map(e -> {
-            DepartmentVO vo = new DepartmentVO();
-            BeanUtils.copyProperties(e, vo);
-            return vo;
-        }).collect(Collectors.toList());
+        List<DepartmentVO> all = list.stream()
+                .sorted(Comparator.comparing(Department::getSort))
+                .map(e -> {
+                    DepartmentVO vo = new DepartmentVO();
+                    BeanUtils.copyProperties(e, vo);
+                    return vo;
+                }).collect(Collectors.toList());
 
         // 拼装子结点并返回
         return all.stream()
