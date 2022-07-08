@@ -52,12 +52,6 @@
             <artifactId>javax.mail</artifactId>
         </dependency>
 
-        <!-- qiniu -->
-        <dependency>
-            <groupId>com.qiniu</groupId>
-            <artifactId>qiniu-java-sdk</artifactId>
-        </dependency>
-
         <dependency>
             <groupId>io.minio</groupId>
             <artifactId>minio</artifactId>
