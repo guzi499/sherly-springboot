@@ -1,13 +1,7 @@
 package com.guzi.upr.service;
 
-import com.guzi.upr.manager.DepartmentManager;
-import com.guzi.upr.manager.MenuManager;
-import com.guzi.upr.manager.RoleManager;
-import com.guzi.upr.manager.UserManager;
-import com.guzi.upr.model.admin.Department;
-import com.guzi.upr.model.admin.Menu;
-import com.guzi.upr.model.admin.Role;
-import com.guzi.upr.model.admin.User;
+import com.guzi.upr.manager.*;
+import com.guzi.upr.model.admin.*;
 import com.guzi.upr.model.vo.*;
 import com.guzi.upr.security.model.SecurityModel;
 import com.guzi.upr.util.SherlyBeanUtil;
@@ -40,7 +34,13 @@ public class GenericService {
     private MenuManager menuManager;
 
     @Autowired
+    private RoleMenuManager roleMenuManager;
+
+    @Autowired
     private DepartmentManager departmentManager;
+
+    @Autowired
+    private UserRoleManager userRoleManager;
 
     /**
      * 获取登录基本信息
@@ -57,7 +57,9 @@ public class GenericService {
         BeanUtils.copyProperties(user, userVO);
 
         // 角色信息收集
-        List<Role> roles = roleManager.listByUserId(userId);
+        List<UserRole> userRoles = userRoleManager.listByUserId(userId);
+        List<Long> roleIds = userRoles.stream().map(UserRole::getRoleId).collect(Collectors.toList());
+        List<Role> roles = roleManager.listByIds(roleIds);
         List<BasicRoleInfoVO> roleVOList = roles.stream().map(e -> {
             BasicRoleInfoVO basicRoleInfoVO = new BasicRoleInfoVO();
             BeanUtils.copyProperties(e, basicRoleInfoVO);
@@ -65,8 +67,9 @@ public class GenericService {
         }).collect(Collectors.toList());
 
         // 菜单信息收集
-        List<Long> roleIds = roles.stream().map(Role::getRoleId).collect(Collectors.toList());
-        List<Menu> menus = menuManager.listByRoleIds(roleIds).stream().distinct().collect(Collectors.toList());
+        List<RoleMenu> roleMenus = roleMenuManager.listByRoleIds(roleIds);
+        List<Long> menuIds = roleMenus.stream().map(RoleMenu::getMenuId).collect(Collectors.toList());
+        List<Menu> menus = menuManager.listByIds(menuIds);
 
         // 跳转相关
         List<Menu> jumps = menus.stream().filter(e -> e.getMenuType() != 3).sorted(Comparator.comparing(Menu::getSort)).collect(Collectors.toList());

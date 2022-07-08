@@ -29,7 +29,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private UserManager userManager;
 
     @Autowired
-    private RoleManager roleManager;
+    private UserRoleManager userRoleManager;
 
     @Autowired
     private MenuManager menuManager;
@@ -59,8 +59,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         // 根据查询参数查询用户信息
         User user = userManager.getByPhone(phone);
 
-        List<Role> roles = roleManager.listByUserId(user.getUserId());
-        List<Long> roleIds = roles.stream().map(Role::getRoleId).collect(Collectors.toList());
+        List<UserRole> userRoles = userRoleManager.listByUserId(user.getUserId());
+        List<Long> roleIds = userRoles.stream().map(UserRole::getRoleId).collect(Collectors.toList());
         List<RoleMenu> roleMenus = roleMenuManager.listByRoleIds(roleIds);
         List<Long> menuIds = roleMenus.stream().map(RoleMenu::getMenuId).distinct().collect(Collectors.toList());
         List<Menu> menus = menuManager.listByIds(menuIds);

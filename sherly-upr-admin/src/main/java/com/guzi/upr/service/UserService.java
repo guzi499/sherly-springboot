@@ -12,6 +12,7 @@ import com.guzi.upr.model.PageResult;
 import com.guzi.upr.model.admin.Department;
 import com.guzi.upr.model.admin.Role;
 import com.guzi.upr.model.admin.User;
+import com.guzi.upr.model.admin.UserRole;
 import com.guzi.upr.model.dto.*;
 import com.guzi.upr.model.eo.UserEO;
 import com.guzi.upr.model.vo.UserPageVo;
@@ -119,8 +120,8 @@ public class UserService {
         User user = userManager.getById(userId);
 
         // 查询角色
-        List<Role> roles = roleManager.listByUserId(userId);
-        List<Long> roleIds = roles.stream().map(Role::getRoleId).collect(Collectors.toList());
+        List<UserRole> userRoles = userRoleManager.listByUserId(userId);
+        List<Long> roleIds = userRoles.stream().map(UserRole::getRoleId).collect(Collectors.toList());
 
         // 组装vo
         UserVo vo = new UserVo();
@@ -196,13 +197,13 @@ public class UserService {
         User user = userManager.getById(SecurityUtil.getUserId());
 
         // 查询角色
-        List<Role> roles = roleManager.listByUserId(SecurityUtil.getUserId());
-        List<Long> roleIds = roles.stream().map(Role::getRoleId).collect(Collectors.toList());
+        List<UserRole> userRoles = userRoleManager.listByUserId(SecurityUtil.getUserId());
+        List<Long> roleIds = userRoles.stream().map(UserRole::getRoleId).collect(Collectors.toList());
+        List<Role> roles = roleManager.listByIds(roleIds);
         List<String> roleNames = roles.stream().map(Role::getRoleName).collect(Collectors.toList());
 
         // 查询部门
         List<Department> departmentList = departmentManager.list();
-        List<Long> departmentIds = departmentList.stream().map(Department::getDepartmentId).collect(Collectors.toList());
 
         // 组装vo
         UserSelfVO vo = new UserSelfVO();

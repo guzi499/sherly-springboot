@@ -60,7 +60,7 @@ public class UserRoleManager extends ServiceImpl<UserRoleMapper, UserRole> {
     }
 
     /**
-     * 根据菜单id查询角色菜单数量
+     * 根据角色id查询用户角色数量
      *
      * @return
      * @param roleId
@@ -69,5 +69,16 @@ public class UserRoleManager extends ServiceImpl<UserRoleMapper, UserRole> {
         LambdaQueryWrapper<UserRole> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(UserRole::getRoleId, roleId);
         return this.count(wrapper);
+    }
+
+    /**
+     * 根据角色id查询用户角色数据
+     * @param userId
+     * @return
+     */
+    public List<UserRole> listByUserId(Long userId) {
+        LambdaQueryWrapper<UserRole> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(UserRole::getUserId, userId);
+        return this.list(wrapper);
     }
 }
