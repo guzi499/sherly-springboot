@@ -33,7 +33,6 @@ public class Tenant extends BaseModel {
     private String contactPhone;
 
     /** 过期时间 */
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date expireTime;
 
     /** 用户上限 */

@@ -29,7 +29,7 @@ public class OssConfig extends BaseModel {
     /** 描述 */
     private String description;
 
-    /** 启用禁用 {@link CommonConstants} */
+    /** 启用禁用 */
     private Integer enable;
 
     /** 具体配置 */

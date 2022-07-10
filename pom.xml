@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.6.4</version>
+        <version>2.7.1</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -22,35 +22,34 @@
     <packaging>pom</packaging>
 
     <properties>
-        <lombok>1.18.22</lombok>
-        <spring.boot.version>2.6.4</spring.boot.version>
-        <mysql.version>8.0.28</mysql.version>
+        <spring.boot.version>2.7.1</spring.boot.version>
         <mybatis.plus>3.5.1</mybatis.plus>
         <knife4j>2.0.7</knife4j>
         <java.jwt>3.19.0</java.jwt>
         <dom4j>1.6.1</dom4j>
-        <hutool>5.8.0</hutool>
-        <javax.mail>1.6.2</javax.mail>
+        <hutool.version>5.8.0</hutool.version>
         <easyexcel>3.0.5</easyexcel>
-        <mapstruct>1.5.1.Final</mapstruct>
         <minio>8.2.2</minio>
     </properties>
 
     <dependencyManagement>
         <dependencies>
 
+            <!-- sherly-upr-model -->
             <dependency>
                 <groupId>com.guzi.upr</groupId>
                 <artifactId>sherly-upr-model</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
+            <!-- sherly-upr-common -->
             <dependency>
                 <groupId>com.guzi.upr</groupId>
                 <artifactId>sherly-upr-common</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
+            <!-- sherly-upr-admin -->
             <dependency>
                 <groupId>com.guzi.upr</groupId>
                 <artifactId>sherly-upr-admin</artifactId>
@@ -61,10 +60,10 @@
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
-                <version>${lombok}</version>
+                <version>${lombok.version}</version>
             </dependency>
 
-            <!-- springboot -->
+            <!-- springboot-starter -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter</artifactId>
@@ -92,18 +91,25 @@
                 <version>${spring.boot.version}</version>
             </dependency>
 
-            <!-- redis -->
+            <!-- springboot-redis -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-data-redis</artifactId>
                 <version>${spring.boot.version}</version>
             </dependency>
 
-            <!-- mysql -->
+            <!-- springboot-mysql -->
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
                 <version>${mysql.version}</version>
+            </dependency>
+
+            <!-- springboot-mail -->
+            <dependency>
+                <groupId>com.sun.mail</groupId>
+                <artifactId>javax.mail</artifactId>
+                <version>${javax-mail.version}</version>
             </dependency>
 
             <!-- mybatis-plus -->
@@ -134,24 +140,11 @@
                 <version>${dom4j}</version>
             </dependency>
 
-            <!-- hutool-core -->
+            <!-- hutool-all -->
             <dependency>
                 <groupId>cn.hutool</groupId>
-                <artifactId>hutool-core</artifactId>
-                <version>${hutool}</version>
-            </dependency>
-
-            <!-- hutool-extra -->
-            <dependency>
-                <groupId>cn.hutool</groupId>
-                <artifactId>hutool-extra</artifactId>
-                <version>${hutool}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.sun.mail</groupId>
-                <artifactId>javax.mail</artifactId>
-                <version>${javax.mail}</version>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
             </dependency>
 
             <!-- easy-excel -->
@@ -161,17 +154,11 @@
                 <version>${easyexcel}</version>
             </dependency>
 
+            <!-- minio -->
             <dependency>
                 <groupId>io.minio</groupId>
                 <artifactId>minio</artifactId>
                 <version>${minio}</version>
-            </dependency>
-
-            <!-- mapstruct -->
-            <dependency>
-                <groupId>org.mapstruct</groupId>
-                <artifactId>mapstruct</artifactId>
-                <version>${mapstruct}</version>
             </dependency>
 
         </dependencies>

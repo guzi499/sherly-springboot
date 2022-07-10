@@ -18,6 +18,7 @@
 
     <dependencies>
 
+        <!-- sherly-upr-model -->
         <dependency>
             <groupId>com.guzi.upr</groupId>
             <artifactId>sherly-upr-model</artifactId>
@@ -38,20 +39,16 @@
         <!-- hutool-core -->
         <dependency>
             <groupId>cn.hutool</groupId>
-            <artifactId>hutool-core</artifactId>
+            <artifactId>hutool-all</artifactId>
         </dependency>
 
-        <!-- hutool-extra -->
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-extra</artifactId>
-        </dependency>
-
+        <!-- springboot-mail -->
         <dependency>
             <groupId>com.sun.mail</groupId>
             <artifactId>javax.mail</artifactId>
         </dependency>
 
+        <!-- minio -->
         <dependency>
             <groupId>io.minio</groupId>
             <artifactId>minio</artifactId>
