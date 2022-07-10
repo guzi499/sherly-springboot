@@ -1,7 +1,7 @@
 package com.guzi.upr.storage;
 
 import cn.hutool.core.util.ReflectUtil;
-import com.guzi.upr.model.admin.OssClientConfig;
+import com.guzi.upr.model.OssClientConfig;
 import com.guzi.upr.storage.enums.OssTypeEnum;
 import com.guzi.upr.storage.model.AbstractOssClient;
 import com.guzi.upr.storage.model.OssClient;

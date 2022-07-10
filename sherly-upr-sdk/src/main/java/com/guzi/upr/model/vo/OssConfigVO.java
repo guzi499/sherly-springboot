@@ -1,8 +1,6 @@
 package com.guzi.upr.model.vo;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.guzi.upr.model.admin.OssClientConfig;
+import com.guzi.upr.model.OssClientConfig;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -14,7 +12,6 @@ import lombok.Data;
 public class OssConfigVO {
     /** 配置id */
     @ApiModelProperty(value = "配置id")
-    @TableId(type = IdType.AUTO)
     private Long configId;
 
     /** 配置名称 */

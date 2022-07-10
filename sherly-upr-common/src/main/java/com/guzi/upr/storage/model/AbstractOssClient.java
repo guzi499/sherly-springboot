@@ -1,6 +1,6 @@
 package com.guzi.upr.storage.model;
 
-import com.guzi.upr.model.admin.OssClientConfig;
+import com.guzi.upr.model.OssClientConfig;
 
 import java.util.Objects;
 

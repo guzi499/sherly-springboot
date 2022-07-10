@@ -1,6 +1,6 @@
 package com.guzi.upr.storage.client.s3;
 
-import com.guzi.upr.model.admin.OssClientConfig;
+import com.guzi.upr.model.OssClientConfig;
 import lombok.Data;
 
 /**

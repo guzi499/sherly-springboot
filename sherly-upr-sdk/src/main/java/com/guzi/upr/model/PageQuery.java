@@ -1,7 +1,5 @@
 package com.guzi.upr.model;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -19,12 +17,4 @@ public class PageQuery {
     /** 页大小 */
     @ApiModelProperty(value = "页大小")
     private Long size = 10L;
-
-    /**
-     * 获取mybatis-plus分页对象
-     * @return
-     */
-    public IPage pageInfo() {
-        return new Page(current, size);
-    }
 }

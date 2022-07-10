@@ -3,7 +3,6 @@ package com.guzi.upr.model;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableLogic;
-import com.guzi.upr.constants.CommonConstants;
 import lombok.Data;
 
 import java.util.Date;

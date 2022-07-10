@@ -1,7 +1,5 @@
 package com.guzi.upr.model.vo;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -16,7 +14,6 @@ import java.util.Date;
 public class RolePageVO {
     /** 角色id */
     @ApiModelProperty(value = "角色id")
-    @TableId(type = IdType.AUTO)
     private Long roleId;
 
     /** 角色名称 */

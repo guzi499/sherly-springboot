@@ -2,6 +2,7 @@ package com.guzi.upr.service;
 
 import cn.hutool.core.io.FileTypeUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.guzi.upr.manager.OssFileManager;
 import com.guzi.upr.model.PageResult;
 import com.guzi.upr.model.admin.OssFile;
@@ -80,7 +81,7 @@ public class OssService {
      * @return
      */
     public PageResult listPage(OssFilePageDTO dto) {
-        IPage<OssFile> page = ossFileManager.page(dto.pageInfo());
+        IPage<OssFile> page = ossFileManager.page(new Page<>(dto.getCurrent(), dto.getSize()));
 
         List<OssFilePageVO> result = page.getRecords().stream().map(e -> {
             OssFilePageVO ossFilePageVO = new OssFilePageVO();

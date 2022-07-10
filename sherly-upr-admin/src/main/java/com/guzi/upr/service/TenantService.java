@@ -1,6 +1,7 @@
 package com.guzi.upr.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.guzi.upr.manager.TenantManager;
 import com.guzi.upr.manager.UserManager;
 import com.guzi.upr.model.PageResult;
@@ -42,7 +43,7 @@ public class TenantService {
      */
     public PageResult listPage(TenantPageDTO dto) {
 
-        IPage<Tenant> page = tenantManager.listPage(dto.pageInfo(), dto.getTenantName(), dto.getTenantCode());
+        IPage<Tenant> page = tenantManager.listPage(new Page<>(dto.getCurrent(), dto.getSize()), dto.getTenantName(), dto.getTenantCode());
 
         List<TenantPageVO> result = page.getRecords().stream().map(e -> {
             TenantPageVO vo = new TenantPageVO();
