@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static com.guzi.upr.constants.CommonConstants.ROOT_PARENT_ID;
+import static com.guzi.upr.model.contants.CommonConstants.ROOT_PARENT_ID;
 
 /**
  * @author 周孟凡

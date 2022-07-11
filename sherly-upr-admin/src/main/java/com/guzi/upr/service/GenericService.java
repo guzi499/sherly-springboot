@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static com.guzi.upr.constants.CommonConstants.ROOT_PARENT_ID;
+import static com.guzi.upr.model.contants.CommonConstants.*;
 
 /**
  * @author 谷子毅
@@ -79,9 +79,9 @@ public class GenericService {
         List<Menu> menus = menuManager.listByIds(menuIds);
 
         // 跳转相关
-        List<Menu> jumps = menus.stream().filter(e -> e.getMenuType() != 3).sorted(Comparator.comparing(Menu::getSort)).collect(Collectors.toList());
+        List<Menu> jumps = menus.stream().filter(e -> !Objects.equals(e.getMenuType(), BUTTON)).sorted(Comparator.comparing(Menu::getSort)).collect(Collectors.toList());
         // 权限相关
-        List<Menu> permissions = menus.stream().filter(e -> e.getMenuType() != 1).collect(Collectors.toList());
+        List<Menu> permissions = menus.stream().filter(e -> !Objects.equals(e.getMenuType(), DIR)).collect(Collectors.toList());
 
         // 跳转相关数据转换成树
         List<BasicMenuInfoVO> menuVOList = jumps.stream().filter(e -> Objects.equals(e.getParentId(), ROOT_PARENT_ID)).map(e -> {
@@ -146,7 +146,7 @@ public class GenericService {
         List<Menu> list = menuManager.list();
 
         // 过滤掉按钮
-        list = list.stream().filter(e -> e.getMenuType() != 3).collect(Collectors.toList());
+        list = list.stream().filter(e -> !Objects.equals(e.getMenuType(), BUTTON)).collect(Collectors.toList());
 
         // 对象转换成vo类型
         List<MenuSelectVO> all = list.stream().map(e -> {

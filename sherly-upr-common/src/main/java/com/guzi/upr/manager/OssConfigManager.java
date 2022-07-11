@@ -6,6 +6,8 @@ import com.guzi.upr.mapper.admin.OssConfigMapper;
 import com.guzi.upr.model.admin.OssConfig;
 import org.springframework.stereotype.Service;
 
+import static com.guzi.upr.model.contants.CommonConstants.ENABLE;
+
 /**
  * @author 谷子毅
  * @date 2022/6/24
@@ -15,7 +17,7 @@ public class OssConfigManager extends ServiceImpl<OssConfigMapper, OssConfig> {
 
     public OssConfig getEnable() {
         LambdaQueryWrapper<OssConfig> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(OssConfig::getEnable, 1);
+        wrapper.eq(OssConfig::getEnable, ENABLE);
         return this.getOne(wrapper);
     }
 }

@@ -24,8 +24,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static com.guzi.upr.constants.CommonConstants.DISABLE;
-import static com.guzi.upr.constants.CommonConstants.ENABLE;
+import static com.guzi.upr.model.contants.CommonConstants.DISABLE;
+import static com.guzi.upr.model.contants.CommonConstants.ENABLE;
 
 /**
  * @author 谷子毅

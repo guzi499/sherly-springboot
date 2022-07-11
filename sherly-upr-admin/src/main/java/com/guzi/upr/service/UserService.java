@@ -32,8 +32,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static com.guzi.upr.constants.CommonConstants.ENABLE;
-import static com.guzi.upr.constants.CommonConstants.MALE;
+import static com.guzi.upr.model.contants.CommonConstants.ENABLE;
+import static com.guzi.upr.model.contants.CommonConstants.MALE;
 import static com.guzi.upr.enums.ResultAdminEnum.*;
 
 /**
