@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 
 /**
  * @author 谷子毅
- * @email guzyc@digitalchina.com
  * @date 2022/7/8
  */
 @Component
