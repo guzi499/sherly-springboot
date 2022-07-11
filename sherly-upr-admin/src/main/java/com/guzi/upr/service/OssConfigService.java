@@ -1,10 +1,11 @@
 package com.guzi.upr.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.guzi.upr.manager.OssConfigManager;
 import com.guzi.upr.model.PageResult;
-import com.guzi.upr.model.admin.OssClientConfig;
+import com.guzi.upr.model.OssClientConfig;
 import com.guzi.upr.model.admin.OssConfig;
 import com.guzi.upr.model.dto.OssConfigInsertDTO;
 import com.guzi.upr.model.dto.OssConfigPageDTO;
@@ -47,7 +48,7 @@ public class OssConfigService {
      * @return
      */
     public PageResult<OssConfigPageVO> listPage(OssConfigPageDTO dto) {
-        IPage<OssConfig> page = ossConfigManager.page(dto.pageInfo());
+        IPage<OssConfig> page = ossConfigManager.page(new Page<>(dto.getCurrent(), dto.getSize()));
 
         List<OssConfigPageVO> result = page.getRecords().stream().map(e -> {
             OssConfigPageVO vo = new OssConfigPageVO();

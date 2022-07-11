@@ -4,6 +4,7 @@ import com.guzi.upr.manager.*;
 import com.guzi.upr.model.admin.*;
 import com.guzi.upr.model.vo.*;
 import com.guzi.upr.security.model.SecurityModel;
+import com.guzi.upr.util.OssUtil;
 import com.guzi.upr.util.SherlyBeanUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,12 +43,15 @@ public class GenericService {
     @Autowired
     private UserRoleManager userRoleManager;
 
+    @Autowired
+    private OssUtil ossUtil;
+
     /**
      * 获取登录基本信息
      *
      * @return
      */
-    public BasicInfoVO getBasicData() {
+    public BasicInfoVO getBasicData() throws Exception {
         SecurityModel securityModel = (SecurityModel) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Long userId = securityModel.getUserId();
 
@@ -55,6 +59,9 @@ public class GenericService {
         User user = userManager.getById(userId);
         BasicUserInfoVO userVO = new BasicUserInfoVO();
         BeanUtils.copyProperties(user, userVO);
+        if (userVO != null) {
+            userVO.setAvatar(ossUtil.accessUrl(userVO.getAvatar()));
+        }
 
         // 角色信息收集
         List<UserRole> userRoles = userRoleManager.listByUserId(userId);
@@ -112,6 +119,22 @@ public class GenericService {
                     basicMenuInfoVO.setChildren(getChildren(e, all));
                     return basicMenuInfoVO;
                 }).collect(Collectors.toList());
+    }
+
+    /**
+     * 用户下拉框
+     *
+     * @return
+     */
+    public List<UserSelectVO> getBasicUser() {
+        List<User> list = userManager.list();
+
+        // 对象转换成vo类型
+        return list.stream().map(e -> {
+            UserSelectVO userSelectVO = new UserSelectVO();
+            BeanUtils.copyProperties(e, userSelectVO);
+            return userSelectVO;
+        }).collect(Collectors.toList());
     }
 
     /**

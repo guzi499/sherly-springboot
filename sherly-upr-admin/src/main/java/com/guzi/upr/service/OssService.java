@@ -2,16 +2,14 @@ package com.guzi.upr.service;
 
 import cn.hutool.core.io.FileTypeUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.guzi.upr.manager.OssConfigManager;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.guzi.upr.manager.OssFileManager;
 import com.guzi.upr.model.PageResult;
-import com.guzi.upr.model.admin.OssConfig;
 import com.guzi.upr.model.admin.OssFile;
 import com.guzi.upr.model.dto.OssFilePageDTO;
 import com.guzi.upr.model.vo.OssFilePageVO;
-import com.guzi.upr.security.util.SecurityUtil;
-import com.guzi.upr.storage.OssClientFactory;
 import com.guzi.upr.storage.model.OssClient;
+import com.guzi.upr.util.OssUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,29 +26,10 @@ import java.util.stream.Collectors;
 public class OssService {
 
     @Autowired
-    private OssClientFactory ossClientFactory;
-
-    @Autowired
-    private OssConfigManager ossConfigManager;
+    private OssUtil ossUtil;
 
     @Autowired
     private OssFileManager ossFileManager;
-
-    /**
-     * 获取对象存储服务客户端
-     * @return
-     */
-    private OssClient getOssClient() {
-        OssClient ossClient = ossClientFactory.getOssClient(SecurityUtil.getTenantCode());
-        if (ossClient == null) {
-            OssConfig ossConfig = ossConfigManager.getEnable();
-            if (ossConfig == null) {
-                return null;
-            }
-            return ossClientFactory.createOssClient(SecurityUtil.getTenantCode(), ossConfig.getConfigId(), ossConfig.getType(), ossConfig.getConfig());
-        }
-        return ossClient;
-    }
 
     /**
      * 文件上传
@@ -63,7 +42,7 @@ public class OssService {
 
         String type = FileTypeUtil.getType(new ByteArrayInputStream(fileBytes));
 
-        OssClient ossClient = this.getOssClient();
+        OssClient ossClient = ossUtil.getOssClient();
         ossClient.upload(fileBytes, newPath);
 
         OssFile ossFile = new OssFile();
@@ -92,7 +71,7 @@ public class OssService {
      * @throws Exception
      */
     public byte[] downloadOne(String path) throws Exception {
-        OssClient ossClient = this.getOssClient();
+        OssClient ossClient = ossUtil.getOssClient();
         return ossClient.download(path);
     }
 
@@ -102,7 +81,7 @@ public class OssService {
      * @return
      */
     public PageResult listPage(OssFilePageDTO dto) {
-        IPage<OssFile> page = ossFileManager.page(dto.pageInfo());
+        IPage<OssFile> page = ossFileManager.page(new Page<>(dto.getCurrent(), dto.getSize()));
 
         List<OssFilePageVO> result = page.getRecords().stream().map(e -> {
             OssFilePageVO ossFilePageVO = new OssFilePageVO();
@@ -121,7 +100,6 @@ public class OssService {
      * @throws Exception
      */
     public String accessUrl(String path) throws Exception {
-        OssClient ossClient = this.getOssClient();
-        return ossClient.getAccessUrl(path);
+        return ossUtil.accessUrl(path);
     }
 }

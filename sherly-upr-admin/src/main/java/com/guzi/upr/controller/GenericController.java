@@ -1,10 +1,7 @@
 package com.guzi.upr.controller;
 
 import com.guzi.upr.model.Result;
-import com.guzi.upr.model.vo.BasicInfoVO;
-import com.guzi.upr.model.vo.DepartmentSelectVO;
-import com.guzi.upr.model.vo.MenuSelectVO;
-import com.guzi.upr.model.vo.RoleSelectVO;
+import com.guzi.upr.model.vo.*;
 import com.guzi.upr.service.GenericService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -31,8 +28,14 @@ public class GenericController {
 
     @GetMapping("/basic/data")
     @ApiOperation("获取登录基本信息")
-    public Result<BasicInfoVO> getBasicData() {
+    public Result<BasicInfoVO> getBasicData() throws Exception {
         return Result.success(genericService.getBasicData());
+    }
+
+    @GetMapping("basic/user")
+    @ApiOperation("用户下拉框")
+    public Result<List<UserSelectVO>> getBasicUser() {
+        return Result.success(genericService.getBasicUser());
     }
 
     @GetMapping("basic/menu")
