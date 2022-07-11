@@ -1,8 +1,9 @@
 package com.guzi.upr.model.vo;
 
-import com.guzi.upr.model.OssClientConfig;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+
+import java.util.Map;
 
 /**
  * @author 谷子毅
@@ -28,5 +29,5 @@ public class OssConfigVO {
 
     /** 具体配置 */
     @ApiModelProperty(value = "具体配置")
-    private OssClientConfig config;
+    private Map<String, Object> config;
 }

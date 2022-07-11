@@ -1,6 +1,6 @@
 package com.guzi.upr.storage.enums;
 
-import com.guzi.upr.model.OssClientConfig;
+import com.guzi.upr.storage.model.OssClientConfig;
 import com.guzi.upr.storage.client.local.LocalOssClient;
 import com.guzi.upr.storage.client.local.LocalOssClientConfig;
 import com.guzi.upr.storage.client.s3.S3OssClient;
