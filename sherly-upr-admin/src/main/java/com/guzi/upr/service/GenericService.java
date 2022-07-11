@@ -122,6 +122,22 @@ public class GenericService {
     }
 
     /**
+     * 用户下拉框
+     *
+     * @return
+     */
+    public List<UserSelectVO> getBasicUser() {
+        List<User> list = userManager.list();
+
+        // 对象转换成vo类型
+        return list.stream().map(e -> {
+            UserSelectVO userSelectVO = new UserSelectVO();
+            BeanUtils.copyProperties(e, userSelectVO);
+            return userSelectVO;
+        }).collect(Collectors.toList());
+    }
+
+    /**
      * 菜单下拉框
      *
      * @return
