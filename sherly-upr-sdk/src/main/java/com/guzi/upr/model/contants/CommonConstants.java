@@ -1,4 +1,4 @@
-package com.guzi.upr.constants;
+package com.guzi.upr.model.contants;
 
 /**
  * 通用常量
@@ -7,6 +7,14 @@ package com.guzi.upr.constants;
  * @date 2022/7/7
  */
 public class CommonConstants {
+
+    /*=============================布尔真假========================*/
+
+    /** 真 */
+    public static final String TRUE = "true";
+
+    /** 假 */
+    public static final String FALSE = "false";
 
     /*=============================逻辑删除========================*/
 

@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import com.guzi.upr.model.BaseModel;
-import com.guzi.upr.model.OssClientConfig;
+import com.guzi.upr.storage.model.OssClientConfig;
 import lombok.Data;
 
 /**

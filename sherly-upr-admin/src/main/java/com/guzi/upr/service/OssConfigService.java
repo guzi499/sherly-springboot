@@ -4,8 +4,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.guzi.upr.manager.OssConfigManager;
+import com.guzi.upr.storage.model.OssClientConfig;
 import com.guzi.upr.model.PageResult;
-import com.guzi.upr.model.OssClientConfig;
 import com.guzi.upr.model.admin.OssConfig;
 import com.guzi.upr.model.dto.OssConfigInsertDTO;
 import com.guzi.upr.model.dto.OssConfigPageDTO;
@@ -24,8 +24,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static com.guzi.upr.constants.CommonConstants.DISABLE;
-import static com.guzi.upr.constants.CommonConstants.ENABLE;
+import static com.guzi.upr.model.contants.CommonConstants.DISABLE;
+import static com.guzi.upr.model.contants.CommonConstants.ENABLE;
 
 /**
  * @author 谷子毅
@@ -64,10 +64,16 @@ public class OssConfigService {
      * @param configId
      * @return
      */
-    public OssConfigVO getOne(Long configId) {
+    public OssConfigVO getOne(Long configId) throws Exception {
         OssConfig ossConfig = ossConfigManager.getById(configId);
+        OssClientConfig config = ossConfig.getConfig();
+        String configStr = OBJECTMAPPER.writeValueAsString(config);
+        Map<String, Object> map = OBJECTMAPPER.readValue(configStr, Map.class);
+
         OssConfigVO vo = new OssConfigVO();
         BeanUtils.copyProperties(ossConfig, vo);
+        vo.setConfig(map);
+
         return vo;
     }
 

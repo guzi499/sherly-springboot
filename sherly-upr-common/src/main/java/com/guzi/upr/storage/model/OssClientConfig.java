@@ -1,4 +1,4 @@
-package com.guzi.upr.model;
+package com.guzi.upr.storage.model;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 

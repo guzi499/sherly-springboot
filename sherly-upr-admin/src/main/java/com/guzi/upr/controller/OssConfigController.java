@@ -38,7 +38,7 @@ public class OssConfigController {
 
     @GetMapping("/get/one")
     @ApiOperation("对象存储配置详情")
-    public Result<OssConfigVO> getOne(@RequestParam Long configId) {
+    public Result<OssConfigVO> getOne(@RequestParam Long configId) throws Exception {
         return Result.success(ossConfigService.getOne(configId));
     }
 

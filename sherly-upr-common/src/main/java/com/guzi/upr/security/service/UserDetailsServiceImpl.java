@@ -16,7 +16,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
+
+import static com.guzi.upr.model.contants.CommonConstants.DIR;
 
 /**
  * @author 谷子毅
@@ -64,7 +67,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         List<RoleMenu> roleMenus = roleMenuManager.listByRoleIds(roleIds);
         List<Long> menuIds = roleMenus.stream().map(RoleMenu::getMenuId).distinct().collect(Collectors.toList());
         List<Menu> menus = menuManager.listByIds(menuIds);
-        List<String> permissions = menus.stream().filter(e -> e.getMenuType() != 1).map(Menu::getPermission).filter(StringUtils::hasText).collect(Collectors.toList());
+        List<String> permissions = menus.stream().filter(e -> !Objects.equals(e.getMenuType(), DIR)).map(Menu::getPermission).filter(StringUtils::hasText).collect(Collectors.toList());
 
         // 响应userDetails用于登录校验
         LoginUserDetails loginUserDetails = new LoginUserDetails();

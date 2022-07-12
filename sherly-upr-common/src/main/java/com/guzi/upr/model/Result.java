@@ -5,6 +5,8 @@ import com.guzi.upr.util.GlobalParamUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.guzi.upr.model.contants.CommonConstants.FALSE;
+
 /**
  * 通用结果返回类
  * @author 谷子毅
@@ -78,7 +80,7 @@ public class Result<T> {
 
     private static List<String> parseException(Exception e) {
         // 如果是生产环境，则不解析异常栈
-        if ("false".equals(GlobalParamUtil.getValue("spring.application.dev-flag"))) {
+        if (FALSE.equals(GlobalParamUtil.getValue("spring.application.dev-flag"))) {
             return null;
         }
 
