@@ -33,6 +33,8 @@ mybatis-plus:
       logic-not-delete-value: 0
 
 logging:
+  file:
+    name: .sherly-log/sherly.log
   level:
     # mysql日志
     -com.guzi.upr.mapper: debug
