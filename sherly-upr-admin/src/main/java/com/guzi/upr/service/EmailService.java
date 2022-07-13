@@ -32,7 +32,7 @@ public class EmailService {
         return emailConfigVO;
     }
 
-    public void saveOrUpdateOne(EmailConfigDTO dto) {
+    public void saveOrUpdate(EmailConfigDTO dto) {
         EmailConfig emailConfig = new EmailConfig();
         BeanUtils.copyProperties(dto, emailConfig);
         emailConfigManager.saveOrUpdate(emailConfig);

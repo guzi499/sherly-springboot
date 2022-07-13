@@ -22,13 +22,13 @@ public class Result<T> {
 
     private static final String ERROR_CODE = "999999";
 
-    private String code;
+    private final String code;
 
-    private String message;
+    private final String message;
 
     private List<String> errorStack;
 
-    private Long timestamp;
+    private final Long timestamp;
 
     private T data;
 

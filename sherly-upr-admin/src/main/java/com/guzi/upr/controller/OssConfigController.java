@@ -21,7 +21,7 @@ import javax.validation.Valid;
  * @date 2022/6/24
  */
 @RestController
-@RequestMapping("/api/oss/config")
+@RequestMapping("/api/oss_config")
 @Api(tags = "对象存储配置相关")
 @Validated
 public class OssConfigController {
@@ -30,40 +30,40 @@ public class OssConfigController {
     private OssConfigService ossConfigService;
 
 
-    @GetMapping("/list/page")
+    @GetMapping("/list_page")
     @ApiOperation("对象存储配置分页")
     public Result<PageResult<OssConfigPageVO>> listPage(OssConfigPageDTO dto) {
         return Result.success(ossConfigService.listPage(dto));
     }
 
-    @GetMapping("/get/one")
+    @GetMapping("/get_one")
     @ApiOperation("对象存储配置详情")
     public Result<OssConfigVO> getOne(@RequestParam Long configId) throws Exception {
         return Result.success(ossConfigService.getOne(configId));
     }
 
-    @PutMapping("/enable/one")
+    @PutMapping("/enable_one")
     @ApiOperation("对象存储配置激活")
     public Result enableOne(@RequestParam Long configId) {
         ossConfigService.enableOne(configId);
         return Result.success();
     }
 
-    @PostMapping("/save/one")
+    @PostMapping("/save_one")
     @ApiOperation("对象存储配置新增")
     public Result saveOne(@RequestBody @Valid OssConfigInsertDTO dto) throws Exception {
         ossConfigService.saveOne(dto);
         return Result.success();
     }
 
-    @PutMapping("/update/one")
+    @PutMapping("/update_one")
     @ApiOperation("对象存储配置更新")
     public Result updateOne(@RequestBody @Valid OssConfigUpdateDTO dto) throws Exception {
         ossConfigService.updateOne(dto);
         return Result.success();
     }
 
-    @DeleteMapping("/remove/one")
+    @DeleteMapping("/remove_one")
     @ApiOperation("对象存储配置删除")
     public Result removeOne(@RequestParam Long configId) {
         ossConfigService.removeOne(configId);

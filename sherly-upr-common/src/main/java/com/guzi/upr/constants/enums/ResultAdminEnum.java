@@ -1,4 +1,4 @@
-package com.guzi.upr.enums;
+package com.guzi.upr.constants.enums;
 
 import com.guzi.upr.exception.IBaseError;
 

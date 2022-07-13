@@ -2,10 +2,13 @@ package com.guzi.upr.controller;
 
 import com.guzi.upr.model.PageResult;
 import com.guzi.upr.model.Result;
-import com.guzi.upr.model.dto.*;
+import com.guzi.upr.model.dto.UserInsertDTO;
+import com.guzi.upr.model.dto.UserPageDTO;
+import com.guzi.upr.model.dto.UserSelectDTO;
+import com.guzi.upr.model.dto.UserUpdateDTO;
 import com.guzi.upr.model.vo.UserPageVo;
+import com.guzi.upr.model.vo.UserSelectVO;
 import com.guzi.upr.model.vo.UserVo;
-import com.guzi.upr.service.OssService;
 import com.guzi.upr.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -13,11 +16,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * @author 谷子毅
@@ -32,31 +35,28 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private OssService ossService;
-
-    @GetMapping("/list/page")
+    @GetMapping("/list_page")
     @PreAuthorize("hasAnyAuthority('user:list:page')")
     @ApiOperation(value = "用户分页")
     public Result<PageResult<UserPageVo>> listPage(UserPageDTO dto) {
         return Result.success(userService.listPage(dto));
     }
 
-    @GetMapping("/list/export")
+    @GetMapping("/list_export")
     // @PreAuthorize("hasAnyAuthority('user:list:export')")
     @ApiOperation(value = "用户导出", produces = "application/octet-stream")
     public void listExport(HttpServletResponse response) throws IOException {
         userService.listExport(response);
     }
 
-    @GetMapping("/get/one")
+    @GetMapping("/get_one")
     @PreAuthorize("hasAnyAuthority('user:get:one')")
     @ApiOperation(value = "用户详情")
     public Result<UserVo> getOne(@RequestParam Long userId) {
         return Result.success(userService.getOne(userId));
     }
 
-    @PutMapping("/ban/one")
+    @PutMapping("/ban_one")
     @PreAuthorize("hasAnyAuthority('user:ban:one')")
     @ApiOperation(value = "用户禁用/启用")
     public Result banOne(@RequestParam Long userId, @RequestParam Integer enable) {
@@ -64,7 +64,7 @@ public class UserController {
         return Result.success();
     }
 
-    @PostMapping("/save/one")
+    @PostMapping("/save_one")
     @PreAuthorize("hasAnyAuthority('user:save:one')")
     @ApiOperation(value = "用户新增")
     public Result saveOne(@RequestBody @Valid UserInsertDTO dto) {
@@ -72,7 +72,7 @@ public class UserController {
         return Result.success();
     }
 
-    @PutMapping("/update/one")
+    @PutMapping("/update_one")
     @PreAuthorize("hasAnyAuthority('user:update:one')")
     @ApiOperation("用户更新")
     public Result updateOne(@RequestBody @Valid UserUpdateDTO dto) {
@@ -80,7 +80,7 @@ public class UserController {
         return Result.success();
     }
 
-    @DeleteMapping("/remove/one")
+    @DeleteMapping("/remove_one")
     @PreAuthorize("hasAnyAuthority('user:remove:one')")
     @ApiOperation("用户删除")
     public Result removeOne(@RequestParam Long userId) {
@@ -88,35 +88,9 @@ public class UserController {
         return Result.success();
     }
 
-    @GetMapping("/get/self")
-    // @PreAuthorize("hasAnyAuthority('user:get:self')")
-    @ApiOperation("用户个人中心")
-    public Result getSelf() {
-        return Result.success(userService.getSelf());
-    }
-
-    @PutMapping("/update/self")
-    // @PreAuthorize("hasAnyAuthority('user:update:self')")
-    @ApiOperation("用户个人中心更新")
-    public Result updateSelf(@RequestBody @Valid UserSelfUpdateDTO dto) {
-        userService.updateSelf(dto);
-        return Result.success();
-    }
-
-    @PutMapping("/update/password")
-    // @PreAuthorize("hasAnyAuthority('user:update:password')")
-    @ApiOperation("用户修改密码")
-    public Result updatePassword(@RequestBody @Valid UserUpdatePasswordDTO dto) {
-        userService.updatePassword(dto);
-        return Result.success();
-    }
-
-    @PutMapping("/update/avatar")
-    // @PreAuthorize("hasAnyAuthority('user:update:avatar')")
-    @ApiOperation("用户修改头像")
-    public Result updateAvatar(@RequestParam MultipartFile file) throws Exception {
-        String avatarPath = ossService.uploadOne(file.getBytes(), "avatar$" + file.getName());
-        userService.updateAvatar(avatarPath);
-        return Result.success();
+    @GetMapping("/list_all")
+    @ApiOperation("用户查询")
+    public Result<List<UserSelectVO>> listAll(UserSelectDTO dto) {
+        return Result.success(userService.listAll(dto));
     }
 }

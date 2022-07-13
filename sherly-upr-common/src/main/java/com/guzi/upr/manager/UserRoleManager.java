@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.guzi.upr.mapper.admin.UserRoleMapper;
 import com.guzi.upr.model.admin.UserRole;
+import com.guzi.upr.util.SherlyLambdaQueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -79,6 +80,17 @@ public class UserRoleManager extends ServiceImpl<UserRoleMapper, UserRole> {
     public List<UserRole> listByUserId(Long userId) {
         LambdaQueryWrapper<UserRole> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(UserRole::getUserId, userId);
+        return this.list(wrapper);
+    }
+
+    /**
+     * 根据用户ids查询用户角色数据
+     * @param roleIds
+     * @return
+     */
+    public List<UserRole> listByRoleIds(List<Long> roleIds) {
+        SherlyLambdaQueryWrapper<UserRole> wrapper = new SherlyLambdaQueryWrapper<>();
+        wrapper.inIfExist(UserRole::getRoleId, roleIds);
         return this.list(wrapper);
     }
 }

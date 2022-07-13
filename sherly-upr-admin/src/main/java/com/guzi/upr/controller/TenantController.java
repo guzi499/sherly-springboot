@@ -29,7 +29,7 @@ public class TenantController {
     @Autowired
     private TenantService tenantService;
 
-    @GetMapping("/list/page")
+    @GetMapping("/list_page")
     @PreAuthorize("hasAnyAuthority('tenant:list:page')")
     @ApiOperation("租户分页")
     public Result<PageResult<TenantPageVO>> listPage(TenantPageDTO dto) {
@@ -37,7 +37,7 @@ public class TenantController {
     }
 
 
-    @PostMapping("/save/one")
+    @PostMapping("/save_one")
     @PreAuthorize("hasAnyAuthority('tenant:save:one')")
     @ApiOperation("租户新增")
     public Result saveOne(@RequestBody @Valid TenantInsertDTO dto) {
@@ -45,7 +45,7 @@ public class TenantController {
         return Result.success();
     }
 
-    @PutMapping("/update/one")
+    @PutMapping("/update_one")
     @PreAuthorize("hasAnyAuthority('tenant:update:one')")
     @ApiOperation("租户更新")
     public Result updateOne(@RequestBody @Valid TenantUpdateDTO dto) {
@@ -53,7 +53,7 @@ public class TenantController {
         return Result.success();
     }
 
-    @DeleteMapping("/remove/one")
+    @DeleteMapping("/remove_one")
     @PreAuthorize("hasAnyAuthority('tenant:remove:one')")
     @ApiOperation("租户删除")
     public Result removeOne(@RequestParam Long id) {

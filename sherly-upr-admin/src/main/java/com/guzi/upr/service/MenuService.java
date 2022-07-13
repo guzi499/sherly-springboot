@@ -17,7 +17,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static com.guzi.upr.model.contants.CommonConstants.ROOT_PARENT_ID;
-import static com.guzi.upr.enums.ResultAdminEnum.*;
+import static com.guzi.upr.constants.enums.ResultAdminEnum.*;
 
 /**
  * @author 谷子毅

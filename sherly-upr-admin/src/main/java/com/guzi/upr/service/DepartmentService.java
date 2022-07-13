@@ -1,6 +1,6 @@
 package com.guzi.upr.service;
 
-import com.guzi.upr.enums.ResultAdminEnum;
+import com.guzi.upr.constants.enums.ResultAdminEnum;
 import com.guzi.upr.exception.BizException;
 import com.guzi.upr.manager.DepartmentManager;
 import com.guzi.upr.manager.UserManager;

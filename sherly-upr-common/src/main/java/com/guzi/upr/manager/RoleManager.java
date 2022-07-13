@@ -5,9 +5,12 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.guzi.upr.mapper.admin.RoleMapper;
 import com.guzi.upr.model.admin.Role;
+import com.guzi.upr.model.dto.RoleSelectDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+
+import java.util.List;
 
 /**
  * @author 谷子毅
@@ -44,5 +47,15 @@ public class RoleManager extends ServiceImpl<RoleMapper, Role> {
         LambdaQueryWrapper<Role> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(Role::getRoleName, roleName);
         return this.getOne(wrapper);
+    }
+
+    /**
+     * 角色查询
+     * @param dto
+     * @return
+     */
+    public List<Role> listAll(RoleSelectDTO dto) {
+        LambdaQueryWrapper<Role> wrapper = new LambdaQueryWrapper<>();
+        return this.list(wrapper);
     }
 }
