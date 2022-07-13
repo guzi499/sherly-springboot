@@ -33,7 +33,7 @@ public class Knife4jConfiguration {
     public Docket defaultApi2() {
         // 设置token请求头为必填
         ParameterBuilder ticketPar = new ParameterBuilder();
-        List<Parameter> params = new ArrayList<Parameter>();
+        List<Parameter> params = new ArrayList<>();
         ticketPar.name("token").description("Authorization")
                 .modelRef(new ModelRef("string")).parameterType("header")
                 .required(false).build();
@@ -49,7 +49,7 @@ public class Knife4jConfiguration {
                 .paths(PathSelectors.any())
                 .build()
                 .globalOperationParameters(params)
-                .extensions(openApiExtensionResolver.buildExtensions("default"));;
+                .extensions(openApiExtensionResolver.buildExtensions("default"));
 
         return docket;
     }

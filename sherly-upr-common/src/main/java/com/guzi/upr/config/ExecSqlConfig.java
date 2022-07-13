@@ -18,7 +18,7 @@ import java.util.Map;
 @Component
 public class ExecSqlConfig {
 
-    private Map<String, String> sqlContainer = new HashMap<>();
+    private final Map<String, String> sqlContainer = new HashMap<>();
 
     private ExecSqlConfig() throws Exception {
         // 1.创建Reader对象

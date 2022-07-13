@@ -2,9 +2,9 @@ package com.guzi.upr.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.guzi.upr.model.Result;
-import com.guzi.upr.model.admin.OnlineUser;
-import com.guzi.upr.model.dto.OnlineUserQueryDTO;
-import com.guzi.upr.service.OnlineUserService;
+import com.guzi.upr.model.dto.UserOnlineSelectDTO;
+import com.guzi.upr.model.vo.UserOnlineSelectVO;
+import com.guzi.upr.service.UserOnlineService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,24 +22,24 @@ import java.util.List;
  * @date 2022/5/18
  */
 @RestController
-@RequestMapping("/api/user/online")
+@RequestMapping("/api/user_online")
 @Api(tags = "在线用户相关")
 @Validated
-public class OnlineUserController {
+public class UserOnlineController {
 
     @Autowired
-    private OnlineUserService onlineUserService;
+    private UserOnlineService userOnlineService;
 
     @GetMapping("/list")
     @ApiOperation("在线用户列表")
-    public Result<List<OnlineUser>> list(@Valid OnlineUserQueryDTO dto) throws JsonProcessingException {
-        return Result.success(onlineUserService.list(dto));
+    public Result<List<UserOnlineSelectVO>> list(@Valid UserOnlineSelectDTO dto) throws JsonProcessingException {
+        return Result.success(userOnlineService.list(dto));
     }
 
-    @GetMapping("/force/quit")
+    @GetMapping("/force_quit")
     @ApiOperation("强制退出")
     public Result forceQuit(@RequestParam String phone) {
-        onlineUserService.forceQuit(phone);
+        userOnlineService.forceQuit(phone);
         return Result.success();
     }
 }

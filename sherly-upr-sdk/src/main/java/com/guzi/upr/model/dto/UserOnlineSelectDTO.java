@@ -8,7 +8,7 @@ import lombok.Data;
  * @date 2022/5/25
  */
 @Data
-public class OnlineUserQueryDTO {
+public class UserOnlineSelectDTO {
 
     /** 手机号 */
     @ApiModelProperty(value = "手机号")

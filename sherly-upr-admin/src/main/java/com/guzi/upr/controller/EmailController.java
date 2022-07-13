@@ -26,16 +26,16 @@ public class EmailController {
     @Autowired
     private EmailService emailService;
 
-    @GetMapping("/get/one")
+    @GetMapping("/get_one")
     @ApiOperation("邮件配置详情")
     public Result<EmailConfigVO> getOne() {
         return Result.success(emailService.getOne());
     }
 
-    @PostMapping("/saveOrUpdate/one")
+    @PostMapping("/save_or_update")
     @ApiOperation("邮件配置保存或修改")
     public Result saveOrUpdateOne(@RequestBody @Valid EmailConfigDTO dto) {
-        emailService.saveOrUpdateOne(dto);
+        emailService.saveOrUpdate(dto);
         return Result.success();
     }
 

@@ -8,8 +8,11 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.guzi.upr.mapper.admin.UserMapper;
 import com.guzi.upr.model.admin.User;
 import com.guzi.upr.model.dto.UserPageDTO;
+import com.guzi.upr.model.dto.UserSelectDTO;
 import com.guzi.upr.util.SherlyLambdaQueryWrapper;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author 谷子毅
@@ -79,5 +82,18 @@ public class UserManager extends ServiceImpl<UserMapper, User> {
         LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(User::getPhone, phone);
         return this.getOne(wrapper);
+    }
+
+    /**
+     * 用户条件查询
+     * @param dto
+     * @return
+     */
+    public List<User> listAll(UserSelectDTO dto) {
+        SherlyLambdaQueryWrapper<User> wrapper = new SherlyLambdaQueryWrapper<>();
+        wrapper.inIfExist(User::getDepartmentId, dto.getDepartmentIds())
+                .eqIfExist(User::getEnable, dto.getEnable())
+                .inIfExist(User::getUserId, dto.getUserIds());
+        return this.list(wrapper);
     }
 }

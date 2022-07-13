@@ -1,6 +1,6 @@
 package com.guzi.upr.security.model;
 
-import com.guzi.upr.model.admin.OnlineUser;
+import com.guzi.upr.model.admin.UserOnline;
 import lombok.Data;
 
 import java.util.List;
@@ -18,5 +18,5 @@ public class RedisSecurityModel {
 
     private List<String> permissions;
 
-    private OnlineUser onlineUser;
+    private UserOnline userOnline;
 }

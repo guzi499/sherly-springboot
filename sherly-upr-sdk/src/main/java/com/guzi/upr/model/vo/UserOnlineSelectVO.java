@@ -1,4 +1,4 @@
-package com.guzi.upr.model.admin;
+package com.guzi.upr.model.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
@@ -8,12 +8,10 @@ import java.util.Date;
 
 /**
  * @author 谷子毅
- * @date 2022/5/25
+ * @date 2022/7/13
  */
-
 @Data
-public class OnlineUser {
-
+public class UserOnlineSelectVO {
     /** 用户id */
     @ApiModelProperty(value = "用户id")
     private Long userId;

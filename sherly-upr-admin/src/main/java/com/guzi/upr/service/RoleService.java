@@ -2,7 +2,7 @@ package com.guzi.upr.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.guzi.upr.enums.ResultAdminEnum;
+import com.guzi.upr.constants.enums.ResultAdminEnum;
 import com.guzi.upr.exception.BizException;
 import com.guzi.upr.manager.RoleManager;
 import com.guzi.upr.manager.RoleMenuManager;
@@ -12,8 +12,10 @@ import com.guzi.upr.model.admin.Role;
 import com.guzi.upr.model.admin.RoleMenu;
 import com.guzi.upr.model.dto.RoleInsertDTO;
 import com.guzi.upr.model.dto.RolePageDTO;
+import com.guzi.upr.model.dto.RoleSelectDTO;
 import com.guzi.upr.model.dto.RoleUpdateDTO;
 import com.guzi.upr.model.vo.RolePageVO;
+import com.guzi.upr.model.vo.RoleSelectVO;
 import com.guzi.upr.model.vo.RoleVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +27,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static com.guzi.upr.enums.ResultAdminEnum.ROLE_BOUND_USER;
+import static com.guzi.upr.constants.enums.ResultAdminEnum.ROLE_BOUND_USER;
 
 /**
  * @author 谷子毅
@@ -143,5 +145,20 @@ public class RoleService {
         // 删除角色菜单、用户角色数据
         roleMenuManager.removeRoleMenuByRoleId(roleId);
         userRoleManager.removeUserRoleByRoleId(roleId);
+    }
+
+    /**
+     * 角色查询
+     * @param dto
+     * @return
+     */
+    public List<RoleSelectVO> listAll(RoleSelectDTO dto) {
+        List<Role> roles = roleManager.listAll(dto);
+
+        return roles.stream().map(e -> {
+            RoleSelectVO vo = new RoleSelectVO();
+            BeanUtils.copyProperties(e, vo);
+            return vo;
+        }).collect(Collectors.toList());
     }
 }

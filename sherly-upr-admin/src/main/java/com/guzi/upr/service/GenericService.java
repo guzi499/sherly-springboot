@@ -5,7 +5,6 @@ import com.guzi.upr.model.admin.*;
 import com.guzi.upr.model.vo.*;
 import com.guzi.upr.security.model.SecurityModel;
 import com.guzi.upr.util.OssUtil;
-import com.guzi.upr.util.SherlyBeanUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -59,7 +58,7 @@ public class GenericService {
         User user = userManager.getById(userId);
         BasicUserInfoVO userVO = new BasicUserInfoVO();
         BeanUtils.copyProperties(user, userVO);
-        if (userVO != null) {
+        if (userVO.getAvatar() != null) {
             userVO.setAvatar(ossUtil.accessUrl(userVO.getAvatar()));
         }
 
@@ -119,76 +118,5 @@ public class GenericService {
                     basicMenuInfoVO.setChildren(getChildren(e, all));
                     return basicMenuInfoVO;
                 }).collect(Collectors.toList());
-    }
-
-    /**
-     * 用户下拉框
-     *
-     * @return
-     */
-    public List<UserSelectVO> getBasicUser() {
-        List<User> list = userManager.list();
-
-        // 对象转换成vo类型
-        return list.stream().map(e -> {
-            UserSelectVO userSelectVO = new UserSelectVO();
-            BeanUtils.copyProperties(e, userSelectVO);
-            return userSelectVO;
-        }).collect(Collectors.toList());
-    }
-
-    /**
-     * 菜单下拉框
-     *
-     * @return
-     */
-    public List<MenuSelectVO> getBasicMenu() {
-        List<Menu> list = menuManager.list();
-
-        // 过滤掉按钮
-        list = list.stream().filter(e -> !Objects.equals(e.getMenuType(), BUTTON)).collect(Collectors.toList());
-
-        // 对象转换成vo类型
-        List<MenuSelectVO> all = list.stream().map(e -> {
-            MenuSelectVO vo = new MenuSelectVO();
-            BeanUtils.copyProperties(e, vo);
-            return vo;
-        }).collect(Collectors.toList());
-
-        return SherlyBeanUtil.convert(all);
-    }
-
-    /**
-     * 角色下拉框
-     *
-     * @return
-     */
-    public List<RoleSelectVO> getBasicRole() {
-        List<Role> list = roleManager.list();
-
-        // 对象转换成vo类型
-        return list.stream().map(e -> {
-            RoleSelectVO vo = new RoleSelectVO();
-            BeanUtils.copyProperties(e, vo);
-            return vo;
-        }).collect(Collectors.toList());
-    }
-
-    /**
-     * 部门下拉框
-     *
-     * @return
-     */
-    public List<DepartmentSelectVO> getBasicDepartment() {
-        List<Department> list = departmentManager.list();
-
-        // 对象转换成vo类型
-        List<DepartmentSelectVO> all = list.stream().map(e -> {
-            DepartmentSelectVO vo = new DepartmentSelectVO();
-            BeanUtils.copyProperties(e, vo);
-            return vo;
-        }).collect(Collectors.toList());
-
-        return SherlyBeanUtil.convert(all);
     }
 }

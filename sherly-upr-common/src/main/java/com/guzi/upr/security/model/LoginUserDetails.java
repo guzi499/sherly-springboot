@@ -1,7 +1,7 @@
 package com.guzi.upr.security.model;
 
 import com.guzi.upr.model.admin.AccountUser;
-import com.guzi.upr.model.admin.OnlineUser;
+import com.guzi.upr.model.admin.UserOnline;
 import com.guzi.upr.model.admin.User;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;
@@ -44,17 +44,17 @@ public class LoginUserDetails implements UserDetails {
         BeanUtils.copyProperties(user, securityModel);
         securityModel.setTenantCode(accountUser.getLastLoginTenantCode());
 
-        OnlineUser onlineUser = new OnlineUser();
-        BeanUtils.copyProperties(user, onlineUser);
-        onlineUser.setLoginTenantCode(accountUser.getLastLoginTenantCode());
-        onlineUser.setLoginTime(new Date());
-        onlineUser.setIp(request.getRemoteAddr());
-        onlineUser.setOs(null);
-        onlineUser.setAddress(null);
-        onlineUser.setBrowser(null);
+        UserOnline userOnline = new UserOnline();
+        BeanUtils.copyProperties(user, userOnline);
+        userOnline.setLoginTenantCode(accountUser.getLastLoginTenantCode());
+        userOnline.setLoginTime(new Date());
+        userOnline.setIp(request.getRemoteAddr());
+        userOnline.setOs(null);
+        userOnline.setAddress(null);
+        userOnline.setBrowser(null);
 
         redisSecurityModel.setSecurityModel(securityModel);
-        redisSecurityModel.setOnlineUser(onlineUser);
+        redisSecurityModel.setUserOnline(userOnline);
         redisSecurityModel.setPermissions(permissions);
 
         return redisSecurityModel;

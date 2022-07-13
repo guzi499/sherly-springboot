@@ -7,8 +7,8 @@ package com.guzi.upr.exception;
  */
 public class BizException extends RuntimeException {
 
-    private String code;
-    private String message;
+    private final String code;
+    private final String message;
 
     public BizException(String code, String message) {
         this.code = code;

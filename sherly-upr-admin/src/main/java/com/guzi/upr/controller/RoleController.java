@@ -4,8 +4,10 @@ import com.guzi.upr.model.PageResult;
 import com.guzi.upr.model.Result;
 import com.guzi.upr.model.dto.RoleInsertDTO;
 import com.guzi.upr.model.dto.RolePageDTO;
+import com.guzi.upr.model.dto.RoleSelectDTO;
 import com.guzi.upr.model.dto.RoleUpdateDTO;
 import com.guzi.upr.model.vo.RolePageVO;
+import com.guzi.upr.model.vo.RoleSelectVO;
 import com.guzi.upr.model.vo.RoleVO;
 import com.guzi.upr.service.RoleService;
 import io.swagger.annotations.Api;
@@ -16,6 +18,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * @author 谷子毅
@@ -30,21 +33,21 @@ public class RoleController {
     @Autowired
     private RoleService roleService;
 
-    @GetMapping("/list/page")
+    @GetMapping("/list_page")
     @PreAuthorize("hasAnyAuthority('role:list:page')")
     @ApiOperation("角色分页")
     public Result<PageResult<RolePageVO>> list(RolePageDTO dto) {
         return Result.success(roleService.listPage(dto));
     }
 
-    @GetMapping("/get/one")
+    @GetMapping("/get_one")
     @PreAuthorize("hasAnyAuthority('role:get:one')")
     @ApiOperation("角色详情")
     public Result<RoleVO> getOne(@RequestParam Long roleId) {
         return Result.success(roleService.getOne(roleId));
     }
 
-    @PostMapping("/save/one")
+    @PostMapping("/save_one")
     @PreAuthorize("hasAnyAuthority('role:save:one')")
     @ApiOperation("角色新增")
     public Result saveOne(@RequestBody @Valid RoleInsertDTO dto) {
@@ -52,7 +55,7 @@ public class RoleController {
         return Result.success();
     }
 
-    @PutMapping("/update/one")
+    @PutMapping("/update_one")
     @PreAuthorize("hasAnyAuthority('role:update:one')")
     @ApiOperation("角色更新")
     public Result updateOne(@RequestBody @Valid RoleUpdateDTO dto) {
@@ -60,7 +63,7 @@ public class RoleController {
         return Result.success();
     }
 
-    @DeleteMapping("/remove/one")
+    @DeleteMapping("/remove_one")
     @PreAuthorize("hasAnyAuthority('role:remove:one')")
     @ApiOperation("角色删除")
     public Result removeOne(@RequestParam Long roleId) {
@@ -68,4 +71,10 @@ public class RoleController {
         return Result.success();
     }
 
+    @GetMapping("/list_all")
+    @PreAuthorize("hasAnyAuthority('role:list:all')")
+    @ApiOperation("角色查询")
+    public Result<List<RoleSelectVO>> listAll(RoleSelectDTO dto) {
+        return Result.success(roleService.listAll(dto));
+    }
 }

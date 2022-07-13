@@ -30,19 +30,19 @@ public class OssController {
     @Autowired
     private OssService ossService;
 
-    @GetMapping("/list/page")
+    @GetMapping("/list_page")
     @ApiOperation("文件分页")
     public Result<PageResult<OssFilePageVO>> listPage(OssFilePageDTO dto) {
         return Result.success(ossService.listPage(dto));
     }
 
-    @PostMapping("/upload/one")
+    @PostMapping("/upload_one")
     @ApiOperation("文件上传")
     public Result<String> uploadOne(@RequestParam MultipartFile file, @RequestParam String path) throws Exception {
         return Result.success(ossService.uploadOne(file.getBytes(), path));
     }
 
-    @GetMapping("/download/one")
+    @GetMapping("/download_one")
     @ApiOperation("文件下载")
     public void downloadOne(HttpServletResponse response, @RequestParam String path) throws Exception {
         byte[] fileBytes = ossService.downloadOne(path);
@@ -51,13 +51,13 @@ public class OssController {
         IoUtil.write(response.getOutputStream(), false, fileBytes);
     }
 
-    @GetMapping("/access/url")
+    @GetMapping("/access_url")
     @ApiOperation("文件链接（如果是S3的话是带过期时间、带url参数签名认证的url）")
     public Result<String> accessUrl(@RequestParam String path) throws Exception {
         return Result.success(ossService.accessUrl(path));
     }
 
-    @DeleteMapping("/remove/one")
+    @DeleteMapping("/remove_one")
     @ApiOperation("文件删除")
     public Result removeOne(@RequestParam Long fileId) throws Exception {
         ossService.removeOne(fileId);
