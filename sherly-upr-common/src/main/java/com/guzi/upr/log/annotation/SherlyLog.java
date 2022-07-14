@@ -1,4 +1,4 @@
-package com.guzi.upr.log;
+package com.guzi.upr.log.annotation;
 
 import java.lang.annotation.*;
 
@@ -10,6 +10,8 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface SherlyLog {
 
-    String value() default "";
+    String description() default "";
+
+    boolean noRecord() default false;
 
 }
