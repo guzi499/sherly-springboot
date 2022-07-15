@@ -1,5 +1,6 @@
 package com.guzi.upr.model.eo;
 
+import cn.hutool.core.date.DatePattern;
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
@@ -47,7 +48,7 @@ public class UserEO {
 
     /** 最后登录时间 */
     @ExcelProperty("最后登录时间")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @JsonFormat(pattern = DatePattern.NORM_DATETIME_PATTERN)
     private Date lastLoginTime;
 
     /** 最后登录IP */

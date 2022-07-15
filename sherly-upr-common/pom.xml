@@ -79,12 +79,6 @@
             <artifactId>dom4j</artifactId>
         </dependency>
 
-        <!-- hutool-core -->
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
-        </dependency>
-
         <!-- springboot-mail -->
         <dependency>
             <groupId>com.sun.mail</groupId>

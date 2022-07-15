@@ -1,5 +1,6 @@
 package com.guzi.upr.model.dto;
 
+import cn.hutool.core.date.DatePattern;
 import com.guzi.upr.model.PageQuery;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -38,10 +39,10 @@ public class UserPageDTO extends PageQuery {
     private Integer enable;
 
     @ApiModelProperty(value = "开始时间")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = DatePattern.NORM_DATETIME_PATTERN)
     private Date beginTime;
 
     @ApiModelProperty(value = "结束时间")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = DatePattern.NORM_DATETIME_PATTERN)
     private Date endTime;
 }
