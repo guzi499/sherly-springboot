@@ -1,7 +1,6 @@
 package com.guzi.upr.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.guzi.upr.log.annotation.SherlyLog;
 import com.guzi.upr.log.model.OperationLog;
@@ -91,14 +90,6 @@ public class OperationLogServiceImpl implements OperationLogService {
         }
 
         return OBJECTMAPPER.writeValueAsString(map);
-    }
-
-    public static void main(String[] args) throws JsonProcessingException {
-        Map map = new HashMap();
-        map.put("a", new ArrayList<>());
-        ObjectMapper mapper = new ObjectMapper();
-        String s = mapper.writeValueAsString(map);
-        System.out.println(s);
     }
 
     @Override
