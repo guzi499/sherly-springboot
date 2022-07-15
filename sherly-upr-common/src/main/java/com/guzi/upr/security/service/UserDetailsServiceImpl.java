@@ -1,10 +1,12 @@
 package com.guzi.upr.security.service;
 
+import com.guzi.upr.exception.BizException;
 import com.guzi.upr.manager.*;
 import com.guzi.upr.model.admin.*;
 import com.guzi.upr.security.model.LoginUserDetails;
 import com.guzi.upr.security.model.SecurityModel;
 import com.guzi.upr.security.util.SecurityUtil;
+import com.guzi.upr.util.LogRecordUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,7 +21,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static com.guzi.upr.model.contants.CommonConstants.DIR;
+import static com.guzi.upr.model.contants.CommonConstants.*;
 
 /**
  * @author 谷子毅
@@ -43,6 +45,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private AccountUserManager accountUserManager;
 
+    @Autowired
+    private LogRecordUtil logRecordUtil;
+
     @Override
     public UserDetails loadUserByUsername(String phone) throws UsernameNotFoundException {
 
@@ -61,6 +66,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         // 根据查询参数查询用户信息
         User user = userManager.getByPhone(phone);
+
+        if (Objects.equals(user.getEnable(), DISABLE)) {
+            logRecordUtil.recordLoginLog(phone, LOGIN_LOG_DISABLE, LOGIN_TYPE_PASSWORD);
+            throw new BizException("999999", "当前账号已被禁用！");
+        }
 
         List<UserRole> userRoles = userRoleManager.listByUserId(user.getUserId());
         List<Long> roleIds = userRoles.stream().map(UserRole::getRoleId).collect(Collectors.toList());
