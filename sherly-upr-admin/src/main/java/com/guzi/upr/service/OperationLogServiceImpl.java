@@ -1,12 +1,18 @@
 package com.guzi.upr.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.guzi.upr.log.annotation.SherlyLog;
 import com.guzi.upr.log.model.OperationLog;
 import com.guzi.upr.log.service.OperationLogService;
 import com.guzi.upr.manager.OperationLogManager;
+import com.guzi.upr.model.PageResult;
+import com.guzi.upr.model.dto.OperationLogPageDTO;
+import com.guzi.upr.model.vo.OperationLogPageVO;
+import com.guzi.upr.model.vo.OperationLogVO;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -60,6 +66,13 @@ public class OperationLogServiceImpl implements OperationLogService {
         operationLogManager.save(operationLog);
     }
 
+    /**
+     * 解析请求参数
+     * @param methodSignature
+     * @param args
+     * @return
+     * @throws Exception
+     */
     private String parseArgs(MethodSignature methodSignature, Object[] args) throws Exception {
         String[] paramNames = methodSignature.getParameterNames();
 
@@ -80,17 +93,28 @@ public class OperationLogServiceImpl implements OperationLogService {
     }
 
     @Override
-    public List listPage() {
-        return null;
+    public PageResult<OperationLogPageVO> listPage(OperationLogPageDTO dto) {
+        Page<OperationLog> page = operationLogManager.listPage(dto);
+
+        List<OperationLogPageVO> result = page.getRecords().stream().map(e -> {
+            OperationLogPageVO vo = new OperationLogPageVO();
+            BeanUtils.copyProperties(e, vo);
+            return vo;
+        }).collect(Collectors.toList());
+
+        return PageResult.build(result, page.getCurrent(), page.getSize(), page.getTotal());
     }
 
     @Override
-    public Object getOne() {
-        return null;
+    public OperationLogVO getOne(Long logId) {
+        OperationLog log = operationLogManager.getById(logId);
+        OperationLogVO vo = new OperationLogVO();
+        BeanUtils.copyProperties(log, vo);
+        return vo;
     }
 
     @Override
     public void removeAll() {
-
+        operationLogManager.removeAll();
     }
 }

@@ -1,8 +1,10 @@
 package com.guzi.upr.log.service;
 
+import com.guzi.upr.model.PageResult;
+import com.guzi.upr.model.dto.OperationLogPageDTO;
+import com.guzi.upr.model.vo.OperationLogPageVO;
+import com.guzi.upr.model.vo.OperationLogVO;
 import org.aspectj.lang.ProceedingJoinPoint;
-
-import java.util.List;
 
 /**
  * @author 谷子毅
@@ -22,15 +24,17 @@ public interface OperationLogService {
 
     /**
      * 日志分页
+     * @param dto
      * @return
      */
-    List listPage();
+    PageResult<OperationLogPageVO> listPage(OperationLogPageDTO dto);
 
     /**
      * 日志详情
+     * @param logId
      * @return
      */
-    Object getOne();
+    OperationLogVO getOne(Long logId);
 
     /**
      * 日志清空
