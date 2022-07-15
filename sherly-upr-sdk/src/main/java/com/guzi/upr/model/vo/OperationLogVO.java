@@ -13,8 +13,8 @@ public class OperationLogVO {
     @ApiModelProperty(value = "日志id")
     private Long logId;
 
-    /** 操作日志类型 */
-    @ApiModelProperty(value = "操作日志类型")
+    /** 日志类型 */
+    @ApiModelProperty(value = "日志类型")
     private String type;
 
     /** 描述 */

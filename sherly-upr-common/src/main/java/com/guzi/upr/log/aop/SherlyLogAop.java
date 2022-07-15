@@ -10,6 +10,8 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 
+import static com.guzi.upr.model.contants.CommonConstants.*;
+
 /**
  * @author 谷子毅
  * @date 2022/7/13
@@ -44,11 +46,11 @@ public class SherlyLogAop {
             recordTime.set(System.currentTimeMillis());
             Object result = joinPoint.proceed();
             Long duration = System.currentTimeMillis() - recordTime.get();
-            operationLogService.saveOne(duration, joinPoint, "INFO", null);
+            operationLogService.saveOne(duration, joinPoint, NORMAL_LOG, null);
             return result;
         } catch (Throwable exception) {
             Long duration = System.currentTimeMillis() - recordTime.get();
-            operationLogService.saveOne(duration, joinPoint, "ERROR", exception);
+            operationLogService.saveOne(duration, joinPoint, EXCEPTION_LOG, exception);
             throw exception;
         } finally {
             recordTime.remove();

@@ -18,8 +18,8 @@ public class OperationLog extends BaseModel {
     @TableId(type = IdType.AUTO)
     private Long logId;
 
-    /** 操作日志类型 */
-    private String type;
+    /** 日志类型 */
+    private Integer type;
 
     /** 描述 */
     private String description;

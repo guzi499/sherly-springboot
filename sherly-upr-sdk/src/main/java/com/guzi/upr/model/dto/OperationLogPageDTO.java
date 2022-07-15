@@ -10,7 +10,7 @@ import lombok.Data;
  */
 @Data
 public class OperationLogPageDTO extends PageQuery {
-    /** 操作日志类型 */
-    @ApiModelProperty("操作日志类型")
+    /** 日志类型 */
+    @ApiModelProperty("日志类型")
     private String type;
 }

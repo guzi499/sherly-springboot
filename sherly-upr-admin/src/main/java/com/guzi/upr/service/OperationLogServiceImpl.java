@@ -38,7 +38,7 @@ public class OperationLogServiceImpl implements OperationLogService {
     private OperationLogManager operationLogManager;
 
     @Override
-    public void saveOne(Long duration, ProceedingJoinPoint joinPoint, String type, Throwable exception) throws Exception {
+    public void saveOne(Long duration, ProceedingJoinPoint joinPoint, Integer type, Throwable exception) throws Exception {
         HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
         String requestMethod = request.getMethod();
         String uri = request.getRequestURI();

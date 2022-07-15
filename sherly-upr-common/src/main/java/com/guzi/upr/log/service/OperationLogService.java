@@ -16,11 +16,11 @@ public interface OperationLogService {
      * 日志记录
      * @param duration
      * @param joinPoint
-     * @param info
+     * @param type
      * @param exception
      * @throws Exception
      */
-    void saveOne(Long duration, ProceedingJoinPoint joinPoint, String info, Throwable exception) throws Exception;
+    void saveOne(Long duration, ProceedingJoinPoint joinPoint, Integer type, Throwable exception) throws Exception;
 
     /**
      * 日志分页

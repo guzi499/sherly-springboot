@@ -38,7 +38,7 @@ public class OperationLogController {
     }
 
     @DeleteMapping("/remove_all")
-    @ApiOperation("操作日志详情")
+    @ApiOperation("操作日志清空")
     public Result removeAll() {
         operationLogService.removeAll();
         return Result.success();
