@@ -80,7 +80,7 @@ public class OssService {
      * @param dto
      * @return
      */
-    public PageResult listPage(OssFilePageDTO dto) {
+    public PageResult<OssFilePageVO> listPage(OssFilePageDTO dto) {
         IPage<OssFile> page = ossFileManager.page(new Page<>(dto.getCurrent(), dto.getSize()));
 
         List<OssFilePageVO> result = page.getRecords().stream().map(e -> {
