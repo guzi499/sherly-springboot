@@ -15,7 +15,7 @@ public class OperationLogVO {
 
     /** 日志类型 */
     @ApiModelProperty(value = "日志类型")
-    private String type;
+    private Integer type;
 
     /** 描述 */
     @ApiModelProperty(value = "描述")
