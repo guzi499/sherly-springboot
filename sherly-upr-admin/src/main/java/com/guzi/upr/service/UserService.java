@@ -1,13 +1,16 @@
 package com.guzi.upr.service;
 
+import cn.hutool.core.util.StrUtil;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.write.style.column.LongestMatchColumnWidthStyleStrategy;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.guzi.upr.exception.BizException;
+import com.guzi.upr.manager.AccountUserManager;
 import com.guzi.upr.manager.DepartmentManager;
 import com.guzi.upr.manager.UserManager;
 import com.guzi.upr.manager.UserRoleManager;
 import com.guzi.upr.model.PageResult;
+import com.guzi.upr.model.admin.AccountUser;
 import com.guzi.upr.model.admin.Department;
 import com.guzi.upr.model.admin.User;
 import com.guzi.upr.model.admin.UserRole;
@@ -19,6 +22,7 @@ import com.guzi.upr.model.eo.UserEO;
 import com.guzi.upr.model.vo.UserPageVo;
 import com.guzi.upr.model.vo.UserSelectVO;
 import com.guzi.upr.model.vo.UserVo;
+import com.guzi.upr.security.util.SecurityUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -54,6 +58,9 @@ public class UserService {
 
     @Autowired
     private DepartmentManager departmentManager;
+
+    @Autowired
+    private AccountUserManager accountUserManager;
 
     /**
      * 用户分页
@@ -136,9 +143,27 @@ public class UserService {
     @Transactional(rollbackFor = Exception.class)
     public void saveOne(UserInsertDTO dto) {
         // 去重
-        User one = userManager.getByPhone(dto.getPhone());
+        String phone = dto.getPhone();
+
+        User one = userManager.getByPhone(phone);
         if (one != null) {
             throw new BizException(USER_REPEAT);
+        }
+
+        SecurityUtil.setOperateTenantCode("sherly");
+        AccountUser accountUser = accountUserManager.getByPhone(phone);
+        if (accountUser == null) {
+            accountUser = new AccountUser();
+            accountUser.setPhone(phone);
+            accountUser.setTenantData(SecurityUtil.getTenantCode());
+            accountUser.setLastLoginTenantCode(SecurityUtil.getTenantCode());
+            accountUserManager.save(accountUser);
+        } else {
+            List<String> split = StrUtil.split(accountUser.getTenantData(), ",");
+            split.add(SecurityUtil.getTenantCode());
+            String tenantData = String.join(",", split);
+            accountUser.setTenantData(tenantData);
+            accountUserManager.updateById(accountUser);
         }
 
         User user = new User();
@@ -172,7 +197,16 @@ public class UserService {
      *
      * @param userId
      */
+    @Transactional(rollbackFor = Exception.class)
     public void removeOne(Long userId) {
+        User user = userManager.getById(userId);
+        AccountUser accountUser = accountUserManager.getByPhone(user.getPhone());
+        List<String> split = StrUtil.split(accountUser.getTenantData(), ",");
+        split.remove(SecurityUtil.getTenantCode());
+        String tenantCode = String.join(",", split);
+        accountUser.setTenantData(tenantCode);
+        accountUserManager.updateById(accountUser);
+
         userManager.removeById(userId);
     }
 

@@ -25,6 +25,12 @@
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
 
+        <!-- springboot-starter -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+
         <!-- springboot-web -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -71,12 +77,6 @@
         <dependency>
             <groupId>dom4j</groupId>
             <artifactId>dom4j</artifactId>
-        </dependency>
-
-        <!-- hutool-core -->
-        <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
         </dependency>
 
         <!-- springboot-mail -->

@@ -1,5 +1,6 @@
 package com.guzi.upr.model.vo;
 
+import cn.hutool.core.date.DatePattern;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -33,7 +34,7 @@ public class UserOnlineSelectVO {
     private String realName;
 
     @ApiModelProperty(value = "登录时间")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @JsonFormat(pattern = DatePattern.NORM_DATETIME_PATTERN)
     private Date loginTime;
 
     /** 登录IP */

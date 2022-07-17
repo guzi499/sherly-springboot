@@ -11,6 +11,7 @@ import com.guzi.upr.security.model.LoginUserDetails;
 import com.guzi.upr.security.model.RedisSecurityModel;
 import com.guzi.upr.security.util.SecurityUtil;
 import com.guzi.upr.util.JwtUtil;
+import com.guzi.upr.util.LogRecordUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -22,6 +23,9 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
+
+import static com.guzi.upr.model.contants.CommonConstants.LOGIN_LOG_SUCCESS;
+import static com.guzi.upr.model.contants.CommonConstants.LOGIN_TYPE_PASSWORD;
 
 /**
  * @author 谷子毅
@@ -41,6 +45,9 @@ public class LoginService {
     @Autowired
     private UserManager userManager;
 
+    @Autowired
+    private LogRecordUtil logRecordUtil;
+
 
     /**
      * 登录
@@ -50,7 +57,7 @@ public class LoginService {
      * @throws JsonProcessingException
      */
     @Transactional(rollbackFor = Exception.class)
-    public LoginVO login(LoginDTO dto, HttpServletRequest request) throws JsonProcessingException {
+    public LoginVO login(LoginDTO dto, HttpServletRequest request) throws Exception {
         // 封装登录参数
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(dto.getPhone(), dto.getPassword());
@@ -75,7 +82,12 @@ public class LoginService {
         String keyLabel = dto.getPhone() + "#" + System.currentTimeMillis();
 
         // 生成token返回前端
-        return new LoginVO(JwtUtil.generateToken(keyLabel));
+        LoginVO loginVO = new LoginVO(JwtUtil.generateToken(keyLabel));
+
+        // 记录日志
+        logRecordUtil.recordLoginLog(dto.getPhone(), LOGIN_LOG_SUCCESS, LOGIN_TYPE_PASSWORD);
+
+        return loginVO;
     }
 
     /**

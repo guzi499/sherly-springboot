@@ -1,5 +1,6 @@
 package com.guzi.upr.model.dto;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
@@ -8,5 +9,7 @@ import lombok.Data;
  */
 @Data
 public class RoleSelectDTO {
-
+    /** 角色id */
+    @ApiModelProperty("角色id")
+    private Long roleId;
 }

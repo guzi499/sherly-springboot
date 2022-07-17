@@ -70,6 +70,13 @@
                 <version>${spring.boot.version}</version>
             </dependency>
 
+            <!-- springboot-aop -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-aop</artifactId>
+                <version>${spring.boot.version}</version>
+            </dependency>
+
             <!-- springboot-web -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>

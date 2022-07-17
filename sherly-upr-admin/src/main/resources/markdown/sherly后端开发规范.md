@@ -90,7 +90,7 @@
 #### 【8】mybatis-plus
 1. 因为加了mybatis-plus逻辑删除。所有逻辑删除不要使用update更新，而是直接删除。
 2. 所有自增主键一律加注解 @TableId(type = IdType.AUTO)。
-3. 所有日期格式的VO对象上必须加上注解 @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+3. 所有日期格式的VO对象上必须加上注解 @JsonFormat(pattern = DatePattern.NORM_DATETIME_PATTERN)
 #### 【9】lombok
 1. @Data：注解在类上，相当于同时使用了@ToString、@EqualsAndHashCode、@Getter、@Setter和@RequiredArgsConstrutor这些注解，对于POJO类十分有用。除特殊情况，不要再添加其他lombok注解。
 #### 【10】validation

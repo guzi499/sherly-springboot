@@ -1,5 +1,6 @@
 package com.guzi.upr.model.dto;
 
+import cn.hutool.core.date.DatePattern;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -36,7 +37,7 @@ public class TenantInsertDTO {
 
     /** 过期时间 */
     @ApiModelProperty(value = "过期时间", required = true)
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    @JsonFormat(pattern = DatePattern.NORM_DATETIME_PATTERN)
     @NotNull
     private Date expireTime;
 
