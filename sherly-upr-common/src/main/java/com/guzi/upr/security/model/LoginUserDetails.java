@@ -1,10 +1,16 @@
 package com.guzi.upr.security.model;
 
+import cn.hutool.extra.servlet.ServletUtil;
+import cn.hutool.http.useragent.UserAgent;
+import cn.hutool.http.useragent.UserAgentUtil;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.guzi.upr.model.admin.AccountUser;
 import com.guzi.upr.model.admin.UserOnline;
 import com.guzi.upr.model.admin.User;
 import lombok.Data;
+import net.dreamlu.mica.ip2region.core.Ip2regionSearcher;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -48,10 +54,15 @@ public class LoginUserDetails implements UserDetails {
         BeanUtils.copyProperties(user, userOnline);
         userOnline.setLoginTenantCode(accountUser.getLastLoginTenantCode());
         userOnline.setLoginTime(new Date());
-        userOnline.setIp(request.getRemoteAddr());
-        userOnline.setOs(null);
-        userOnline.setAddress(null);
-        userOnline.setBrowser(null);
+
+        String ip = ServletUtil.getClientIP(request);
+        String userAgent = request.getHeader("User-Agent");
+        UserAgent agent = UserAgentUtil.parse(userAgent);
+        if (userAgent != null) {
+            userOnline.setOs(agent.getOs().toString());
+            userOnline.setBrowser(agent.getBrowser().toString());
+        }
+        userOnline.setIp(ip);
 
         redisSecurityModel.setSecurityModel(securityModel);
         redisSecurityModel.setUserOnline(userOnline);

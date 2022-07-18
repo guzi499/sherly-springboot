@@ -1,10 +1,15 @@
 package com.guzi.upr.service;
 
+import cn.hutool.extra.servlet.ServletUtil;
+import cn.hutool.http.useragent.OS;
+import cn.hutool.http.useragent.UserAgent;
+import cn.hutool.http.useragent.UserAgentUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.guzi.upr.constants.RedisKey;
 import com.guzi.upr.manager.UserManager;
 import com.guzi.upr.model.admin.User;
+import com.guzi.upr.model.admin.UserOnline;
 import com.guzi.upr.model.dto.LoginDTO;
 import com.guzi.upr.model.vo.LoginVO;
 import com.guzi.upr.security.model.LoginUserDetails;
@@ -12,6 +17,7 @@ import com.guzi.upr.security.model.RedisSecurityModel;
 import com.guzi.upr.security.util.SecurityUtil;
 import com.guzi.upr.util.JwtUtil;
 import com.guzi.upr.util.LogRecordUtil;
+import net.dreamlu.mica.ip2region.core.Ip2regionSearcher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -48,6 +54,9 @@ public class LoginService {
     @Autowired
     private LogRecordUtil logRecordUtil;
 
+    @Autowired
+    private Ip2regionSearcher ip2regionSearcher;
+
 
     /**
      * 登录
@@ -70,6 +79,9 @@ public class LoginService {
 
         // redis缓存登录用户信息
         RedisSecurityModel redisSecurityModel = loginUserDetails.getRedisSecurityModel(request);
+        UserOnline userOnline = redisSecurityModel.getUserOnline();
+        userOnline.setAddress(ip2regionSearcher.getAddress(userOnline.getIp()));
+        redisSecurityModel.setUserOnline(userOnline);
 
         // 权限信息更新到redis
         String redisString = OBJECTMAPPER.writeValueAsString(redisSecurityModel);
@@ -96,8 +108,9 @@ public class LoginService {
      * @param request
      */
     private void updateUser(User user, HttpServletRequest request) {
+        String ip = ServletUtil.getClientIP(request);
         user.setLastLoginTime(new Date());
-        user.setLastLoginIp(request.getRemoteAddr());
+        user.setLastLoginIp(ip);
         userManager.updateById(user);
     }
 
