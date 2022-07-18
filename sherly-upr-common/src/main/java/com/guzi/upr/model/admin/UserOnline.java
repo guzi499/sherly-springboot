@@ -30,7 +30,7 @@ public class UserOnline {
     /** 登录时间 */
     private Date loginTime;
 
-    /** 登录IP */
+    /** 登录ip */
     private String ip;
 
     /** 登录地址 */

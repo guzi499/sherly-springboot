@@ -29,6 +29,9 @@ public class LoginLog extends BaseModel {
     /** 请求地址 */
     private String address;
 
+    /** 请求系统 */
+    private String os;
+
     /** 请求浏览器 */
     private String browser;
 

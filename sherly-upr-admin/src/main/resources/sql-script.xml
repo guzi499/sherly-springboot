@@ -77,7 +77,7 @@
             `identity`        tinyint UNSIGNED NULL COMMENT '0超级管理员 1管理员 2普通用户',
             `enable`          tinyint UNSIGNED NULL COMMENT '0不可用 1可用',
             `last_login_time` datetime         NULL COMMENT '最后登录时间',
-            `last_login_ip`   char(15)         NULL COMMENT '最后登录IP',
+            `last_login_ip`   char(15)         NULL COMMENT '最后请求ip',
             `create_time`     datetime         NULL COMMENT '创建时间',
             `update_time`     datetime         NULL COMMENT '更新时间',
             `create_user_id`  bigint UNSIGNED  NULL COMMENT '创建人id',
