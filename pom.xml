@@ -30,6 +30,7 @@
         <hutool.version>5.8.0</hutool.version>
         <easyexcel>3.0.5</easyexcel>
         <minio>8.2.2</minio>
+        <ip2region>2.7.0</ip2region>
     </properties>
 
     <dependencyManagement>
@@ -166,6 +167,13 @@
                 <groupId>io.minio</groupId>
                 <artifactId>minio</artifactId>
                 <version>${minio}</version>
+            </dependency>
+
+            <!-- ip2region -->
+            <dependency>
+                <groupId>net.dreamlu</groupId>
+                <artifactId>mica-ip2region</artifactId>
+                <version>${ip2region}</version>
             </dependency>
 
         </dependencies>

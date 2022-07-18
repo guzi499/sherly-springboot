@@ -91,6 +91,12 @@
             <artifactId>minio</artifactId>
         </dependency>
 
+        <!-- ip2region -->
+        <dependency>
+            <groupId>net.dreamlu</groupId>
+            <artifactId>mica-ip2region</artifactId>
+        </dependency>
+
     </dependencies>
 
 

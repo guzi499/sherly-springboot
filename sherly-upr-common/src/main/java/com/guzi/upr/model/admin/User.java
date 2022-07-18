@@ -52,6 +52,6 @@ public class User extends BaseModel {
     /** 最后登录时间 */
     private Date lastLoginTime;
 
-    /** 最后登录IP */
+    /** 最后登录ip */
     private String lastLoginIp;
 }

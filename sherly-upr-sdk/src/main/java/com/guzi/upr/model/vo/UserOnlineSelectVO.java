@@ -37,8 +37,8 @@ public class UserOnlineSelectVO {
     @JsonFormat(pattern = DatePattern.NORM_DATETIME_PATTERN)
     private Date loginTime;
 
-    /** 登录IP */
-    @ApiModelProperty(value = "登录IP")
+    /** 登录ip */
+    @ApiModelProperty(value = "登录ip")
     private String ip;
 
     /** 登录地址 */

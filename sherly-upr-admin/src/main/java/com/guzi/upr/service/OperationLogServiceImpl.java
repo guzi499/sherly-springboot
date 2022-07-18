@@ -1,5 +1,8 @@
 package com.guzi.upr.service;
 
+import cn.hutool.extra.servlet.ServletUtil;
+import cn.hutool.http.useragent.UserAgent;
+import cn.hutool.http.useragent.UserAgentUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.guzi.upr.log.annotation.SherlyLog;
@@ -10,6 +13,7 @@ import com.guzi.upr.model.PageResult;
 import com.guzi.upr.model.dto.OperationLogPageDTO;
 import com.guzi.upr.model.vo.OperationLogPageVO;
 import com.guzi.upr.model.vo.OperationLogVO;
+import net.dreamlu.mica.ip2region.core.Ip2regionSearcher;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.BeanUtils;
@@ -37,9 +41,22 @@ public class OperationLogServiceImpl implements OperationLogService {
     @Autowired
     private OperationLogManager operationLogManager;
 
+    @Autowired
+    private Ip2regionSearcher regionSearcher;
+
     @Override
     public void saveOne(Long duration, ProceedingJoinPoint joinPoint, Integer type, Throwable exception) throws Exception {
+        OperationLog operationLog = new OperationLog();
+
         HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
+        String ip = ServletUtil.getClientIP(request);
+        String userAgent = request.getHeader("User-Agent");
+        if (userAgent != null) {
+            UserAgent agent = UserAgentUtil.parse(userAgent);
+            operationLog.setOs(agent.getOs().toString());
+            operationLog.setBrowser(agent.getBrowser().toString());
+        }
+
         String requestMethod = request.getMethod();
         String uri = request.getRequestURI();
 
@@ -49,13 +66,14 @@ public class OperationLogServiceImpl implements OperationLogService {
 
         String requestParams = this.parseArgs(methodSignature, joinPoint.getArgs());
 
-        OperationLog operationLog = new OperationLog();
         operationLog.setType(type);
         operationLog.setDescription(annotation != null ? annotation.description() : null);
         operationLog.setDuration(duration);
         operationLog.setRequestMethod(requestMethod);
         operationLog.setUri(uri);
         operationLog.setRequestParams(requestParams);
+        operationLog.setIp(ip);
+        operationLog.setAddress(regionSearcher.getAddress(ip));
 
         if (exception != null) {
             List<String> list = Arrays.stream(exception.getStackTrace()).map(Objects::toString).filter(e -> e.startsWith("com.guzi")).collect(Collectors.toList());
