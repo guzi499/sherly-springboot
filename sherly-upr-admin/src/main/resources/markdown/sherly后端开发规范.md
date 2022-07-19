@@ -8,22 +8,23 @@
 
 ### 编程规约
 #### 【1】命名风格
-1. 类名使用UpperCamelCase风格，但以下情形例外：DTO / VO。如UserDTO, UserVO；
+1. 类名使用UpperCamelCase风格，但以下情形例外：DTO / VO / EO。如UserDTO, UserVO；
 2. 常量命名全部大写，单词间用下划线隔开，力求语义表达完整清楚，不要嫌名字长。
 3. 接口类中的方法和属性不要加任何修饰符号（public 也不要加），保持代码的简洁性，并加上有效的Javadoc注释。尽量不要在接口里定义变量，如果一定要定义变量，确定与接口方法相关，并且是整个应用的基础常量。
-4. 各层命名规约：
-    - 对单个对象的方法用get做前缀
-    - 获取多个对象的方法用list做前缀
-    - 获取统计值的方法用count做前缀
-    - 插入的方法用save做前缀
-    - 删除的方法用remove做前缀
-    - 修改的方法用update做前缀
+4. 请求uri中不可使用驼峰式命名，使用下划线"_"隔离单词。
+5. 各层命名规约：
+    - 对单个对象的方法和uri用get做前缀，如`getOne()`， `"get_one"`。
+    - 获取多个对象的方法和uri用list做前缀，如`listPage()`，`"list_page"`，`listTree()`，`"list_tree"`。
+    - 获取统计值的方法和uri用count做前缀
+    - 插入的方法和uri用save做前缀，如`saveOne()`， `"save_one"`，`saveAll()`， `"save_all"`。
+    - 删除的方法和uri用remove做前缀，如`removeOne()`， `"remove_one"`。
+    - 修改的方法和uri用update做前缀，如`updateOne()`， `"update_one"`。
     - ===========================
-    - 查询的时候使用QueryDTO做后缀，如果是分页查询必须继承PageQuery，而不可直接使用PageQuery
-    - 新增的时候使用InsertDTO做后缀
-    - 更新的时候使用UpdateDTO做后缀
+    - 查询的时候使用QueryDTO，QueryVO做后缀，如果是分页查询，DTO必须继承PageQuery，而不可直接使用PageQuery
+    - 新增的时候使用InsertDTO，InsertVO做后缀
+    - 更新的时候使用UpdateDTO，UpdateVO做后缀
     - ===========================
-5. 所有注入一律使用 @Autowired，不要使用 @Resource。
+6. 所有注入一律使用 @Autowired，不要使用 @Resource。
 #### 【2】OOP规约      
 1. 关于基本数据类型与包装数据类型的使用标准如下： 
    - 所有的POJO类属性必须使用包装数据类型。 
@@ -83,7 +84,7 @@
       revert -> 回滚
    ```
 #### 【7】knife4j文档
-1. 所有VO/DTO/MODEL都需要加**行形式**文档注释和@ApiModelProperty注解
+1. 所有VO/DTO都需要加**行形式**文档注释和@ApiModelProperty注解
 2. 所有Controller类上需要加@Api(tags = "xxx")注解
 3. 所有Controller方法需要加@ApiOperation("xxx")注解
 4. 如果Result中data有数据，Controller方法中返回值必须写完整的类型。如 Result<List<UserVO>>。
@@ -94,17 +95,22 @@
 #### 【9】lombok
 1. @Data：注解在类上，相当于同时使用了@ToString、@EqualsAndHashCode、@Getter、@Setter和@RequiredArgsConstrutor这些注解，对于POJO类十分有用。除特殊情况，不要再添加其他lombok注解。
 #### 【10】validation
-1. 增删改时必填字段：如果为字符串类型使用@NotBlank注解，如果为其他类型使用@NotNull注解
+1. 增删改时必填字段,只加在DTO字段上：如果为字符串类型使用@NotBlank注解，如果为其他类型使用@NotNull注解
 #### 【11】其他
 1. 基础代码统一使用jdk与springframework下的工具类。
 2. 业务代码统一使用hutool下的工具类。
 4. 不要在视图模板中加入任何复杂的逻辑，即前端只负责展示，不参与任何业务处理！
 ### 异常日志
 #### 【1】错误码
-1. 使用ResultAdminEnum枚举新增异常类型，code共6位为错误码，message为错误信息，code结构为**模块2位**+**编号4位**。
+1. 使用ResultXXXEnum枚举新增异常类型，code共6位为错误码，message为错误信息，code结构为**模块2位**+**编号4位**。
 #### 【2】异常处理
-1. 系统定义了全局异常处理器，分别处理业务异常，空指针异常和其他异常三种。如果代码会出现可能的异常，请使用throw抛出异常交给全局异常处理器处理，而不是自己使用try-catch。
+1. 系统定义了全局异常处理器，分别处理业务异常，空指针异常和其他异常四种。如果代码会出现可能的异常，请使用throw抛出异常交给全局异常处理器处理，而不是自己使用try-catch。
 #### 【3】日志规约
+### 数据库设计
+#### 【1】表设计
+1. 一般来说，主键策略选择自增id，使用unsigned bigint
+2. 一般来说，时间类型选择datetime
+3. 一般来说，小的枚举类型使用tinyint
 ### 工程结构
 #### 【1】应用分层
 1. 根据业务架构，将系统分为四层。controller、service、manager、mapper。
@@ -118,3 +124,4 @@
 - `v1.1 & 2022-04-11 : 更新完善`
 - `v1.2 & 2022-05-13 : 更新校验注解的使用`
 - `v1.3 & 2022-06-16 : 更新git提交规范`
+- `v1.4 & 2022-07-19 : 更新mysql表设计规范`

@@ -35,7 +35,7 @@ public class UserPageDTO extends PageQuery {
     private Long departmentId;
 
     /** 启用禁用[enum] */
-    @ApiModelProperty(value = "启用禁用[enum]")
+    @ApiModelProperty(value = "启用禁用[enum]", allowableValues = "CommonConstants.java")
     private Integer enable;
 
     @ApiModelProperty(value = "开始时间")
