@@ -3,6 +3,7 @@ package com.guzi.upr.model.dto;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -18,6 +19,7 @@ public class UserSelfUpdateDTO {
 
     /** 用户邮箱 */
     @ApiModelProperty(value = "用户邮箱")
+    @Email
     private String email;
 
     /** 性别 */
