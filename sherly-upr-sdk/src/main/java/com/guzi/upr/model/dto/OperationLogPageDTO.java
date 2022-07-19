@@ -10,7 +10,7 @@ import lombok.Data;
  */
 @Data
 public class OperationLogPageDTO extends PageQuery {
-    /** 日志类型 */
-    @ApiModelProperty("日志类型")
+    /** 日志类型[enum] */
+    @ApiModelProperty(value = "日志类型[enum]", allowableValues = "CommonConstants.java")
     private String type;
 }

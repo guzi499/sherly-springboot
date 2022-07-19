@@ -1,10 +1,10 @@
 package com.guzi.upr.log.model;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import com.guzi.upr.model.BaseModel;
 import lombok.Data;
+
+import java.util.Date;
 
 /**
  * @author 谷子毅
@@ -12,13 +12,13 @@ import lombok.Data;
  */
 @Data
 @TableName("sys_operation_log")
-public class OperationLog extends BaseModel {
+public class OperationLog {
 
     /** 日志id */
     @TableId(type = IdType.AUTO)
     private Long logId;
 
-    /** 日志类型 */
+    /** 日志类型[enum] */
     private Integer type;
 
     /** 描述 */
@@ -50,4 +50,12 @@ public class OperationLog extends BaseModel {
 
     /** 异常描述 */
     private String exception;
+
+    /** 创建时间 */
+    @TableField(fill = FieldFill.INSERT)
+    private Date createTime;
+
+    /** 创建人id */
+    @TableField(fill = FieldFill.INSERT)
+    private Long createUserId;
 }

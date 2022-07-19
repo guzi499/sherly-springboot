@@ -31,7 +31,7 @@ public abstract class BaseModel {
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Long updateUserId;
 
-    /** 逻辑删除 */
+    /** 逻辑删除[enum] */
     @TableField("is_deleted")
     @TableLogic
     private Integer deleted = 0;

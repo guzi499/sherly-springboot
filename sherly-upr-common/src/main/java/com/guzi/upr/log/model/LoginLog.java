@@ -1,10 +1,10 @@
 package com.guzi.upr.log.model;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import com.guzi.upr.model.BaseModel;
 import lombok.Data;
+
+import java.util.Date;
 
 /**
  * @author 谷子毅
@@ -12,7 +12,7 @@ import lombok.Data;
  */
 @Data
 @TableName("sys_login_log")
-public class LoginLog extends BaseModel {
+public class LoginLog {
     /** 日志id */
     @TableId(type = IdType.AUTO)
     private Long logId;
@@ -35,6 +35,10 @@ public class LoginLog extends BaseModel {
     /** 请求浏览器 */
     private String browser;
 
-    /** 登录结果 */
+    /** 登录结果[enum] */
     private Integer result;
+
+    /** 创建时间 */
+    @TableField(fill = FieldFill.INSERT)
+    private Date createTime;
 }

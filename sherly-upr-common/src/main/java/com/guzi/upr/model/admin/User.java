@@ -40,13 +40,13 @@ public class User extends BaseModel {
     /** 用户邮箱 */
     private String email;
 
-    /** 性别 */
+    /** 性别[enum] */
     private Integer gender;
 
     /** 部门id */
     private Long departmentId;
 
-    /** 启用禁用 */
+    /** 启用禁用[enum] */
     private Integer enable;
 
     /** 最后登录时间 */

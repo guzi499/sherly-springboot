@@ -19,8 +19,8 @@ public class OssConfigVO {
     @ApiModelProperty(value = "配置名称")
     private String configName;
 
-    /** 存储类型 */
-    @ApiModelProperty(value = "存储类型", allowableValues = "OssTypeEnum.java")
+    /** 存储方式[enum] */
+    @ApiModelProperty(value = "存储方式[enum]", allowableValues = "OssTypeEnum.java")
     private Integer type;
 
     /** 描述 */

@@ -18,8 +18,8 @@ public class OssConfigInsertDTO {
     @NotBlank
     private String configName;
 
-    /** 存储类型 */
-    @ApiModelProperty(value = "存储类型", required = true, allowableValues = "OssTypeEnum.java")
+    /** 存储方式[enum] */
+    @ApiModelProperty(value = "存储方式[enum]", required = true, allowableValues = "OssTypeEnum.java")
     @NotNull
     private Integer type;
 
