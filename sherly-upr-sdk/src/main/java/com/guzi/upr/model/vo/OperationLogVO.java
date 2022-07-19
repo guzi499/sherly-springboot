@@ -13,8 +13,8 @@ public class OperationLogVO {
     @ApiModelProperty(value = "日志id")
     private Long logId;
 
-    /** 日志类型 */
-    @ApiModelProperty(value = "日志类型")
+    /** 日志类型[enum] */
+    @ApiModelProperty(value = "日志类型[enum]")
     private Integer type;
 
     /** 描述 */

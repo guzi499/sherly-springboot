@@ -18,8 +18,8 @@ public class MenuInsertDTO {
     @NotBlank
     private String menuName;
 
-    /** 菜单类型 */
-    @ApiModelProperty(value = "菜单类型", required = true, allowableValues = "CommonConstants.java")
+    /** 菜单类型[enum] */
+    @ApiModelProperty(value = "菜单类型[enum]", required = true, allowableValues = "CommonConstants.java")
     @NotNull
     private Integer menuType;
 

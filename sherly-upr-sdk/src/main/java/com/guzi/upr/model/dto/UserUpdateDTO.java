@@ -22,8 +22,8 @@ public class UserUpdateDTO {
     @NotNull
     private String realName;
 
-    /** 性别 */
-    @ApiModelProperty(value = "性别", required = true, allowableValues = "CommonConstants.java")
+    /** 性别[enum] */
+    @ApiModelProperty(value = "性别[enum]", required = true, allowableValues = "CommonConstants.java")
     @NotNull
     private Integer gender;
 

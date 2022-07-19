@@ -39,8 +39,8 @@ public class LoginLogPageVO {
     @ApiModelProperty(value = "请求浏览器")
     private String browser;
 
-    /** 登录结果 */
-    @ApiModelProperty(value = "登录结果")
+    /** 登录结果[enum] */
+    @ApiModelProperty(value = "登录结果[enum]")
     private Integer result;
 
     /** 创建时间 */

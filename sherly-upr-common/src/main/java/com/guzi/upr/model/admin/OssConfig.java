@@ -23,13 +23,13 @@ public class OssConfig extends BaseModel {
     /** 配置名称 */
     private String configName;
 
-    /** 存储方式 */
+    /** 存储方式[enum] */
     private Integer type;
 
     /** 描述 */
     private String description;
 
-    /** 启用禁用 */
+    /** 启用禁用[enum] */
     private Integer enable;
 
     /** 具体配置 */

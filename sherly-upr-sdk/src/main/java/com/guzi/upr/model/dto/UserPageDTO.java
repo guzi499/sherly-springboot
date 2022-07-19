@@ -34,8 +34,8 @@ public class UserPageDTO extends PageQuery {
     @ApiModelProperty(value = "部门id")
     private Long departmentId;
 
-    /** 启用禁用 */
-    @ApiModelProperty(value = "启用禁用")
+    /** 启用禁用[enum] */
+    @ApiModelProperty(value = "启用禁用[enum]")
     private Integer enable;
 
     @ApiModelProperty(value = "开始时间")

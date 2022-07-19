@@ -39,7 +39,7 @@ public class UserSelectDTO {
     @ApiModelProperty(value = "角色ids")
     private List<Long> roleIds;
 
-    /** 启用禁用 */
-    @ApiModelProperty(value = "启用禁用")
+    /** 启用禁用[enum] */
+    @ApiModelProperty(value = "启用禁用[enum]")
     private Integer enable;
 }

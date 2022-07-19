@@ -33,8 +33,8 @@ public class BasicUserInfoVO {
     @ApiModelProperty(value = "用户邮箱")
     private String email;
 
-    /** 性别 */
-    @ApiModelProperty(value = "性别", allowableValues = "CommonConstants.java")
+    /** 性别[enum] */
+    @ApiModelProperty(value = "性别[enum]", allowableValues = "CommonConstants.java")
     private Integer gender;
 
     /** 部门id */
