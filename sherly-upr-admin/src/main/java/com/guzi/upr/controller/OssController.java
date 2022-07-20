@@ -39,14 +39,14 @@ public class OssController {
     }
 
     @PostMapping("/upload_one")
-    @PreAuthorize("hasAnyAuthority('oss:list_page')")
+    @PreAuthorize("hasAnyAuthority('oss:upload_one')")
     @ApiOperation("文件上传")
     public Result<String> uploadOne(@RequestParam MultipartFile file, @RequestParam String path) throws Exception {
         return Result.success(ossService.uploadOne(file.getBytes(), path));
     }
 
     @GetMapping("/download_one")
-    @PreAuthorize("hasAnyAuthority('oss:list_page')")
+    @PreAuthorize("hasAnyAuthority('oss:download_one')")
     @ApiOperation("文件下载")
     public void downloadOne(HttpServletResponse response, @RequestParam String path) throws Exception {
         byte[] fileBytes = ossService.downloadOne(path);
@@ -56,14 +56,14 @@ public class OssController {
     }
 
     @GetMapping("/access_url")
-    @PreAuthorize("hasAnyAuthority('oss:list_page')")
+    @PreAuthorize("hasAnyAuthority('oss:access_url')")
     @ApiOperation("文件链接")
     public Result<String> accessUrl(@RequestParam String path) throws Exception {
         return Result.success(ossService.accessUrl(path));
     }
 
     @DeleteMapping("/remove_one")
-    @PreAuthorize("hasAnyAuthority('oss:list_page')")
+    @PreAuthorize("hasAnyAuthority('oss:remove_one')")
     @ApiOperation("文件删除")
     public Result removeOne(@RequestParam Long fileId) throws Exception {
         ossService.removeOne(fileId);

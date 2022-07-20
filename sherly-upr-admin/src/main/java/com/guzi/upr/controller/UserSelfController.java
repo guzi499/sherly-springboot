@@ -32,14 +32,12 @@ public class UserSelfController {
     private OssService ossService;
 
     @GetMapping("/get_self")
-    @PreAuthorize("hasAnyAuthority('user_self:get_self')")
     @ApiOperation("用户个人中心")
     public Result getSelf() {
         return Result.success(userSelfService.getSelf());
     }
 
     @PutMapping("/update_self")
-    @PreAuthorize("hasAnyAuthority('user_self:update_self')")
     @ApiOperation("用户个人中心更新")
     public Result updateSelf(@RequestBody @Valid UserSelfUpdateDTO dto) {
         userSelfService.updateSelf(dto);
@@ -47,7 +45,6 @@ public class UserSelfController {
     }
 
     @PutMapping("/update_password")
-    @PreAuthorize("hasAnyAuthority('user_self:update_password')")
     @ApiOperation("用户修改密码")
     public Result updatePassword(@RequestBody @Valid UserUpdatePasswordDTO dto) {
         userSelfService.updatePassword(dto);
@@ -55,7 +52,6 @@ public class UserSelfController {
     }
 
     @PutMapping("/update_avatar")
-    @PreAuthorize("hasAnyAuthority('user_self:update_avatar')")
     @ApiOperation("用户修改头像")
     public Result updateAvatar(@RequestParam MultipartFile file) throws Exception {
         String avatarPath = ossService.uploadOne(file.getBytes(), "avatar$" + file.getName());

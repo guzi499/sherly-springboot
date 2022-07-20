@@ -31,11 +31,11 @@ public class UserOnlineController {
     @Autowired
     private UserOnlineService userOnlineService;
 
-    @GetMapping("/list")
-    @PreAuthorize("hasAnyAuthority('user_online:list')")
+    @GetMapping("/list_all")
+    @PreAuthorize("hasAnyAuthority('user_online:list_all')")
     @ApiOperation("在线用户列表")
-    public Result<List<UserOnlineSelectVO>> list(@Valid UserOnlineSelectDTO dto) throws JsonProcessingException {
-        return Result.success(userOnlineService.list(dto));
+    public Result<List<UserOnlineSelectVO>> listAll(@Valid UserOnlineSelectDTO dto) throws JsonProcessingException {
+        return Result.success(userOnlineService.listAll(dto));
     }
 
     @GetMapping("/force_quit")
