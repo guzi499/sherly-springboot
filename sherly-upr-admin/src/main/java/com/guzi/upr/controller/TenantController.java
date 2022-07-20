@@ -3,6 +3,7 @@ package com.guzi.upr.controller;
 import com.guzi.upr.model.PageResult;
 import com.guzi.upr.model.Result;
 import com.guzi.upr.model.dto.TenantInsertDTO;
+import com.guzi.upr.model.dto.TenantMenuUpdateDTO;
 import com.guzi.upr.model.dto.TenantPageDTO;
 import com.guzi.upr.model.dto.TenantUpdateDTO;
 import com.guzi.upr.model.vo.TenantPageVO;
@@ -15,6 +16,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * @author 谷子毅
@@ -56,8 +58,21 @@ public class TenantController {
     @DeleteMapping("/remove_one")
     @PreAuthorize("hasAnyAuthority('tenant:remove:one')")
     @ApiOperation("租户删除")
-    public Result removeOne(@RequestParam Long id) {
-        tenantService.removeOne(id);
+    public Result removeOne(@RequestParam Long tenantId) {
+        tenantService.removeOne(tenantId);
         return Result.success();
+    }
+
+    @PutMapping("/update_menu")
+    @ApiOperation("租户菜单更新")
+    public Result updateMenu(@RequestBody @Valid TenantMenuUpdateDTO dto) {
+        tenantService.updateMenu(dto);
+        return Result.success();
+    }
+
+    @GetMapping("/list_menu")
+    @ApiOperation("租户菜单列表")
+    public Result<List<Long>> listMenu(@RequestParam Long tenantId) {
+        return Result.success(tenantService.listMenu(tenantId));
     }
 }
