@@ -32,7 +32,7 @@ public class TenantController {
     private TenantService tenantService;
 
     @GetMapping("/list_page")
-    @PreAuthorize("hasAnyAuthority('tenant:list:page')")
+    @PreAuthorize("hasAnyAuthority('tenant:list_page')")
     @ApiOperation("租户分页")
     public Result<PageResult<TenantPageVO>> listPage(TenantPageDTO dto) {
         return Result.success(tenantService.listPage(dto));
@@ -40,7 +40,7 @@ public class TenantController {
 
 
     @PostMapping("/save_one")
-    @PreAuthorize("hasAnyAuthority('tenant:save:one')")
+    @PreAuthorize("hasAnyAuthority('tenant:save_one')")
     @ApiOperation("租户新增")
     public Result saveOne(@RequestBody @Valid TenantInsertDTO dto) {
         tenantService.saveOne(dto);
@@ -48,7 +48,7 @@ public class TenantController {
     }
 
     @PutMapping("/update_one")
-    @PreAuthorize("hasAnyAuthority('tenant:update:one')")
+    @PreAuthorize("hasAnyAuthority('tenant:update_one')")
     @ApiOperation("租户更新")
     public Result updateOne(@RequestBody @Valid TenantUpdateDTO dto) {
         tenantService.updateOne(dto);
@@ -56,7 +56,7 @@ public class TenantController {
     }
 
     @DeleteMapping("/remove_one")
-    @PreAuthorize("hasAnyAuthority('tenant:remove:one')")
+    @PreAuthorize("hasAnyAuthority('tenant:remove_one')")
     @ApiOperation("租户删除")
     public Result removeOne(@RequestParam Long tenantId) {
         tenantService.removeOne(tenantId);
@@ -64,6 +64,7 @@ public class TenantController {
     }
 
     @PutMapping("/update_menu")
+    @PreAuthorize("hasAnyAuthority('tenant:update_menu')")
     @ApiOperation("租户菜单更新")
     public Result updateMenu(@RequestBody @Valid TenantMenuUpdateDTO dto) {
         tenantService.updateMenu(dto);
@@ -71,6 +72,7 @@ public class TenantController {
     }
 
     @GetMapping("/list_menu")
+    @PreAuthorize("hasAnyAuthority('tenant:list_menu')")
     @ApiOperation("租户菜单列表")
     public Result<List<Long>> listMenu(@RequestParam Long tenantId) {
         return Result.success(tenantService.listMenu(tenantId));

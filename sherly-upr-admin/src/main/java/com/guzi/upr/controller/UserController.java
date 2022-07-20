@@ -36,28 +36,28 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/list_page")
-    @PreAuthorize("hasAnyAuthority('user:list:page')")
+    @PreAuthorize("hasAnyAuthority('user:list_page')")
     @ApiOperation(value = "用户分页")
     public Result<PageResult<UserPageVo>> listPage(UserPageDTO dto) {
         return Result.success(userService.listPage(dto));
     }
 
     @GetMapping("/list_export")
-    // @PreAuthorize("hasAnyAuthority('user:list:export')")
+    @PreAuthorize("hasAnyAuthority('user:list_export')")
     @ApiOperation(value = "用户导出", produces = "application/octet-stream")
     public void listExport(HttpServletResponse response) throws IOException {
         userService.listExport(response);
     }
 
     @GetMapping("/get_one")
-    @PreAuthorize("hasAnyAuthority('user:get:one')")
+    @PreAuthorize("hasAnyAuthority('user:get_one')")
     @ApiOperation(value = "用户详情")
     public Result<UserVo> getOne(@RequestParam Long userId) {
         return Result.success(userService.getOne(userId));
     }
 
     @PutMapping("/ban_one")
-    @PreAuthorize("hasAnyAuthority('user:ban:one')")
+    @PreAuthorize("hasAnyAuthority('user:ban_one')")
     @ApiOperation(value = "用户禁用/启用")
     public Result banOne(@RequestParam Long userId, @RequestParam Integer enable) {
         userService.banOne(userId, enable);
@@ -65,7 +65,7 @@ public class UserController {
     }
 
     @PostMapping("/save_one")
-    @PreAuthorize("hasAnyAuthority('user:save:one')")
+    @PreAuthorize("hasAnyAuthority('user:save_one')")
     @ApiOperation(value = "用户新增")
     public Result saveOne(@RequestBody @Valid UserInsertDTO dto) {
         userService.saveOne(dto);
@@ -73,7 +73,7 @@ public class UserController {
     }
 
     @PutMapping("/update_one")
-    @PreAuthorize("hasAnyAuthority('user:update:one')")
+    @PreAuthorize("hasAnyAuthority('user:update_one')")
     @ApiOperation("用户更新")
     public Result updateOne(@RequestBody @Valid UserUpdateDTO dto) {
         userService.updateOne(dto);
@@ -81,7 +81,7 @@ public class UserController {
     }
 
     @DeleteMapping("/remove_one")
-    @PreAuthorize("hasAnyAuthority('user:remove:one')")
+    @PreAuthorize("hasAnyAuthority('user:remove_one')")
     @ApiOperation("用户删除")
     public Result removeOne(@RequestParam Long userId) {
         userService.removeOne(userId);
@@ -89,6 +89,7 @@ public class UserController {
     }
 
     @GetMapping("/list_all")
+    @PreAuthorize("hasAnyAuthority('user:list_all')")
     @ApiOperation("用户查询")
     public Result<List<UserSelectVO>> listAll(UserSelectDTO dto) {
         return Result.success(userService.listAll(dto));

@@ -10,6 +10,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -31,18 +32,21 @@ public class OssController {
     private OssService ossService;
 
     @GetMapping("/list_page")
+    @PreAuthorize("hasAnyAuthority('oss:list_page')")
     @ApiOperation("文件分页")
     public Result<PageResult<OssFilePageVO>> listPage(OssFilePageDTO dto) {
         return Result.success(ossService.listPage(dto));
     }
 
     @PostMapping("/upload_one")
+    @PreAuthorize("hasAnyAuthority('oss:list_page')")
     @ApiOperation("文件上传")
     public Result<String> uploadOne(@RequestParam MultipartFile file, @RequestParam String path) throws Exception {
         return Result.success(ossService.uploadOne(file.getBytes(), path));
     }
 
     @GetMapping("/download_one")
+    @PreAuthorize("hasAnyAuthority('oss:list_page')")
     @ApiOperation("文件下载")
     public void downloadOne(HttpServletResponse response, @RequestParam String path) throws Exception {
         byte[] fileBytes = ossService.downloadOne(path);
@@ -52,12 +56,14 @@ public class OssController {
     }
 
     @GetMapping("/access_url")
-    @ApiOperation("文件链接（如果是S3的话是带过期时间、带url参数签名认证的url）")
+    @PreAuthorize("hasAnyAuthority('oss:list_page')")
+    @ApiOperation("文件链接")
     public Result<String> accessUrl(@RequestParam String path) throws Exception {
         return Result.success(ossService.accessUrl(path));
     }
 
     @DeleteMapping("/remove_one")
+    @PreAuthorize("hasAnyAuthority('oss:list_page')")
     @ApiOperation("文件删除")
     public Result removeOne(@RequestParam Long fileId) throws Exception {
         ossService.removeOne(fileId);

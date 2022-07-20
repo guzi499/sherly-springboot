@@ -8,6 +8,7 @@ import com.guzi.upr.service.UserOnlineService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,12 +32,14 @@ public class UserOnlineController {
     private UserOnlineService userOnlineService;
 
     @GetMapping("/list")
+    @PreAuthorize("hasAnyAuthority('user_online:list')")
     @ApiOperation("在线用户列表")
     public Result<List<UserOnlineSelectVO>> list(@Valid UserOnlineSelectDTO dto) throws JsonProcessingException {
         return Result.success(userOnlineService.list(dto));
     }
 
     @GetMapping("/force_quit")
+    @PreAuthorize("hasAnyAuthority('user_online:force_quit')")
     @ApiOperation("强制退出")
     public Result forceQuit(@RequestParam String phone) {
         userOnlineService.forceQuit(phone);

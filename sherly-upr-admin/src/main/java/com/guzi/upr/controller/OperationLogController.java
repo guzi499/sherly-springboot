@@ -9,6 +9,7 @@ import com.guzi.upr.model.vo.OperationLogVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,18 +27,21 @@ public class OperationLogController {
     private OperationLogService operationLogService;
 
     @GetMapping("/list_page")
+    @PreAuthorize("hasAnyAuthority('operation_log:list_page')")
     @ApiOperation("操作日志分页")
     public Result<PageResult<OperationLogPageVO>> listPage(OperationLogPageDTO dto) {
         return Result.success(operationLogService.listPage(dto));
     }
 
     @GetMapping("/get_one")
+    @PreAuthorize("hasAnyAuthority('operation_log:get_one')")
     @ApiOperation("操作日志详情")
     public Result<OperationLogVO> getOne(@RequestParam Long logId) {
         return Result.success(operationLogService.getOne(logId));
     }
 
     @DeleteMapping("/remove_all")
+    @PreAuthorize("hasAnyAuthority('operation_log:remove_all')")
     @ApiOperation("操作日志清空")
     public Result removeAll() {
         operationLogService.removeAll();

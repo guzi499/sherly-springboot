@@ -34,21 +34,21 @@ public class RoleController {
     private RoleService roleService;
 
     @GetMapping("/list_page")
-    @PreAuthorize("hasAnyAuthority('role:list:page')")
+    @PreAuthorize("hasAnyAuthority('role:list_page')")
     @ApiOperation("角色分页")
     public Result<PageResult<RolePageVO>> list(RolePageDTO dto) {
         return Result.success(roleService.listPage(dto));
     }
 
     @GetMapping("/get_one")
-    @PreAuthorize("hasAnyAuthority('role:get:one')")
+    @PreAuthorize("hasAnyAuthority('role:get_one')")
     @ApiOperation("角色详情")
     public Result<RoleVO> getOne(@RequestParam Long roleId) {
         return Result.success(roleService.getOne(roleId));
     }
 
     @PostMapping("/save_one")
-    @PreAuthorize("hasAnyAuthority('role:save:one')")
+    @PreAuthorize("hasAnyAuthority('role:save_one')")
     @ApiOperation("角色新增")
     public Result saveOne(@RequestBody @Valid RoleInsertDTO dto) {
         roleService.saveOne(dto);
@@ -56,7 +56,7 @@ public class RoleController {
     }
 
     @PutMapping("/update_one")
-    @PreAuthorize("hasAnyAuthority('role:update:one')")
+    @PreAuthorize("hasAnyAuthority('role:update_one')")
     @ApiOperation("角色更新")
     public Result updateOne(@RequestBody @Valid RoleUpdateDTO dto) {
         roleService.updateOne(dto);
@@ -64,7 +64,7 @@ public class RoleController {
     }
 
     @DeleteMapping("/remove_one")
-    @PreAuthorize("hasAnyAuthority('role:remove:one')")
+    @PreAuthorize("hasAnyAuthority('role:remove_one')")
     @ApiOperation("角色删除")
     public Result removeOne(@RequestParam Long roleId) {
         roleService.removeOne(roleId);
@@ -72,7 +72,7 @@ public class RoleController {
     }
 
     @GetMapping("/list_all")
-    @PreAuthorize("hasAnyAuthority('role:list:all')")
+    @PreAuthorize("hasAnyAuthority('role:list_all')")
     @ApiOperation("角色查询")
     public Result<List<RoleSelectVO>> listAll(RoleSelectDTO dto) {
         return Result.success(roleService.listAll(dto));

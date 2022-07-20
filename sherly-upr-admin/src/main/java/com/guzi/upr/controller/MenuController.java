@@ -29,14 +29,14 @@ public class MenuController {
     private MenuService menuService;
 
     @GetMapping("/list_tree")
-    @PreAuthorize("hasAnyAuthority('menu:list:tree')")
+    @PreAuthorize("hasAnyAuthority('menu:list_tree')")
     @ApiOperation("查询菜单树")
     public Result<List<MenuVO>> listTree() {
         return Result.success(menuService.listTree());
     }
 
     @PostMapping("/save_one")
-    @PreAuthorize("hasAnyAuthority('menu:save:one')")
+    @PreAuthorize("hasAnyAuthority('menu:save_one')")
     @ApiOperation("菜单新增")
     public Result saveOne(@RequestBody @Valid MenuInsertDTO dto) {
         menuService.saveOne(dto);
@@ -44,7 +44,7 @@ public class MenuController {
     }
 
     @DeleteMapping("/remove_one")
-    @PreAuthorize("hasAnyAuthority('menu:remove:one')")
+    @PreAuthorize("hasAnyAuthority('menu:remove_one')")
     @ApiOperation("菜单删除")
     public Result removeOne(@RequestParam Long menuId) {
         menuService.removeOne(menuId);
@@ -52,7 +52,7 @@ public class MenuController {
     }
 
     @PutMapping("/update_one")
-    @PreAuthorize("hasAnyAuthority('menu:update:one')")
+    @PreAuthorize("hasAnyAuthority('menu:update_one')")
     @ApiOperation("菜单修改")
     public Result updateOne(@RequestBody @Valid MenuUpdateDTO dto) {
         menuService.updateOne(dto);
