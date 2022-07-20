@@ -165,6 +165,7 @@ public class UserService {
             accountUser.setTenantData(tenantData);
             accountUserManager.updateById(accountUser);
         }
+        SecurityUtil.clearOperateTenantCode();
 
         User user = new User();
         BeanUtils.copyProperties(dto, user);

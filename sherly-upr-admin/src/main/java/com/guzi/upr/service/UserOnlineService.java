@@ -30,7 +30,7 @@ public class UserOnlineService {
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
 
-    public List<UserOnlineSelectVO> list(UserOnlineSelectDTO dto) throws JsonProcessingException {
+    public List<UserOnlineSelectVO> listAll(UserOnlineSelectDTO dto) throws JsonProcessingException {
         // 获取所有在线用户的redisKey
         Set<String> keys = redisTemplate.keys(RedisKey.GENERATE_USER + "*");
 

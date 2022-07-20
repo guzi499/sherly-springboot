@@ -29,14 +29,14 @@ public class DepartmentController {
     private DepartmentService departmentService;
 
     @GetMapping("/list_tree")
-    @PreAuthorize("hasAnyAuthority('department:list:tree')")
+    @PreAuthorize("hasAnyAuthority('department:list_tree')")
     @ApiOperation("查询部门树")
     public Result<List<DepartmentVO>> listTree() {
         return Result.success(departmentService.listTree());
     }
 
     @PostMapping("/save_one")
-    @PreAuthorize("hasAnyAuthority('department:save:one')")
+    @PreAuthorize("hasAnyAuthority('department:save_one')")
     @ApiOperation("部门新增")
     public Result saveOne(@RequestBody @Valid DepartmentInsertDTO dto) {
         departmentService.saveOne(dto);
@@ -44,7 +44,7 @@ public class DepartmentController {
     }
 
     @PutMapping("/update_one")
-    @PreAuthorize("hasAnyAuthority('department:update:one')")
+    @PreAuthorize("hasAnyAuthority('department:update_one')")
     @ApiOperation("部门更新")
     public Result updateOne(@RequestBody @Valid DepartmentUpdateDTO dto) {
         departmentService.updateOne(dto);
@@ -52,7 +52,7 @@ public class DepartmentController {
     }
 
     @DeleteMapping("/remove_one")
-    @PreAuthorize("hasAnyAuthority('department:remove:one')")
+    @PreAuthorize("hasAnyAuthority('department:remove_one')")
     @ApiOperation("部门删除")
     public Result removeOne(@RequestParam Long departmentId) {
         departmentService.removeOne(departmentId);
