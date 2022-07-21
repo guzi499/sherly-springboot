@@ -23,10 +23,6 @@ public class BasicMenuInfoVO {
     @ApiModelProperty(value = "菜单路径")
     private String link;
 
-    /** 组件路径 */
-    @ApiModelProperty(value = "组件路径")
-    private String path;
-
     /** 菜单图标 */
     @ApiModelProperty(value = "菜单图标")
     private String icon;
