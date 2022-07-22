@@ -55,7 +55,6 @@ public class OperationLogPageVO {
 
     /** 创建时间 */
     @ApiModelProperty("创建时间")
-    @JsonFormat(pattern = DatePattern.NORM_DATETIME_PATTERN)
     private Date createTime;
 
 

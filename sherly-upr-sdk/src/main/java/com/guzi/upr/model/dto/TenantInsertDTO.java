@@ -37,7 +37,6 @@ public class TenantInsertDTO {
 
     /** 过期时间 */
     @ApiModelProperty(value = "过期时间", required = true)
-    @JsonFormat(pattern = DatePattern.NORM_DATETIME_PATTERN)
     @NotNull
     private Date expireTime;
 

@@ -68,7 +68,6 @@ public class UserSelfVO {
 
     /** 创建时间 */
     @ApiModelProperty(value = "创建时间")
-    @JsonFormat(pattern = DatePattern.NORM_DATETIME_PATTERN)
     private Date createTime;
 
 

@@ -23,6 +23,7 @@ import com.guzi.upr.model.vo.UserPageVo;
 import com.guzi.upr.model.vo.UserSelectVO;
 import com.guzi.upr.model.vo.UserVo;
 import com.guzi.upr.security.util.SecurityUtil;
+import com.guzi.upr.util.GlobalPropertiesUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -170,8 +171,7 @@ public class UserService {
         User user = new User();
         BeanUtils.copyProperties(dto, user);
         user.setEnable(ENABLE);
-        user.setPassword(passwordEncoder.encode("123456"));
-        user.setAvatar("avatar/hello499.jpg");
+        user.setPassword(passwordEncoder.encode(GlobalPropertiesUtil.SHERLY_PROPERTIES.getDefaultPassword()));
         userManager.save(user);
 
         // 保存用户角色数据
