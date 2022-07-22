@@ -14,9 +14,9 @@ import org.springframework.stereotype.Component;
 public class SherlyProperties {
 
     /** 开发环境标识 */
-    private final Boolean devFlag;
+    private Boolean devFlag;
 
     /** 默认密码 */
-    private final String defaultPassword;
+    private String defaultPassword;
 
 }

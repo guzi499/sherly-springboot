@@ -15,6 +15,6 @@ public class ProjectProperties {
 
     /** 项目名称 */
     @Value("${spring.application.name}")
-    private final String projectName;
+    private String projectName;
 
 }
