@@ -2,6 +2,7 @@ package com.guzi.upr.model.dto;
 
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -12,6 +13,7 @@ import java.util.List;
 public class TenantMenuUpdateDTO {
 
     /** 租户id */
+    @NotNull
     private Integer tenantId;
 
     /** 菜单ids */

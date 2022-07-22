@@ -19,7 +19,7 @@ public class MenuInsertDTO {
     private String menuName;
 
     /** 菜单类型[enum] */
-    @ApiModelProperty(value = "菜单类型[enum]", required = true, allowableValues = "CommonConstants.java")
+    @ApiModelProperty(value = "菜单类型[enum]", required = true, example = "CommonConstants.java")
     @NotNull
     private Integer menuType;
 
@@ -33,7 +33,7 @@ public class MenuInsertDTO {
     private Long parentId;
 
     /** 菜单路径  */
-    @ApiModelProperty(value = "菜单路径", example = "/system/user", allowableValues = "必须为英文，且以'/'开头")
+    @ApiModelProperty(value = "菜单路径")
     private String link;
 
     /** 菜单图标 */
@@ -41,7 +41,7 @@ public class MenuInsertDTO {
     private String icon;
 
     /** 排序 */
-    @ApiModelProperty(value = "排序", required = true, allowableValues = "只能是从1到999的正整数")
+    @ApiModelProperty(value = "排序", required = true)
     @NotNull
     private Integer sort;
 

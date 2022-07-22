@@ -27,7 +27,7 @@ public class DepartmentInsertDTO {
     private Long parentId;
 
     /** 排序 */
-    @ApiModelProperty(value = "排序", required = true, allowableValues = "只能是从1到999的正整数")
+    @ApiModelProperty(value = "排序", required = true)
     @NotNull
     private Integer sort;
 }

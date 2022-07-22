@@ -19,7 +19,7 @@ public class MenuVO {
     private Long menuId;
 
     /** 菜单类型[enum] */
-    @ApiModelProperty(value = "菜单类型[enum]", allowableValues = "CommonConstants.java")
+    @ApiModelProperty(value = "菜单类型[enum]", example = "CommonConstants.java")
     private Integer menuType;
 
     /** 权限 */

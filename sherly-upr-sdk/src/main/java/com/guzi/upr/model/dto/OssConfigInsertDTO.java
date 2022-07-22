@@ -19,7 +19,7 @@ public class OssConfigInsertDTO {
     private String configName;
 
     /** 存储方式[enum] */
-    @ApiModelProperty(value = "存储方式[enum]", required = true, allowableValues = "OssTypeEnum.java")
+    @ApiModelProperty(value = "存储方式[enum]", required = true, example = "OssTypeEnum.java")
     @NotNull
     private Integer type;
 
@@ -28,7 +28,7 @@ public class OssConfigInsertDTO {
     private String description;
 
     /** 具体配置 */
-    @ApiModelProperty(value = "具体配置", required = true, allowableValues = "OssClientConfig.java接口的实现")
+    @ApiModelProperty(value = "具体配置", required = true, example = "OssClientConfig.java接口的实现")
     @NotNull
     private Map<String, Object> config;
 }

@@ -20,7 +20,7 @@ public class LoginLogPageVO {
     private String username;
 
     /** 登录方式[enum] */
-    @ApiModelProperty(value = "登录方式[enum]", allowableValues = "CommonConstants.java")
+    @ApiModelProperty(value = "登录方式[enum]", example = "CommonConstants.java")
     private Integer type;
 
     /** 请求ip */
@@ -40,7 +40,7 @@ public class LoginLogPageVO {
     private String browser;
 
     /** 登录结果[enum] */
-    @ApiModelProperty(value = "登录结果[enum]", allowableValues = "CommonConstants.java")
+    @ApiModelProperty(value = "登录结果[enum]", example = "CommonConstants.java")
     private Integer result;
 
     /** 创建时间 */

@@ -11,6 +11,6 @@ import lombok.Data;
 @Data
 public class OperationLogPageDTO extends PageQuery {
     /** 日志类型[enum] */
-    @ApiModelProperty(value = "日志类型[enum]", allowableValues = "CommonConstants.java")
+    @ApiModelProperty(value = "日志类型[enum]", example = "CommonConstants.java")
     private String type;
 }

@@ -25,7 +25,7 @@ public class UserInsertDTO {
     private String phone;
 
     /** 性别[enum] */
-    @ApiModelProperty(value = "性别[enum]", required = true, allowableValues = "CommonConstants.java")
+    @ApiModelProperty(value = "性别[enum]", required = true, example = "CommonConstants.java")
     @NotNull
     private Integer gender;
 
