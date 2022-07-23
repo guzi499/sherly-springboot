@@ -19,4 +19,7 @@ public class SherlyProperties {
     /** 默认密码 */
     private String defaultPassword;
 
+    /** 默认头像 */
+    private String defaultAvatar;
+
 }
