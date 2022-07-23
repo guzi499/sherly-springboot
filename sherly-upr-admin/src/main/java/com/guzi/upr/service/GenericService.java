@@ -58,9 +58,7 @@ public class GenericService {
         User user = userManager.getById(userId);
         BasicUserInfoVO userVO = new BasicUserInfoVO();
         BeanUtils.copyProperties(user, userVO);
-        if (userVO.getAvatar() != null) {
-            userVO.setAvatar(ossUtil.accessUrl(userVO.getAvatar()));
-        }
+        userVO.setAvatar(ossUtil.accessUrl(userVO.getAvatar()));
 
         // 角色信息收集
         List<UserRole> userRoles = userRoleManager.listByUserId(userId);
