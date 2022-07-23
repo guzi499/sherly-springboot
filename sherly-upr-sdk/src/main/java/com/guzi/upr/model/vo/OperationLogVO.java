@@ -14,7 +14,7 @@ public class OperationLogVO {
     private Long logId;
 
     /** 日志类型[enum] */
-    @ApiModelProperty(value = "日志类型[enum]", allowableValues = "CommonConstants.java")
+    @ApiModelProperty(value = "日志类型[enum]", example = "CommonConstants.java")
     private Integer type;
 
     /** 描述 */

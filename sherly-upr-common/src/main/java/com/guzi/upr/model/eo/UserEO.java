@@ -48,7 +48,6 @@ public class UserEO {
 
     /** 最后登录时间 */
     @ExcelProperty("最后登录时间")
-    @JsonFormat(pattern = DatePattern.NORM_DATETIME_PATTERN)
     private Date lastLoginTime;
 
     /** 最后登录ip */

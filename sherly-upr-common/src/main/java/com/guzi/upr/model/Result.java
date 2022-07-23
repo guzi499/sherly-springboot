@@ -1,6 +1,6 @@
 package com.guzi.upr.model;
 
-import com.guzi.upr.util.GlobalParamUtil;
+import com.guzi.upr.util.GlobalPropertiesUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,7 +80,7 @@ public class Result<T> {
 
     private static List<String> parseException(Exception e) {
         // 如果是生产环境，则不解析异常栈
-        if (FALSE.equals(GlobalParamUtil.getValue("spring.application.dev-flag"))) {
+        if (FALSE.equals(GlobalPropertiesUtil.SHERLY_PROPERTIES.getDevFlag())) {
             return null;
         }
 

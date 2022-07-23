@@ -1,7 +1,7 @@
 package com.guzi.upr.config;
 
 import com.github.xiaoymin.knife4j.spring.extension.OpenApiExtensionResolver;
-import com.guzi.upr.util.GlobalParamUtil;
+import com.guzi.upr.util.GlobalPropertiesUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -41,7 +41,7 @@ public class Knife4jConfiguration {
 
         Docket docket=new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(new ApiInfoBuilder()
-                        .title(GlobalParamUtil.getValue("spring.application.name"))
+                        .title(GlobalPropertiesUtil.PROJECT_PROPERTIES.getProjectName())
                         .build())
                 .select()
                 //这里指定Controller扫描包路径

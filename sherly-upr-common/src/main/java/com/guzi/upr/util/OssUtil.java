@@ -1,5 +1,6 @@
 package com.guzi.upr.util;
 
+import cn.hutool.core.util.StrUtil;
 import com.guzi.upr.manager.OssConfigManager;
 import com.guzi.upr.model.admin.OssConfig;
 import com.guzi.upr.security.util.SecurityUtil;
@@ -44,6 +45,9 @@ public class OssUtil {
      * @throws Exception
      */
     public String accessUrl(String path) throws Exception {
+        if (StrUtil.isBlank(path)) {
+            return GlobalPropertiesUtil.SHERLY_PROPERTIES.getDefaultAvatar();
+        }
         OssClient ossClient = this.getOssClient();
         return ossClient.getAccessUrl(path);
     }

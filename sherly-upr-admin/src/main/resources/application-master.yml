@@ -1,9 +1,12 @@
+sherly:
+  dev-flag: true
+  default-password: 123456
+  default-avatar: https://portrait.gitee.com/uploads/avatars/user/2730/8190589_guzi499_1602830711.png!avatar200
+
 server:
   port: 8888
 
 spring:
-  application:
-    dev-flag: false
 
   # redis配置
   redis:

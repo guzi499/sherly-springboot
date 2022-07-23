@@ -22,7 +22,7 @@ public class OssConfigPageVO {
     private String configName;
 
     /** 存储方式[enum] */
-    @ApiModelProperty(value = "存储方式[enum]", allowableValues = "OssTypeEnum.java")
+    @ApiModelProperty(value = "存储方式[enum]", example = "OssTypeEnum.java")
     private Integer type;
 
     /** 描述 */
@@ -30,11 +30,10 @@ public class OssConfigPageVO {
     private String description;
 
     /** 启用禁用[enum] */
-    @ApiModelProperty(value = "启用禁用[enum]", allowableValues = "CommonConstants.java")
+    @ApiModelProperty(value = "启用禁用[enum]", example = "CommonConstants.java")
     private Integer enable;
 
     /** 创建时间 */
     @ApiModelProperty(value = "创建时间")
-    @JsonFormat(pattern = DatePattern.NORM_DATETIME_PATTERN)
     private Date createTime;
 }

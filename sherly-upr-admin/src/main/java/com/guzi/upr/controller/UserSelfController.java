@@ -33,7 +33,7 @@ public class UserSelfController {
 
     @GetMapping("/get_self")
     @ApiOperation("用户个人中心")
-    public Result getSelf() {
+    public Result getSelf() throws Exception {
         return Result.success(userSelfService.getSelf());
     }
 

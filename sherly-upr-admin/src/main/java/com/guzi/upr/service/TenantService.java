@@ -17,6 +17,7 @@ import com.guzi.upr.model.dto.TenantUpdateDTO;
 import com.guzi.upr.model.vo.TenantPageVO;
 import com.guzi.upr.security.util.SecurityUtil;
 import com.guzi.upr.util.ExecSqlUtil;
+import com.guzi.upr.util.GlobalPropertiesUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -130,7 +131,7 @@ public class TenantService {
         user.setEnable(ENABLE);
         user.setDepartmentId(department.getDepartmentId());
         user.setGender(1);
-        user.setPassword(passwordEncoder.encode("123456"));
+        user.setPassword(passwordEncoder.encode(GlobalPropertiesUtil.SHERLY_PROPERTIES.getDefaultPassword()));
         userManager.save(user);
 
         // 关联用户角色

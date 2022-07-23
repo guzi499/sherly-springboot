@@ -19,7 +19,7 @@ public class MenuVO {
     private Long menuId;
 
     /** 菜单类型[enum] */
-    @ApiModelProperty(value = "菜单类型[enum]", allowableValues = "CommonConstants.java")
+    @ApiModelProperty(value = "菜单类型[enum]", example = "CommonConstants.java")
     private Integer menuType;
 
     /** 权限 */
@@ -48,7 +48,6 @@ public class MenuVO {
 
     /** 创建时间 */
     @ApiModelProperty(value = "创建时间")
-    @JsonFormat(pattern = DatePattern.NORM_DATETIME_PATTERN)
     private Date createTime;
 
     private List<MenuVO> children;

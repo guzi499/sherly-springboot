@@ -1,5 +1,6 @@
 package com.guzi.upr.service;
 
+import com.google.j2objc.annotations.AutoreleasePool;
 import com.guzi.upr.exception.BizException;
 import com.guzi.upr.manager.DepartmentManager;
 import com.guzi.upr.manager.RoleManager;
@@ -13,6 +14,7 @@ import com.guzi.upr.model.dto.UserSelfUpdateDTO;
 import com.guzi.upr.model.dto.UserUpdatePasswordDTO;
 import com.guzi.upr.model.vo.UserSelfVO;
 import com.guzi.upr.security.util.SecurityUtil;
+import com.guzi.upr.util.OssUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -48,12 +50,15 @@ public class UserSelfService {
     @Autowired
     private DepartmentManager departmentManager;
 
+    @Autowired
+    private OssUtil ossUtil;
+
     /**
      * 用户个人中心
      *
      * @return
      */
-    public UserSelfVO getSelf() {
+    public UserSelfVO getSelf() throws Exception {
         User user = userManager.getById(SecurityUtil.getUserId());
 
         // 查询角色
@@ -68,6 +73,7 @@ public class UserSelfService {
         // 组装vo
         UserSelfVO vo = new UserSelfVO();
         BeanUtils.copyProperties(user, vo);
+        vo.setAvatar(ossUtil.accessUrl(vo.getAvatar()));
         vo.setRoleIds(roleIds);
         vo.setRoleNames(roleNames);
         vo.setGenderStr(Objects.equals(vo.getGender(), MALE) ? "男" : "女");

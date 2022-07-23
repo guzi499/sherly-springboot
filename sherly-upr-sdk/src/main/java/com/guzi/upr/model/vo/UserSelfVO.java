@@ -39,7 +39,7 @@ public class UserSelfVO {
     private String email;
 
     /** 性别[enum] */
-    @ApiModelProperty(value = "性别[enum]", allowableValues = "CommonConstants.java")
+    @ApiModelProperty(value = "性别[enum]", example = "CommonConstants.java")
     private Integer gender;
 
     /** 性别 */
@@ -68,7 +68,6 @@ public class UserSelfVO {
 
     /** 创建时间 */
     @ApiModelProperty(value = "创建时间")
-    @JsonFormat(pattern = DatePattern.NORM_DATETIME_PATTERN)
     private Date createTime;
 
 

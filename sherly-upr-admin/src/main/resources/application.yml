@@ -11,6 +11,9 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
 
 
 # mybatis-plus配置
@@ -27,4 +30,3 @@ knife4j:
     - locations: classpath:markdown/*
       name: 前后端联调文档
       group: default
-
