@@ -17,6 +17,7 @@ public class OperationLogManager extends ServiceImpl<OperationLogMapper, Operati
     public Page<OperationLog> listPage(OperationLogPageDTO dto) {
         SherlyLambdaQueryWrapper<OperationLog> wrapper = new SherlyLambdaQueryWrapper<>();
         wrapper.eqIfExist(OperationLog::getType, dto.getType())
+                .eqIfExist(OperationLog::getCreateUserId, dto.getUserId())
                 .orderByDesc(OperationLog::getLogId);
         return this.page(new Page<>(dto.getCurrent(), dto.getSize()), wrapper);
     }
