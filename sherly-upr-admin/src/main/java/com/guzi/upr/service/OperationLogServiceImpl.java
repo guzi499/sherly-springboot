@@ -1,32 +1,18 @@
 package com.guzi.upr.service;
 
-import cn.hutool.extra.servlet.ServletUtil;
-import cn.hutool.http.useragent.UserAgent;
-import cn.hutool.http.useragent.UserAgentUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.guzi.upr.log.annotation.SherlyLog;
+import com.guzi.upr.log.manager.OperationLogManager;
 import com.guzi.upr.log.model.OperationLog;
 import com.guzi.upr.log.service.OperationLogService;
-import com.guzi.upr.manager.OperationLogManager;
 import com.guzi.upr.model.PageResult;
 import com.guzi.upr.model.dto.OperationLogPageDTO;
 import com.guzi.upr.model.vo.OperationLogPageVO;
 import com.guzi.upr.model.vo.OperationLogVO;
-import net.dreamlu.mica.ip2region.core.Ip2regionSearcher;
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.lang.reflect.Method;
-import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -36,78 +22,12 @@ import java.util.stream.Collectors;
 @Service
 public class OperationLogServiceImpl implements OperationLogService {
 
-    private static final ObjectMapper OBJECTMAPPER = new ObjectMapper();
-
     @Autowired
     private OperationLogManager operationLogManager;
 
-    @Autowired
-    private Ip2regionSearcher regionSearcher;
-
     @Override
-    public void saveOne(Long duration, ProceedingJoinPoint joinPoint, Integer type, Throwable exception) throws Exception {
-        OperationLog operationLog = new OperationLog();
-
-        HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
-        String ip = ServletUtil.getClientIP(request);
-        String userAgent = request.getHeader("User-Agent");
-        if (userAgent != null) {
-            UserAgent agent = UserAgentUtil.parse(userAgent);
-            operationLog.setOs(agent.getOs().toString());
-            operationLog.setBrowser(agent.getBrowser().toString());
-        }
-
-        String requestMethod = request.getMethod();
-        String uri = request.getRequestURI();
-
-        MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
-        Method method = methodSignature.getMethod();
-        SherlyLog annotation = method.getAnnotation(SherlyLog.class);
-
-        String requestParams = this.parseArgs(methodSignature, joinPoint.getArgs());
-
-        operationLog.setType(type);
-        operationLog.setDescription(annotation != null ? annotation.description() : null);
-        operationLog.setDuration(duration);
-        operationLog.setRequestMethod(requestMethod);
-        operationLog.setUri(uri);
-        operationLog.setRequestParams(requestParams);
-        operationLog.setIp(ip);
-        operationLog.setAddress(regionSearcher.getAddress(ip));
-
-        if (exception != null) {
-            List<String> list = Arrays.stream(exception.getStackTrace()).map(Objects::toString).filter(e -> e.startsWith("com.guzi")).collect(Collectors.toList());
-            list.add(0, exception.getMessage());
-            operationLog.setException(OBJECTMAPPER.writeValueAsString(list));
-        }
-
+    public void saveOne(OperationLog operationLog) {
         operationLogManager.save(operationLog);
-    }
-
-    /**
-     * 解析请求参数
-     * @param methodSignature
-     * @param args
-     * @return
-     * @throws Exception
-     */
-    private String parseArgs(MethodSignature methodSignature, Object[] args) throws Exception {
-        String[] paramNames = methodSignature.getParameterNames();
-
-        Map<String, Object> map = new HashMap<>(args.length);
-        for (int i = 0; i < args.length; i++) {
-            String paramName = paramNames[i];
-            Object arg = args[i];
-            if (!(arg instanceof MultipartFile || arg instanceof HttpServletRequest || arg instanceof HttpServletResponse)) {
-                map.put(paramName, arg);
-            }
-        }
-
-        if (map.isEmpty()) {
-            return "";
-        }
-
-        return OBJECTMAPPER.writeValueAsString(map);
     }
 
     @Override

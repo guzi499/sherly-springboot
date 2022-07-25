@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.util.Date;
+
 /**
  * @author 谷子毅
  * @date 2022/7/15
@@ -45,5 +47,5 @@ public class LoginLogPageVO {
 
     /** 创建时间 */
     @ApiModelProperty(value = "创建时间")
-    private Data createTime;
+    private Date createTime;
 }

@@ -2,7 +2,7 @@ package com.guzi.upr.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.guzi.upr.log.model.LoginLog;
-import com.guzi.upr.manager.LoginLogManager;
+import com.guzi.upr.log.manager.LoginLogManager;
 import com.guzi.upr.model.PageResult;
 import com.guzi.upr.model.dto.LoginLogPageDTO;
 import com.guzi.upr.model.vo.LoginLogPageVO;
@@ -23,6 +23,11 @@ public class LoginLogService {
     @Autowired
     private LoginLogManager loginLogManager;
 
+    /**
+     * 日志分页
+     * @param dto
+     * @return
+     */
     public PageResult<LoginLogPageVO> listPage(LoginLogPageDTO dto) {
         Page<LoginLog> page = loginLogManager.listPage(dto);
 
@@ -35,6 +40,9 @@ public class LoginLogService {
         return PageResult.build(result, page.getCurrent(), page.getSize(), page.getTotal());
     }
 
+    /**
+     * 日志清空
+     */
     public void removeAll() {
         loginLogManager.removeAll();
     }

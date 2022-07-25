@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.guzi.upr.log.model.OperationLog;
 import com.guzi.upr.mapper.admin.UserMapper;
 import com.guzi.upr.model.admin.User;
 import com.guzi.upr.model.dto.UserPageDTO;
@@ -29,7 +30,8 @@ public class UserManager extends ServiceImpl<UserMapper, User> {
                 .likeIfExist(User::getEmail, dto.getEmail())
                 .eqIfExist(User::getDepartmentId, dto.getDepartmentId())
                 .eqIfExist(User::getEnable, dto.getEnable())
-                .betweenIfExist(User::getCreateTime, dto.getBeginTime(), dto.getEndTime());
+                .betweenIfExist(User::getCreateTime, dto.getBeginTime(), dto.getEndTime())
+                .orderByDesc(User::getUserId);
         return this.page(new Page<>(dto.getCurrent(), dto.getSize()), wrapper);
     }
 

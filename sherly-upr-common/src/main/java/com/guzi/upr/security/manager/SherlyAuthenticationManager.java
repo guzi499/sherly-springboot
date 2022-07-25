@@ -13,6 +13,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.servlet.http.HttpServletRequest;
+
+import java.util.Objects;
 
 import static com.guzi.upr.model.contants.CommonConstants.LOGIN_LOG_FAIL;
 import static com.guzi.upr.model.contants.CommonConstants.LOGIN_TYPE_PASSWORD;
@@ -47,8 +53,9 @@ public class SherlyAuthenticationManager implements AuthenticationProvider {
         if (passwordEncoder.matches(password, loginUserDetails.getPassword())) {
             return new UsernamePasswordAuthenticationToken(loginUserDetails, null, loginUserDetails.getAuthorities());
         } else {
+            HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
             // 记录日志
-            logRecordUtil.recordLoginLog(phone, LOGIN_LOG_FAIL, LOGIN_TYPE_PASSWORD);
+            logRecordUtil.recordLoginLog(request, phone, LOGIN_LOG_FAIL, LOGIN_TYPE_PASSWORD);
             throw new BadCredentialsException("用户名或密码错误!");
         }
 

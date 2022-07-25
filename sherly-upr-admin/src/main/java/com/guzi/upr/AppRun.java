@@ -7,14 +7,16 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.env.ConfigurableEnvironment;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 /**
  * @author 谷子毅
  * @date 2022/3/18
  */
 @Slf4j
+@EnableAsync
 @SpringBootApplication
-@MapperScan("com.guzi.upr.mapper.admin")
+@MapperScan({"com.guzi.upr.mapper.admin", "com.guzi.upr.log.mapper"})
 public class AppRun {
     @SneakyThrows
     public static void main(String[] args) {

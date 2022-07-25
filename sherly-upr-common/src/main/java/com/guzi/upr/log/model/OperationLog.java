@@ -1,7 +1,8 @@
 package com.guzi.upr.log.model;
 
-import com.baomidou.mybatisplus.annotation.*;
-import com.guzi.upr.model.BaseModel;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.util.Date;
@@ -52,10 +53,8 @@ public class OperationLog {
     private String exception;
 
     /** 创建时间 */
-    @TableField(fill = FieldFill.INSERT)
     private Date createTime;
 
     /** 创建人id */
-    @TableField(fill = FieldFill.INSERT)
     private Long createUserId;
 }

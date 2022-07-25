@@ -1,9 +1,6 @@
 package com.guzi.upr.service;
 
 import cn.hutool.extra.servlet.ServletUtil;
-import cn.hutool.http.useragent.OS;
-import cn.hutool.http.useragent.UserAgent;
-import cn.hutool.http.useragent.UserAgentUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.guzi.upr.constants.RedisKey;
@@ -95,9 +92,8 @@ public class LoginService {
 
         // 生成token返回前端
         LoginVO loginVO = new LoginVO(JwtUtil.generateToken(keyLabel));
-
         // 记录日志
-        logRecordUtil.recordLoginLog(dto.getPhone(), LOGIN_LOG_SUCCESS, LOGIN_TYPE_PASSWORD);
+        logRecordUtil.recordLoginLog(request, dto.getPhone(), LOGIN_LOG_SUCCESS, LOGIN_TYPE_PASSWORD);
 
         return loginVO;
     }

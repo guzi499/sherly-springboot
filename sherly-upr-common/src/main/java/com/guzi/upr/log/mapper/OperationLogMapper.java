@@ -1,7 +1,7 @@
-package com.guzi.upr.mapper.admin;
+package com.guzi.upr.log.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.guzi.upr.log.model.LoginLog;
+import com.guzi.upr.log.model.OperationLog;
 import org.apache.ibatis.annotations.Delete;
 import org.springframework.stereotype.Repository;
 
@@ -10,10 +10,10 @@ import org.springframework.stereotype.Repository;
  * @date 2022/7/14
  */
 @Repository
-public interface LoginLogMapper extends BaseMapper<LoginLog> {
+public interface OperationLogMapper extends BaseMapper<OperationLog> {
     /**
      * 清空日志表
      */
-    @Delete("truncate table sys_login_log")
+    @Delete("truncate table sys_operation_log")
     void removeAll();
 }

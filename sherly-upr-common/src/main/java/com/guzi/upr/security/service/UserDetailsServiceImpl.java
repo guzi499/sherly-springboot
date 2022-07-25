@@ -16,7 +16,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -68,7 +71,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         User user = userManager.getByPhone(phone);
 
         if (Objects.equals(user.getEnable(), DISABLE)) {
-            logRecordUtil.recordLoginLog(phone, LOGIN_LOG_DISABLE, LOGIN_TYPE_PASSWORD);
+            HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
+            logRecordUtil.recordLoginLog(request, phone, LOGIN_LOG_DISABLE, LOGIN_TYPE_PASSWORD);
             throw new BizException("999999", "当前账号已被禁用！");
         }
 
