@@ -4,13 +4,14 @@ import cn.hutool.extra.servlet.ServletUtil;
 import cn.hutool.http.useragent.UserAgent;
 import cn.hutool.http.useragent.UserAgentUtil;
 import com.guzi.upr.log.model.LoginLog;
-import com.guzi.upr.manager.LoginLogManager;
+import com.guzi.upr.log.manager.LoginLogManager;
 import net.dreamlu.mica.ip2region.core.Ip2regionSearcher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 
 /**
  * @author 谷子毅
@@ -42,6 +43,12 @@ public class LogRecordUtil {
         loginLog.setUsername(username);
         loginLog.setType(type);
         loginLog.setResult(result);
+        loginLog.setCreateTime(new Date());
+        this.saveOne(loginLog);
+    }
+
+    @Async
+    public void saveOne(LoginLog loginLog) {
         loginLogManager.save(loginLog);
     }
 }

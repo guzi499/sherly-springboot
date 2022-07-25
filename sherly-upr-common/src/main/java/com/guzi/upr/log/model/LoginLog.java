@@ -39,6 +39,5 @@ public class LoginLog {
     private Integer result;
 
     /** 创建时间 */
-    @TableField(fill = FieldFill.INSERT)
     private Date createTime;
 }

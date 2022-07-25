@@ -1,9 +1,9 @@
-package com.guzi.upr.manager;
+package com.guzi.upr.log.manager;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.guzi.upr.log.model.OperationLog;
-import com.guzi.upr.mapper.admin.OperationLogMapper;
+import com.guzi.upr.log.mapper.OperationLogMapper;
 import com.guzi.upr.model.dto.OperationLogPageDTO;
 import com.guzi.upr.util.SherlyLambdaQueryWrapper;
 import org.springframework.stereotype.Service;

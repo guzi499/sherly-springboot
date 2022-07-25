@@ -1,13 +1,11 @@
 package com.guzi.upr.log.service;
 
+import com.guzi.upr.log.model.OperationLog;
 import com.guzi.upr.model.PageResult;
 import com.guzi.upr.model.dto.OperationLogPageDTO;
 import com.guzi.upr.model.vo.OperationLogPageVO;
 import com.guzi.upr.model.vo.OperationLogVO;
-import org.aspectj.lang.ProceedingJoinPoint;
 import org.springframework.scheduling.annotation.Async;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author 谷子毅
@@ -17,16 +15,10 @@ public interface OperationLogService {
 
     /**
      * 日志记录
-     *
-     * @param request
-     * @param duration
-     * @param joinPoint
-     * @param type
-     * @param exception
-     * @throws Exception
+     * @param operationLog
      */
     @Async
-    void saveOne(HttpServletRequest request, Long duration, ProceedingJoinPoint joinPoint, Integer type, Throwable exception) throws Exception;
+    void saveOne(OperationLog operationLog);
 
     /**
      * 日志分页
