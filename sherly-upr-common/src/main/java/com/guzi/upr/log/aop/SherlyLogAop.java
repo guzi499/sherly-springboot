@@ -9,6 +9,11 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Objects;
 
 import static com.guzi.upr.model.contants.CommonConstants.*;
 
@@ -41,16 +46,16 @@ public class SherlyLogAop {
         if (annotation != null && annotation.noRecord()) {
             return joinPoint.proceed();
         }
-
+        HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
         try {
             recordTime.set(System.currentTimeMillis());
             Object result = joinPoint.proceed();
             Long duration = System.currentTimeMillis() - recordTime.get();
-            operationLogService.saveOne(duration, joinPoint, NORMAL_LOG, null);
+            operationLogService.saveOne(request, duration, joinPoint, NORMAL_LOG, null);
             return result;
         } catch (Throwable exception) {
             Long duration = System.currentTimeMillis() - recordTime.get();
-            operationLogService.saveOne(duration, joinPoint, EXCEPTION_LOG, exception);
+            operationLogService.saveOne(request, duration, joinPoint, EXCEPTION_LOG, exception);
             throw exception;
         } finally {
             recordTime.remove();

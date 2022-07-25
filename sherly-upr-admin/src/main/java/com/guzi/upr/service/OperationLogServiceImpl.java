@@ -19,8 +19,6 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -45,10 +43,9 @@ public class OperationLogServiceImpl implements OperationLogService {
     private Ip2regionSearcher regionSearcher;
 
     @Override
-    public void saveOne(Long duration, ProceedingJoinPoint joinPoint, Integer type, Throwable exception) throws Exception {
+    public void saveOne(HttpServletRequest request, Long duration, ProceedingJoinPoint joinPoint, Integer type, Throwable exception) throws Exception {
         OperationLog operationLog = new OperationLog();
 
-        HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
         String ip = ServletUtil.getClientIP(request);
         String userAgent = request.getHeader("User-Agent");
         if (userAgent != null) {
