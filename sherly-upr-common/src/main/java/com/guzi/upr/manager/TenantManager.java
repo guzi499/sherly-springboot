@@ -3,6 +3,7 @@ package com.guzi.upr.manager;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.guzi.upr.log.model.OperationLog;
 import com.guzi.upr.mapper.admin.TenantMapper;
 import com.guzi.upr.model.admin.Tenant;
 import org.springframework.stereotype.Service;
@@ -40,7 +41,7 @@ public class TenantManager extends ServiceImpl<TenantMapper, Tenant> {
      */
     public IPage<Tenant> listPage(IPage page, String tenantName, String tenantCode) {
         LambdaQueryWrapper<Tenant> wrapper = new LambdaQueryWrapper<>();
-
+        wrapper.orderByDesc(Tenant::getTenantId);
         if (StringUtils.hasText(tenantCode)) {
             wrapper.eq(Tenant::getTenantCode, tenantCode);
         }

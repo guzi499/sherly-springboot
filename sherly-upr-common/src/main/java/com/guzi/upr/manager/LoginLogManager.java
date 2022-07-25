@@ -17,7 +17,7 @@ public class LoginLogManager extends ServiceImpl<LoginLogMapper, LoginLog> {
 
     public Page<LoginLog> listPage(LoginLogPageDTO dto) {
         SherlyLambdaQueryWrapper<LoginLog> wrapper = new SherlyLambdaQueryWrapper<>();
-
+        wrapper.orderByDesc(LoginLog::getLogId);
         return this.page(new Page<>(dto.getCurrent(), dto.getSize()), wrapper);
     }
 

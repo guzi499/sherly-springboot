@@ -16,7 +16,8 @@ import org.springframework.stereotype.Service;
 public class OperationLogManager extends ServiceImpl<OperationLogMapper, OperationLog> {
     public Page<OperationLog> listPage(OperationLogPageDTO dto) {
         SherlyLambdaQueryWrapper<OperationLog> wrapper = new SherlyLambdaQueryWrapper<>();
-        wrapper.eqIfExist(OperationLog::getType, dto.getType());
+        wrapper.eqIfExist(OperationLog::getType, dto.getType())
+                .orderByDesc(OperationLog::getLogId);
         return this.page(new Page<>(dto.getCurrent(), dto.getSize()), wrapper);
     }
 
