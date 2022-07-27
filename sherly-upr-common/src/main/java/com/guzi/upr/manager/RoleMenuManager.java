@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.guzi.upr.mapper.admin.RoleMenuMapper;
 import com.guzi.upr.model.admin.RoleMenu;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,12 +16,8 @@ import java.util.List;
 @Service
 public class RoleMenuManager extends ServiceImpl<RoleMenuMapper, RoleMenu> {
 
-    @Autowired
-    private RoleMenuMapper roleMenuMapper;
-
     /**
      * 根据菜单id删除角色菜单表数据
-     *
      * @param menuId
      */
     public void removeRoleMenuByMenuId(Long menuId) {
@@ -33,7 +28,6 @@ public class RoleMenuManager extends ServiceImpl<RoleMenuMapper, RoleMenu> {
 
     /**
      * 根据角色id删除角色菜单数据
-     *
      * @param roleId
      */
     public void removeRoleMenuByRoleId(Long roleId) {
@@ -43,8 +37,7 @@ public class RoleMenuManager extends ServiceImpl<RoleMenuMapper, RoleMenu> {
     }
 
     /**
-     * 保存角色菜单数据
-     *
+     * 角色菜单新增
      * @param roleId
      * @param menuIds
      */
@@ -61,7 +54,6 @@ public class RoleMenuManager extends ServiceImpl<RoleMenuMapper, RoleMenu> {
 
     /**
      * 根据角色id查询角色菜单数据
-     *
      * @param roleId
      * @return
      */
@@ -72,8 +64,7 @@ public class RoleMenuManager extends ServiceImpl<RoleMenuMapper, RoleMenu> {
     }
 
     /**
-     * 根据角色id查询角色菜单数据
-     *
+     * 根据角色ids查询角色菜单数据
      * @param roleIds
      * @return
      */
@@ -85,7 +76,6 @@ public class RoleMenuManager extends ServiceImpl<RoleMenuMapper, RoleMenu> {
 
     /**
      * 根据菜单id查询角色菜单数量
-     *
      * @param menuId
      * @return
      */

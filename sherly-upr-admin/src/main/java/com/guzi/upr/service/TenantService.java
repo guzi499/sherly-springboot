@@ -76,7 +76,7 @@ public class TenantService {
      */
     public PageResult listPage(TenantPageDTO dto) {
 
-        IPage<Tenant> page = tenantManager.listPage(new Page<>(dto.getCurrent(), dto.getSize()), dto.getTenantName(), dto.getTenantCode());
+        IPage<Tenant> page = tenantManager.listPage(new Page<>(dto.getCurrent(), dto.getSize()), dto);
 
         List<TenantPageVO> result = page.getRecords().stream().map(e -> {
             TenantPageVO vo = new TenantPageVO();

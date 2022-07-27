@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.guzi.upr.log.model.OperationLog;
 import com.guzi.upr.mapper.admin.UserMapper;
 import com.guzi.upr.model.admin.User;
 import com.guzi.upr.model.dto.UserPageDTO;
@@ -22,6 +21,11 @@ import java.util.List;
 @Service
 public class UserManager extends ServiceImpl<UserMapper, User> {
 
+    /**
+     * 用户分页
+     * @param dto
+     * @return
+     */
     public IPage<User> page(UserPageDTO dto) {
         SherlyLambdaQueryWrapper<User> wrapper = new SherlyLambdaQueryWrapper<>();
         wrapper.likeIfExist(User::getPhone, dto.getPhone())
@@ -36,8 +40,7 @@ public class UserManager extends ServiceImpl<UserMapper, User> {
     }
 
     /**
-     * 根据手机号和密码查询用户
-     *
+     * 根据手机号和密码查询用户数据
      * @param phone
      * @param password
      * @return
@@ -47,12 +50,11 @@ public class UserManager extends ServiceImpl<UserMapper, User> {
         wrapper.eq(User::getPhone, phone)
                 .eq(User::getPassword, password);
 
-        return this.getOne(wrapper);
+        return this.getOne(wrapper, false);
     }
 
     /**
-     * 更新用户部门
-     *
+     * 用户部门更新
      * @param departmentId
      */
     public void updateDepartmentId(Long departmentId) {
@@ -64,7 +66,6 @@ public class UserManager extends ServiceImpl<UserMapper, User> {
 
     /**
      * 用户禁用/启用
-     *
      * @param userId
      * @param enable
      */
@@ -76,14 +77,14 @@ public class UserManager extends ServiceImpl<UserMapper, User> {
     }
 
     /**
-     * 根据手机号查询用户
+     * 根据手机号查询用户数据
      * @param phone
      * @return
      */
     public User getByPhone(String phone) {
         LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(User::getPhone, phone);
-        return this.getOne(wrapper);
+        return this.getOne(wrapper, false);
     }
 
     /**

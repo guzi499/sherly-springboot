@@ -40,6 +40,8 @@
 ### 项目特色
 - 支持可开关的自定义响应，方便测试环境下及时排查bug，避免查日志的困扰。同时生产环境一键关闭错误堆栈，面向用户更加友好。
 - 支持S3规范下的所有云存储厂商，同时测试学习时可以使用本地存储。
+- 支持Excel导出，可参考用户的导出，轻而易举的实现各种数据导出。
+- 架构可向微服务拓展，支持参数注解校验，knife4j文档。
 
 ### 演示图片
 <img height="120" src="https://gitee.com/guzi499/sherly-springboot/raw/develop/sherly-springboot/display-image/login.png">

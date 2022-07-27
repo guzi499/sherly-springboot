@@ -23,7 +23,6 @@ public class UserRoleManager extends ServiceImpl<UserRoleMapper, UserRole> {
 
     /**
      * 根据角色id删除用户角色数据
-     *
      * @param roleId
      */
     public void removeUserRoleByRoleId(Long roleId) {
@@ -34,7 +33,6 @@ public class UserRoleManager extends ServiceImpl<UserRoleMapper, UserRole> {
 
     /**
      * 根据用户id删除用户角色数据
-     *
      * @param userId
      */
     public void removeUserRoleByUserId(Long userId) {
@@ -44,8 +42,7 @@ public class UserRoleManager extends ServiceImpl<UserRoleMapper, UserRole> {
     }
 
     /**
-     * 保存用户角色数据
-     *
+     * 用户角色数据保存
      * @param userId
      * @param roleIds
      */
@@ -62,7 +59,6 @@ public class UserRoleManager extends ServiceImpl<UserRoleMapper, UserRole> {
 
     /**
      * 根据角色id查询用户角色数量
-     *
      * @return
      * @param roleId
      */

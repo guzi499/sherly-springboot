@@ -15,9 +15,13 @@ import static com.guzi.upr.model.contants.CommonConstants.ENABLE;
 @Service
 public class OssConfigManager extends ServiceImpl<OssConfigMapper, OssConfig> {
 
+    /**
+     * 获取当前正启用的配置
+     * @return
+     */
     public OssConfig getEnable() {
         LambdaQueryWrapper<OssConfig> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(OssConfig::getEnable, ENABLE);
-        return this.getOne(wrapper);
+        return this.getOne(wrapper, false);
     }
 }

@@ -3,11 +3,11 @@ package com.guzi.upr.manager;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.guzi.upr.log.model.OperationLog;
 import com.guzi.upr.mapper.admin.TenantMapper;
 import com.guzi.upr.model.admin.Tenant;
+import com.guzi.upr.model.dto.TenantPageDTO;
+import com.guzi.upr.util.SherlyLambdaQueryWrapper;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 /**
  * @author 谷子毅
@@ -18,7 +18,6 @@ public class TenantManager extends ServiceImpl<TenantMapper, Tenant> {
 
     /**
      * 租户查重
-     *
      * @param tenantName
      * @param tenantCode
      * @return
@@ -28,28 +27,20 @@ public class TenantManager extends ServiceImpl<TenantMapper, Tenant> {
         wrapper.eq(Tenant::getTenantName, tenantName)
                 .or()
                 .eq(Tenant::getTenantCode, tenantCode);
-        return this.getOne(wrapper);
+        return this.getOne(wrapper, false);
     }
 
     /**
      * 租户条件分页
-     *
      * @param page
-     * @param tenantName
-     * @param tenantCode
+     * @param dto
      * @return
      */
-    public IPage<Tenant> listPage(IPage page, String tenantName, String tenantCode) {
-        LambdaQueryWrapper<Tenant> wrapper = new LambdaQueryWrapper<>();
-        wrapper.orderByDesc(Tenant::getTenantId);
-        if (StringUtils.hasText(tenantCode)) {
-            wrapper.eq(Tenant::getTenantCode, tenantCode);
-        }
-
-        if (StringUtils.hasText(tenantName)) {
-            wrapper.eq(Tenant::getTenantName, tenantName);
-        }
-
+    public IPage<Tenant> listPage(IPage page, TenantPageDTO dto) {
+        SherlyLambdaQueryWrapper<Tenant> wrapper = new SherlyLambdaQueryWrapper<>();
+        wrapper.eqIfExist(Tenant::getTenantName, dto.getTenantName())
+                .eqIfExist(Tenant::getTenantCode, dto.getTenantCode())
+                .orderByDesc(Tenant::getTenantId);
         return this.page(page, wrapper);
     }
 }

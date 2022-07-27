@@ -8,6 +8,7 @@ import java.util.List;
  * @author 谷子毅
  * @date 2022/4/17
  */
+@Deprecated
 public interface TreeAble {
 
     Long getId();

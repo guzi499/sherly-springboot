@@ -8,14 +8,15 @@ import org.springframework.util.StringUtils;
 import java.util.Collection;
 
 /**
+ * 对 mybatisPlus lambdaQueryWrapper包装
  * @author 谷子毅
  * @date 2022/6/10
  */
 public class SherlyLambdaQueryWrapper<T> extends LambdaQueryWrapper<T> {
 
-    public SherlyLambdaQueryWrapper<T> likeIfExist(SFunction<T, ?> column, String valueue) {
-        if (StringUtils.hasText(valueue)) {
-            return (SherlyLambdaQueryWrapper<T>) super.like(column, valueue);
+    public SherlyLambdaQueryWrapper<T> likeIfExist(SFunction<T, ?> column, String value) {
+        if (StringUtils.hasText(value)) {
+            return (SherlyLambdaQueryWrapper<T>) super.like(column, value);
         }
         return this;
     }
