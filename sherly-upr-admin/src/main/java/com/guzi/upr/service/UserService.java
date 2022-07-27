@@ -65,7 +65,6 @@ public class UserService {
 
     /**
      * 用户分页
-     *
      * @param dto
      * @return
      */
@@ -87,7 +86,6 @@ public class UserService {
 
     /**
      * 用户导出
-     *
      * @param response
      */
     public void listExport(HttpServletResponse response) throws IOException {
@@ -116,7 +114,6 @@ public class UserService {
 
     /**
      * 用户详情
-     *
      * @param userId
      * @return
      */
@@ -138,7 +135,6 @@ public class UserService {
 
     /**
      * 新增用户
-     *
      * @param dto
      */
     @Transactional(rollbackFor = Exception.class)
@@ -180,7 +176,6 @@ public class UserService {
 
     /**
      * 用户更新
-     *
      * @param dto
      */
     @Transactional(rollbackFor = Exception.class)
@@ -195,7 +190,6 @@ public class UserService {
 
     /**
      * 用户删除
-     *
      * @param userId
      */
     @Transactional(rollbackFor = Exception.class)
@@ -213,7 +207,6 @@ public class UserService {
 
     /**
      * 用户禁用/启用
-     *
      * @param userId
      */
     public void banOne(Long userId, Integer enable) {

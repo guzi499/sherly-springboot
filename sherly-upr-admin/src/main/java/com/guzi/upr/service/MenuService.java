@@ -34,7 +34,6 @@ public class MenuService {
 
     /**
      * 查询菜单树
-     *
      * @return
      */
     public List<MenuVO> listTree() {
@@ -54,7 +53,6 @@ public class MenuService {
 
     /**
      * 递归拼装子结点
-     *
      * @param parent
      * @param all
      * @return
@@ -68,7 +66,6 @@ public class MenuService {
 
     /**
      * 菜单新增
-     *
      * @param dto
      */
     public void saveOne(MenuInsertDTO dto) {
@@ -79,7 +76,6 @@ public class MenuService {
 
     /**
      * 菜单删除
-     *
      * @param menuId
      */
     public void removeOne(Long menuId) {
@@ -94,7 +90,6 @@ public class MenuService {
 
     /**
      * 菜单更新
-     *
      * @param dto
      */
     public void updateOne(MenuUpdateDTO dto) {

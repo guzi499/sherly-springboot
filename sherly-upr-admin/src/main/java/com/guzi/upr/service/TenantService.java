@@ -70,7 +70,6 @@ public class TenantService {
 
     /**
      * 租户条件分页
-     *
      * @param dto
      * @return
      */
@@ -89,7 +88,6 @@ public class TenantService {
 
     /**
      * 租户新增
-     *
      * @param dto
      */
     public void saveOne(TenantInsertDTO dto) {
@@ -159,7 +157,6 @@ public class TenantService {
 
     /**
      * 租户更新
-     *
      * @param dto
      */
     public void updateOne(TenantUpdateDTO dto) {
@@ -170,7 +167,6 @@ public class TenantService {
 
     /**
      * 租户删除
-     *
      * @param tenantId
      */
     public void removeOne(Long tenantId) {
@@ -191,6 +187,11 @@ public class TenantService {
         SecurityUtil.clearOperateTenantCode();
     }
 
+    /**
+     * 租户菜单列表
+     * @param tenantId
+     * @return
+     */
     public List<Long> listMenu(Long tenantId) {
         Tenant tenant = tenantManager.getById(tenantId);
 
