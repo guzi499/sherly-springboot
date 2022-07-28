@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.guzi.upr.mapper.admin.MenuMapper;
 import com.guzi.upr.model.admin.Menu;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,12 +13,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class MenuManager extends ServiceImpl<MenuMapper, Menu> {
 
-    @Autowired
-    private MenuMapper menuMapper;
-
     /**
-     * 根据菜单id获取子菜单数量
-     *
+     * 根据菜单id查询子菜单数量
      * @param menuId
      * @return
      */

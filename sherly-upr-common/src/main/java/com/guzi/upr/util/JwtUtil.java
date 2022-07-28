@@ -32,14 +32,4 @@ public class JwtUtil {
     public static String parseToken(String token) {
         return JWT.require(Algorithm.HMAC256(SIGN)).build().verify(token).getClaim("data").asString();
     }
-
-
-
-    public static void main(String[] args) {
-        String a = "a series of data";
-        String token = generateToken(a);
-        System.out.println(token);
-        String data = parseToken(token);
-        System.out.println(data);
-    }
 }

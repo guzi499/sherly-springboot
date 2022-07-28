@@ -23,7 +23,7 @@ public class UserSelfUpdateDTO {
     private String email;
 
     /** 性别[enum] */
-    @ApiModelProperty(value = "性别[enum]", required = true, example = "CommonConstants.java")
+    @ApiModelProperty(value = "性别[enum]", required = true)
     @NotNull
     private Integer gender;
 }

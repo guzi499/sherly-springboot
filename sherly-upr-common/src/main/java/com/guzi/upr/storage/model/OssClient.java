@@ -36,7 +36,7 @@ public interface OssClient {
     byte[] download(String path) throws Exception;
 
     /**
-     * 获取访问url（如果是S3的话是带过期时间、带url参数签名认证的url）
+     * 获取访问url
      * @param path 相对路径
      * @return 访问url
      * @throws Exception

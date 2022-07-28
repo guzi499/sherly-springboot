@@ -34,7 +34,7 @@ public class UserPageVo {
     private String email;
 
     /** 性别[enum] */
-    @ApiModelProperty(value = "性别[enum]", example = "CommonConstants.java")
+    @ApiModelProperty(value = "性别[enum]")
     private Integer gender;
 
     /** 部门名称 */
@@ -46,7 +46,7 @@ public class UserPageVo {
     private Long departmentId;
 
     /** 启用禁用[enum] */
-    @ApiModelProperty(value = "启用禁用[enum]", example = "CommonConstants.java")
+    @ApiModelProperty(value = "启用禁用[enum]")
     private Integer enable;
 
     /** 创建时间 */

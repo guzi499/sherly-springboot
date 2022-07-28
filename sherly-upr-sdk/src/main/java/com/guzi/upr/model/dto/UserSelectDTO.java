@@ -40,6 +40,6 @@ public class UserSelectDTO {
     private List<Long> roleIds;
 
     /** 启用禁用[enum] */
-    @ApiModelProperty(value = "启用禁用[enum]", example = "CommonConstants.java")
+    @ApiModelProperty(value = "启用禁用[enum]")
     private Integer enable;
 }

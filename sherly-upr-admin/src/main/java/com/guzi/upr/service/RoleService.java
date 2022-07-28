@@ -46,7 +46,6 @@ public class RoleService {
 
     /**
      * 角色分页
-     *
      * @param dto
      * @return
      */
@@ -66,7 +65,6 @@ public class RoleService {
 
     /**
      * 角色详情
-     *
      * @param roleId
      * @return
      */
@@ -87,7 +85,6 @@ public class RoleService {
 
     /**
      * 角色新增
-     *
      * @param dto
      */
     public void saveOne(RoleInsertDTO dto) {
@@ -104,7 +101,6 @@ public class RoleService {
 
     /**
      * 角色更新
-     *
      * @param dto
      */
     @Transactional(rollbackFor = Exception.class)
@@ -131,7 +127,6 @@ public class RoleService {
 
     /**
      * 角色删除
-     *
      * @param roleId
      */
     @Transactional(rollbackFor = Exception.class)

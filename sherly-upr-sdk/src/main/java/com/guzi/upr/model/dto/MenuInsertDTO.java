@@ -19,12 +19,12 @@ public class MenuInsertDTO {
     private String menuName;
 
     /** 菜单类型[enum] */
-    @ApiModelProperty(value = "菜单类型[enum]", required = true, example = "CommonConstants.java")
+    @ApiModelProperty(value = "菜单类型[enum]", required = true)
     @NotNull
     private Integer menuType;
 
     /** 权限 */
-    @ApiModelProperty(value = "权限", example = "user:save:one")
+    @ApiModelProperty(value = "权限")
     private String permission;
 
     /** 父菜单id */

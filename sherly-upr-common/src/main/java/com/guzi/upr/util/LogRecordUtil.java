@@ -26,7 +26,6 @@ public class LogRecordUtil {
     @Autowired
     private Ip2regionSearcher regionSearcher;
 
-    @Async
     public void recordLoginLog(HttpServletRequest request, String username, Integer result, Integer type) {
         LoginLog loginLog = new LoginLog();
 

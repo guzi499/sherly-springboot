@@ -2,7 +2,6 @@ package com.guzi.upr.service;
 
 import cn.hutool.extra.mail.Mail;
 import cn.hutool.extra.mail.MailAccount;
-import com.guzi.upr.exception.BizException;
 import com.guzi.upr.manager.EmailConfigManager;
 import com.guzi.upr.model.admin.EmailConfig;
 import com.guzi.upr.model.dto.EmailConfigDTO;
@@ -22,6 +21,10 @@ public class EmailService {
     @Autowired
     private EmailConfigManager emailConfigManager;
 
+    /**
+     * 邮箱配置查询
+     * @return
+     */
     public EmailConfigVO getOne() {
         EmailConfig emailConfig = emailConfigManager.getOne(null);
         EmailConfigVO emailConfigVO = new EmailConfigVO();
@@ -32,12 +35,20 @@ public class EmailService {
         return emailConfigVO;
     }
 
+    /**
+     * 邮箱配置保存或修改
+     * @param dto
+     */
     public void saveOrUpdate(EmailConfigDTO dto) {
         EmailConfig emailConfig = new EmailConfig();
         BeanUtils.copyProperties(dto, emailConfig);
         emailConfigManager.saveOrUpdate(emailConfig);
     }
 
+    /**
+     * 发送邮件
+     * @param dto
+     */
     public void send(EmailSendDTO dto) {
         EmailConfig emailConfig = emailConfigManager.getOne(null);
         // 封装
@@ -56,18 +67,14 @@ public class EmailService {
         account.setStarttlsEnable(true);
         String content = dto.getContent();
         // 发送
-        try {
-            int size = dto.getTos().size();
-            Mail.create(account)
-                    .setTos(dto.getTos().toArray(new String[size]))
-                    .setTitle(dto.getSubject())
-                    .setContent(content)
-                    .setHtml(true)
-                    //关闭session
-                    .setUseGlobalSession(false)
-                    .send();
-        } catch (Exception e) {
-            throw new BizException("999999", e.getMessage());
-        }
+        int size = dto.getTos().size();
+        Mail.create(account)
+                .setTos(dto.getTos().toArray(new String[size]))
+                .setTitle(dto.getSubject())
+                .setContent(content)
+                .setHtml(true)
+                //关闭session
+                .setUseGlobalSession(false)
+                .send();
     }
 }

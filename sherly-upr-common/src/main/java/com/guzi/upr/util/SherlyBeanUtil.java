@@ -13,6 +13,7 @@ import static com.guzi.upr.model.contants.CommonConstants.ROOT_PARENT_ID;
  * @author 谷子毅
  * @date 2022/4/17
  */
+@Deprecated
 public class SherlyBeanUtil {
 
     public static <T extends TreeAble> List<T> convert(List<T> all) {

@@ -37,9 +37,6 @@ public class GenericService {
     private RoleMenuManager roleMenuManager;
 
     @Autowired
-    private DepartmentManager departmentManager;
-
-    @Autowired
     private UserRoleManager userRoleManager;
 
     @Autowired
@@ -47,7 +44,6 @@ public class GenericService {
 
     /**
      * 获取登录基本信息
-     *
      * @return
      */
     public BasicInfoVO getBasicData() throws Exception {
@@ -102,7 +98,6 @@ public class GenericService {
 
     /**
      * 递归拼装子结点
-     *
      * @param parent
      * @param all
      * @return

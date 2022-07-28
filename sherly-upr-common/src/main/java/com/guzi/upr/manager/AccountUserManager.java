@@ -14,13 +14,13 @@ import org.springframework.stereotype.Service;
 public class AccountUserManager extends ServiceImpl<AccountUserMapper, AccountUser> {
 
     /**
-     * 根据手机号查询账户用户
+     * 根据手机号查询账户用户数据
      * @param phone
      * @return
      */
     public AccountUser getByPhone(String phone) {
         LambdaQueryWrapper<AccountUser> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(AccountUser::getPhone, phone);
-        return this.getOne(wrapper);
+        return this.getOne(wrapper, false);
     }
 }

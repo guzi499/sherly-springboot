@@ -7,6 +7,7 @@ import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author 付东辉
@@ -30,12 +31,12 @@ public class UserPageDTO extends PageQuery {
     @ApiModelProperty(value = "用户邮箱")
     private String email;
 
-    /** 部门id */
-    @ApiModelProperty(value = "部门id")
-    private Long departmentId;
+    /** 部门ids */
+    @ApiModelProperty(value = "部门ids")
+    private List<Long> departmentIds;
 
     /** 启用禁用[enum] */
-    @ApiModelProperty(value = "启用禁用[enum]", example = "CommonConstants.java")
+    @ApiModelProperty(value = "启用禁用[enum]")
     private Integer enable;
 
     @ApiModelProperty(value = "开始时间")

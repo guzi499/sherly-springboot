@@ -25,6 +25,7 @@ import static com.guzi.upr.model.contants.CommonConstants.ROOT_PARENT_ID;
  */
 @Service
 public class DepartmentService {
+
     @Autowired
     private DepartmentManager departmentManager;
 
@@ -33,7 +34,6 @@ public class DepartmentService {
 
     /**
      * 查询部门树
-     *
      * @return
      */
     public List<DepartmentVO> listTree() {
@@ -57,7 +57,6 @@ public class DepartmentService {
 
     /**
      * 递归拼装子结点
-     *
      * @param parent
      * @param all
      * @return
@@ -71,7 +70,6 @@ public class DepartmentService {
 
     /**
      * 部门新增
-     *
      * @param dto
      */
     public void saveOne(DepartmentInsertDTO dto) {
@@ -89,7 +87,6 @@ public class DepartmentService {
 
     /**
      * 部门更新
-     *
      * @param dto
      */
     public void updateOne(DepartmentUpdateDTO dto) {
@@ -107,7 +104,6 @@ public class DepartmentService {
 
     /**
      * 部门删除
-     *
      * @param departmentId
      */
     public void removeOne(Long departmentId) {
