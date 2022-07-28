@@ -24,7 +24,7 @@ public class MenuUpdateDTO {
     private String menuName;
 
     /** 菜单类型[enum] */
-    @ApiModelProperty(value = "菜单类型[enum]", required = true, example = "CommonConstants.java")
+    @ApiModelProperty(value = "菜单类型[enum]", required = true)
     @NotNull
     private Integer menuType;
 

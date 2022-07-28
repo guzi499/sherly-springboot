@@ -34,7 +34,7 @@ public class BasicUserInfoVO {
     private String email;
 
     /** 性别[enum] */
-    @ApiModelProperty(value = "性别[enum]", example = "CommonConstants.java")
+    @ApiModelProperty(value = "性别[enum]")
     private Integer gender;
 
     /** 部门id */
