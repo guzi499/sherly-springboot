@@ -104,6 +104,22 @@ public class TenantService {
         // 执行sql语句创建新租户的数据库表
         execSqlUtil.execSql(SqlStatement.CREATE_TENANT, Collections.singletonMap(SqlParam.DATABASE, dto.getTenantCode()));
 
+        // 新建用户租户
+        AccountUser accountUser = accountUserManager.getByPhone(dto.getContactPhone());
+        if (accountUser == null) {
+            accountUser = new AccountUser();
+            accountUser.setPhone(dto.getContactPhone());
+            accountUser.setTenantData(dto.getTenantCode());
+            accountUser.setLastLoginTenantCode(dto.getTenantCode());
+            accountUserManager.save(accountUser);
+        } else {
+            List<String> split = StrUtil.split(accountUser.getTenantData(), ",");
+            split.add(dto.getTenantCode());
+            String tenantData = String.join(",", split);
+            accountUser.setTenantData(tenantData);
+            accountUserManager.updateById(accountUser);
+        }
+
         // 设置要操作的租户数据库
         SecurityUtil.setOperateTenantCode(dto.getTenantCode());
 
@@ -121,6 +137,7 @@ public class TenantService {
 
         // 新建用户
         User user = new User();
+        user.setAccountUserId(accountUser.getAccountUserId());
         user.setPhone(dto.getContactPhone());
         user.setRealName(dto.getContactUser());
         user.setEnable(ENABLE);
@@ -136,22 +153,6 @@ public class TenantService {
         userRoleManager.save(userRole);
 
         SecurityUtil.clearOperateTenantCode();
-
-        // 新建用户租户
-        AccountUser accountUser = accountUserManager.getByPhone(dto.getContactPhone());
-        if (accountUser == null) {
-            accountUser = new AccountUser();
-            accountUser.setPhone(dto.getContactPhone());
-            accountUser.setTenantData(dto.getTenantCode());
-            accountUser.setLastLoginTenantCode(dto.getTenantCode());
-            accountUserManager.save(accountUser);
-        } else {
-            List<String> split = StrUtil.split(accountUser.getTenantData(), ",");
-            split.add(dto.getTenantCode());
-            String tenantData = String.join(",", split);
-            accountUser.setTenantData(tenantData);
-            accountUserManager.updateById(accountUser);
-        }
 
     }
 
