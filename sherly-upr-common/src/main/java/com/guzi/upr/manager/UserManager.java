@@ -32,7 +32,7 @@ public class UserManager extends ServiceImpl<UserMapper, User> {
                 .likeIfExist(User::getRealName, dto.getRealName())
                 .likeIfExist(User::getNickname, dto.getNickname())
                 .likeIfExist(User::getEmail, dto.getEmail())
-                .eqIfExist(User::getDepartmentId, dto.getDepartmentId())
+                .inIfExist(User::getDepartmentId, dto.getDepartmentIds())
                 .eqIfExist(User::getEnable, dto.getEnable())
                 .betweenIfExist(User::getCreateTime, dto.getBeginTime(), dto.getEndTime())
                 .orderByDesc(User::getUserId);
