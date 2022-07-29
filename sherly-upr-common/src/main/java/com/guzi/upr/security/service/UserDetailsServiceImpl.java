@@ -1,14 +1,13 @@
 package com.guzi.upr.security.service;
 
-import com.guzi.upr.exception.BizException;
 import com.guzi.upr.manager.*;
 import com.guzi.upr.model.admin.*;
+import com.guzi.upr.model.exception.BizException;
 import com.guzi.upr.security.model.LoginUserDetails;
 import com.guzi.upr.security.model.SecurityModel;
 import com.guzi.upr.security.util.SecurityUtil;
 import com.guzi.upr.util.LogRecordUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,6 +24,8 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static com.guzi.upr.model.contants.CommonConstants.*;
+import static com.guzi.upr.model.exception.enums.AdminErrorEnum.FORBIDDEN;
+import static com.guzi.upr.model.exception.enums.AdminErrorEnum.NO_REGISTER;
 
 /**
  * @author 谷子毅
@@ -62,7 +63,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         // 查询用户租户信息
         AccountUser accountUser = accountUserManager.getByPhone(phone);
         if (accountUser == null) {
-            throw new BadCredentialsException("当前账号未注册！");
+            throw new BizException(NO_REGISTER);
         }
 
         SecurityUtil.setOperateTenantCode(accountUser.getLastLoginTenantCode());
@@ -73,7 +74,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (Objects.equals(user.getEnable(), DISABLE)) {
             HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
             logRecordUtil.recordLoginLog(request, phone, LOGIN_LOG_DISABLE, LOGIN_TYPE_PASSWORD);
-            throw new BizException("999999", "当前账号已被禁用！");
+            throw new BizException(FORBIDDEN);
         }
 
         List<UserRole> userRoles = userRoleManager.listByUserId(user.getUserId());

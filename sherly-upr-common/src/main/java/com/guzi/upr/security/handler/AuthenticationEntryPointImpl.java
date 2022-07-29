@@ -6,10 +6,11 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+
+import static com.guzi.upr.model.exception.enums.CommonErrorEnum.UNAUTHORIZED;
 
 /**
  * @author 谷子毅
@@ -21,8 +22,8 @@ public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint {
     private static final ObjectMapper OBJECTMAPPER = new ObjectMapper();
 
     @Override
-    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        Result result = Result.error("访问未授权！");
+    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException {
+        Result result = Result.error(UNAUTHORIZED);
         String jsonResult = OBJECTMAPPER.writeValueAsString(result);
 
         response.setStatus(200);

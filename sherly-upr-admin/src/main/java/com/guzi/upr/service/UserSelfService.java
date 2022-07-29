@@ -1,7 +1,5 @@
 package com.guzi.upr.service;
 
-import com.google.j2objc.annotations.AutoreleasePool;
-import com.guzi.upr.exception.BizException;
 import com.guzi.upr.manager.DepartmentManager;
 import com.guzi.upr.manager.RoleManager;
 import com.guzi.upr.manager.UserManager;
@@ -12,6 +10,7 @@ import com.guzi.upr.model.admin.User;
 import com.guzi.upr.model.admin.UserRole;
 import com.guzi.upr.model.dto.UserSelfUpdateDTO;
 import com.guzi.upr.model.dto.UserUpdatePasswordDTO;
+import com.guzi.upr.model.exception.BizException;
 import com.guzi.upr.model.vo.UserSelfVO;
 import com.guzi.upr.security.util.SecurityUtil;
 import com.guzi.upr.util.OssUtil;
@@ -24,9 +23,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static com.guzi.upr.constants.enums.ResultAdminEnum.USER_PASSWORD_ERROR;
-import static com.guzi.upr.constants.enums.ResultAdminEnum.USER_PASSWORD_REPEAT;
 import static com.guzi.upr.model.contants.CommonConstants.MALE;
+import static com.guzi.upr.model.exception.enums.AdminErrorEnum.USER_PASSWORD_ERROR;
+import static com.guzi.upr.model.exception.enums.AdminErrorEnum.USER_PASSWORD_REPEAT;
 
 /**
  * @author 谷子毅

@@ -36,7 +36,7 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/list_page")
-    @PreAuthorize("hasAnyAuthority('user:list_page')")
+    @PreAuthorize("hasAnyAuthority('user:list_page2')")
     @ApiOperation(value = "用户分页")
     public Result<PageResult<UserPageVo>> listPage(UserPageDTO dto) {
         return Result.success(userService.listPage(dto));

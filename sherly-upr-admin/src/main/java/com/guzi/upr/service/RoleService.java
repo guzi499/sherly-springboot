@@ -2,8 +2,6 @@ package com.guzi.upr.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.guzi.upr.constants.enums.ResultAdminEnum;
-import com.guzi.upr.exception.BizException;
 import com.guzi.upr.manager.RoleManager;
 import com.guzi.upr.manager.RoleMenuManager;
 import com.guzi.upr.manager.UserRoleManager;
@@ -14,6 +12,7 @@ import com.guzi.upr.model.dto.RoleInsertDTO;
 import com.guzi.upr.model.dto.RolePageDTO;
 import com.guzi.upr.model.dto.RoleSelectDTO;
 import com.guzi.upr.model.dto.RoleUpdateDTO;
+import com.guzi.upr.model.exception.BizException;
 import com.guzi.upr.model.vo.RolePageVO;
 import com.guzi.upr.model.vo.RoleSelectVO;
 import com.guzi.upr.model.vo.RoleVO;
@@ -27,7 +26,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static com.guzi.upr.constants.enums.ResultAdminEnum.ROLE_BOUND_USER;
+import static com.guzi.upr.model.exception.enums.AdminErrorEnum.ROLE_BOUND_USER;
+import static com.guzi.upr.model.exception.enums.AdminErrorEnum.ROLE_REPEAT;
 
 /**
  * @author 谷子毅
@@ -91,7 +91,7 @@ public class RoleService {
         // 去重
         Role one = roleManager.getByRoleName(dto.getRoleName());
         if (one != null) {
-            throw new BizException(ResultAdminEnum.ROLE_REPEAT);
+            throw new BizException(ROLE_REPEAT);
         }
 
         Role role = new Role();
@@ -109,7 +109,7 @@ public class RoleService {
         Role one = roleManager.getByRoleName(dto.getRoleName());
         // 如果待修改名称已存在且不为自身
         if (one != null && !Objects.equals(one.getRoleId(), dto.getRoleId())) {
-            throw new BizException(ResultAdminEnum.ROLE_REPEAT);
+            throw new BizException(ROLE_REPEAT);
         }
 
         Role role = new Role();
