@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.validation.ConstraintViolationException;
 
-import static com.guzi.upr.model.exception.enums.AdminErrorEnum.FORBIDDEN;
+import static com.guzi.upr.model.exception.enums.CommonErrorEnum.ACCESS_DENY;
 import static com.guzi.upr.model.exception.enums.CommonErrorEnum.PARAMS_ERR;
 
 /**
@@ -84,7 +84,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(AccessDeniedException.class)
     public Result accessDeniedException(Exception e) {
         e.printStackTrace();
-        return Result.error(FORBIDDEN);
+        return Result.error(ACCESS_DENY);
     }
 
     /**

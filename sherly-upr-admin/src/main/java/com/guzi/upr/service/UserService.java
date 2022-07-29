@@ -147,7 +147,7 @@ public class UserService {
             throw new BizException(USER_REPEAT);
         }
 
-        SecurityUtil.setOperateTenantCode("sherly");
+        SecurityUtil.setOperateTenantCode(GlobalPropertiesUtil.SHERLY_PROPERTIES.getDefaultDb());
         AccountUser accountUser = accountUserManager.getByPhone(phone);
         if (accountUser == null) {
             accountUser = new AccountUser();

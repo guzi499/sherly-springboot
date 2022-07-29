@@ -6,6 +6,7 @@ import com.guzi.upr.model.exception.BizException;
 import com.guzi.upr.security.model.LoginUserDetails;
 import com.guzi.upr.security.model.SecurityModel;
 import com.guzi.upr.security.util.SecurityUtil;
+import com.guzi.upr.util.GlobalPropertiesUtil;
 import com.guzi.upr.util.LogRecordUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -57,7 +58,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         // 因为登录前不存在Authentication，必须手动设置特殊操作数据库code，
         SecurityModel securityModel = new SecurityModel();
-        securityModel.setTenantCode("sherly");
+        securityModel.setTenantCode(GlobalPropertiesUtil.SHERLY_PROPERTIES.getDefaultDb());
         SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(securityModel, null));
 
         // 查询用户租户信息

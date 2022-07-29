@@ -16,6 +16,9 @@ public class SherlyProperties {
     /** 开发环境标识 */
     private Boolean devFlag;
 
+    /** 默认数据库 */
+    private String defaultDb;
+
     /** 默认密码 */
     private String defaultPassword;
 
