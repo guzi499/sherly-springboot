@@ -5,8 +5,6 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.guzi.upr.constants.SqlParam;
 import com.guzi.upr.constants.SqlStatement;
-import com.guzi.upr.constants.enums.ResultAdminEnum;
-import com.guzi.upr.exception.BizException;
 import com.guzi.upr.manager.*;
 import com.guzi.upr.model.PageResult;
 import com.guzi.upr.model.admin.*;
@@ -14,6 +12,7 @@ import com.guzi.upr.model.dto.TenantInsertDTO;
 import com.guzi.upr.model.dto.TenantMenuUpdateDTO;
 import com.guzi.upr.model.dto.TenantPageDTO;
 import com.guzi.upr.model.dto.TenantUpdateDTO;
+import com.guzi.upr.model.exception.BizException;
 import com.guzi.upr.model.vo.TenantPageVO;
 import com.guzi.upr.security.util.SecurityUtil;
 import com.guzi.upr.util.ExecSqlUtil;
@@ -29,6 +28,7 @@ import java.util.stream.Collectors;
 
 import static com.guzi.upr.model.contants.CommonConstants.ENABLE;
 import static com.guzi.upr.model.contants.CommonConstants.ROOT_PARENT_ID;
+import static com.guzi.upr.model.exception.enums.AdminErrorEnum.TENANT_REPEAT;
 
 
 /**
@@ -94,7 +94,7 @@ public class TenantService {
         // 查重
         Tenant one = tenantManager.getByTenantNameOrTenantCode(dto.getTenantName(), dto.getTenantCode());
         if (one != null) {
-            throw new BizException(ResultAdminEnum.TENANT_REPEAT);
+            throw new BizException(TENANT_REPEAT);
         }
 
         Tenant tenant = new Tenant();

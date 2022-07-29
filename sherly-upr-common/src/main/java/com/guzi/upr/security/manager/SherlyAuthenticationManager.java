@@ -1,11 +1,11 @@
 package com.guzi.upr.security.manager;
 
+import com.guzi.upr.model.exception.BizException;
 import com.guzi.upr.security.model.LoginUserDetails;
 import com.guzi.upr.security.service.UserDetailsServiceImpl;
 import com.guzi.upr.util.LogRecordUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -17,11 +17,11 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-
 import java.util.Objects;
 
 import static com.guzi.upr.model.contants.CommonConstants.LOGIN_LOG_FAIL;
 import static com.guzi.upr.model.contants.CommonConstants.LOGIN_TYPE_PASSWORD;
+import static com.guzi.upr.model.exception.enums.AdminErrorEnum.ERR_USR_PWD;
 
 /**
  * 自定义登录校验方法
@@ -56,7 +56,7 @@ public class SherlyAuthenticationManager implements AuthenticationProvider {
             HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
             // 记录日志
             logRecordUtil.recordLoginLog(request, phone, LOGIN_LOG_FAIL, LOGIN_TYPE_PASSWORD);
-            throw new BadCredentialsException("用户名或密码错误!");
+            throw new BizException(ERR_USR_PWD);
         }
 
     }

@@ -1,8 +1,8 @@
-package com.guzi.upr.exception;
+package com.guzi.upr.config;
 
 import com.guzi.upr.model.Result;
+import com.guzi.upr.model.exception.BizException;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.validation.ConstraintViolationException;
+
+import static com.guzi.upr.model.exception.enums.CommonErrorEnum.ACCESS_DENY;
+import static com.guzi.upr.model.exception.enums.CommonErrorEnum.PARAMS_ERR;
 
 /**
  * 全局异常处理器
@@ -22,7 +25,6 @@ public class GlobalExceptionHandler {
 
     /**
      * 参数校验异常
-     *
      * @param e
      * @return
      */
@@ -49,24 +51,22 @@ public class GlobalExceptionHandler {
             }
         }
 
-        return Result.error(message.toString(), e);
+        return Result.error(PARAMS_ERR, message.toString());
     }
 
     /**
      * 业务异常
-     *
      * @param e
      * @return
      */
     @ExceptionHandler(BizException.class)
     public Result bizExceptionHandler(BizException e) {
         e.printStackTrace();
-        return Result.error(e.getCode(), e.getMessage(), e);
+        return Result.error(e);
     }
 
     /**
      * 空指针异常
-     *
      * @param e
      * @return
      */
@@ -78,26 +78,17 @@ public class GlobalExceptionHandler {
 
     /**
      * security认证异常
-     *
      * @param e
      * @return
      */
-    @ExceptionHandler({BadCredentialsException.class, AccessDeniedException.class})
-    public Result badCredentialsExceptionHandler(Exception e) {
+    @ExceptionHandler(AccessDeniedException.class)
+    public Result accessDeniedException(Exception e) {
         e.printStackTrace();
-
-        String message = null;
-        if (e instanceof BadCredentialsException) {
-            message = e.getMessage();
-        } else if (e instanceof AccessDeniedException) {
-            message = "访问未授权！";
-        }
-        return Result.error(message, e);
+        return Result.error(ACCESS_DENY);
     }
 
     /**
      * 其他异常
-     *
      * @param e
      * @return
      */

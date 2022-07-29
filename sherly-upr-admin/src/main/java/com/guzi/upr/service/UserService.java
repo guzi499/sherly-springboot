@@ -4,7 +4,6 @@ import cn.hutool.core.util.StrUtil;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.write.style.column.LongestMatchColumnWidthStyleStrategy;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.guzi.upr.exception.BizException;
 import com.guzi.upr.manager.AccountUserManager;
 import com.guzi.upr.manager.DepartmentManager;
 import com.guzi.upr.manager.UserManager;
@@ -19,6 +18,7 @@ import com.guzi.upr.model.dto.UserPageDTO;
 import com.guzi.upr.model.dto.UserSelectDTO;
 import com.guzi.upr.model.dto.UserUpdateDTO;
 import com.guzi.upr.model.eo.UserEO;
+import com.guzi.upr.model.exception.BizException;
 import com.guzi.upr.model.vo.UserPageVo;
 import com.guzi.upr.model.vo.UserSelectVO;
 import com.guzi.upr.model.vo.UserVo;
@@ -37,9 +37,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static com.guzi.upr.constants.enums.ResultAdminEnum.USER_REPEAT;
 import static com.guzi.upr.model.contants.CommonConstants.ENABLE;
 import static com.guzi.upr.model.contants.CommonConstants.MALE;
+import static com.guzi.upr.model.exception.enums.AdminErrorEnum.USER_REPEAT;
 
 /**
  * @author 谷子毅
@@ -147,7 +147,7 @@ public class UserService {
             throw new BizException(USER_REPEAT);
         }
 
-        SecurityUtil.setOperateTenantCode("sherly");
+        SecurityUtil.setOperateTenantCode(GlobalPropertiesUtil.SHERLY_PROPERTIES.getDefaultDb());
         AccountUser accountUser = accountUserManager.getByPhone(phone);
         if (accountUser == null) {
             accountUser = new AccountUser();

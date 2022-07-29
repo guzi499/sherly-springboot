@@ -1,26 +1,24 @@
 package com.guzi.upr.model;
 
+import com.guzi.upr.model.exception.BizException;
+import com.guzi.upr.model.exception.IBaseError;
 import com.guzi.upr.util.GlobalPropertiesUtil;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.guzi.upr.model.contants.CommonConstants.FALSE;
+import static com.guzi.upr.model.exception.enums.CommonErrorEnum.SUCCESS;
+import static com.guzi.upr.model.exception.enums.CommonErrorEnum.UNKNOWN;
 
 /**
  * 通用结果返回类
  * @author 谷子毅
  * @date 2022/3/22
  */
+@Getter
 public class Result<T> {
-
-    private static final String DEFAULT_MSG = "SUCCESS";
-
-    private static final String ERROR_MSG = "服务器异常，请联系服务商！";
-
-    private static final String DEFAULT_CODE = "000000";
-
-    private static final String ERROR_CODE = "999999";
 
     private final String code;
 
@@ -33,8 +31,8 @@ public class Result<T> {
     private T data;
 
     public Result(T data) {
-        this.code = DEFAULT_CODE;
-        this.message = DEFAULT_MSG;
+        this.code = SUCCESS.getCode();
+        this.message = SUCCESS.getMessage();
         this.timestamp = System.currentTimeMillis();
         this.data = data;
     }
@@ -61,21 +59,41 @@ public class Result<T> {
         return Result.success(null);
     }
 
-
-    public static Result error(String message) {
-        return new Result(ERROR_CODE, message);
+    /**
+     * 处理异常枚举
+     * @param error
+     * @return
+     */
+    public static Result error(IBaseError error) {
+        return new Result(error.getCode(), error.getMessage());
     }
 
-    public static Result error(String code, String message, Exception e) {
-        return new Result(ERROR_CODE, message, parseException(e));
+    /**
+     * 处理预编译的异常枚举
+     * @param error
+     * @param message
+     * @return
+     */
+    public static Result error(IBaseError error, String message) {
+        return new Result(error.getCode(), String.format(error.getMessage(), message));
     }
 
-    public static Result error(String message, Exception e) {
-        return new Result(ERROR_CODE, message, parseException(e));
-    }
-
+    /**
+     * 处理未知异常
+     * @param e
+     * @return
+     */
     public static Result error(Exception e) {
-        return new Result(ERROR_CODE, ERROR_MSG, parseException(e));
+        return new Result(UNKNOWN.getCode(), UNKNOWN.getMessage(), parseException(e));
+    }
+
+    /**
+     * 处理业务异常
+     * @param e
+     * @return
+     */
+    public static Result error(BizException e) {
+        return new Result(e.getCode(), e.getMessage(), parseException(e));
     }
 
     private static List<String> parseException(Exception e) {
@@ -99,25 +117,5 @@ public class Result<T> {
         }
 
         return list;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public List<String> getErrorStack() {
-        return errorStack;
-    }
-
-    public Long getTimestamp() {
-        return timestamp;
-    }
-
-    public T getData() {
-        return data;
     }
 }

@@ -29,9 +29,4 @@ public class GenericController {
     public Result<BasicInfoVO> getBasicData() throws Exception {
         return Result.success(genericService.getBasicData());
     }
-
-    @GetMapping("heart_beat")
-    @ApiOperation("心跳检测")
-    public void heartBeat() {
-    }
 }

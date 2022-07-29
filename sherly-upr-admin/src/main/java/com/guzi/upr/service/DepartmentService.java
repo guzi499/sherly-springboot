@@ -1,12 +1,11 @@
 package com.guzi.upr.service;
 
-import com.guzi.upr.constants.enums.ResultAdminEnum;
-import com.guzi.upr.exception.BizException;
 import com.guzi.upr.manager.DepartmentManager;
 import com.guzi.upr.manager.UserManager;
 import com.guzi.upr.model.admin.Department;
 import com.guzi.upr.model.dto.DepartmentInsertDTO;
 import com.guzi.upr.model.dto.DepartmentUpdateDTO;
+import com.guzi.upr.model.exception.BizException;
 import com.guzi.upr.model.vo.DepartmentVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +17,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static com.guzi.upr.model.contants.CommonConstants.ROOT_PARENT_ID;
+import static com.guzi.upr.model.exception.enums.AdminErrorEnum.DEPARTMENT_REPEAT;
 
 /**
  * @author 周孟凡
@@ -76,7 +76,7 @@ public class DepartmentService {
         // 查重
         Department one = departmentManager.getByDepartmentName(dto.getDepartmentName());
         if (one != null) {
-            throw new BizException(ResultAdminEnum.DEPARTMENT_REPEAT);
+            throw new BizException(DEPARTMENT_REPEAT);
         }
 
         Department department = new Department();
@@ -94,7 +94,7 @@ public class DepartmentService {
         Department one = departmentManager.getByDepartmentName(dto.getDepartmentName());
         // 如果待修改名称已存在且不为自身
         if (one != null && !Objects.equals(one.getDepartmentId(), dto.getDepartmentId())) {
-            throw new BizException(ResultAdminEnum.DEPARTMENT_REPEAT);
+            throw new BizException(DEPARTMENT_REPEAT);
         }
 
         Department department = new Department();

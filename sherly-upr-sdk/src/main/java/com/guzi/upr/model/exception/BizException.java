@@ -1,10 +1,13 @@
-package com.guzi.upr.exception;
+package com.guzi.upr.model.exception;
+
+import lombok.Getter;
 
 /**
  * 业务异常
  * @author 谷子毅
  * @date 2022/3/23
  */
+@Getter
 public class BizException extends RuntimeException {
 
     private final String code;
@@ -20,12 +23,8 @@ public class BizException extends RuntimeException {
         this.message = error.getMessage();
     }
 
-    public String getCode() {
-        return code;
-    }
-
-    @Override
-    public String getMessage() {
-        return message;
+    public BizException(IBaseError error, Object... args) {
+        this.code = error.getCode();
+        this.message = String.format(error.getMessage(), args);
     }
 }

@@ -1,11 +1,11 @@
 package com.guzi.upr.service;
 
-import com.guzi.upr.exception.BizException;
 import com.guzi.upr.manager.MenuManager;
 import com.guzi.upr.manager.RoleMenuManager;
 import com.guzi.upr.model.admin.Menu;
 import com.guzi.upr.model.dto.MenuInsertDTO;
 import com.guzi.upr.model.dto.MenuUpdateDTO;
+import com.guzi.upr.model.exception.BizException;
 import com.guzi.upr.model.vo.MenuVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static com.guzi.upr.model.contants.CommonConstants.ROOT_PARENT_ID;
-import static com.guzi.upr.constants.enums.ResultAdminEnum.*;
+import static com.guzi.upr.model.exception.enums.AdminErrorEnum.*;
 
 /**
  * @author 谷子毅
