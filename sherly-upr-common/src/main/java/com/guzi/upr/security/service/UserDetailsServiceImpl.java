@@ -4,13 +4,9 @@ import com.guzi.upr.manager.*;
 import com.guzi.upr.model.admin.*;
 import com.guzi.upr.model.exception.BizException;
 import com.guzi.upr.security.model.LoginUserDetails;
-import com.guzi.upr.security.model.SecurityModel;
 import com.guzi.upr.security.util.SecurityUtil;
-import com.guzi.upr.util.GlobalPropertiesUtil;
 import com.guzi.upr.util.LogRecordUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -57,11 +53,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String phone) throws UsernameNotFoundException {
-
-        // 因为登录前不存在Authentication，必须手动设置特殊操作数据库code，
-        SecurityModel securityModel = new SecurityModel();
-        securityModel.setTenantCode(GlobalPropertiesUtil.SHERLY_PROPERTIES.getDefaultDb());
-        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(securityModel, null));
 
         // 查询用户账户信息
         AccountUser accountUser = accountUserManager.getByPhone(phone);

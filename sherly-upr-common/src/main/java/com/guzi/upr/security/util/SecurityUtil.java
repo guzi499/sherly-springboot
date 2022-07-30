@@ -15,7 +15,6 @@ public final class SecurityUtil {
 
     /**
      * 获取SecurityModel
-     *
      * @return
      */
     private static SecurityModel getThreadLocalModel() {
@@ -37,7 +36,6 @@ public final class SecurityUtil {
 
     /**
      * 设置特殊操作数据库code
-     *
      * @param tenantCode
      */
     public static void setOperateTenantCode(String tenantCode) {
@@ -47,8 +45,18 @@ public final class SecurityUtil {
     }
 
     /**
+     * 切换租户
+     * @param tenantCode
+     */
+    public static void setTenantCode(String tenantCode) {
+        SecurityModel securityModel = getThreadLocalModel();
+        securityModel.setTenantCode(tenantCode);
+        securityModel.setOperateTenantCode(tenantCode);
+        setThreadLocalModel(securityModel);
+    }
+
+    /**
      * 获取特殊操作数据库code
-     *
      * @return
      */
     public static String getOperateTenantCode() {
@@ -58,7 +66,6 @@ public final class SecurityUtil {
 
     /**
      * 获取租户code
-     *
      * @return
      */
     public static String getTenantCode() {
@@ -68,7 +75,6 @@ public final class SecurityUtil {
 
     /**
      * 获取userId
-     *
      * @return
      */
     public static Long getUserId() {
@@ -78,7 +84,6 @@ public final class SecurityUtil {
 
     /**
      * 获取手机号
-     *
      * @return
      */
     public static String getPhone() {
