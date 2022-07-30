@@ -49,4 +49,12 @@ public class LoginController {
     public Result<List<LoginTenantVO>> availableList(@RequestParam String phone) {
         return Result.success(loginService.availableList(phone));
     }
+
+    @PutMapping("/login_change")
+    @ApiOperation("切换登录租户")
+    @SherlyLog(noRecord = true)
+    public Result loginChange(@RequestParam String tenantCode, HttpServletRequest request) throws Exception {
+        loginService.loginChange(tenantCode, request);
+        return Result.success();
+    }
 }

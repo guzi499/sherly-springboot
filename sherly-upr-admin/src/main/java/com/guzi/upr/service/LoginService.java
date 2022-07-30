@@ -18,6 +18,7 @@ import com.guzi.upr.model.vo.LoginTenantVO;
 import com.guzi.upr.model.vo.LoginVO;
 import com.guzi.upr.security.model.LoginUserDetails;
 import com.guzi.upr.security.model.RedisSecurityModel;
+import com.guzi.upr.security.model.SecurityModel;
 import com.guzi.upr.security.util.SecurityUtil;
 import com.guzi.upr.util.GlobalPropertiesUtil;
 import com.guzi.upr.util.JwtUtil;
@@ -29,6 +30,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -73,17 +76,55 @@ public class LoginService {
     @Autowired
     private Ip2regionSearcher ip2regionSearcher;
 
+    @Autowired
+    private UserDetailsService userDetailsService;
 
     /**
      * 登录
      * @param dto
      * @param request
      * @return
-     * @throws JsonProcessingException
+     * @throws Exception
      */
     @Transactional(rollbackFor = Exception.class)
     public LoginVO login(LoginDTO dto, HttpServletRequest request) throws Exception {
-        // 如果登录信息包含租户code             校验租户是否可用，如果可用，那么最近登陆租户切换成该租户code
+
+        // 因为登录前不存在Authentication，必须手动设置特殊操作数据库code，
+        SecurityModel securityModel = new SecurityModel();
+        securityModel.setTenantCode(GlobalPropertiesUtil.SHERLY_PROPERTIES.getDefaultDb());
+        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(securityModel, null));
+
+        // 如果登录信息包含租户需要做的处理
+        this.dealWithTenantCode(dto);
+
+        // 封装登录参数
+        UsernamePasswordAuthenticationToken authenticationToken =
+                new UsernamePasswordAuthenticationToken(dto.getPhone(), dto.getPassword());
+
+        // 登录校验
+        Authentication authentication = authenticationProvider.authenticate(authenticationToken);
+
+        // 获取登录用户信息
+        LoginUserDetails loginUserDetails = (LoginUserDetails) authentication.getPrincipal();
+
+        this.updateCache(loginUserDetails, request);
+
+        // 生成key标签作为token内容
+        String keyLabel = dto.getPhone() + "#" + System.currentTimeMillis();
+
+        // 生成token返回前端
+        LoginVO loginVO = new LoginVO(JwtUtil.generateToken(keyLabel));
+        // 记录日志
+        logRecordUtil.recordLoginLog(request, dto.getPhone(), LOGIN_LOG_SUCCESS, LOGIN_TYPE_PASSWORD);
+
+        return loginVO;
+    }
+
+    /**
+     * 处理登录时携带租户code情况
+     * @param dto
+     */
+    private void dealWithTenantCode(LoginDTO dto) {
         if (StrUtil.isNotBlank(dto.getTenantCode())) {
             Tenant tenant = tenantManager.getByTenantCode(dto.getTenantCode());
             // 如果租户不存在
@@ -102,42 +143,10 @@ public class LoginService {
             if (tenant.getExpireTime().getTime() <= System.currentTimeMillis()) {
                 throw new BizException(TENANT_EXPIRED, tenant.getTenantName());
             }
+            // 校验租户是否可用，如果可用，那么最近登陆租户切换成该租户code
             accountUser.setLastLoginTenantCode(dto.getTenantCode());
             accountUserManager.updateById(accountUser);
         }
-
-        // 封装登录参数
-        UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(dto.getPhone(), dto.getPassword());
-
-        // 登录校验
-        Authentication authentication = authenticationProvider.authenticate(authenticationToken);
-
-        // 获取登录用户信息
-        LoginUserDetails loginUserDetails = (LoginUserDetails) authentication.getPrincipal();
-
-        // redis缓存登录用户信息
-        RedisSecurityModel redisSecurityModel = loginUserDetails.getRedisSecurityModel(request);
-        UserOnline userOnline = redisSecurityModel.getUserOnline();
-        userOnline.setAddress(ip2regionSearcher.getAddress(userOnline.getIp()));
-        redisSecurityModel.setUserOnline(userOnline);
-
-        // 权限信息更新到redis
-        String redisString = OBJECTMAPPER.writeValueAsString(redisSecurityModel);
-        redisTemplate.opsForValue().set(RedisKey.GENERATE_USER + dto.getPhone(), redisString, 6, TimeUnit.HOURS);
-
-        // 更新用户信息
-        this.updateUser(loginUserDetails.getUser(), request);
-
-        // 生成key标签作为token内容
-        String keyLabel = dto.getPhone() + "#" + System.currentTimeMillis();
-
-        // 生成token返回前端
-        LoginVO loginVO = new LoginVO(JwtUtil.generateToken(keyLabel));
-        // 记录日志
-        logRecordUtil.recordLoginLog(request, dto.getPhone(), LOGIN_LOG_SUCCESS, LOGIN_TYPE_PASSWORD);
-
-        return loginVO;
     }
 
     /**
@@ -183,5 +192,39 @@ public class LoginService {
             return vo;
         }).collect(Collectors.toList());
 
+    }
+
+    /**
+     * 切换登录租户
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public void loginChange(String tenantCode, HttpServletRequest request) throws Exception {
+        String phone = SecurityUtil.getPhone();
+        AccountUser accountUser = accountUserManager.getByPhone(phone);
+
+        SecurityModel securityModel = new SecurityModel();
+        securityModel.setTenantCode(GlobalPropertiesUtil.SHERLY_PROPERTIES.getDefaultDb());
+        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(securityModel, null));
+
+        accountUser.setLastLoginTenantCode(tenantCode);
+        accountUserManager.updateById(accountUser);
+
+        LoginUserDetails loginUserDetails = (LoginUserDetails)userDetailsService.loadUserByUsername(phone);
+        this.updateCache(loginUserDetails, request);
+    }
+
+    public void updateCache(LoginUserDetails loginUserDetails, HttpServletRequest request) throws JsonProcessingException {
+        // redis缓存登录用户信息
+        RedisSecurityModel redisSecurityModel = loginUserDetails.getRedisSecurityModel(request);
+        UserOnline userOnline = redisSecurityModel.getUserOnline();
+        userOnline.setAddress(ip2regionSearcher.getAddress(userOnline.getIp()));
+        redisSecurityModel.setUserOnline(userOnline);
+
+        // 权限信息更新到redis
+        String redisString = OBJECTMAPPER.writeValueAsString(redisSecurityModel);
+        redisTemplate.opsForValue().set(RedisKey.GENERATE_USER + loginUserDetails.getUsername(), redisString, 6, TimeUnit.HOURS);
+
+        // 更新用户信息
+        this.updateUser(loginUserDetails.getUser(), request);
     }
 }
