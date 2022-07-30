@@ -3,6 +3,7 @@ package com.guzi.upr.controller;
 import com.guzi.upr.log.annotation.SherlyLog;
 import com.guzi.upr.model.Result;
 import com.guzi.upr.model.dto.LoginDTO;
+import com.guzi.upr.model.vo.LoginTenantVO;
 import com.guzi.upr.model.vo.LoginVO;
 import com.guzi.upr.service.LoginService;
 import io.swagger.annotations.Api;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * @author 谷子毅
@@ -39,5 +41,12 @@ public class LoginController {
     public Result logout() {
         loginService.logout();
         return Result.success();
+    }
+
+    @GetMapping("/available_list")
+    @ApiOperation("可用租户列表")
+    @SherlyLog(noRecord = true)
+    public Result<List<LoginTenantVO>> availableList(@RequestParam String phone) {
+        return Result.success(loginService.availableList(phone));
     }
 }

@@ -1,13 +1,7 @@
 package com.guzi.upr.service;
 
-import com.guzi.upr.manager.DepartmentManager;
-import com.guzi.upr.manager.RoleManager;
-import com.guzi.upr.manager.UserManager;
-import com.guzi.upr.manager.UserRoleManager;
-import com.guzi.upr.model.admin.Department;
-import com.guzi.upr.model.admin.Role;
-import com.guzi.upr.model.admin.User;
-import com.guzi.upr.model.admin.UserRole;
+import com.guzi.upr.manager.*;
+import com.guzi.upr.model.admin.*;
 import com.guzi.upr.model.dto.UserSelfUpdateDTO;
 import com.guzi.upr.model.dto.UserUpdatePasswordDTO;
 import com.guzi.upr.model.exception.BizException;
@@ -50,6 +44,9 @@ public class UserSelfService {
     private DepartmentManager departmentManager;
 
     @Autowired
+    private AccountUserManager accountUserManager;
+
+    @Autowired
     private OssUtil ossUtil;
 
     /**
@@ -87,20 +84,21 @@ public class UserSelfService {
      * @param dto
      */
     public void updatePassword(UserUpdatePasswordDTO dto) {
-        Long userId = SecurityUtil.getUserId();
-        User user = userManager.getById(userId);
-
         if (Objects.equals(dto.getNewPassword(), dto.getOldPassword())) {
             // 新旧密码相同
             throw new BizException(USER_PASSWORD_REPEAT);
         }
-        boolean match = passwordEncoder.matches(dto.getOldPassword(), user.getPassword());
+
+        String phone = SecurityUtil.getPhone();
+        AccountUser accountUser = accountUserManager.getByPhone(phone);
+
+        boolean match = passwordEncoder.matches(dto.getOldPassword(), accountUser.getPassword());
         if (!match) {
             // 旧密码不正确
             throw new BizException(USER_PASSWORD_ERROR);
         }
-        user.setPassword(passwordEncoder.encode(dto.getNewPassword()));
-        userManager.updateById(user);
+        accountUser.setPassword(passwordEncoder.encode(dto.getNewPassword()));
+        accountUserManager.updateById(accountUser);
     }
 
     /**

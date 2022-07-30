@@ -20,6 +20,9 @@ public class AccountUser {
     /** 手机号 */
     private String phone;
 
+    /** 密码 */
+    private String password;
+
     /** 租户信息 */
     private String tenantData;
 

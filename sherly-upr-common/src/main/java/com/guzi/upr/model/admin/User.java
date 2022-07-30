@@ -31,9 +31,6 @@ public class User extends BaseModel {
     /** 手机号 */
     private String phone;
 
-    /** 密码 */
-    private String password;
-
     /** 用户头像 */
     private String avatar;
 

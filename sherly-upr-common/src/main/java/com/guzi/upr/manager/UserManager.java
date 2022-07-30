@@ -40,20 +40,6 @@ public class UserManager extends ServiceImpl<UserMapper, User> {
     }
 
     /**
-     * 根据手机号和密码查询用户数据
-     * @param phone
-     * @param password
-     * @return
-     */
-    public User getOneByPhoneAndPwd(String phone, String password) {
-        LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(User::getPhone, phone)
-                .eq(User::getPassword, password);
-
-        return this.getOne(wrapper, false);
-    }
-
-    /**
      * 用户部门更新
      * @param departmentId
      */

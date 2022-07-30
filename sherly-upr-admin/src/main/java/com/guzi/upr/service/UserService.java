@@ -158,6 +158,7 @@ public class UserService {
         if (accountUser == null) {
             accountUser = new AccountUser();
             accountUser.setPhone(phone);
+            accountUser.setPassword(GlobalPropertiesUtil.SHERLY_PROPERTIES.getDefaultPassword());
             accountUser.setTenantData(SecurityUtil.getTenantCode());
             accountUser.setLastLoginTenantCode(SecurityUtil.getTenantCode());
             accountUserManager.save(accountUser);
@@ -173,7 +174,6 @@ public class UserService {
         User user = new User();
         BeanUtils.copyProperties(dto, user);
         user.setEnable(ENABLE);
-        user.setPassword(passwordEncoder.encode(GlobalPropertiesUtil.SHERLY_PROPERTIES.getDefaultPassword()));
         userManager.save(user);
 
         // 保存用户角色数据

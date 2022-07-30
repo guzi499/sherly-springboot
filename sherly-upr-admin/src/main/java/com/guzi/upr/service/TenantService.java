@@ -109,6 +109,7 @@ public class TenantService {
         if (accountUser == null) {
             accountUser = new AccountUser();
             accountUser.setPhone(dto.getContactPhone());
+            accountUser.setPassword(passwordEncoder.encode(GlobalPropertiesUtil.SHERLY_PROPERTIES.getDefaultPassword()));
             accountUser.setTenantData(dto.getTenantCode());
             accountUser.setLastLoginTenantCode(dto.getTenantCode());
             accountUserManager.save(accountUser);
@@ -143,7 +144,6 @@ public class TenantService {
         user.setEnable(ENABLE);
         user.setDepartmentId(department.getDepartmentId());
         user.setGender(1);
-        user.setPassword(passwordEncoder.encode(GlobalPropertiesUtil.SHERLY_PROPERTIES.getDefaultPassword()));
         userManager.save(user);
 
         // 关联用户角色

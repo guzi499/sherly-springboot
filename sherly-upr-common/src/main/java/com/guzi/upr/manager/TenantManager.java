@@ -9,6 +9,9 @@ import com.guzi.upr.model.dto.TenantPageDTO;
 import com.guzi.upr.util.SherlyLambdaQueryWrapper;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+import java.util.List;
+
 /**
  * @author 谷子毅
  * @date 2022/3/25
@@ -53,5 +56,17 @@ public class TenantManager extends ServiceImpl<TenantMapper, Tenant> {
         SherlyLambdaQueryWrapper<Tenant> wrapper = new SherlyLambdaQueryWrapper<>();
         wrapper.eq(Tenant::getTenantCode, tenantCode);
         return this.getOne(wrapper, false);
+    }
+
+    /**
+     * 根据租户codes查询未到期的租户数据
+     * @param tenantCodes
+     * @return
+     */
+    public List<Tenant> listAvailableByTenantCodes(List<String> tenantCodes) {
+        SherlyLambdaQueryWrapper<Tenant> wrapper = new SherlyLambdaQueryWrapper<>();
+        wrapper.inIfExist(Tenant::getTenantCode, tenantCodes)
+                .ltIfExist(Tenant::getExpireTime, new Date());
+        return this.list(wrapper);
     }
 }
