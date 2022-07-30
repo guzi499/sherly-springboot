@@ -4,15 +4,9 @@ import cn.hutool.core.util.StrUtil;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.write.style.column.LongestMatchColumnWidthStyleStrategy;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.guzi.upr.manager.AccountUserManager;
-import com.guzi.upr.manager.DepartmentManager;
-import com.guzi.upr.manager.UserManager;
-import com.guzi.upr.manager.UserRoleManager;
+import com.guzi.upr.manager.*;
 import com.guzi.upr.model.PageResult;
-import com.guzi.upr.model.admin.AccountUser;
-import com.guzi.upr.model.admin.Department;
-import com.guzi.upr.model.admin.User;
-import com.guzi.upr.model.admin.UserRole;
+import com.guzi.upr.model.admin.*;
 import com.guzi.upr.model.dto.UserInsertDTO;
 import com.guzi.upr.model.dto.UserPageDTO;
 import com.guzi.upr.model.dto.UserSelectDTO;
@@ -39,6 +33,7 @@ import java.util.stream.Collectors;
 
 import static com.guzi.upr.model.contants.CommonConstants.ENABLE;
 import static com.guzi.upr.model.contants.CommonConstants.MALE;
+import static com.guzi.upr.model.exception.enums.AdminErrorEnum.USER_LIMIT;
 import static com.guzi.upr.model.exception.enums.AdminErrorEnum.USER_REPEAT;
 
 /**
@@ -62,6 +57,9 @@ public class UserService {
 
     @Autowired
     private AccountUserManager accountUserManager;
+
+    @Autowired
+    private TenantManager tenantManager;
 
     /**
      * 用户分页
@@ -141,17 +139,26 @@ public class UserService {
     public void saveOne(UserInsertDTO dto) {
         // 去重
         String phone = dto.getPhone();
-
         User one = userManager.getByPhone(phone);
         if (one != null) {
             throw new BizException(USER_REPEAT);
         }
 
+        long userNum = userManager.count();
         SecurityUtil.setOperateTenantCode(GlobalPropertiesUtil.SHERLY_PROPERTIES.getDefaultDb());
+
+        // 注册用户上限校验
+        Tenant tenant = tenantManager.getByTenantCode(SecurityUtil.getTenantCode());
+        if (tenant.getUserLimit() <= userNum) {
+            throw new BizException(USER_LIMIT);
+        }
+
+        // 同步用户账户信息
         AccountUser accountUser = accountUserManager.getByPhone(phone);
         if (accountUser == null) {
             accountUser = new AccountUser();
             accountUser.setPhone(phone);
+            accountUser.setPassword(GlobalPropertiesUtil.SHERLY_PROPERTIES.getDefaultPassword());
             accountUser.setTenantData(SecurityUtil.getTenantCode());
             accountUser.setLastLoginTenantCode(SecurityUtil.getTenantCode());
             accountUserManager.save(accountUser);
@@ -167,7 +174,6 @@ public class UserService {
         User user = new User();
         BeanUtils.copyProperties(dto, user);
         user.setEnable(ENABLE);
-        user.setPassword(passwordEncoder.encode(GlobalPropertiesUtil.SHERLY_PROPERTIES.getDefaultPassword()));
         userManager.save(user);
 
         // 保存用户角色数据

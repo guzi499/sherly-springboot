@@ -46,7 +46,7 @@ public class CommonConstants {
     public static final Integer MALE = 1;
 
     /** 性别：未知 */
-    public static final Integer UNKNOWN = 2;
+    public static final Integer NO_GENDER = 2;
 
     /*=============================菜单类型========================*/
 
@@ -54,7 +54,7 @@ public class CommonConstants {
     public static final Integer DIR = 1;
 
     /** 菜单类型：菜单 */
-    public static final Integer MENU = 1;
+    public static final Integer MENU = 2;
 
     /** 菜单类型：按钮 */
     public static final Integer BUTTON = 3;

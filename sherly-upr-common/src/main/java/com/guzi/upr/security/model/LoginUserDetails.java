@@ -3,14 +3,11 @@ package com.guzi.upr.security.model;
 import cn.hutool.extra.servlet.ServletUtil;
 import cn.hutool.http.useragent.UserAgent;
 import cn.hutool.http.useragent.UserAgentUtil;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.guzi.upr.model.admin.AccountUser;
-import com.guzi.upr.model.admin.UserOnline;
 import com.guzi.upr.model.admin.User;
+import com.guzi.upr.model.admin.UserOnline;
 import lombok.Data;
-import net.dreamlu.mica.ip2region.core.Ip2regionSearcher;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -80,12 +77,12 @@ public class LoginUserDetails implements UserDetails {
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return accountUser.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return user.getPhone();
+        return accountUser.getPhone();
     }
 
     @Override

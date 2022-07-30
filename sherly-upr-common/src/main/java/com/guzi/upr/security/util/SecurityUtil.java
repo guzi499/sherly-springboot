@@ -19,7 +19,11 @@ public final class SecurityUtil {
      * @return
      */
     private static SecurityModel getThreadLocalModel() {
-        return (SecurityModel) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (principal instanceof SecurityModel) {
+            return (SecurityModel) principal;
+        }
+        return new SecurityModel();
     }
 
     /**

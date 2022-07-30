@@ -21,4 +21,8 @@ public class LoginDTO {
     @ApiModelProperty(value = "密码", required = true)
     @NotBlank
     private String password;
+
+    /** 租户code */
+    @ApiModelProperty(value = "租户code")
+    private String tenantCode;
 }

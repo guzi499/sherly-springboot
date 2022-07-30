@@ -15,7 +15,7 @@ public enum CommonErrorEnum implements IBaseError {
     /** 000-SUCCESS */
     SUCCESS("000", "SUCCESS"),
     /** 001-参数异常 */
-    PARAMS_ERR("999", "{%s}"),
+    PARAMS_ERR("001", "{%s}"),
     /** 999-未知异常 */
     UNKNOWN("999", "服务器异常，请联系服务商！"),
 
