@@ -66,7 +66,7 @@ public class TenantManager extends ServiceImpl<TenantMapper, Tenant> {
     public List<Tenant> listAvailableByTenantCodes(List<String> tenantCodes) {
         SherlyLambdaQueryWrapper<Tenant> wrapper = new SherlyLambdaQueryWrapper<>();
         wrapper.inIfExist(Tenant::getTenantCode, tenantCodes)
-                .ltIfExist(Tenant::getExpireTime, new Date());
+                .geIfExist(Tenant::getExpireTime, new Date());
         return this.list(wrapper);
     }
 }
