@@ -81,7 +81,7 @@ public class OssService {
      * @return
      */
     public PageResult<OssFilePageVO> listPage(OssFilePageDTO dto) {
-        IPage<OssFile> page = ossFileManager.page(new Page<>(dto.getCurrent(), dto.getSize()));
+        IPage<OssFile> page = ossFileManager.listPage(dto);
 
         List<OssFilePageVO> result = page.getRecords().stream().map(e -> {
             OssFilePageVO ossFilePageVO = new OssFilePageVO();
