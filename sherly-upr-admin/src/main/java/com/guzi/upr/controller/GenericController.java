@@ -32,6 +32,7 @@ public class GenericController {
 
     @GetMapping("heart_beat")
     @ApiOperation("心跳检测")
-    public void heartBeat() {
+    public Result heartBeat() {
+        return Result.success();
     }
 }
