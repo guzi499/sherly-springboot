@@ -25,8 +25,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static com.guzi.upr.model.contants.CommonConstants.*;
-import static com.guzi.upr.model.exception.enums.AdminErrorEnum.FORBIDDEN;
-import static com.guzi.upr.model.exception.enums.AdminErrorEnum.NO_REGISTER;
+import static com.guzi.upr.model.exception.enums.AdminErrorEnum.*;
 
 /**
  * @author 谷子毅
@@ -51,6 +50,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private AccountUserManager accountUserManager;
 
     @Autowired
+    private TenantManager tenantManager;
+
+    @Autowired
     private LogRecordUtil logRecordUtil;
 
     @Override
@@ -61,10 +63,17 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         securityModel.setTenantCode(GlobalPropertiesUtil.SHERLY_PROPERTIES.getDefaultDb());
         SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(securityModel, null));
 
-        // 查询用户租户信息
+        // 查询用户账户信息
         AccountUser accountUser = accountUserManager.getByPhone(phone);
         if (accountUser == null) {
             throw new BizException(NO_REGISTER);
+        }
+
+        // 租户过期校验
+        String lastLoginTenantCode = accountUser.getLastLoginTenantCode();
+        Tenant tenant = tenantManager.getByTenantCode(lastLoginTenantCode);
+        if (tenant.getExpireTime().getTime() <= System.currentTimeMillis()) {
+            throw new BizException(TENANT_EXPIRED, tenant.getTenantName());
         }
 
         SecurityUtil.setOperateTenantCode(accountUser.getLastLoginTenantCode());

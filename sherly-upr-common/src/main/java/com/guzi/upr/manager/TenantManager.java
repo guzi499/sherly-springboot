@@ -43,4 +43,15 @@ public class TenantManager extends ServiceImpl<TenantMapper, Tenant> {
                 .orderByDesc(Tenant::getTenantId);
         return this.page(page, wrapper);
     }
+
+    /**
+     * 根据租户code查询租户信息
+     * @param tenantCode
+     * @return
+     */
+    public Tenant getByTenantCode(String tenantCode) {
+        SherlyLambdaQueryWrapper<Tenant> wrapper = new SherlyLambdaQueryWrapper<>();
+        wrapper.eq(Tenant::getTenantCode, tenantCode);
+        return this.getOne(wrapper, false);
+    }
 }
