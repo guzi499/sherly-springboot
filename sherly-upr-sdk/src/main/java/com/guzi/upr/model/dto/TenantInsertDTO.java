@@ -1,9 +1,9 @@
 package com.guzi.upr.model.dto;
 
 import cn.hutool.core.date.DatePattern;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -38,6 +38,7 @@ public class TenantInsertDTO {
     /** 过期时间 */
     @ApiModelProperty(value = "过期时间", required = true)
     @NotNull
+    @DateTimeFormat(pattern = DatePattern.NORM_DATETIME_PATTERN)
     private Date expireTime;
 
     /** 用户上限 */

@@ -8,6 +8,7 @@ import com.guzi.upr.log.annotation.SherlyLog;
 import com.guzi.upr.log.model.OperationLog;
 import com.guzi.upr.log.service.OperationLogService;
 import com.guzi.upr.security.util.SecurityUtil;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import net.dreamlu.mica.ip2region.core.Ip2regionSearcher;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -27,7 +28,8 @@ import java.lang.reflect.Method;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.guzi.upr.model.contants.CommonConstants.*;
+import static com.guzi.upr.model.contants.CommonConstants.EXCEPTION_LOG;
+import static com.guzi.upr.model.contants.CommonConstants.NORMAL_LOG;
 
 /**
  * @author 谷子毅
@@ -103,12 +105,13 @@ public class SherlyLogAop {
 
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         Method method = methodSignature.getMethod();
-        SherlyLog annotation = method.getAnnotation(SherlyLog.class);
+        SherlyLog sherlyLogAnnotation = method.getAnnotation(SherlyLog.class);
+        ApiOperation apiOperationAnnotation = method.getAnnotation(ApiOperation.class);
 
         String requestParams = this.parseArgs(methodSignature, joinPoint.getArgs());
 
         operationLog.setType(type);
-        operationLog.setDescription(annotation != null ? annotation.description() : null);
+        operationLog.setDescription(sherlyLogAnnotation != null ? sherlyLogAnnotation.description() : apiOperationAnnotation.value());
         operationLog.setDuration(duration);
         operationLog.setRequestMethod(requestMethod);
         operationLog.setUri(uri);
