@@ -40,4 +40,12 @@ public class BasicUserInfoVO {
     /** 部门id */
     @ApiModelProperty(value = "部门id")
     private Long departmentId;
+
+    /** 租户code */
+    @ApiModelProperty(value = "租户code")
+    private String tenantCode;
+
+    /** 租户名称 */
+    @ApiModelProperty(value = "租户名称")
+    private String tenantName;
 }

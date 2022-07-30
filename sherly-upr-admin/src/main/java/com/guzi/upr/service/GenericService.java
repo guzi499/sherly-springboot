@@ -2,8 +2,12 @@ package com.guzi.upr.service;
 
 import com.guzi.upr.manager.*;
 import com.guzi.upr.model.admin.*;
-import com.guzi.upr.model.vo.*;
+import com.guzi.upr.model.vo.BasicInfoVO;
+import com.guzi.upr.model.vo.BasicMenuInfoVO;
+import com.guzi.upr.model.vo.BasicRoleInfoVO;
+import com.guzi.upr.model.vo.BasicUserInfoVO;
 import com.guzi.upr.security.model.SecurityModel;
+import com.guzi.upr.security.util.SecurityUtil;
 import com.guzi.upr.util.OssUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +44,9 @@ public class GenericService {
     private UserRoleManager userRoleManager;
 
     @Autowired
+    private TenantManager tenantManager;
+
+    @Autowired
     private OssUtil ossUtil;
 
     /**
@@ -55,6 +62,9 @@ public class GenericService {
         BasicUserInfoVO userVO = new BasicUserInfoVO();
         BeanUtils.copyProperties(user, userVO);
         userVO.setAvatar(ossUtil.accessUrl(userVO.getAvatar()));
+        Tenant tenant = tenantManager.getByTenantCode(SecurityUtil.getTenantCode());
+        userVO.setTenantCode(tenant.getTenantCode());
+        userVO.setTenantName(tenant.getTenantName());
 
         // 角色信息收集
         List<UserRole> userRoles = userRoleManager.listByUserId(userId);
