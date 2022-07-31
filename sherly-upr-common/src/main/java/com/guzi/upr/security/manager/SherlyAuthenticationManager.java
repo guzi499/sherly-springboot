@@ -11,8 +11,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -42,7 +40,6 @@ public class SherlyAuthenticationManager implements AuthenticationProvider {
     private LogRecordUtil logRecordUtil;
 
     @Override
-    @Transactional(propagation = Propagation.NOT_SUPPORTED)
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 
         String phone = authentication.getName();

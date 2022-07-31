@@ -2,6 +2,7 @@ package com.guzi.upr.model;
 
 import lombok.Data;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -29,5 +30,9 @@ public class PageResult<T> {
 
     public static <T> PageResult build(List<T> result, Long current, Long size, Long total) {
         return new PageResult(result, current, size, total);
+    }
+
+    public static <T> PageResult buildEmpty() {
+        return new PageResult(Collections.emptyList(), 1L, 10L, 0L);
     }
 }

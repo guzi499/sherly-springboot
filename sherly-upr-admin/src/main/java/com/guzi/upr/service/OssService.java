@@ -80,7 +80,11 @@ public class OssService {
      * @return
      */
     public PageResult<OssFilePageVO> listPage(OssFilePageDTO dto) {
-        dto.setConfigId(ossUtil.getOssClient().getConfigId());
+        OssClient ossClient = ossUtil.getOssClient();
+        if (ossClient == null) {
+            return PageResult.buildEmpty();
+        }
+        dto.setConfigId(ossClient.getConfigId());
         IPage<OssFile> page = ossFileManager.listPage(dto);
 
         List<OssFilePageVO> result = page.getRecords().stream().map(e -> {
