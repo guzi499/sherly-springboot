@@ -67,7 +67,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/swagger-resources/**").permitAll()
                 .antMatchers("/webjars/**").permitAll()
                 .antMatchers("/*/api-docs").permitAll()
-                .antMatchers("/api/available_list").permitAll()
+                .antMatchers("/api/available_list_check").permitAll()
                 // 对于登录接口 允许匿名访问
                 .antMatchers("/api/login").anonymous()
                 // 除上面外的所有请求全部需要鉴权认证

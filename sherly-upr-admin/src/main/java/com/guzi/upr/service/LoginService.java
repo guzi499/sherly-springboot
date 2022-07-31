@@ -32,6 +32,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -78,6 +79,9 @@ public class LoginService {
 
     @Autowired
     private UserDetailsService userDetailsService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     /**
      * 登录
@@ -225,5 +229,34 @@ public class LoginService {
 
         // 更新用户信息
         this.updateUser(loginUserDetails.getUser(), request);
+    }
+
+    /**
+     * 可用租户列表
+     * @param dto
+     * @return
+     */
+    public List<LoginTenantVO> availableListCheck(LoginDTO dto) {
+        SecurityUtil.setOperateTenantCode(GlobalPropertiesUtil.SHERLY_PROPERTIES.getDefaultDb());
+        AccountUser accountUser = accountUserManager.getByPhone(dto.getPhone());
+        if (accountUser == null) {
+            throw new BizException(NO_REGISTER);
+        }
+        if (!passwordEncoder.matches(dto.getPassword(), accountUser.getPassword())) {
+            throw new BizException(ERR_USR_PWD);
+        }
+        List<String> tenantCodes = StrUtil.split(accountUser.getTenantData(), ",");
+        List<Tenant> tenants = tenantManager.listAvailableByTenantCodes(tenantCodes);
+        SecurityUtil.clearOperateTenantCode();
+
+        if (CollectionUtils.isEmpty(tenants)) {
+            throw new BizException(NO_TENANT);
+        }
+
+        return tenants.stream().map(e -> {
+            LoginTenantVO vo = new LoginTenantVO();
+            BeanUtils.copyProperties(e, vo);
+            return vo;
+        }).collect(Collectors.toList());
     }
 }
