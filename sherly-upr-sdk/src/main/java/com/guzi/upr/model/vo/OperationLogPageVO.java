@@ -19,6 +19,10 @@ public class OperationLogPageVO {
     @ApiModelProperty(value = "日志类型[enum]")
     private Integer type;
 
+    /** 操作用户 */
+    @ApiModelProperty(value = "操作用户")
+    private String operateUser;
+
     /** 描述 */
     @ApiModelProperty(value = "描述")
     private String description;

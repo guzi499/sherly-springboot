@@ -80,7 +80,12 @@ public class UserManager extends ServiceImpl<UserMapper, User> {
      */
     public List<User> listAll(UserSelectDTO dto) {
         SherlyLambdaQueryWrapper<User> wrapper = new SherlyLambdaQueryWrapper<>();
-        wrapper.inIfExist(User::getDepartmentId, dto.getDepartmentIds())
+        wrapper
+                .likeIfExist(User::getNickname, dto.getNickname())
+                .likeIfExist(User::getPhone, dto.getPhone())
+                .likeIfExist(User::getEmail, dto.getEmail())
+                .inIfExist(User::getDepartmentId, dto.getDepartmentIds())
+                .likeIfExist(User::getRealName, dto.getRealName())
                 .eqIfExist(User::getEnable, dto.getEnable())
                 .inIfExist(User::getUserId, dto.getUserIds());
         return this.list(wrapper);

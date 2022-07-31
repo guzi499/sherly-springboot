@@ -7,6 +7,7 @@ import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author 谷子毅
@@ -18,9 +19,13 @@ public class OperationLogPageDTO extends PageQuery {
     @ApiModelProperty(value = "日志类型[enum]")
     private String type;
 
-    /** 用户id */
-    @ApiModelProperty(value = "用户id")
-    private Long userId;
+    /** 用户ids */
+    @ApiModelProperty(value = "用户ids")
+    private List<Long> userIds;
+
+    /** 姓名 */
+    @ApiModelProperty(value = "姓名")
+    private String realName;
 
     /** 请求方式 */
     @ApiModelProperty(value = "请求方式")
