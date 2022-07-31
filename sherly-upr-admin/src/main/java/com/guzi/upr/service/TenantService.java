@@ -67,9 +67,6 @@ public class TenantService {
     @Autowired
     private AccountUserManager accountUserManager;
 
-    @Autowired
-    private ExecSqlUtil execSqlUtil;
-
     /**
      * 租户条件分页
      * @param dto
@@ -104,7 +101,7 @@ public class TenantService {
         tenantManager.save(tenant);
 
         // 执行sql语句创建新租户的数据库表
-        execSqlUtil.execSql(SqlStatement.CREATE_TENANT, Collections.singletonMap(SqlParam.DATABASE, dto.getTenantCode()));
+        ExecSqlUtil.execSql(SqlStatement.CREATE_TENANT, Collections.singletonMap(SqlParam.DATABASE, dto.getTenantCode()));
 
         // 新建用户租户
         AccountUser accountUser = accountUserManager.getByPhone(dto.getContactPhone());
