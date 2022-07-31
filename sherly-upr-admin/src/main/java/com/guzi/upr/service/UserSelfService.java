@@ -1,10 +1,17 @@
 package com.guzi.upr.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.guzi.upr.log.manager.OperationLogManager;
+import com.guzi.upr.log.model.OperationLog;
 import com.guzi.upr.manager.*;
+import com.guzi.upr.model.PageResult;
 import com.guzi.upr.model.admin.*;
+import com.guzi.upr.model.dto.OperationLogPageDTO;
+import com.guzi.upr.model.dto.OperationLogSelfPageDTO;
 import com.guzi.upr.model.dto.UserSelfUpdateDTO;
 import com.guzi.upr.model.dto.UserUpdatePasswordDTO;
 import com.guzi.upr.model.exception.BizException;
+import com.guzi.upr.model.vo.OperationLogPageVO;
 import com.guzi.upr.model.vo.UserSelfVO;
 import com.guzi.upr.security.util.SecurityUtil;
 import com.guzi.upr.util.OssUtil;
@@ -13,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -45,6 +53,9 @@ public class UserSelfService {
 
     @Autowired
     private AccountUserManager accountUserManager;
+
+    @Autowired
+    private OperationLogManager operationLogManager;
 
     @Autowired
     private OssUtil ossUtil;
@@ -121,5 +132,24 @@ public class UserSelfService {
         user.setUserId(SecurityUtil.getUserId());
         user.setAvatar(avatarPath);
         userManager.updateById(user);
+    }
+
+    /**
+     * 个人中心操作日志列表
+     * @param dto
+     * @return
+     */
+    public PageResult<OperationLogPageVO> operationLogListPage(OperationLogSelfPageDTO dto) {
+        OperationLogPageDTO operationLogPageDTO = new OperationLogPageDTO();
+        BeanUtils.copyProperties(dto, operationLogPageDTO);
+        operationLogPageDTO.setUserIds(Collections.singletonList(SecurityUtil.getUserId()));
+        Page<OperationLog> page = operationLogManager.listPage(operationLogPageDTO);
+        List<OperationLogPageVO> result = page.getRecords().stream().map(e -> {
+            OperationLogPageVO vo = new OperationLogPageVO();
+            BeanUtils.copyProperties(e, vo);
+            return vo;
+        }).collect(Collectors.toList());
+
+        return PageResult.build(result, page.getCurrent(), page.getSize(), page.getTotal());
     }
 }

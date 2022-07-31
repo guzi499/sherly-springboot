@@ -11,11 +11,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -82,8 +84,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         List<Long> roleIds = userRoles.stream().map(UserRole::getRoleId).collect(Collectors.toList());
         List<RoleMenu> roleMenus = roleMenuManager.listByRoleIds(roleIds);
         List<Long> menuIds = roleMenus.stream().map(RoleMenu::getMenuId).distinct().collect(Collectors.toList());
-        List<Menu> menus = menuManager.listByIds(menuIds);
-        List<String> permissions = menus.stream().filter(e -> !Objects.equals(e.getMenuType(), DIR)).map(Menu::getPermission).filter(StringUtils::hasText).collect(Collectors.toList());
+
+        List<String> permissions = Collections.emptyList();
+        if (!CollectionUtils.isEmpty(menuIds)) {
+            List<Menu> menus = menuManager.listByIds(menuIds);
+            permissions = menus.stream().filter(e -> !Objects.equals(e.getMenuType(), DIR)).map(Menu::getPermission).filter(StringUtils::hasText).collect(Collectors.toList());
+        }
 
         // 响应userDetails用于登录校验
         LoginUserDetails loginUserDetails = new LoginUserDetails();

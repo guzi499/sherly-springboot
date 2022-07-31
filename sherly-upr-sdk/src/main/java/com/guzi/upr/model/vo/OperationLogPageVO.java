@@ -1,7 +1,5 @@
 package com.guzi.upr.model.vo;
 
-import cn.hutool.core.date.DatePattern;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -19,7 +17,11 @@ public class OperationLogPageVO {
 
     /** 日志类型[enum] */
     @ApiModelProperty(value = "日志类型[enum]")
-    private String type;
+    private Integer type;
+
+    /** 操作用户 */
+    @ApiModelProperty(value = "操作用户")
+    private String operateUser;
 
     /** 描述 */
     @ApiModelProperty(value = "描述")

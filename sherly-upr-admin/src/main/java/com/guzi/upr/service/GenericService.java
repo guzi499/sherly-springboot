@@ -12,7 +12,9 @@ import com.guzi.upr.util.OssUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
@@ -80,6 +82,15 @@ public class GenericService {
         // 菜单信息收集
         List<RoleMenu> roleMenus = roleMenuManager.listByRoleIds(roleIds);
         List<Long> menuIds = roleMenus.stream().map(RoleMenu::getMenuId).collect(Collectors.toList());
+        if (CollectionUtils.isEmpty(menuIds)) {
+            // 组装结果
+            BasicInfoVO basicInfoVO = new BasicInfoVO();
+            basicInfoVO.setBasicUserInfoVO(userVO);
+            basicInfoVO.setBasicRoleInfoVO(roleVOList);
+            basicInfoVO.setBasicMenuInfoVO(Collections.emptyList());
+            basicInfoVO.setBasicPermissionVO(Collections.emptyList());
+            return basicInfoVO;
+        }
         List<Menu> menus = menuManager.listByIds(menuIds);
 
         // 跳转相关

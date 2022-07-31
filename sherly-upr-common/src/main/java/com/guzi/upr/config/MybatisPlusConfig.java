@@ -6,13 +6,8 @@ import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.DynamicTableNameInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.guzi.upr.security.util.SecurityUtil;
-import org.apache.ibatis.jdbc.ScriptRunner;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import javax.sql.DataSource;
-import java.sql.SQLException;
 
 /**
  * @author 谷子毅
@@ -21,9 +16,6 @@ import java.sql.SQLException;
 
 @Configuration
 public class MybatisPlusConfig {
-
-    @Autowired
-    private DataSource dataSource;
 
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
@@ -45,10 +37,5 @@ public class MybatisPlusConfig {
         interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
 
         return interceptor;
-    }
-
-    @Bean
-    public ScriptRunner scriptRunner() throws SQLException {
-        return new ScriptRunner(dataSource.getConnection());
     }
 }

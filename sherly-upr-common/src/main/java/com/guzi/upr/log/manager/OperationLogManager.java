@@ -18,7 +18,7 @@ public class OperationLogManager extends ServiceImpl<OperationLogMapper, Operati
         SherlyLambdaQueryWrapper<OperationLog> wrapper = new SherlyLambdaQueryWrapper<>();
         wrapper
                 .eqIfExist(OperationLog::getType, dto.getType())
-                .eqIfExist(OperationLog::getCreateUserId, dto.getUserId())
+                .inIfExist(OperationLog::getCreateUserId, dto.getUserIds())
                 .eqIfExist(OperationLog::getRequestMethod, dto.getRequestMethod())
                 .likeIfExist(OperationLog::getUri, dto.getUri())
                 .betweenIfExist(OperationLog::getDuration, dto.getBeginDuration(), dto.getEndDuration())
