@@ -186,7 +186,7 @@ public class LoginService {
         List<String> tenantCodes = StrUtil.split(accountUser.getTenantData(), ",");
         List<Tenant> tenants = tenantManager.listAvailableByTenantCodes(tenantCodes);
         if (CollectionUtils.isEmpty(tenants)) {
-            throw new BizException(TENANT_UNABLE);
+            throw new BizException(NO_TENANT);
         }
 
         SecurityUtil.clearOperateTenantCode();

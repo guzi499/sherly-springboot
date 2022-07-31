@@ -33,8 +33,7 @@ import java.util.stream.Collectors;
 
 import static com.guzi.upr.model.contants.CommonConstants.ENABLE;
 import static com.guzi.upr.model.contants.CommonConstants.MALE;
-import static com.guzi.upr.model.exception.enums.AdminErrorEnum.USER_LIMIT;
-import static com.guzi.upr.model.exception.enums.AdminErrorEnum.USER_REPEAT;
+import static com.guzi.upr.model.exception.enums.AdminErrorEnum.*;
 
 /**
  * @author 谷子毅
@@ -200,6 +199,10 @@ public class UserService {
      */
     @Transactional(rollbackFor = Exception.class)
     public void removeOne(Long userId) {
+        if (Objects.equals(userId, 1L)) {
+            throw new BizException(DELETE_USER_ERROR);
+        }
+
         User user = userManager.getById(userId);
         AccountUser accountUser = accountUserManager.getByPhone(user.getPhone());
         List<String> split = StrUtil.split(accountUser.getTenantData(), ",");

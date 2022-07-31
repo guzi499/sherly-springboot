@@ -17,7 +17,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static com.guzi.upr.model.contants.CommonConstants.ROOT_PARENT_ID;
-import static com.guzi.upr.model.exception.enums.AdminErrorEnum.DEPARTMENT_REPEAT;
+import static com.guzi.upr.model.exception.enums.AdminErrorEnum.*;
 
 /**
  * @author 周孟凡
@@ -90,6 +90,9 @@ public class DepartmentService {
      * @param dto
      */
     public void updateOne(DepartmentUpdateDTO dto) {
+        if (Objects.equals(dto.getDepartmentId(), 1L)) {
+            throw new BizException(UPDATE_DEPT_ERROR);
+        }
         // 查重 排除自身
         Department one = departmentManager.getByDepartmentName(dto.getDepartmentName());
         // 如果待修改名称已存在且不为自身
@@ -107,6 +110,9 @@ public class DepartmentService {
      * @param departmentId
      */
     public void removeOne(Long departmentId) {
+        if (Objects.equals(departmentId, 1L)) {
+            throw new BizException(DELETE_DEPT_ERROR);
+        }
         departmentManager.removeById(departmentId);
         userManager.updateDepartmentId(departmentId);
     }

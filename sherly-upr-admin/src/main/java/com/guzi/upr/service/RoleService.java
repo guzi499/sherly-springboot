@@ -25,8 +25,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static com.guzi.upr.model.exception.enums.AdminErrorEnum.ROLE_BOUND_USER;
-import static com.guzi.upr.model.exception.enums.AdminErrorEnum.ROLE_REPEAT;
+import static com.guzi.upr.model.exception.enums.AdminErrorEnum.*;
 
 /**
  * @author 谷子毅
@@ -130,6 +129,9 @@ public class RoleService {
      */
     @Transactional(rollbackFor = Exception.class)
     public void removeOne(Long roleId) {
+        if (Objects.equals(roleId, 1L)) {
+            throw new BizException(DELETE_ROLE_ERROR);
+        }
         if (userRoleManager.countByRoleId(roleId) > 0) {
             throw new BizException(ROLE_BOUND_USER);
         }

@@ -6,6 +6,7 @@ import com.guzi.upr.model.dto.TenantInsertDTO;
 import com.guzi.upr.model.dto.TenantMenuUpdateDTO;
 import com.guzi.upr.model.dto.TenantPageDTO;
 import com.guzi.upr.model.dto.TenantUpdateDTO;
+import com.guzi.upr.model.exception.BizException;
 import com.guzi.upr.model.vo.TenantPageVO;
 import com.guzi.upr.service.TenantService;
 import io.swagger.annotations.Api;
@@ -17,6 +18,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Objects;
+
+import static com.guzi.upr.model.exception.enums.AdminErrorEnum.DELETE_TENANT_ERROR;
 
 /**
  * @author 谷子毅
@@ -59,6 +63,9 @@ public class TenantController {
     @PreAuthorize("hasAnyAuthority('tenant:remove_one')")
     @ApiOperation("租户删除")
     public Result removeOne(@RequestParam Long tenantId) {
+        if (Objects.equals(tenantId, 1L)) {
+            throw new BizException(DELETE_TENANT_ERROR);
+        }
         tenantService.removeOne(tenantId);
         return Result.success();
     }
