@@ -2,6 +2,7 @@ package com.guzi.upr.manager;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.guzi.upr.mapper.admin.TenantMapper;
 import com.guzi.upr.model.admin.Tenant;
@@ -35,16 +36,22 @@ public class TenantManager extends ServiceImpl<TenantMapper, Tenant> {
 
     /**
      * 租户条件分页
-     * @param page
+     *
      * @param dto
      * @return
      */
-    public IPage<Tenant> listPage(IPage page, TenantPageDTO dto) {
+    public IPage<Tenant> listPage(TenantPageDTO dto) {
         SherlyLambdaQueryWrapper<Tenant> wrapper = new SherlyLambdaQueryWrapper<>();
-        wrapper.eqIfExist(Tenant::getTenantName, dto.getTenantName())
-                .eqIfExist(Tenant::getTenantCode, dto.getTenantCode())
+        wrapper
+                .likeIfExist(Tenant::getTenantName, dto.getTenantName())
+                .likeIfExist(Tenant::getTenantCode, dto.getTenantCode())
+                .likeIfExist(Tenant::getContactUser, dto.getContactUser())
+                .likeIfExist(Tenant::getContactPhone, dto.getContactPhone())
+                .betweenIfExist(Tenant::getExpireTime, dto.getBeginExpireTime(), dto.getEndExpireTime())
+                .betweenIfExist(Tenant::getUserLimit, dto.getBeginUserLimit(), dto.getEndUserLimit())
+                .betweenIfExist(Tenant::getCreateTime, dto.getBeginTime(), dto.getEndTime())
                 .orderByDesc(Tenant::getTenantId);
-        return this.page(page, wrapper);
+        return this.page(new Page<>(dto.getCurrent(), dto.getSize()), wrapper);
     }
 
     /**

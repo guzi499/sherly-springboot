@@ -2,12 +2,14 @@ package com.guzi.upr.manager;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.guzi.upr.mapper.admin.RoleMapper;
 import com.guzi.upr.model.admin.Role;
+import com.guzi.upr.model.dto.RolePageDTO;
 import com.guzi.upr.model.dto.RoleSelectDTO;
+import com.guzi.upr.util.SherlyLambdaQueryWrapper;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -19,17 +21,15 @@ import java.util.List;
 public class RoleManager extends ServiceImpl<RoleMapper, Role> {
 
     /**
-     * 角色条件分页
-     * @param page
-     * @param roleName
+     * 角色分页
+     * @param dto
      * @return
      */
-    public IPage<Role> listPage(IPage page, String roleName) {
-        LambdaQueryWrapper<Role> wrapper = new LambdaQueryWrapper<>();
-        if (StringUtils.hasText(roleName)) {
-            wrapper.like(Role::getRoleName, roleName);
-        }
-        return this.page(page, wrapper);
+    public IPage<Role> listPage(RolePageDTO dto) {
+        SherlyLambdaQueryWrapper<Role> wrapper = new SherlyLambdaQueryWrapper<>();
+        wrapper
+                .likeIfExist(Role::getRoleName, dto.getRoleName());
+        return this.page(new Page<>(dto.getCurrent(), dto.getSize()), wrapper);
     }
 
     /**

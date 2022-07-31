@@ -26,7 +26,7 @@ public class UserManager extends ServiceImpl<UserMapper, User> {
      * @param dto
      * @return
      */
-    public IPage<User> page(UserPageDTO dto) {
+    public IPage<User> listPage(UserPageDTO dto) {
         SherlyLambdaQueryWrapper<User> wrapper = new SherlyLambdaQueryWrapper<>();
         wrapper.likeIfExist(User::getPhone, dto.getPhone())
                 .likeIfExist(User::getRealName, dto.getRealName())

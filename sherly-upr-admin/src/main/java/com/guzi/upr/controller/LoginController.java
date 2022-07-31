@@ -50,6 +50,13 @@ public class LoginController {
         return Result.success(loginService.availableList(phone));
     }
 
+    @PostMapping("/available_list_check")
+    @ApiOperation("可用租户列表")
+    @SherlyLog(noRecord = true)
+    public Result<List<LoginTenantVO>> availableListCheck(@RequestBody LoginDTO dto) {
+        return Result.success(loginService.availableListCheck(dto));
+    }
+
     @PutMapping("/login_change")
     @ApiOperation("切换登录租户")
     @SherlyLog(noRecord = true)

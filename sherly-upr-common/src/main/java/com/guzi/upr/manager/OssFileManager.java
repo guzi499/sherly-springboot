@@ -22,7 +22,11 @@ public class OssFileManager extends ServiceImpl<OssFileMapper, OssFile> {
      */
     public IPage<OssFile> listPage(OssFilePageDTO dto) {
         SherlyLambdaQueryWrapper<OssFile> wrapper = new SherlyLambdaQueryWrapper<>();
-        wrapper.orderByDesc(OssFile::getFileId);
+        wrapper
+                .eqIfExist(OssFile::getConfigId, dto.getConfigId())
+                .likeIfExist(OssFile::getPath, dto.getPath())
+                .betweenIfExist(OssFile::getCreateTime, dto.getBeginTime(), dto.getEndTime())
+                .orderByDesc(OssFile::getFileId);
         return this.page(new Page<>(dto.getCurrent(), dto.getSize()), wrapper);
     }
 }

@@ -1,7 +1,8 @@
 package com.guzi.upr.log.model;
 
-import com.baomidou.mybatisplus.annotation.*;
-import com.guzi.upr.model.BaseModel;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.util.Date;
@@ -20,7 +21,7 @@ public class LoginLog {
     /** 登录账号 */
     private String username;
 
-    /** 登录方式 */
+    /** 登录方式[enum] */
     private Integer type;
 
     /** 请求ip */
