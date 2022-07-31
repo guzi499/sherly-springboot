@@ -72,7 +72,6 @@ public class RoleController {
     }
 
     @GetMapping("/list_all")
-    @PreAuthorize("hasAnyAuthority('role:list_all')")
     @ApiOperation("角色查询")
     public Result<List<RoleSelectVO>> listAll(RoleSelectDTO dto) {
         return Result.success(roleService.listAll(dto));

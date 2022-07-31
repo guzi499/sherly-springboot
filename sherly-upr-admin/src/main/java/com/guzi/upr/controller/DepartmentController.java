@@ -29,7 +29,6 @@ public class DepartmentController {
     private DepartmentService departmentService;
 
     @GetMapping("/list_tree")
-    @PreAuthorize("hasAnyAuthority('department:list_tree')")
     @ApiOperation("查询部门树")
     public Result<List<DepartmentVO>> listTree() {
         return Result.success(departmentService.listTree());
