@@ -1,7 +1,6 @@
 package com.guzi.upr.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.guzi.upr.manager.RoleManager;
 import com.guzi.upr.manager.RoleMenuManager;
 import com.guzi.upr.manager.UserRoleManager;
@@ -51,7 +50,7 @@ public class RoleService {
      */
     public PageResult listPage(RolePageDTO dto) {
         // 分页查询
-        IPage<Role> page = roleManager.listPage(new Page<>(dto.getCurrent(), dto.getSize()), dto.getRoleName());
+        IPage<Role> page = roleManager.listPage(dto);
 
         // 对象转换成vo类型
         List<RolePageVO> result = page.getRecords().stream().map(e -> {

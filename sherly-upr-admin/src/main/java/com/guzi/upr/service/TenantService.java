@@ -3,7 +3,6 @@ package com.guzi.upr.service;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.guzi.upr.constants.SqlParam;
 import com.guzi.upr.constants.SqlStatement;
 import com.guzi.upr.manager.*;
@@ -78,7 +77,7 @@ public class TenantService {
      */
     public PageResult listPage(TenantPageDTO dto) {
 
-        IPage<Tenant> page = tenantManager.listPage(new Page<>(dto.getCurrent(), dto.getSize()), dto);
+        IPage<Tenant> page = tenantManager.listPage(dto);
 
         List<TenantPageVO> result = page.getRecords().stream().map(e -> {
             TenantPageVO vo = new TenantPageVO();
