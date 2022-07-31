@@ -200,12 +200,11 @@ public class LoginService {
     @Transactional(rollbackFor = Exception.class)
     public void loginChange(String tenantCode, HttpServletRequest request) throws Exception {
         String phone = SecurityUtil.getPhone();
-        AccountUser accountUser = accountUserManager.getByPhone(phone);
 
         SecurityModel securityModel = new SecurityModel();
         securityModel.setTenantCode(GlobalPropertiesUtil.SHERLY_PROPERTIES.getDefaultDb());
         SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(securityModel, null));
-
+        AccountUser accountUser = accountUserManager.getByPhone(phone);
         accountUser.setLastLoginTenantCode(tenantCode);
         accountUserManager.updateById(accountUser);
 

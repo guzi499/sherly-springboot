@@ -1,5 +1,6 @@
 package com.guzi.upr.service;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -24,6 +25,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static com.guzi.upr.model.contants.CommonConstants.ENABLE;
@@ -176,14 +179,35 @@ public class TenantService {
 
     public void updateMenu(TenantMenuUpdateDTO dto) {
         Tenant tenant = tenantManager.getById(dto.getTenantId());
+        if (tenant.getTenantCode().equals(GlobalPropertiesUtil.SHERLY_PROPERTIES.getDefaultDb())) {
+            return;
+        }
 
         List<Long> menuIds = dto.getMenuIds();
         List<Menu> menus = menuManager.listByIds(menuIds);
 
         SecurityUtil.setOperateTenantCode(tenant.getTenantCode());
 
+        // 先清空菜单，再分配新的菜单
+        menuManager.removeAll();
         menuManager.saveBatch(menus);
-        roleMenuManager.saveRoleMenu(1L, menuIds);
+
+        // 处理角色菜单数据
+        List<Role> roles = roleManager.list();
+        roles.forEach(e -> {
+            // 如果是管理员
+            if (Objects.equals(e.getRoleId(), 1L)) {
+                roleMenuManager.removeRoleMenuByRoleId(1L);
+                roleMenuManager.saveRoleMenu(1L, menuIds);
+                return;
+            }
+            // 如果是其他角色
+            List<RoleMenu> roleMenus = roleMenuManager.listByRoleId(e.getRoleId());
+            List<Long> oldMenuIds = roleMenus.stream().map(RoleMenu::getMenuId).collect(Collectors.toList());
+            Set<Long> resultMenuIds = CollUtil.intersectionDistinct(menuIds, oldMenuIds);
+            roleMenuManager.removeRoleMenuByRoleId(e.getRoleId());
+            roleMenuManager.saveRoleMenu(e.getRoleId(), resultMenuIds);
+        });
 
         SecurityUtil.clearOperateTenantCode();
     }
