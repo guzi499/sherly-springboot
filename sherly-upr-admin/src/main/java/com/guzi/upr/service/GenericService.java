@@ -6,12 +6,11 @@ import com.guzi.upr.model.vo.BasicInfoVO;
 import com.guzi.upr.model.vo.BasicMenuInfoVO;
 import com.guzi.upr.model.vo.BasicRoleInfoVO;
 import com.guzi.upr.model.vo.BasicUserInfoVO;
-import com.guzi.upr.security.model.SecurityModel;
 import com.guzi.upr.security.util.SecurityUtil;
+import com.guzi.upr.util.GlobalPropertiesUtil;
 import com.guzi.upr.util.OssUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
@@ -54,15 +53,17 @@ public class GenericService {
      * @return
      */
     public BasicInfoVO getBasicData() throws Exception {
-        SecurityModel securityModel = (SecurityModel) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Long userId = securityModel.getUserId();
+        Long userId = SecurityUtil.getUserId();
+
+        SecurityUtil.setOperateTenantCode(GlobalPropertiesUtil.SHERLY_PROPERTIES.getDefaultDb());
+        Tenant tenant = tenantManager.getByTenantCode(SecurityUtil.getTenantCode());
+        SecurityUtil.clearOperateTenantCode();
 
         // 用户信息收集
         User user = userManager.getById(userId);
         BasicUserInfoVO userVO = new BasicUserInfoVO();
         BeanUtils.copyProperties(user, userVO);
         userVO.setAvatar(ossUtil.accessUrl(userVO.getAvatar()));
-        Tenant tenant = tenantManager.getByTenantCode(SecurityUtil.getTenantCode());
         userVO.setTenantCode(tenant.getTenantCode());
         userVO.setTenantName(tenant.getTenantName());
 

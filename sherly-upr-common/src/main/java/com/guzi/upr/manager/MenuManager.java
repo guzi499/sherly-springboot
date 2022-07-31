@@ -23,4 +23,11 @@ public class MenuManager extends ServiceImpl<MenuMapper, Menu> {
         wrapper.eq(Menu::getParentId, menuId);
         return this.count(wrapper);
     }
+
+    /**
+     * 菜单清空
+     */
+    public void removeAll() {
+        this.baseMapper.removeAll();
+    }
 }
