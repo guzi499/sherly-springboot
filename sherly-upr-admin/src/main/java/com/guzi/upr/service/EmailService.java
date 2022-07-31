@@ -6,10 +6,13 @@ import com.guzi.upr.manager.EmailConfigManager;
 import com.guzi.upr.model.admin.EmailConfig;
 import com.guzi.upr.model.dto.EmailConfigDTO;
 import com.guzi.upr.model.dto.EmailSendDTO;
+import com.guzi.upr.model.exception.BizException;
 import com.guzi.upr.model.vo.EmailConfigVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import static com.guzi.upr.model.exception.enums.AdminErrorEnum.NO_EMAIL_CONFIG;
 
 /**
  * @author 谷子毅
@@ -51,6 +54,9 @@ public class EmailService {
      */
     public void send(EmailSendDTO dto) {
         EmailConfig emailConfig = emailConfigManager.getOne(null);
+        if (emailConfig == null) {
+            throw new BizException(NO_EMAIL_CONFIG);
+        }
         // 封装
         MailAccount account = new MailAccount();
         // 设置用户
