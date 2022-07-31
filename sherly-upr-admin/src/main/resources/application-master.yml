@@ -14,6 +14,8 @@ spring:
     host: 101.34.169.185
     port: 6379
     password: mpw:tNvIJM/7zuhDi3RoOr2KAA==
+    database: 0
+    timeout: 1000
 
   # mysql配置
   datasource:
@@ -21,6 +23,15 @@ spring:
     url: jdbc:mysql://101.34.169.185:3306/sherly?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai&allowMultiQueries=true&rewriteBatchedStatements=true
     username: mpw:tNvIJM/7zuhDi3RoOr2KAA==
     password: mpw:tNvIJM/7zuhDi3RoOr2KAA==
+    hikari:
+      connection-timeout: 60000
+      validation-timeout: 3000
+      idle-timeout: 60000
+      login-timeout: 5
+      max-lifetime: 60000
+      maximum-pool-size: 10
+      minimum-idle: 10
+      read-only: false
 
 logging:
   file:

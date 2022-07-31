@@ -39,7 +39,9 @@ public enum AdminErrorEnum implements IBaseError {
     USER_PASSWORD_ERROR("000-006-001", "旧密码错误！"),
     USER_PASSWORD_REPEAT("000-006-002", "新旧密码相同，禁止修改！"),
     /*============================邮件管理=======================*/
+    NO_EMAIL_CONFIG("000-050-001", "失败，请检查邮箱配置！"),
     /*============================对象存储=======================*/
+    NO_OSS_CONFIG("000-051-001", "失败，请检查存储配置！"),
     ;
 
     private final String code;

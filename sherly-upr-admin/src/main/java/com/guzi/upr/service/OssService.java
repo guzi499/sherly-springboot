@@ -6,6 +6,7 @@ import com.guzi.upr.manager.OssFileManager;
 import com.guzi.upr.model.PageResult;
 import com.guzi.upr.model.admin.OssFile;
 import com.guzi.upr.model.dto.OssFilePageDTO;
+import com.guzi.upr.model.exception.BizException;
 import com.guzi.upr.model.vo.OssFilePageVO;
 import com.guzi.upr.storage.model.OssClient;
 import com.guzi.upr.util.OssUtil;
@@ -16,6 +17,8 @@ import org.springframework.stereotype.Service;
 import java.io.ByteArrayInputStream;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.guzi.upr.model.exception.enums.AdminErrorEnum.NO_OSS_CONFIG;
 
 /**
  * @author 谷子毅
@@ -37,11 +40,13 @@ public class OssService {
      * @throws Exception
      */
     public String uploadOne(byte[] fileBytes, String path) throws Exception {
-        String newPath = System.currentTimeMillis() + "$" + path;
-
-        String type = FileTypeUtil.getType(new ByteArrayInputStream(fileBytes));
-
         OssClient ossClient = ossUtil.getOssClient();
+        if (ossClient == null) {
+            throw new BizException(NO_OSS_CONFIG);
+        }
+
+        String newPath = System.currentTimeMillis() + "$" + path;
+        String type = FileTypeUtil.getType(new ByteArrayInputStream(fileBytes));
         ossClient.upload(fileBytes, newPath);
 
         OssFile ossFile = new OssFile();
