@@ -29,7 +29,6 @@ public class MenuController {
     private MenuService menuService;
 
     @GetMapping("/list_tree")
-    @PreAuthorize("hasAnyAuthority('menu:list_tree')")
     @ApiOperation("查询菜单树")
     public Result<List<MenuVO>> listTree() {
         return Result.success(menuService.listTree());

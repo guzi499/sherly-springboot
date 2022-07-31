@@ -38,6 +38,7 @@ public class LoginController {
 
     @GetMapping("/logout")
     @ApiOperation("登出")
+    @SherlyLog(noRecord = true)
     public Result logout() {
         loginService.logout();
         return Result.success();
@@ -59,7 +60,6 @@ public class LoginController {
 
     @PutMapping("/login_change")
     @ApiOperation("切换登录租户")
-    @SherlyLog(noRecord = true)
     public Result loginChange(@RequestParam String tenantCode, HttpServletRequest request) throws Exception {
         loginService.loginChange(tenantCode, request);
         return Result.success();

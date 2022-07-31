@@ -89,7 +89,6 @@ public class UserController {
     }
 
     @GetMapping("/list_all")
-    @PreAuthorize("hasAnyAuthority('user:list_all')")
     @ApiOperation("用户查询")
     public Result<List<UserSelectVO>> listAll(UserSelectDTO dto) {
         return Result.success(userService.listAll(dto));
