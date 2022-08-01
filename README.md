@@ -67,11 +67,6 @@
 
 添加我的企业微信，邀请您加入企业微信外部交流群
 
-### 相关文档
-项目启动文档：[传送门链接](https://gitee.com/guzi499/sherly-springboot/blob/1.1-RELEASE/sherly-upr-admin/src/main/resources/markdown/sherly%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.md)
-
-开发规范文档:[传送门链接](https://gitee.com/guzi499/sherly-springboot/blob/1.1-RELEASE/sherly-upr-admin/src/main/resources/markdown/sherly%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.md)
-
 ### 特别鸣谢
 <img width="120" src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.png" alt="JetBrains Logo (Main) logo.">
 
