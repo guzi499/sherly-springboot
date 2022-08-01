@@ -10,6 +10,7 @@ import com.guzi.upr.model.vo.DepartmentVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Comparator;
 import java.util.List;
@@ -109,6 +110,7 @@ public class DepartmentService {
      * 部门删除
      * @param departmentId
      */
+    @Transactional(rollbackFor = Exception.class)
     public void removeOne(Long departmentId) {
         if (Objects.equals(departmentId, 1L)) {
             throw new BizException(DELETE_DEPT_ERROR);

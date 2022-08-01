@@ -27,6 +27,8 @@ public enum AdminErrorEnum implements IBaseError {
     NO_REGISTER("000-002-003", "当前账号未注册！"),
     ERR_USR_PWD("000-002-004", "用户名或密码错误！"),
     DELETE_USER_ERROR("000-002-005", "顶级用户禁止删除！"),
+    BAN_USER_ERROR("000-002-006", "顶级用户禁止禁用！"),
+    UPDATE_USER_ERROR("000-002-007", "顶级用户禁止修改！"),
     /*=============================角色管理========================*/
     ROLE_REPEAT("000-003-001", "该角色已存在！"),
     ROLE_BOUND_USER("000-003-002", "当前角色已绑定用户，禁止删除！"),

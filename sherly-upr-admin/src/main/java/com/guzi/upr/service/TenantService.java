@@ -21,6 +21,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
@@ -89,6 +90,7 @@ public class TenantService {
      * 租户新增
      * @param dto
      */
+    @Transactional(rollbackFor = Exception.class)
     public void saveOne(TenantInsertDTO dto) {
         // 查重
         Tenant one = tenantManager.getByTenantNameOrTenantCode(dto.getTenantName(), dto.getTenantCode());
@@ -132,7 +134,7 @@ public class TenantService {
 
         // 新建角色
         Role role = new Role();
-        role.setRoleName("管理员");
+        role.setRoleName("超级管理员");
         roleManager.save(role);
 
         // 新建用户
@@ -173,6 +175,11 @@ public class TenantService {
         tenantManager.removeById(tenantId);
     }
 
+    /**
+     * 租户菜单更新
+     * @param dto
+     */
+    @Transactional(rollbackFor = Exception.class)
     public void updateMenu(TenantMenuUpdateDTO dto) {
         Tenant tenant = tenantManager.getById(dto.getTenantId());
         if (tenant.getTenantCode().equals(GlobalPropertiesUtil.SHERLY_PROPERTIES.getDefaultDb())) {

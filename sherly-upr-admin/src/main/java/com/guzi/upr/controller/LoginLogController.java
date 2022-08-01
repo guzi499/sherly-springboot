@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,7 +35,7 @@ public class LoginLogController {
         return Result.success(loginLogService.listPage(dto));
     }
 
-    @GetMapping("/remove_all")
+    @DeleteMapping("/remove_all")
     @PreAuthorize("hasAnyAuthority('login_log:remove_all')")
     @ApiOperation("登录日志清空")
     public Result removeAll() {

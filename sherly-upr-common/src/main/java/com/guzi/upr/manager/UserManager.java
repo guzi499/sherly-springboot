@@ -45,7 +45,7 @@ public class UserManager extends ServiceImpl<UserMapper, User> {
      */
     public void updateDepartmentId(Long departmentId) {
         LambdaUpdateWrapper<User> wrapper = new LambdaUpdateWrapper<>();
-        wrapper.set(User::getDepartmentId, null)
+        wrapper.set(User::getDepartmentId, 1L)
                 .eq(User::getDepartmentId, departmentId);
         this.update(wrapper);
     }

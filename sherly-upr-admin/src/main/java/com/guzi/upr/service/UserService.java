@@ -185,6 +185,9 @@ public class UserService {
      */
     @Transactional(rollbackFor = Exception.class)
     public void updateOne(UserUpdateDTO dto) {
+        if (Objects.equals(dto.getUserId(), 1L)) {
+            throw new BizException(UPDATE_USER_ERROR);
+        }
         User user = new User();
         BeanUtils.copyProperties(dto, user);
         userManager.updateById(user);
@@ -219,6 +222,9 @@ public class UserService {
      * @param userId
      */
     public void banOne(Long userId, Integer enable) {
+        if (Objects.equals(userId, 1L)) {
+            throw new BizException(BAN_USER_ERROR);
+        }
         userManager.banOne(userId, enable);
     }
 
