@@ -16,6 +16,12 @@ spring:
     port: 6379
     password: mpw:tNvIJM/7zuhDi3RoOr2KAA==
     database: 0
+    lettuce:
+      pool:
+        max-active: 100
+        max-wait: -1ms
+        max-idle: 8
+        min-idle: 1
     timeout: 1000
 
   # mysql配置
