@@ -55,7 +55,7 @@
 <img height="120" src="https://gitee.com/guzi499/sherly-springboot/raw/develop/sherly-springboot/display-image/menu.png">
 
 ### 演示地址
-[传送门链接](http://114.116.37.42/)
+[传送门链接](http://101.34.169.185:90)
 
 ### 相关文档
 项目启动文档：[传送门链接](https://gitee.com/guzi499/sherly-springboot/blob/develop/sherly-upr-admin/src/main/resources/markdown/%E9%A1%B9%E7%9B%AE%E5%90%AF%E5%8A%A8%E6%96%87%E6%A1%A3.md)
