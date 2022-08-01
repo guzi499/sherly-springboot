@@ -1,7 +1,7 @@
 
 spring:
   profiles:
-    active: master
+    active: develop
     default: develop
 
   application:
