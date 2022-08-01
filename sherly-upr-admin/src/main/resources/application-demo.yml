@@ -1,12 +1,12 @@
 sherly:
   dev-flag: false
-  default-db: sherly
+  default-db: sherly_demo
   default-password: 123456
   default-avatar: https://portrait.gitee.com/uploads/avatars/user/2730/8190589_guzi499_1602830711.png!avatar200
   demo-env: true
 
 server:
-  port: 8888
+  port: 8887
 
 spring:
 

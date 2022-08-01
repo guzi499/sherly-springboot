@@ -39,8 +39,8 @@ public class TestAop {
         List<String> enableUris = new ArrayList<>();
         enableUris.add("/api/login");
         enableUris.add("/api/logout");
-        enableUris.add("/available_list_check");
-        enableUris.add("/login_change");
+        enableUris.add("/api/available_list_check");
+        enableUris.add("/api/login_change");
         enableUris.add("/api/login");
 
         HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
