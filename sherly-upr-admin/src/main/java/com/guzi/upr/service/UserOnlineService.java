@@ -57,7 +57,7 @@ public class UserOnlineService {
                 continue;
             }
             // 根据查询条件过滤
-            if (dto.getPhone() != null && !Objects.equals(dto.getPhone(), userOnline.getPhone())) {
+            if (dto.getPhone() != null && !userOnline.getPhone().contains(dto.getPhone())) {
                 continue;
             }
             result.add(userOnline);
