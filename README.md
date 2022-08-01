@@ -38,10 +38,17 @@
     - 内容管理
 
 ### 项目特色
-- 支持可开关的自定义响应，方便测试环境下及时排查bug，避免查日志的困扰。同时生产环境一键关闭错误堆栈，面向用户更加友好。
-- 支持S3规范下的所有云存储厂商，同时测试学习时可以使用本地存储。
+- 支持可开关的自定义响应结果，方便测试环境下及时排查bug，避免查日志的困扰。同时生产环境一键关闭错误堆栈，面向用户更加友好。
+- 支持演示环境，禁用所有的修改接口。
+- 支持S3规范下的所有云存储厂商，同时测试学习时可以使用本地存储，每个租户都可以配置自己的对象存储方案。
 - 支持Excel导出，可参考用户的导出，轻而易举的实现各种数据导出。
 - 架构可向微服务拓展，支持参数注解校验，knife4j文档。
+- 支持定制化异常枚举，实现动态格式化枚举内容。
+- 支持多租户在线切换，灵感来源于企业微信。
+- 支持操作日志记录，及时处理和复现bug，不用再去翻服务器日志。
+- 支持多租户权限、用户上限、过期时间动态配置，随时启用和禁用下属租户的功能。
+- 架构支持多数据源拓展，租户分库的优势体现的淋漓尽致。
+- 支持jenkins自动构建部署，只需简单配置jenkins服务即可。
 
 ### 演示图片
 <img height="120" src="https://gitee.com/guzi499/sherly-springboot/raw/develop/sherly-springboot/display-image/login.png">
@@ -52,6 +59,11 @@
 <img height="120" src="https://gitee.com/guzi499/sherly-springboot/raw/develop/sherly-springboot/wx.jpg">
 
 添加我的企业微信，邀请您加入企业微信外部交流群
+
+### 相关文档
+项目启动文档：[传送门链接](https://gitee.com/guzi499/sherly-springboot/blob/develop/sherly-upr-admin/src/main/resources/markdown/sherly%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.md)
+
+开发规范文档:[传送门链接](https://gitee.com/guzi499/sherly-springboot/blob/develop/sherly-upr-admin/src/main/resources/markdown/sherly%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.md)
 
 ### 特别鸣谢
 <img width="120" src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.png" alt="JetBrains Logo (Main) logo.">
