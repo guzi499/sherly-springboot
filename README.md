@@ -54,16 +54,18 @@
 <img height="120" src="https://gitee.com/guzi499/sherly-springboot/raw/develop/sherly-springboot/display-image/login.png">
 <img height="120" src="https://gitee.com/guzi499/sherly-springboot/raw/develop/sherly-springboot/display-image/menu.png">
 
+### 演示地址
+[传送门链接](http://114.116.37.42/)
+
+### 相关文档
+项目启动文档：[传送门链接](https://gitee.com/guzi499/sherly-springboot/blob/develop/sherly-upr-admin/src/main/resources/markdown/%E9%A1%B9%E7%9B%AE%E5%90%AF%E5%8A%A8%E6%96%87%E6%A1%A3.md)
+
+开发规范文档：[传送门链接](https://gitee.com/guzi499/sherly-springboot/blob/develop/sherly-upr-admin/src/main/resources/markdown/sherly%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.md)
 
 ### 反馈交流
 <img height="120" src="https://gitee.com/guzi499/sherly-springboot/raw/develop/sherly-springboot/wx.jpg">
 
 添加我的企业微信，邀请您加入企业微信外部交流群
-
-### 相关文档
-项目启动文档：[传送门链接](https://gitee.com/guzi499/sherly-springboot/blob/develop/sherly-upr-admin/src/main/resources/markdown/sherly%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.md)
-
-开发规范文档:[传送门链接](https://gitee.com/guzi499/sherly-springboot/blob/develop/sherly-upr-admin/src/main/resources/markdown/sherly%E5%90%8E%E7%AB%AF%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83.md)
 
 ### 特别鸣谢
 <img width="120" src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.png" alt="JetBrains Logo (Main) logo.">
