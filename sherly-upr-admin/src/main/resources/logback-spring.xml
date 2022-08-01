@@ -34,7 +34,7 @@
         </root>
     </springProfile>
 
-    <springProfile name="test,master">
+    <springProfile name="test,demo">
         <root level="INFO">
             <appender-ref ref="CONSOLE"/>
             <appender-ref ref="FILE"/>
