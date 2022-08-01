@@ -10,10 +10,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -38,7 +35,7 @@ public class UserOnlineController {
         return Result.success(userOnlineService.listAll(dto));
     }
 
-    @GetMapping("/force_quit")
+    @DeleteMapping("/force_quit")
     @PreAuthorize("hasAnyAuthority('user_online:force_quit')")
     @ApiOperation("强制退出")
     public Result forceQuit(@RequestParam String phone) {

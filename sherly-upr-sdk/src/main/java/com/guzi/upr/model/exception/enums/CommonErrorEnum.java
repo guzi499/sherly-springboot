@@ -21,6 +21,8 @@ public enum CommonErrorEnum implements IBaseError {
 
     /** 401-登录未授权 */
     UNAUTHORIZED("401", "登录未授权！"),
+    /** 402-演示环境 */
+    DEMO_ENV("402", "演示环境，操作被禁止！"),
     /** 403-操作未授权 */
     ACCESS_DENY("403", "操作未授权！"),
     ;

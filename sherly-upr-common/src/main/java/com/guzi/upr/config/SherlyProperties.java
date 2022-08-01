@@ -14,7 +14,10 @@ import org.springframework.stereotype.Component;
 public class SherlyProperties {
 
     /** 开发环境标识 */
-    private Boolean devFlag;
+    private String devFlag;
+
+    /** 演示环境标识 */
+    private String demoEnv;
 
     /** 默认数据库 */
     private String defaultDb;
