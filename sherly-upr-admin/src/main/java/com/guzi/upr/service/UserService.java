@@ -144,7 +144,6 @@ public class UserService {
         }
 
         long userNum = userManager.count();
-        SecurityUtil.setOperateTenantCode(GlobalPropertiesUtil.SHERLY_PROPERTIES.getDefaultDb());
 
         // 注册用户上限校验
         Tenant tenant = tenantManager.getByTenantCode(SecurityUtil.getTenantCode());
@@ -168,7 +167,6 @@ public class UserService {
             accountUser.setTenantData(tenantData);
             accountUserManager.updateById(accountUser);
         }
-        SecurityUtil.clearOperateTenantCode();
 
         User user = new User();
         BeanUtils.copyProperties(dto, user);

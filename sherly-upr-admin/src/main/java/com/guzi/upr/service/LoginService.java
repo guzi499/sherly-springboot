@@ -180,7 +180,6 @@ public class LoginService {
      * @return
      */
     public List<LoginTenantVO> availableList(String phone) {
-        SecurityUtil.setOperateTenantCode(GlobalPropertiesUtil.SHERLY_PROPERTIES.getDefaultDb());
 
         AccountUser accountUser = accountUserManager.getByPhone(phone);
         List<String> tenantCodes = StrUtil.split(accountUser.getTenantData(), ",");
@@ -189,7 +188,6 @@ public class LoginService {
             throw new BizException(NO_TENANT);
         }
 
-        SecurityUtil.clearOperateTenantCode();
         return tenants.stream().map(e -> {
             LoginTenantVO vo = new LoginTenantVO();
             BeanUtils.copyProperties(e, vo);
@@ -237,7 +235,6 @@ public class LoginService {
      * @return
      */
     public List<LoginTenantVO> availableListCheck(LoginDTO dto) {
-        SecurityUtil.setOperateTenantCode(GlobalPropertiesUtil.SHERLY_PROPERTIES.getDefaultDb());
         AccountUser accountUser = accountUserManager.getByPhone(dto.getPhone());
         if (accountUser == null) {
             throw new BizException(NO_REGISTER);
@@ -247,7 +244,6 @@ public class LoginService {
         }
         List<String> tenantCodes = StrUtil.split(accountUser.getTenantData(), ",");
         List<Tenant> tenants = tenantManager.listAvailableByTenantCodes(tenantCodes);
-        SecurityUtil.clearOperateTenantCode();
 
         if (CollectionUtils.isEmpty(tenants)) {
             throw new BizException(NO_TENANT);

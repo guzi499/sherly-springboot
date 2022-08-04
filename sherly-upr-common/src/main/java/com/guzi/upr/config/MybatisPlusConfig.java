@@ -6,8 +6,11 @@ import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.DynamicTableNameInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.guzi.upr.security.util.SecurityUtil;
+import com.guzi.upr.util.GlobalPropertiesUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.List;
 
 /**
  * @author 谷子毅
@@ -17,6 +20,9 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class MybatisPlusConfig {
 
+    private final List<String> COMMON_DBS = GlobalPropertiesUtil.SHERLY_PROPERTIES.getCommonDbs();
+    private final String DEFAULT_DB = GlobalPropertiesUtil.SHERLY_PROPERTIES.getDefaultDb();
+
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor() {
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
@@ -24,11 +30,16 @@ public class MybatisPlusConfig {
         // 动态表名
         DynamicTableNameInnerInterceptor dynamicTableNameInnerInterceptor = new DynamicTableNameInnerInterceptor();
         dynamicTableNameInnerInterceptor.setTableNameHandler((sql, tableName) -> {
-
+            // 1.如果是公用表，直接拼上默认数据库名
+            if (COMMON_DBS.contains(tableName)) {
+                return DEFAULT_DB + "." + tableName;
+            }
+            // 2.如果指定了操作数据库，那么拼上指定的数据库名
             String operateTenantCode = SecurityUtil.getOperateTenantCode();
             if (operateTenantCode != null) {
                 return operateTenantCode + "." + tableName;
             }
+            // 3.否则拼上当前租户的数据库名
             return SecurityUtil.getTenantCode() + "." + tableName;
         });
         interceptor.addInnerInterceptor(dynamicTableNameInnerInterceptor);
