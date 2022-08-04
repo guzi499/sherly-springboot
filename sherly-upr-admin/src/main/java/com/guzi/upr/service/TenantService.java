@@ -117,6 +117,7 @@ public class TenantService {
         } else {
             List<String> split = StrUtil.split(accountUser.getTenantData(), ",");
             split.add(dto.getTenantCode());
+            split = split.stream().filter(StrUtil::isNotBlank).collect(Collectors.toList());
             String tenantData = String.join(",", split);
             accountUser.setTenantData(tenantData);
             accountUserManager.updateById(accountUser);

@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.DynamicTableNameInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.guzi.upr.security.util.SecurityUtil;
-import com.guzi.upr.util.GlobalPropertiesUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -20,19 +19,19 @@ import java.util.List;
 @Configuration
 public class MybatisPlusConfig {
 
-    private final List<String> COMMON_DBS = GlobalPropertiesUtil.SHERLY_PROPERTIES.getCommonDbs();
-    private final String DEFAULT_DB = GlobalPropertiesUtil.SHERLY_PROPERTIES.getDefaultDb();
-
     @Bean
-    public MybatisPlusInterceptor mybatisPlusInterceptor() {
+    public MybatisPlusInterceptor mybatisPlusInterceptor(SherlyProperties sherlyProperties) {
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
+
+        List<String> commonDbs = sherlyProperties.getCommonDbs();
+        String defaultDb = sherlyProperties.getDefaultDb();
 
         // 动态表名
         DynamicTableNameInnerInterceptor dynamicTableNameInnerInterceptor = new DynamicTableNameInnerInterceptor();
         dynamicTableNameInnerInterceptor.setTableNameHandler((sql, tableName) -> {
             // 1.如果是公用表，直接拼上默认数据库名
-            if (COMMON_DBS.contains(tableName)) {
-                return DEFAULT_DB + "." + tableName;
+            if (commonDbs.contains(tableName)) {
+                return defaultDb + "." + tableName;
             }
             // 2.如果指定了操作数据库，那么拼上指定的数据库名
             String operateTenantCode = SecurityUtil.getOperateTenantCode();
