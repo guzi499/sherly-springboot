@@ -157,7 +157,7 @@ public class UserService {
         if (accountUser == null) {
             accountUser = new AccountUser();
             accountUser.setPhone(phone);
-            accountUser.setPassword(GlobalPropertiesUtil.SHERLY_PROPERTIES.getDefaultPassword());
+            accountUser.setPassword(passwordEncoder.encode(GlobalPropertiesUtil.SHERLY_PROPERTIES.getDefaultPassword()));
             accountUser.setTenantData(SecurityUtil.getTenantCode());
             accountUser.setLastLoginTenantCode(SecurityUtil.getTenantCode());
             accountUserManager.save(accountUser);
