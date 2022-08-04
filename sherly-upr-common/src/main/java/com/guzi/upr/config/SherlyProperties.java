@@ -4,6 +4,8 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * @author 谷子毅
  * @date 2022/7/22
@@ -21,6 +23,9 @@ public class SherlyProperties {
 
     /** 默认数据库 */
     private String defaultDb;
+
+    /** 公共数据表 */
+    private List<String> commonDbs;
 
     /** 默认密码 */
     private String defaultPassword;

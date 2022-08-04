@@ -7,7 +7,6 @@ import com.guzi.upr.model.vo.BasicMenuInfoVO;
 import com.guzi.upr.model.vo.BasicRoleInfoVO;
 import com.guzi.upr.model.vo.BasicUserInfoVO;
 import com.guzi.upr.security.util.SecurityUtil;
-import com.guzi.upr.util.GlobalPropertiesUtil;
 import com.guzi.upr.util.OssUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,10 +55,7 @@ public class GenericService {
      */
     public BasicInfoVO getBasicData() throws Exception {
         Long userId = SecurityUtil.getUserId();
-
-        SecurityUtil.setOperateTenantCode(GlobalPropertiesUtil.SHERLY_PROPERTIES.getDefaultDb());
         Tenant tenant = tenantManager.getByTenantCode(SecurityUtil.getTenantCode());
-        SecurityUtil.clearOperateTenantCode();
 
         // 用户信息收集
         User user = userManager.getById(userId);

@@ -144,7 +144,6 @@ public class UserService {
         }
 
         long userNum = userManager.count();
-        SecurityUtil.setOperateTenantCode(GlobalPropertiesUtil.SHERLY_PROPERTIES.getDefaultDb());
 
         // 注册用户上限校验
         Tenant tenant = tenantManager.getByTenantCode(SecurityUtil.getTenantCode());
@@ -157,18 +156,18 @@ public class UserService {
         if (accountUser == null) {
             accountUser = new AccountUser();
             accountUser.setPhone(phone);
-            accountUser.setPassword(GlobalPropertiesUtil.SHERLY_PROPERTIES.getDefaultPassword());
+            accountUser.setPassword(passwordEncoder.encode(GlobalPropertiesUtil.SHERLY_PROPERTIES.getDefaultPassword()));
             accountUser.setTenantData(SecurityUtil.getTenantCode());
             accountUser.setLastLoginTenantCode(SecurityUtil.getTenantCode());
             accountUserManager.save(accountUser);
         } else {
             List<String> split = StrUtil.split(accountUser.getTenantData(), ",");
             split.add(SecurityUtil.getTenantCode());
+            split = split.stream().filter(StrUtil::isNotBlank).collect(Collectors.toList());
             String tenantData = String.join(",", split);
             accountUser.setTenantData(tenantData);
             accountUserManager.updateById(accountUser);
         }
-        SecurityUtil.clearOperateTenantCode();
 
         User user = new User();
         BeanUtils.copyProperties(dto, user);

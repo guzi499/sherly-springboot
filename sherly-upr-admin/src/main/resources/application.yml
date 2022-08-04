@@ -1,3 +1,7 @@
+sherly:
+  common-dbs:
+    - ge_account_user
+    - sys_tenant
 
 spring:
   profiles:
