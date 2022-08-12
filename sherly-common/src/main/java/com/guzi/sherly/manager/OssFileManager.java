@@ -3,7 +3,7 @@ package com.guzi.sherly.manager;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.guzi.sherly.mapper.admin.OssFileMapper;
+import com.guzi.sherly.mapper.OssFileMapper;
 import com.guzi.sherly.model.admin.OssFile;
 import com.guzi.sherly.model.dto.OssFilePageDTO;
 import com.guzi.sherly.util.SherlyLambdaQueryWrapper;

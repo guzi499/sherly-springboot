@@ -6,7 +6,7 @@ import com.guzi.sherly.model.vo.BasicInfoVO;
 import com.guzi.sherly.model.vo.BasicMenuInfoVO;
 import com.guzi.sherly.model.vo.BasicRoleInfoVO;
 import com.guzi.sherly.model.vo.BasicUserInfoVO;
-import com.guzi.sherly.security.util.SecurityUtil;
+import com.guzi.sherly.modules.security.util.SecurityUtil;
 import com.guzi.sherly.util.OssUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

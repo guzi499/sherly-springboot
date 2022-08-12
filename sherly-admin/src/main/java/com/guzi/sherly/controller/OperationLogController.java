@@ -1,11 +1,11 @@
 package com.guzi.sherly.controller;
 
-import com.guzi.sherly.log.service.OperationLogService;
 import com.guzi.sherly.model.PageResult;
 import com.guzi.sherly.model.Result;
 import com.guzi.sherly.model.dto.OperationLogPageDTO;
 import com.guzi.sherly.model.vo.OperationLogPageVO;
 import com.guzi.sherly.model.vo.OperationLogVO;
+import com.guzi.sherly.modules.log.service.OperationLogService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;

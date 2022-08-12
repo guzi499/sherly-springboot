@@ -1,10 +1,10 @@
 package com.guzi.sherly.controller;
 
-import com.guzi.sherly.log.annotation.SherlyLog;
 import com.guzi.sherly.model.Result;
 import com.guzi.sherly.model.dto.LoginDTO;
 import com.guzi.sherly.model.vo.LoginTenantVO;
 import com.guzi.sherly.model.vo.LoginVO;
+import com.guzi.sherly.modules.log.annotation.SherlyLog;
 import com.guzi.sherly.service.LoginService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

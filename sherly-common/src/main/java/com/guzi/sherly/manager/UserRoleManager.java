@@ -2,7 +2,7 @@ package com.guzi.sherly.manager;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.guzi.sherly.mapper.admin.UserRoleMapper;
+import com.guzi.sherly.mapper.UserRoleMapper;
 import com.guzi.sherly.model.admin.UserRole;
 import com.guzi.sherly.util.SherlyLambdaQueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;

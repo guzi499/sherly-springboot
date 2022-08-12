@@ -16,7 +16,7 @@ import com.guzi.sherly.model.exception.BizException;
 import com.guzi.sherly.model.vo.UserPageVo;
 import com.guzi.sherly.model.vo.UserSelectVO;
 import com.guzi.sherly.model.vo.UserVo;
-import com.guzi.sherly.security.util.SecurityUtil;
+import com.guzi.sherly.modules.security.util.SecurityUtil;
 import com.guzi.sherly.util.GlobalPropertiesUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

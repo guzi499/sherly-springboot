@@ -3,9 +3,9 @@ package com.guzi.sherly.util;
 import cn.hutool.core.util.StrUtil;
 import com.guzi.sherly.manager.OssConfigManager;
 import com.guzi.sherly.model.admin.OssConfig;
-import com.guzi.sherly.security.util.SecurityUtil;
-import com.guzi.sherly.storage.OssClientFactory;
-import com.guzi.sherly.storage.model.OssClient;
+import com.guzi.sherly.modules.security.util.SecurityUtil;
+import com.guzi.sherly.modules.storage.OssClientFactory;
+import com.guzi.sherly.modules.storage.model.OssClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

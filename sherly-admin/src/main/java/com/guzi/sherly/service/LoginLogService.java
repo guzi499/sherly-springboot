@@ -1,11 +1,11 @@
 package com.guzi.sherly.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.guzi.sherly.log.manager.LoginLogManager;
-import com.guzi.sherly.log.model.LoginLog;
 import com.guzi.sherly.model.PageResult;
 import com.guzi.sherly.model.dto.LoginLogPageDTO;
 import com.guzi.sherly.model.vo.LoginLogPageVO;
+import com.guzi.sherly.modules.log.manager.LoginLogManager;
+import com.guzi.sherly.modules.log.model.LoginLog;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

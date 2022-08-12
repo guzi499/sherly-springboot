@@ -2,7 +2,7 @@ package com.guzi.sherly.manager;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.guzi.sherly.mapper.admin.RoleMenuMapper;
+import com.guzi.sherly.mapper.RoleMenuMapper;
 import com.guzi.sherly.model.admin.RoleMenu;
 import org.springframework.stereotype.Service;
 

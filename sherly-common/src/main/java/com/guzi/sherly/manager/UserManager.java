@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.guzi.sherly.mapper.admin.UserMapper;
+import com.guzi.sherly.mapper.UserMapper;
 import com.guzi.sherly.model.admin.User;
 import com.guzi.sherly.model.dto.UserPageDTO;
 import com.guzi.sherly.model.dto.UserSelectDTO;

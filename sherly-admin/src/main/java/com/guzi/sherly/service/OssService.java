@@ -8,7 +8,7 @@ import com.guzi.sherly.model.admin.OssFile;
 import com.guzi.sherly.model.dto.OssFilePageDTO;
 import com.guzi.sherly.model.exception.BizException;
 import com.guzi.sherly.model.vo.OssFilePageVO;
-import com.guzi.sherly.storage.model.OssClient;
+import com.guzi.sherly.modules.storage.model.OssClient;
 import com.guzi.sherly.util.OssUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

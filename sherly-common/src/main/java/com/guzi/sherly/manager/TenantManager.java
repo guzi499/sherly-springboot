@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.guzi.sherly.mapper.admin.TenantMapper;
+import com.guzi.sherly.mapper.TenantMapper;
 import com.guzi.sherly.model.admin.Tenant;
 import com.guzi.sherly.model.dto.TenantPageDTO;
 import com.guzi.sherly.util.SherlyLambdaQueryWrapper;

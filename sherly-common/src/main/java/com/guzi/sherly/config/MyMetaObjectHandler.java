@@ -1,7 +1,7 @@
 package com.guzi.sherly.config;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
-import com.guzi.sherly.security.util.SecurityUtil;
+import com.guzi.sherly.modules.security.util.SecurityUtil;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.stereotype.Component;
 

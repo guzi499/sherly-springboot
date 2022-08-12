@@ -14,7 +14,7 @@ import com.guzi.sherly.model.dto.TenantPageDTO;
 import com.guzi.sherly.model.dto.TenantUpdateDTO;
 import com.guzi.sherly.model.exception.BizException;
 import com.guzi.sherly.model.vo.TenantPageVO;
-import com.guzi.sherly.security.util.SecurityUtil;
+import com.guzi.sherly.modules.security.util.SecurityUtil;
 import com.guzi.sherly.util.ExecSqlUtil;
 import com.guzi.sherly.util.GlobalPropertiesUtil;
 import org.springframework.beans.BeanUtils;

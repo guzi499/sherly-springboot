@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import com.guzi.sherly.model.BaseModel;
-import com.guzi.sherly.storage.model.OssClientConfig;
+import com.guzi.sherly.modules.storage.model.OssClientConfig;
 import lombok.Data;
 
 /**

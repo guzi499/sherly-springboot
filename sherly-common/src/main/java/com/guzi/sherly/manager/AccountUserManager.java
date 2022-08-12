@@ -2,7 +2,7 @@ package com.guzi.sherly.manager;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.guzi.sherly.mapper.admin.AccountUserMapper;
+import com.guzi.sherly.mapper.AccountUserMapper;
 import com.guzi.sherly.model.admin.AccountUser;
 import org.springframework.stereotype.Service;
 
