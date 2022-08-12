@@ -1,0 +1,42 @@
+sherly:
+  common-dbs:
+    - ge_account_user
+    - sys_tenant
+
+spring:
+  profiles:
+    active: develop
+    default: develop
+
+  application:
+    name: sherly-admin
+
+  # 适配knife4j高版本
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+
+  # 文件上传限制
+  servlet:
+    multipart:
+      max-file-size: 2MB
+      max-request-size: 2MB
+
+
+# mybatis-plus配置
+mybatis-plus:
+  global-config:
+    # 逻辑删除
+    db-config:
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+
+knife4j:
+  enable: true
+  documents:
+    - locations: classpath:markdown/*
+      name: 前后端联调文档
+      group: default

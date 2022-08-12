@@ -216,7 +216,7 @@ CREATE TABLE `sys_oss_config`  (
 -- ----------------------------
 -- Records of sys_oss_config
 -- ----------------------------
-INSERT INTO `sys_oss_config` VALUES (3, 'minio docker', 5, 'minio', 1, '{\"@class\":\"com.guzi.upr.storage.client.s3.S3OssClientConfig\",\"endpoint\":\"http://101.34.169.185:9000\",\"domainName\":\"http://101.34.169.185:9000\",\"bucket\":\"sherly\",\"accessKey\":\"AKIAIOSFODNN7EXAMPLE\",\"accessSecret\":\"wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY\",\"region\":null}', '2022-06-27 17:41:36', '2022-07-14 00:52:46', 1, 1, 0);
+INSERT INTO `sys_oss_config` VALUES (3, 'minio docker', 5, 'minio', 1, '{\"@class\":\"com.guzi.sherly.storage.client.s3.S3OssClientConfig\",\"endpoint\":\"http://101.34.169.185:9000\",\"domainName\":\"http://101.34.169.185:9000\",\"bucket\":\"sherly\",\"accessKey\":\"AKIAIOSFODNN7EXAMPLE\",\"accessSecret\":\"wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY\",\"region\":null}', '2022-06-27 17:41:36', '2022-07-14 00:52:46', 1, 1, 0);
 
 -- ----------------------------
 -- Table structure for sys_oss_file
