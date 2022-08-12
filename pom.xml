@@ -12,7 +12,7 @@
 
     <groupId>com.guzi.sherly</groupId>
     <artifactId>sherly</artifactId>
-    <version>1.1-RELEASE</version>
+    <version>1.2-SNAPSHOT</version>
 
     <modules>
         <module>sherly-sdk</module>
