@@ -1,7 +1,8 @@
 #!/bin/bash
 # 这里可替换为你自己的执行程序，其他代码无需更改
 APP_NAME=sherly-admin.jar
-PARAM=--mpw.key=xxx --spring.profiles.active=xxx
+SALT=--mpw.key=xxx
+ENV=--spring.profiles.active=xxx
 PORT=8888
 
 # 使用说明，用来提示输入参数
@@ -38,7 +39,7 @@ start(){
   if [ $? -eq "0" ]; then
     echo "${APP_NAME} is already running. pid=${pid} ."
   else
-    nohup java -jar $APP_NAME > log.file 2>&1 &
+    nohup java -jar $APP_NAME $SALT $ENV > log.file 2>&1 &
 	echo "${APP_NAME} is running"
   fi
 }
