@@ -18,8 +18,14 @@ public class Module extends BaseModel {
     @TableId(type = IdType.AUTO)
     private Integer moduleId;
 
+    /** 模块代码 */
+    private Integer moduleCode;
+
     /** 模块名称 */
     private Integer moduleName;
+
+    /** 排序 */
+    private Integer sort;
 
     /** 父模块id */
     private Integer parentId;

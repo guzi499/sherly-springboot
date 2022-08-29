@@ -17,7 +17,7 @@ public class ErrorCode extends BaseModel {
     @TableId(type = IdType.AUTO)
     private Integer errorId;
 
-    /** 错误码 */
+    /** 错误代码 */
     private String errorCode;
 
     /** 错误信息 */
@@ -29,6 +29,6 @@ public class ErrorCode extends BaseModel {
     /** 模块id */
     private String moduleId;
 
-    /** 模块名称 */
-    private String moduleName;
+    /** 模块代码 */
+    private String moduleCode;
 }
