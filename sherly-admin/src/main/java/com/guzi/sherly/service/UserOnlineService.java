@@ -38,17 +38,18 @@ public class UserOnlineService {
      */
     public List<UserOnlineSelectVO> listAll(UserOnlineSelectDTO dto) throws JsonProcessingException {
         // 获取所有在线用户的redisKey
-        Set<String> keys = redisTemplate.keys(RedisKey.GENERATE_USER + "*");
+        Set<String> keys = redisTemplate.keys(RedisKey.SESSION_ID + "*");
 
         // 如果key为空直接返回空
         if (CollectionUtils.isEmpty(keys)) {
             return Collections.emptyList();
         }
 
-        List<UserOnline> result = new ArrayList<>();
+        List<UserOnlineSelectVO> result = new ArrayList<>();
         for (String key : keys) {
 
             String redisString = redisTemplate.opsForValue().get(key);
+            String sessionId = key.split(":")[1];
             RedisSecurityModel redisSecurityModel = OBJECTMAPPER.readValue(redisString, new TypeReference<RedisSecurityModel>() {});
             UserOnline userOnline = redisSecurityModel.getUserOnline();
 
@@ -60,21 +61,19 @@ public class UserOnlineService {
             if (dto.getPhone() != null && !userOnline.getPhone().contains(dto.getPhone())) {
                 continue;
             }
-            result.add(userOnline);
-        }
-
-        return result.stream().map(e -> {
             UserOnlineSelectVO vo = new UserOnlineSelectVO();
-            BeanUtils.copyProperties(e, vo);
-            return vo;
-        }).collect(Collectors.toList());
+            BeanUtils.copyProperties(userOnline, vo);
+            vo.setSessionId(sessionId);
+            result.add(vo);
+        }
+        return result.stream().sorted(Comparator.comparing(UserOnlineSelectVO::getLoginTime).reversed()).collect(Collectors.toList());
     }
 
     /**
      * 强制退出
-     * @param phone
+     * @param sessionId
      */
-    public void forceQuit(String phone) {
-        redisTemplate.delete(RedisKey.GENERATE_USER + phone);
+    public void forceQuit(String sessionId) {
+        redisTemplate.delete(RedisKey.SESSION_ID + sessionId);
     }
 }

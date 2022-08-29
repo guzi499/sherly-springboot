@@ -49,26 +49,23 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
         }
 
         // 解析token数据
-        String keyLabel;
+        String sessionId;
         try {
-            keyLabel = JwtUtil.parseToken(token);
+            sessionId = JwtUtil.parseToken(token);
         } catch(Exception e) {
             filterChain.doFilter(request, response);
             return;
         }
 
-        // 获取手机号
-        String phone = keyLabel.split("#")[0];
-
         // 从redis获取redisSecurityModel
-        String redisString = redisTemplate.opsForValue().get(RedisKey.GENERATE_USER + phone);
+        String redisString = redisTemplate.opsForValue().get(RedisKey.SESSION_ID + sessionId);
         if (redisString == null) {
             filterChain.doFilter(request, response);
             return;
         }
 
         // redis续期
-        redisTemplate.expire(RedisKey.GENERATE_USER + phone, 6, TimeUnit.HOURS);
+        redisTemplate.expire(RedisKey.SESSION_ID + sessionId, 6, TimeUnit.HOURS);
 
         RedisSecurityModel redisSecurityModel = OBJECTMAPPER.readValue(redisString, new TypeReference<RedisSecurityModel>() {});
 

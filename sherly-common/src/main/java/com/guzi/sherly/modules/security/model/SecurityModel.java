@@ -29,4 +29,6 @@ public class SecurityModel {
     /** 姓名 */
     private String realName;
 
+    /** 会话id */
+    private String sessionId;
 }

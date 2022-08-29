@@ -7,6 +7,6 @@ package com.guzi.sherly.constants;
  */
 public class RedisKey {
 
-    /** 账户用户信息 【ge:user:手机号】 */
-    public static final String GENERATE_USER = "ge:user:";
+    /** 账户用户信息 【session:UUID】 */
+    public static final String SESSION_ID = "session:";
 }

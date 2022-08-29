@@ -113,11 +113,11 @@ public class LoginService {
 
         this.updateCache(loginUserDetails, request);
 
-        // 生成key标签作为token内容
-        String keyLabel = dto.getPhone() + "#" + System.currentTimeMillis();
+        // 获取sessionId作为token内容
+        String sessionId = loginUserDetails.getSessionId();
 
         // 生成token返回前端
-        LoginVO loginVO = new LoginVO(JwtUtil.generateToken(keyLabel));
+        LoginVO loginVO = new LoginVO(JwtUtil.generateToken(sessionId));
         // 记录日志
         logRecordUtil.recordLoginLog(request, dto.getPhone(), LOGIN_LOG_SUCCESS, LOGIN_TYPE_PASSWORD);
 
@@ -169,8 +169,7 @@ public class LoginService {
      * 登出
      */
     public void logout() {
-
-        redisTemplate.delete(RedisKey.GENERATE_USER + SecurityUtil.getPhone());
+        redisTemplate.delete(RedisKey.SESSION_ID + SecurityUtil.getSessionId());
 
     }
 
@@ -223,7 +222,7 @@ public class LoginService {
 
         // 权限信息更新到redis
         String redisString = OBJECTMAPPER.writeValueAsString(redisSecurityModel);
-        redisTemplate.opsForValue().set(RedisKey.GENERATE_USER + loginUserDetails.getUsername(), redisString, 6, TimeUnit.HOURS);
+        redisTemplate.opsForValue().set(RedisKey.SESSION_ID + redisSecurityModel.getSecurityModel().getSessionId(), redisString, 6, TimeUnit.HOURS);
 
         // 更新用户信息
         this.updateUser(loginUserDetails.getUser(), request);
