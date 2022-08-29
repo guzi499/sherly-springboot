@@ -49,4 +49,8 @@ public class UserOnlineSelectVO {
     /** 登录浏览器 */
     @ApiModelProperty(value = "登录浏览器")
     private String browser;
+
+    /** 会话id */
+    @ApiModelProperty(value = "会话id")
+    private String sessionId;
 }

@@ -92,6 +92,15 @@ public final class SecurityUtil {
     }
 
     /**
+     * 获取会话id
+     * @return
+     */
+    public static String getSessionId() {
+        SecurityModel securityModel = (SecurityModel) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return securityModel.getSessionId();
+    }
+
+    /**
      * 清空特殊操作数据库code
      */
     public static void clearOperateTenantCode() {

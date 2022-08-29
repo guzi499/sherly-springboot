@@ -38,8 +38,8 @@ public class UserOnlineController {
     @DeleteMapping("/force_quit")
     @PreAuthorize("hasAnyAuthority('user_online:force_quit')")
     @ApiOperation("强制退出")
-    public Result forceQuit(@RequestParam String phone) {
-        userOnlineService.forceQuit(phone);
+    public Result forceQuit(@RequestParam String sessionId) {
+        userOnlineService.forceQuit(sessionId);
         return Result.success();
     }
 }

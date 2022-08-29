@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static com.guzi.sherly.model.contants.CommonConstants.*;
@@ -96,6 +97,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         loginUserDetails.setUser(user);
         loginUserDetails.setAccountUser(accountUser);
         loginUserDetails.setPermissions(permissions);
+        loginUserDetails.setSessionId(UUID.randomUUID().toString());
 
         return loginUserDetails;
     }

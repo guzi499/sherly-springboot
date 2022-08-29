@@ -34,6 +34,9 @@ public class LoginUserDetails implements UserDetails {
     /** 权限list */
     private List<String> permissions;
 
+    /** 会话id */
+    private String sessionId;
+
     /**
      * 获取用户登录缓存对象
      *
@@ -45,6 +48,7 @@ public class LoginUserDetails implements UserDetails {
 
         SecurityModel securityModel = new SecurityModel();
         BeanUtils.copyProperties(user, securityModel);
+        securityModel.setSessionId(sessionId);
         securityModel.setTenantCode(accountUser.getLastLoginTenantCode());
 
         UserOnline userOnline = new UserOnline();
@@ -103,5 +107,9 @@ public class LoginUserDetails implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
     }
 }
