@@ -219,6 +219,7 @@ CREATE TABLE `sys_oss_config`  (
 DROP TABLE IF EXISTS `sys_oss_file`;
 CREATE TABLE `sys_oss_file`  (
   `file_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '文件id',
+  `file_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '文件名称',
   `config_id` bigint(20) NULL DEFAULT NULL COMMENT '配置id',
   `path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '文件相对路径',
   `file_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '文件类型',

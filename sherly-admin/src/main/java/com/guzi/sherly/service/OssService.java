@@ -1,6 +1,7 @@
 package com.guzi.sherly.service;
 
-import cn.hutool.core.io.FileTypeUtil;
+import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.guzi.sherly.manager.OssFileManager;
 import com.guzi.sherly.model.PageResult;
@@ -10,12 +11,14 @@ import com.guzi.sherly.model.exception.BizException;
 import com.guzi.sherly.model.vo.OssFilePageVO;
 import com.guzi.sherly.modules.storage.model.OssClient;
 import com.guzi.sherly.util.OssUtil;
+import lombok.SneakyThrows;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.io.ByteArrayInputStream;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static com.guzi.sherly.model.exception.enums.AdminErrorEnum.NO_OSS_CONFIG;
@@ -35,36 +38,48 @@ public class OssService {
 
     /**
      * 文件上传
-     * @param fileBytes
-     * @param path
-     * @throws Exception
+     * @param file
+     * @param prefix
      */
-    public String uploadOne(byte[] fileBytes, String path) throws Exception {
+    @SneakyThrows
+    public String uploadOne(MultipartFile file, String prefix) {
         OssClient ossClient = ossUtil.getOssClient();
         if (ossClient == null) {
             throw new BizException(NO_OSS_CONFIG);
         }
+        // 1. 获取文件后缀
+        String fileName = file.getOriginalFilename();
+        String suffix = FileUtil.getSuffix(fileName);
 
-        String newPath = System.currentTimeMillis() + "$" + path;
-        String type = FileTypeUtil.getType(new ByteArrayInputStream(fileBytes));
-        ossClient.upload(fileBytes, newPath);
+        // 2. 生成文件相对路径
+        String relativePath = UUID.randomUUID() + "." + suffix;
 
+        // 3. 如果path不为空，则只进行对象的保存
+        if (StrUtil.isNotBlank(prefix)) {
+            relativePath = prefix + relativePath;
+            ossClient.upload(file.getBytes(), relativePath);
+            return relativePath;
+        }
+
+        // 4. 如果path为空，则还需记录保存信息
+        ossClient.upload(file.getBytes(), relativePath);
         OssFile ossFile = new OssFile();
-        ossFile.setFileType(type);
+        ossFile.setFileType(suffix);
+        ossFile.setFileName(fileName);
         ossFile.setConfigId(ossClient.getConfigId());
-        ossFile.setPath(newPath);
-        ossFile.setSize(fileBytes.length);
+        ossFile.setPath(relativePath);
+        ossFile.setSize((int) file.getSize());
         ossFileManager.save(ossFile);
 
-        return newPath;
+        return relativePath;
     }
 
     /**
      * 文件删除
      * @param fileId
-     * @throws Exception
      */
-    public void removeOne(Long fileId) throws Exception {
+    @SneakyThrows
+    public void removeOne(Long fileId) {
         ossFileManager.removeById(fileId);
     }
 
@@ -72,9 +87,9 @@ public class OssService {
      * 文件下载
      * @param path
      * @return
-     * @throws Exception
      */
-    public byte[] downloadOne(String path) throws Exception {
+    @SneakyThrows
+    public byte[] downloadOne(String path) {
         OssClient ossClient = ossUtil.getOssClient();
         return ossClient.download(path);
     }
@@ -106,9 +121,9 @@ public class OssService {
      * 文件链接（如果是S3的话是带过期时间、带url参数签名认证的url）
      * @param path
      * @return
-     * @throws Exception
      */
-    public String accessUrl(String path) throws Exception {
+    @SneakyThrows
+    public String accessUrl(String path) {
         return ossUtil.accessUrl(path);
     }
 }

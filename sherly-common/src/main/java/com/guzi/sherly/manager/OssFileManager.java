@@ -24,6 +24,7 @@ public class OssFileManager extends ServiceImpl<OssFileMapper, OssFile> {
         SherlyLambdaQueryWrapper<OssFile> wrapper = new SherlyLambdaQueryWrapper<>();
         wrapper
                 .eqIfExist(OssFile::getConfigId, dto.getConfigId())
+                .likeIfExist(OssFile::getFileName, dto.getFileName())
                 .likeIfExist(OssFile::getPath, dto.getPath())
                 .betweenIfExist(OssFile::getCreateTime, dto.getBeginTime(), dto.getEndTime())
                 .orderByDesc(OssFile::getFileId);

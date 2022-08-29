@@ -41,8 +41,8 @@ public class OssController {
     @PostMapping("/upload_one")
     @PreAuthorize("hasAnyAuthority('oss:upload_one')")
     @ApiOperation("文件上传")
-    public Result<String> uploadOne(@RequestParam MultipartFile file, @RequestParam String path) throws Exception {
-        return Result.success(ossService.uploadOne(file.getBytes(), path));
+    public Result<String> uploadOne(@RequestParam MultipartFile file) {
+        return Result.success(ossService.uploadOne(file, null));
     }
 
     @GetMapping("/download_one")
@@ -58,14 +58,14 @@ public class OssController {
     @GetMapping("/access_url")
     @PreAuthorize("hasAnyAuthority('oss:access_url')")
     @ApiOperation("文件链接")
-    public Result<String> accessUrl(@RequestParam String path) throws Exception {
+    public Result<String> accessUrl(@RequestParam String path) {
         return Result.success(ossService.accessUrl(path));
     }
 
     @DeleteMapping("/remove_one")
     @PreAuthorize("hasAnyAuthority('oss:remove_one')")
     @ApiOperation("文件删除")
-    public Result removeOne(@RequestParam Long fileId) throws Exception {
+    public Result removeOne(@RequestParam Long fileId) {
         ossService.removeOne(fileId);
         return Result.success();
     }

@@ -17,6 +17,9 @@ public class OssFile extends BaseModel {
     @TableId(type = IdType.AUTO)
     private Long fileId;
 
+    /** 文件名称 */
+    private String fileName;
+
     /** 配置id */
     private Long configId;
 

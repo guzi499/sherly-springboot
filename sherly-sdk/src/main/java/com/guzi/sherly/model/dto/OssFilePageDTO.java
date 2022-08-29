@@ -19,6 +19,10 @@ public class OssFilePageDTO extends PageQuery {
     @ApiModelProperty(value = "配置id")
     private Long configId;
 
+    /** 文件名称 */
+    @ApiModelProperty(value = "文件名称")
+    private String fileName;
+
     /** 文件相对路径 */
     @ApiModelProperty(value = "文件相对路径")
     private String path;
