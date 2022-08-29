@@ -15,6 +15,10 @@ public class OssFilePageVO {
     @ApiModelProperty(value = "文件id")
     private Long fileId;
 
+    /** 文件名称 */
+    @ApiModelProperty(value = "文件名称")
+    private String fileName;
+
     /** 文件相对路径 */
     @ApiModelProperty(value = "文件相对路径")
     private String path;

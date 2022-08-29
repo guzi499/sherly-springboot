@@ -55,8 +55,8 @@ public class UserSelfController {
 
     @PutMapping("/update_avatar")
     @ApiOperation("用户修改头像")
-    public Result updateAvatar(@RequestParam MultipartFile file) throws Exception {
-        String avatarPath = ossService.uploadOne(file.getBytes(), "avatar$" + file.getName());
+    public Result updateAvatar(@RequestParam MultipartFile file) {
+        String avatarPath = ossService.uploadOne(file, "avatar/");
         userSelfService.updateAvatar(avatarPath);
         return Result.success();
     }
