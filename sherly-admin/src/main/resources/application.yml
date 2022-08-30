@@ -25,6 +25,8 @@ spring:
       max-file-size: 2MB
       max-request-size: 2MB
 
+  liquibase:
+    enabled: false
 
 # mybatis-plus配置
 mybatis-plus:
