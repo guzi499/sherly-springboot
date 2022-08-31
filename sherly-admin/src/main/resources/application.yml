@@ -42,3 +42,6 @@ knife4j:
     - locations: classpath:markdown/*
       name: 前后端联调文档
       group: default
+
+flowable:
+  async-executor-activate: false
