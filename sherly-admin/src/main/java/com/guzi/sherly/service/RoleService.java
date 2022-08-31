@@ -58,7 +58,7 @@ public class RoleService {
             return vo;
         }).collect(Collectors.toList());
 
-        return PageResult.build(result, page.getCurrent(), page.getSize(), page.getTotal());
+        return PageResult.build(result, page.getTotal());
     }
 
     /**
