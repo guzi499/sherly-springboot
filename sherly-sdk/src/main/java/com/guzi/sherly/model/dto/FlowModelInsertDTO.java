@@ -21,11 +21,12 @@ public class FlowModelInsertDTO {
     @NotBlank
     private String key;
 
-    /** 模型描述 */
-    @ApiModelProperty(value = "模型描述")
-    private String description;
+    /** 模型元数据 */
+    @ApiModelProperty(value = "模型元数据")
+    private String metaInfo;
 
     /** 模型json */
     @ApiModelProperty(value = "模型xml")
+    @NotBlank
     private String modelXml;
 }

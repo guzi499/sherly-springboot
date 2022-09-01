@@ -2,14 +2,12 @@ package com.guzi.sherly.model.vo;
 
 import lombok.Data;
 
-import java.util.Date;
-
 /**
  * @author 谷子毅
- * @date 2022/8/31
+ * @date 2022/9/1
  */
 @Data
-public class FlowModelPageVO {
+public class FlowModelVO {
     /** 模型id */
     private String id;
 
@@ -22,9 +20,6 @@ public class FlowModelPageVO {
     /** 模型元数据 */
     private String metaInfo;
 
-    /** 创建时间 */
-    private Date createTime;
-
-    /** 最后更新时间 */
-    protected Date lastUpdateTime;
+    /** 模型xml */
+    private String modelXml;
 }
