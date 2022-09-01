@@ -6,6 +6,10 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.guzi.sherly.model.BaseModel;
 import lombok.Data;
 
+/**
+ * @author 谷子毅
+ * @date 2022/8/29
+ */
 @Data
 @TableName("ge_module")
 public class Module extends BaseModel {

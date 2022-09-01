@@ -5,6 +5,10 @@ import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 
+/**
+ * @author 李仁杰
+ * @date 2022/9/1
+ */
 @Data
 public class ErrorCodeInsertDTO {
 
@@ -22,8 +26,8 @@ public class ErrorCodeInsertDTO {
     @ApiModelProperty(value = "错误描述")
     private String description;
 
-    /** 模块代码 */
-    @ApiModelProperty(value = "模块代码", required = true)
+    /** 模块id */
+    @ApiModelProperty(value = "模块id", required = true)
     @NotBlank
-    private String moduleCode;
+    private Integer moduleId;
 }

@@ -10,9 +10,10 @@ import com.guzi.sherly.model.dto.ErrorCodePageDTO;
 import com.guzi.sherly.util.SherlyLambdaQueryWrapper;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
-
+/**
+ * @author 李仁杰
+ * @date 2022/9/1
+ */
 @Service
 public class ErrorCodeManager extends ServiceImpl<ErrorCodeMapper, ErrorCode> {
 
@@ -21,21 +22,10 @@ public class ErrorCodeManager extends ServiceImpl<ErrorCodeMapper, ErrorCode> {
      * @param errorCode
      * @return
      */
-    public ErrorCode getErrorCode(String errorCode) {
+    public ErrorCode getByErrorCode(String errorCode) {
         LambdaQueryWrapper<ErrorCode> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(ErrorCode::getErrorCode, errorCode);
         return this.getOne(wrapper, false);
-    }
-
-    /**
-     * 根据模块id查询错误数据
-     * @param moduleId
-     * @return
-     */
-    public List<ErrorCode> getAll(Integer moduleId) {
-        LambdaQueryWrapper<ErrorCode> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(ErrorCode::getModuleId, moduleId);
-        return this.list(wrapper);
     }
 
     /**
@@ -48,7 +38,7 @@ public class ErrorCodeManager extends ServiceImpl<ErrorCodeMapper, ErrorCode> {
         wrapper
                 .likeIfExist(ErrorCode::getErrorCode, dto.getErrorCode())
                 .likeIfExist(ErrorCode::getMessage, dto.getMessage())
-                .eqIfExist(ErrorCode::getErrorCode, dto.getErrorCode());
+                .eqIfExist(ErrorCode::getModuleId, dto.getModuleId());
         return this.page(new Page<>(dto.getCurrent(), dto.getSize()), wrapper);
     }
 }

@@ -6,10 +6,15 @@ import lombok.Data;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+/**
+ * @author 李仁杰
+ * @date 2022/9/1
+ */
 @Data
 public class ModuleUpdateDTO {
 
-    @ApiModelProperty(value = "模块id")
+    @ApiModelProperty(value = "模块id", required = true)
+    @NotNull
     private Integer moduleId;
 
     @ApiModelProperty(value = "模块名称", required = true)

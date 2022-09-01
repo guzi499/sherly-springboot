@@ -10,7 +10,6 @@ import com.guzi.sherly.model.vo.ModuleVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Comparator;
 import java.util.List;
@@ -18,8 +17,13 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static com.guzi.sherly.model.contants.CommonConstants.ROOT_PARENT_ID;
-import static com.guzi.sherly.model.exception.enums.AdminErrorEnum.*;
+import static com.guzi.sherly.model.exception.enums.AdminErrorEnum.MODULE_HAS_CHILDREN;
+import static com.guzi.sherly.model.exception.enums.AdminErrorEnum.MODULE_REPEAT;
 
+/**
+ * @author 李仁杰
+ * @date 2022/9/1
+ */
 @Service
 public class ModuleService {
 
@@ -70,12 +74,12 @@ public class ModuleService {
      * @param dto
      */
     public void saveOne(ModuleInsertDTO dto) {
-
-        Module one = moduleManager.getByModuleName(dto.getModuleName(), dto.getModuleCode(),dto.getParentId());
-        // 查重 同级禁止新增相同模块
-        if (one != null && Objects.equals(dto.getParentId(), one.getParentId())) {
+        // 查重
+        Module one = moduleManager.getByParentIdAndModuleNameOrModuleCode(dto.getParentId(), dto.getModuleName(), dto.getModuleCode());
+        if (one != null) {
             throw new BizException(MODULE_REPEAT);
         }
+
         Module module = new Module();
         BeanUtils.copyProperties(dto, module);
         moduleManager.save(module);
@@ -85,23 +89,14 @@ public class ModuleService {
      * 模块更新
      * @param dto
      */
-    @Transactional(rollbackFor = Exception.class)
     public void updateOne(ModuleUpdateDTO dto) {
-
-        Module one = moduleManager.getByModuleName(dto.getModuleName(), dto.getModuleCode(),dto.getParentId());
-
-        if (one != null) {
-            List<Module> list = moduleManager.getAll(dto.getModuleId());
-            //存在子模块的父模块和不为自身的模块禁止修改
-            if ((Objects.equals(dto.getParentId(), ROOT_PARENT_ID.intValue()) && list != null) || !Objects.equals(dto.getModuleId(), one.getModuleId())) {
-                throw new BizException(UPDATE_MODULE_ERROR);
-            }
-            //修改子模块同时更新错误列表
-            if (!Objects.equals(dto.getParentId(), ROOT_PARENT_ID.intValue()) && Objects.equals(dto.getParentId(), one.getParentId())) {
-                ErrorCodeService errorCodeService = new ErrorCodeService();
-                errorCodeService.updateModuleCode(dto.getModuleId(), dto.getModuleCode());
-            }
+        // 查重
+        Module one = moduleManager.getByParentIdAndModuleNameOrModuleCode(dto.getParentId(), dto.getModuleName(), dto.getModuleCode());
+        // 如果待修改名称已存在且不为自身
+        if (one != null && !Objects.equals(one.getModuleId(), dto.getModuleId())) {
+            throw new BizException(MODULE_REPEAT);
         }
+
         Module module = new Module();
         BeanUtils.copyProperties(dto, module);
         moduleManager.updateById(module);
@@ -113,9 +108,9 @@ public class ModuleService {
      */
     public void removeOne(Integer moduleId) {
         //是否存在子模块
-        List<Module> list = moduleManager.getAll(moduleId);
-        if (list.size() > 0) {
-            throw new BizException(DELETE_MODULE_ERROR);
+        Long count = moduleManager.countByParentId(moduleId);
+        if (count > 0) {
+            throw new BizException(MODULE_HAS_CHILDREN);
         }
         moduleManager.removeById(moduleId);
     }

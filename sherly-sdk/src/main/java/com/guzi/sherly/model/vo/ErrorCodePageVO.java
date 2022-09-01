@@ -5,6 +5,10 @@ import lombok.Data;
 
 import java.util.Date;
 
+/**
+ * @author 李仁杰
+ * @date 2022/9/1
+ */
 @Data
 public class ErrorCodePageVO {
 

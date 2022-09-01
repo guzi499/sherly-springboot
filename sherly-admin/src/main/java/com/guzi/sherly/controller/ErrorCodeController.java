@@ -15,6 +15,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+/**
+ * @author 李仁杰
+ * @date 2022/9/1
+ */
 @RestController
 @Api(tags = "错误相关")
 @RequestMapping("/api/error_code")
