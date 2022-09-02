@@ -2,10 +2,12 @@ package com.guzi.sherly.controller;
 
 import com.guzi.sherly.model.PageResult;
 import com.guzi.sherly.model.Result;
+import com.guzi.sherly.model.dto.FlowModelDeployDTO;
 import com.guzi.sherly.model.dto.FlowModelInsertDTO;
 import com.guzi.sherly.model.dto.FlowModelPageDTO;
 import com.guzi.sherly.model.dto.FlowModelUpdateDTO;
 import com.guzi.sherly.model.vo.FlowModelPageVO;
+import com.guzi.sherly.model.vo.FlowModelVO;
 import com.guzi.sherly.service.FlowModelService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -41,22 +43,29 @@ public class FlowModelController {
         return Result.success();
     }
 
-    @GetMapping("list_page")
+    @GetMapping("/list_page")
     @ApiOperation("流程模型分页")
     public Result<PageResult<FlowModelPageVO>> listPage(FlowModelPageDTO dto) {
         return Result.success(flowModelService.listPage(dto));
     }
 
-    @DeleteMapping("remove_one")
+    @DeleteMapping("/remove_one")
     @ApiOperation("流程模型删除")
     public Result removeOne(@RequestParam String id) {
         flowModelService.removeOne(id);
         return Result.success();
     }
 
-    @GetMapping("get_one")
+    @GetMapping("/get_one")
     @ApiOperation("流程模型详情")
-    public Result getOne(@RequestParam String id) {
+    public Result<FlowModelVO> getOne(@RequestParam String id) {
         return Result.success(flowModelService.getOne(id));
+    }
+
+    @PostMapping("/deploy")
+    @ApiOperation("流程模型部署")
+    public Result deploy(@RequestBody FlowModelDeployDTO dto) {
+        flowModelService.deploy(dto);
+        return Result.success();
     }
 }

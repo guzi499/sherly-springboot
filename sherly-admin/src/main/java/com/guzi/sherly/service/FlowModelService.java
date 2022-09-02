@@ -2,6 +2,7 @@ package com.guzi.sherly.service;
 
 import cn.hutool.core.util.StrUtil;
 import com.guzi.sherly.model.PageResult;
+import com.guzi.sherly.model.dto.FlowModelDeployDTO;
 import com.guzi.sherly.model.dto.FlowModelInsertDTO;
 import com.guzi.sherly.model.dto.FlowModelPageDTO;
 import com.guzi.sherly.model.dto.FlowModelUpdateDTO;
@@ -88,5 +89,23 @@ public class FlowModelService {
         byte[] modelXmlBytes = repositoryService.getModelEditorSource(id);
         vo.setModelXml(StrUtil.utf8Str(modelXmlBytes));
         return vo;
+    }
+
+    /**
+     * 流程模型部署
+     * @param dto
+     * @return
+     */
+    public void deploy(FlowModelDeployDTO dto) {
+        Model model = repositoryService.getModel(dto.getId());
+
+        byte[] modelXmlBytes = repositoryService.getModelEditorSource(dto.getId());
+
+        repositoryService.createDeployment()
+                .name(model.getName())
+                .key(model.getKey())
+                .category(model.getCategory())
+                .addBytes(model.getName(), modelXmlBytes)
+                .deploy();
     }
 }
