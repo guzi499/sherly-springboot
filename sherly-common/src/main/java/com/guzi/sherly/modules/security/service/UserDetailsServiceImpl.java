@@ -1,5 +1,6 @@
 package com.guzi.sherly.modules.security.service;
 
+import cn.hutool.core.util.IdUtil;
 import com.guzi.sherly.manager.*;
 import com.guzi.sherly.model.admin.*;
 import com.guzi.sherly.model.exception.BizException;
@@ -20,7 +21,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static com.guzi.sherly.model.contants.CommonConstants.*;
@@ -97,7 +97,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         loginUserDetails.setUser(user);
         loginUserDetails.setAccountUser(accountUser);
         loginUserDetails.setPermissions(permissions);
-        loginUserDetails.setSessionId(UUID.randomUUID().toString());
+        loginUserDetails.setSessionId(IdUtil.randomUUID());
 
         return loginUserDetails;
     }

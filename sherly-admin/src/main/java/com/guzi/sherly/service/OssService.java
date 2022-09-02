@@ -1,6 +1,7 @@
 package com.guzi.sherly.service;
 
 import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.guzi.sherly.manager.OssFileManager;
@@ -18,7 +19,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static com.guzi.sherly.model.exception.enums.AdminErrorEnum.NO_OSS_CONFIG;
@@ -52,7 +52,7 @@ public class OssService {
         String suffix = FileUtil.getSuffix(fileName);
 
         // 2. 生成文件相对路径
-        String relativePath = UUID.randomUUID() + "." + suffix;
+        String relativePath = IdUtil.randomUUID() + "." + suffix;
 
         // 3. 如果path不为空，则只进行对象的保存
         if (StrUtil.isNotBlank(prefix)) {
@@ -113,7 +113,7 @@ public class OssService {
             return ossFilePageVO;
         }).collect(Collectors.toList());
 
-        return PageResult.build(result, page.getCurrent(), page.getSize(), page.getTotal());
+        return PageResult.build(result, page.getTotal());
 
     }
 

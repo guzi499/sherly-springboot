@@ -13,7 +13,7 @@ import java.util.Date;
  * @date 2022/3/18
  */
 @Data
-@TableName("sys_tenant")
+@TableName("ge_tenant")
 public class Tenant extends BaseModel {
 
     /** 租户id */

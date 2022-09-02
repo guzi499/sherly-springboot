@@ -1,7 +1,9 @@
 sherly:
   common-dbs:
     - ge_account_user
-    - sys_tenant
+    - ge_tenant
+    - ge_modules
+    - ge_error_code
 
 spring:
   profiles:
@@ -25,6 +27,8 @@ spring:
       max-file-size: 2MB
       max-request-size: 2MB
 
+  liquibase:
+    enabled: false
 
 # mybatis-plus配置
 mybatis-plus:
@@ -40,3 +44,6 @@ knife4j:
     - locations: classpath:markdown/*
       name: 前后端联调文档
       group: default
+
+flowable:
+  async-executor-activate: false
