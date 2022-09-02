@@ -97,6 +97,12 @@
             <artifactId>mica-ip2region</artifactId>
         </dependency>
 
+        <!-- flowable -->
+        <dependency>
+            <groupId>org.flowable</groupId>
+            <artifactId>flowable-spring-boot-starter-process</artifactId>
+        </dependency>
+
     </dependencies>
 
 

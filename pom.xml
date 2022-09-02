@@ -31,6 +31,7 @@
         <easyexcel>3.0.5</easyexcel>
         <minio>8.2.2</minio>
         <ip2region>2.7.0</ip2region>
+        <flowable.version>6.7.0</flowable.version>
     </properties>
 
     <dependencyManagement>
@@ -174,6 +175,12 @@
                 <groupId>net.dreamlu</groupId>
                 <artifactId>mica-ip2region</artifactId>
                 <version>${ip2region}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.flowable</groupId>
+                <artifactId>flowable-spring-boot-starter-process</artifactId>
+                <version>${flowable.version}</version>
             </dependency>
 
         </dependencies>

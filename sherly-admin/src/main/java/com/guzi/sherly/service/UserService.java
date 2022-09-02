@@ -78,7 +78,7 @@ public class UserService {
             return userPageVo;
         }).collect(Collectors.toList());
 
-        return PageResult.build(result, page.getCurrent(), page.getSize(), page.getTotal());
+        return PageResult.build(result, page.getTotal());
     }
 
     /**
