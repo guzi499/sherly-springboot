@@ -15,7 +15,7 @@ CREATE TABLE `ge_account_user`  (
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`account_user_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of ge_account_user
@@ -38,7 +38,7 @@ CREATE TABLE `sys_department`  (
   `update_user_id` bigint(20) UNSIGNED NULL DEFAULT NULL COMMENT '更新人id',
   `is_deleted` tinyint(3) UNSIGNED NULL DEFAULT 0 COMMENT '逻辑删除[enum]',
   PRIMARY KEY (`department_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_department
@@ -67,7 +67,7 @@ CREATE TABLE `sys_email_config`  (
   `update_user_id` bigint(20) NULL DEFAULT NULL COMMENT '更新人id',
   `is_deleted` tinyint(255) NULL DEFAULT NULL COMMENT '逻辑删除[enum]',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 22 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 22 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_email_config
@@ -89,7 +89,7 @@ CREATE TABLE `sys_login_log`  (
   `result` int(255) NULL DEFAULT NULL COMMENT '登录结果[enum]',
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`log_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 200 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 200 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_login_log
@@ -114,7 +114,7 @@ CREATE TABLE `sys_menu`  (
   `update_user_id` bigint(20) UNSIGNED NULL DEFAULT NULL COMMENT '更新人id',
   `is_deleted` tinyint(3) UNSIGNED NULL DEFAULT 0 COMMENT '逻辑删除[enum]',
   PRIMARY KEY (`menu_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 97 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 97 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_menu
@@ -192,7 +192,7 @@ CREATE TABLE `sys_operation_log`  (
   `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
   `create_user_id` bigint(20) NULL DEFAULT NULL COMMENT '创建人id',
   PRIMARY KEY (`log_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 15046 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 15046 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for sys_oss_config
@@ -211,7 +211,7 @@ CREATE TABLE `sys_oss_config`  (
   `update_user_id` bigint(20) NULL DEFAULT NULL COMMENT '更新人id',
   `is_deleted` tinyint(3) NULL DEFAULT NULL COMMENT '逻辑删除[enum]',
   PRIMARY KEY (`config_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 20 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for sys_oss_file
@@ -230,7 +230,7 @@ CREATE TABLE `sys_oss_file`  (
   `update_user_id` bigint(20) NULL DEFAULT NULL COMMENT '更新人id',
   `is_deleted` tinyint(4) NULL DEFAULT NULL COMMENT '逻辑删除[enum]',
   PRIMARY KEY (`file_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 96 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 96 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for sys_role
@@ -246,7 +246,7 @@ CREATE TABLE `sys_role`  (
   `update_user_id` bigint(20) UNSIGNED NULL DEFAULT NULL COMMENT '更新人id',
   `is_deleted` tinyint(3) UNSIGNED NULL DEFAULT 0 COMMENT '逻辑删除[enum]',
   PRIMARY KEY (`role_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_role
@@ -267,7 +267,7 @@ CREATE TABLE `sys_role_menu`  (
   `update_user_id` bigint(20) UNSIGNED NULL DEFAULT NULL COMMENT '更新人id',
   `is_deleted` tinyint(3) UNSIGNED NULL DEFAULT 0 COMMENT '逻辑删除[enum]',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1474 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 1474 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_role_menu
@@ -423,8 +423,8 @@ INSERT INTO `sys_role_menu` VALUES (1473, 1, 5, '2022-08-01 12:51:25', NULL, 1, 
 -- ----------------------------
 -- Table structure for sys_tenant
 -- ----------------------------
-DROP TABLE IF EXISTS `sys_tenant`;
-CREATE TABLE `sys_tenant`  (
+DROP TABLE IF EXISTS `ge_tenant`;
+CREATE TABLE `ge_tenant`  (
   `tenant_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '租户id',
   `tenant_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '租户code',
   `tenant_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '租户名称',
@@ -438,12 +438,12 @@ CREATE TABLE `sys_tenant`  (
   `update_user_id` bigint(20) UNSIGNED NULL DEFAULT NULL COMMENT '更新人id',
   `is_deleted` tinyint(3) UNSIGNED NULL DEFAULT 0 COMMENT '逻辑删除[enum]',
   PRIMARY KEY (`tenant_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of sys_tenant
+-- Records of ge_tenant
 -- ----------------------------
-INSERT INTO `sys_tenant` VALUES (1, 'sherly', 'sherly开源', '谷子毅', '18888888888', '2099-01-01 00:00:00', 1000, '2022-05-05 16:59:14', '2022-08-01 13:03:05', 1, 1, 0);
+INSERT INTO `ge_tenant` VALUES (1, 'sherly', 'sherly开源', '谷子毅', '18888888888', '2099-01-01 00:00:00', 1000, '2022-05-05 16:59:14', '2022-08-01 13:03:05', 1, 1, 0);
 
 -- ----------------------------
 -- Table structure for sys_user
@@ -468,7 +468,7 @@ CREATE TABLE `sys_user`  (
   `update_user_id` bigint(20) UNSIGNED NULL DEFAULT NULL COMMENT '更新人id',
   `is_deleted` tinyint(3) NULL DEFAULT 0 COMMENT '逻辑删除[enum]',
   PRIMARY KEY (`user_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 31 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 31 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_user
@@ -489,11 +489,47 @@ CREATE TABLE `sys_user_role`  (
   `update_user_id` bigint(20) UNSIGNED NULL DEFAULT NULL COMMENT '更新人id',
   `is_deleted` tinyint(3) UNSIGNED NULL DEFAULT 0 COMMENT '逻辑删除[enum]',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 111 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 111 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_user_role
 -- ----------------------------
 INSERT INTO `sys_user_role` VALUES (1, 1, 1, '2022-08-01 05:03:29', NULL, 1, NULL, 0);
+
+-- ----------------------------
+-- Table structure for ge_error_code
+-- ----------------------------
+DROP TABLE IF EXISTS `ge_error_code`;
+CREATE TABLE `ge_error_code`  (
+                                  `error_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '错误id',
+                                  `error_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '错误代码',
+                                  `message` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '错误信息',
+                                  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '描述',
+                                  `module_id` int(11) NULL DEFAULT NULL COMMENT '模块id',
+                                  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+                                  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+                                  `create_user_id` bigint(20) NULL DEFAULT NULL COMMENT '创建人id',
+                                  `update_user_id` bigint(20) NULL DEFAULT NULL COMMENT '更新人id',
+                                  `is_deleted` tinyint(4) NULL DEFAULT NULL COMMENT '逻辑删除[enum]',
+                                  PRIMARY KEY (`error_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for ge_module
+-- ----------------------------
+DROP TABLE IF EXISTS `ge_module`;
+CREATE TABLE `ge_module`  (
+                              `module_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '模块id',
+                              `module_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '模块代码',
+                              `module_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '模块名称',
+                              `sort` int(11) NULL DEFAULT NULL COMMENT '排序',
+                              `parent_id` int(11) NULL DEFAULT NULL COMMENT '父模块id',
+                              `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+                              `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
+                              `create_user_id` bigint(20) NULL DEFAULT NULL COMMENT '创建人id',
+                              `update_user_id` bigint(20) NULL DEFAULT NULL COMMENT '更新人id',
+                              `is_deleted` tinyint(4) NULL DEFAULT NULL COMMENT '逻辑删除[enum]',
+                              PRIMARY KEY (`module_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 SET FOREIGN_KEY_CHECKS = 1;
