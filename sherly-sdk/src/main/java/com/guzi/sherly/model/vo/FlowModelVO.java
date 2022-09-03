@@ -17,6 +17,9 @@ public class FlowModelVO {
     /** 模型key */
     private String key;
 
+    /** 分类 */
+    private String category;
+
     /** 模型元数据 */
     private String metaInfo;
 
