@@ -16,7 +16,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
@@ -83,5 +85,11 @@ public class TenantController {
     @ApiOperation("租户菜单列表")
     public Result<List<Long>> listMenu(@RequestParam Long tenantId) {
         return Result.success(tenantService.listMenu(tenantId));
+    }
+
+    @GetMapping("/list_export")
+    @ApiOperation(value = "租户导出", produces = "application/octet-stream")
+    public void listExport(HttpServletResponse response) throws IOException {
+        tenantService.listExport(response);
     }
 }
