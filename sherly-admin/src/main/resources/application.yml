@@ -46,4 +46,11 @@ knife4j:
       group: default
 
 flowable:
+  check-process-definitions: false
   async-executor-activate: false
+  idm:
+    enabled: false
+  cmmn:
+    enabled: false
+  dmn:
+    enabled: false
