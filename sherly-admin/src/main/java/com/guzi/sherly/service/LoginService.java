@@ -111,7 +111,7 @@ public class LoginService {
         // 获取登录用户信息
         LoginUserDetails loginUserDetails = (LoginUserDetails) authentication.getPrincipal();
 
-        this.updateCache(loginUserDetails, request);
+        this.updateCache(loginUserDetails, null, request);
 
         // 获取sessionId作为token内容
         String sessionId = loginUserDetails.getSessionId();
@@ -201,6 +201,7 @@ public class LoginService {
     @Transactional(rollbackFor = Exception.class)
     public void loginChange(String tenantCode, HttpServletRequest request) throws Exception {
         String phone = SecurityUtil.getPhone();
+        String sessionId = SecurityUtil.getSessionId();
 
         SecurityModel securityModel = new SecurityModel();
         securityModel.setTenantCode(GlobalPropertiesUtil.SHERLY_PROPERTIES.getDefaultDb());
@@ -210,15 +211,18 @@ public class LoginService {
         accountUserManager.updateById(accountUser);
 
         LoginUserDetails loginUserDetails = (LoginUserDetails)userDetailsService.loadUserByUsername(phone);
-        this.updateCache(loginUserDetails, request);
+        this.updateCache(loginUserDetails, sessionId, request);
     }
 
-    public void updateCache(LoginUserDetails loginUserDetails, HttpServletRequest request) throws JsonProcessingException {
+    public void updateCache(LoginUserDetails loginUserDetails, String sessionId, HttpServletRequest request) throws JsonProcessingException {
         // redis缓存登录用户信息
         RedisSecurityModel redisSecurityModel = loginUserDetails.getRedisSecurityModel(request);
         UserOnline userOnline = redisSecurityModel.getUserOnline();
         userOnline.setAddress(ip2regionSearcher.getAddress(userOnline.getIp()));
         redisSecurityModel.setUserOnline(userOnline);
+        if (sessionId != null) {
+            redisSecurityModel.getSecurityModel().setSessionId(sessionId);
+        }
 
         // 权限信息更新到redis
         String redisString = OBJECTMAPPER.writeValueAsString(redisSecurityModel);

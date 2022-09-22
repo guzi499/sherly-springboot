@@ -2,6 +2,8 @@ package com.guzi.sherly.service;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
+import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.write.style.column.LongestMatchColumnWidthStyleStrategy;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.guzi.sherly.constants.SqlParam;
 import com.guzi.sherly.constants.SqlStatement;
@@ -12,6 +14,7 @@ import com.guzi.sherly.model.dto.TenantInsertDTO;
 import com.guzi.sherly.model.dto.TenantMenuUpdateDTO;
 import com.guzi.sherly.model.dto.TenantPageDTO;
 import com.guzi.sherly.model.dto.TenantUpdateDTO;
+import com.guzi.sherly.model.eo.TenantEO;
 import com.guzi.sherly.model.exception.BizException;
 import com.guzi.sherly.model.vo.TenantPageVO;
 import com.guzi.sherly.modules.security.util.SecurityUtil;
@@ -23,6 +26,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -230,4 +236,29 @@ public class TenantService {
 
         return list.stream().map(Menu::getMenuId).collect(Collectors.toList());
     }
+
+    /**
+     * 租户导出
+     * @param response
+     */
+    public void listExport(HttpServletResponse response) throws IOException {
+        List<Tenant> list = tenantManager.list();
+
+        List<TenantEO> result = list.stream().map(e -> {
+            TenantEO tenantEO = new TenantEO();
+            BeanUtils.copyProperties(e, tenantEO);
+            return tenantEO;
+        }).collect(Collectors.toList());
+
+        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        response.setCharacterEncoding("utf-8");
+        String fileName = URLEncoder.encode("租户列表", "UTF-8").replaceAll("\\+", "%20");
+        response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName + ".xlsx");
+
+        EasyExcel.write(response.getOutputStream(), TenantEO.class)
+                .registerWriteHandler(new LongestMatchColumnWidthStyleStrategy())
+                .sheet("租户列表")
+                .doWrite(result);
+    }
+
 }
