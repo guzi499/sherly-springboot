@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.guzi.sherly.mapper.ModuleMapper;
 import com.guzi.sherly.model.admin.Module;
+import com.guzi.sherly.modules.mybatisplus.service.SherlyServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Service;
  * @date 2022/9/1
  */
 @Service
-public class ModuleManager extends ServiceImpl<ModuleMapper, Module> {
+public class ModuleManager extends SherlyServiceImpl<ModuleMapper, Module> {
 
     /**
      * 根据父模块id、模块名称或模块代码查询模块数据

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.guzi.sherly.mapper.MenuMapper;
 import com.guzi.sherly.model.admin.Menu;
+import com.guzi.sherly.modules.mybatisplus.service.SherlyServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Service;
  * @date 2022/3/25
  */
 @Service
-public class MenuManager extends ServiceImpl<MenuMapper, Menu> {
+public class MenuManager extends SherlyServiceImpl<MenuMapper, Menu> {
 
     /**
      * 根据菜单id查询子菜单数量

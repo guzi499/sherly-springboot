@@ -7,7 +7,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.guzi.sherly.mapper.ErrorCodeMapper;
 import com.guzi.sherly.model.admin.ErrorCode;
 import com.guzi.sherly.model.dto.ErrorCodePageDTO;
-import com.guzi.sherly.util.SherlyLambdaQueryWrapper;
+import com.guzi.sherly.modules.mybatisplus.service.SherlyServiceImpl;
+import com.guzi.sherly.modules.mybatisplus.wrapper.SherlyLambdaQueryWrapper;
 import org.springframework.stereotype.Service;
 
 /**
@@ -15,7 +16,7 @@ import org.springframework.stereotype.Service;
  * @date 2022/9/1
  */
 @Service
-public class ErrorCodeManager extends ServiceImpl<ErrorCodeMapper, ErrorCode> {
+public class ErrorCodeManager extends SherlyServiceImpl<ErrorCodeMapper, ErrorCode> {
 
     /**
      * 根据错误代码查询错误数据

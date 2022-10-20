@@ -1,4 +1,4 @@
-package com.guzi.sherly.util;
+package com.guzi.sherly.modules.mybatisplus.wrapper;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;

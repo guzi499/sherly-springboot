@@ -9,7 +9,8 @@ import com.guzi.sherly.mapper.UserMapper;
 import com.guzi.sherly.model.admin.User;
 import com.guzi.sherly.model.dto.UserPageDTO;
 import com.guzi.sherly.model.dto.UserSelectDTO;
-import com.guzi.sherly.util.SherlyLambdaQueryWrapper;
+import com.guzi.sherly.modules.mybatisplus.service.SherlyServiceImpl;
+import com.guzi.sherly.modules.mybatisplus.wrapper.SherlyLambdaQueryWrapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,7 +20,7 @@ import java.util.List;
  * @date 2022/3/25
  */
 @Service
-public class UserManager extends ServiceImpl<UserMapper, User> {
+public class UserManager extends SherlyServiceImpl<UserMapper, User> {
 
     /**
      * 用户分页

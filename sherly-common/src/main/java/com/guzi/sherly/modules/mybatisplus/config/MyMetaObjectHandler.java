@@ -1,4 +1,4 @@
-package com.guzi.sherly.config;
+package com.guzi.sherly.modules.mybatisplus.config;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.guzi.sherly.modules.security.util.SecurityUtil;
