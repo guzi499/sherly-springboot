@@ -105,7 +105,7 @@ public class FlowModelService {
                 .name(model.getName())
                 .key(model.getKey())
                 .category(model.getCategory())
-                .addBytes(model.getName(), modelXmlBytes)
+                .addBytes(model.getName() + ".bpmn20.xml", modelXmlBytes)
                 .deploy();
     }
 }
