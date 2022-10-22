@@ -3,6 +3,11 @@ package com.guzi.sherly.service;
 import com.guzi.sherly.model.dto.FlowMatchDonePageDTO;
 import com.guzi.sherly.model.dto.FlowMatchRequestPageDTO;
 import com.guzi.sherly.model.dto.FlowMatchTodoPageDTO;
+import com.guzi.sherly.modules.security.util.SecurityUtil;
+import org.flowable.engine.TaskService;
+import org.flowable.task.api.Task;
+import org.flowable.task.api.TaskQuery;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,9 +19,16 @@ import java.util.List;
 @Service
 public class FlowMatchService {
 
-    public List todo(FlowMatchTodoPageDTO dto) {
+    @Autowired
+    private TaskService taskService;
 
-        return null;
+    public List todo(FlowMatchTodoPageDTO dto) {
+        Long userId = SecurityUtil.getUserId();
+        TaskQuery query = taskService
+                .createTaskQuery()
+                .taskAssignee(userId.toString());
+        List<Task> tasks = query.listPage((dto.getCurrent() - 1) * dto.getSize(), dto.getSize());
+        return tasks;
     }
 
     public List done(FlowMatchDonePageDTO dto) {

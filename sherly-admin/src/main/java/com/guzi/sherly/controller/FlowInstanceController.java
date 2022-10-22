@@ -26,7 +26,7 @@ public class FlowInstanceController {
     private FlowInstanceService flowInstanceService;
 
     @PostMapping("startup")
-    @ApiOperation("流程实例创建")
+    @ApiOperation("流程实例启动")
     public Result startup(@RequestBody FlowInstanceStartupDTO dto) {
         flowInstanceService.startup(dto);
         return Result.success();
