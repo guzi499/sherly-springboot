@@ -8,5 +8,5 @@ import lombok.Data;
  * @date 2022/10/21
  */
 @Data
-public class FlowMatchRequestPageDTO extends PageQuery {
+public class FlowMatchMyRequestPageDTO extends PageQuery {
 }

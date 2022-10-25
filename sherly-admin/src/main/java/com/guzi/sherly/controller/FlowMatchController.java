@@ -1,9 +1,13 @@
 package com.guzi.sherly.controller;
 
+import com.guzi.sherly.model.PageResult;
 import com.guzi.sherly.model.Result;
 import com.guzi.sherly.model.dto.FlowMatchDonePageDTO;
-import com.guzi.sherly.model.dto.FlowMatchRequestPageDTO;
+import com.guzi.sherly.model.dto.FlowMatchMyRequestPageDTO;
 import com.guzi.sherly.model.dto.FlowMatchTodoPageDTO;
+import com.guzi.sherly.model.vo.FlowMatchDonePageVO;
+import com.guzi.sherly.model.vo.FlowMatchMyRequestPageVO;
+import com.guzi.sherly.model.vo.FlowMatchTodoPageVO;
 import com.guzi.sherly.service.FlowMatchService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -28,19 +32,19 @@ public class FlowMatchController {
 
     @GetMapping("/todo/list_page")
     @ApiOperation("流程待办")
-    public Result todo(FlowMatchTodoPageDTO dto) {
+    public Result<PageResult<FlowMatchTodoPageVO>> todo(FlowMatchTodoPageDTO dto) {
         return Result.success(flowMatchService.todo(dto));
     }
 
     @GetMapping("/done/list_page")
     @ApiOperation("流程已办")
-    public Result done(FlowMatchDonePageDTO dto) {
+    public Result<PageResult<FlowMatchDonePageVO>> done(FlowMatchDonePageDTO dto) {
         return Result.success(flowMatchService.done(dto));
     }
 
-    @GetMapping("/request/list_page")
+    @GetMapping("/my_request/list_page")
     @ApiOperation("流程申请")
-    public Result request(FlowMatchRequestPageDTO dto) {
-        return Result.success(flowMatchService.request(dto));
+    public Result<PageResult<FlowMatchMyRequestPageVO>> myRequest(FlowMatchMyRequestPageDTO dto) {
+        return Result.success(flowMatchService.myRequest(dto));
     }
 }
