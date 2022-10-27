@@ -9,6 +9,7 @@ import com.guzi.sherly.model.dto.UserOnlineSelectDTO;
 import com.guzi.sherly.model.vo.UserOnlineSelectVO;
 import com.guzi.sherly.modules.security.model.RedisSecurityModel;
 import com.guzi.sherly.modules.security.util.SecurityUtil;
+import lombok.SneakyThrows;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -36,7 +37,8 @@ public class UserOnlineService {
      * @return
      * @throws JsonProcessingException
      */
-    public List<UserOnlineSelectVO> listAll(UserOnlineSelectDTO dto) throws JsonProcessingException {
+    @SneakyThrows
+    public List<UserOnlineSelectVO> listAll(UserOnlineSelectDTO dto) {
         // 获取所有在线用户的redisKey
         Set<String> keys = redisTemplate.keys(RedisKey.SESSION_ID + "*");
 

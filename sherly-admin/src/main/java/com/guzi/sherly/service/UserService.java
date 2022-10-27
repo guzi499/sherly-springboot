@@ -28,6 +28,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -65,7 +66,7 @@ public class UserService {
      * @param dto
      * @return
      */
-    public PageResult listPage(UserPageDTO dto) {
+    public PageResult<UserPageVo> listPage(UserPageDTO dto) {
         // 分页查询
         IPage<User> page = userManager.listPage(dto);
         List<Department> departmentList = departmentManager.list();
@@ -86,14 +87,15 @@ public class UserService {
      * @param response
      */
     public void listExport(HttpServletResponse response) throws IOException {
-        List<User> list = userManager.list();
+        List<User> userList = userManager.list();
         List<Department> departmentList = departmentManager.list();
+        Map<Long, String> departmentIdMapName = departmentList.stream().collect(Collectors.toMap(Department::getDepartmentId, Department::getDepartmentName));
 
-        List<UserEO> result = list.stream().map(e -> {
+        List<UserEO> result = userList.stream().map(e -> {
             UserEO userEO = new UserEO();
             BeanUtils.copyProperties(e, userEO);
             userEO.setEnable(Objects.equals(e.getEnable(), ENABLE) ? "启用" : "禁用");
-            userEO.setDepartmentName(departmentList.stream().filter(x -> Objects.equals(x.getDepartmentId(), e.getDepartmentId())).map(Department::getDepartmentName).collect(Collectors.joining(",")));
+            userEO.setDepartmentName(departmentIdMapName.get(e.getDepartmentId()));
             userEO.setGender(Objects.equals(e.getGender(), MALE) ? "男" : "女");
             return userEO;
         }).collect(Collectors.toList());

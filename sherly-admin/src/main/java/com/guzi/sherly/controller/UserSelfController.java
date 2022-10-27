@@ -6,6 +6,7 @@ import com.guzi.sherly.model.dto.OperationLogSelfPageDTO;
 import com.guzi.sherly.model.dto.UserSelfUpdateDTO;
 import com.guzi.sherly.model.dto.UserUpdatePasswordDTO;
 import com.guzi.sherly.model.vo.OperationLogPageVO;
+import com.guzi.sherly.model.vo.UserSelfVO;
 import com.guzi.sherly.service.OssService;
 import com.guzi.sherly.service.UserSelfService;
 import io.swagger.annotations.Api;
@@ -35,7 +36,7 @@ public class UserSelfController {
 
     @GetMapping("/get_self")
     @ApiOperation("用户个人中心")
-    public Result getSelf() throws Exception {
+    public Result<UserSelfVO> getSelf() {
         return Result.success(userSelfService.getSelf());
     }
 

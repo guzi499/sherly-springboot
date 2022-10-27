@@ -6,6 +6,7 @@ import com.guzi.sherly.model.admin.OssConfig;
 import com.guzi.sherly.modules.security.util.SecurityUtil;
 import com.guzi.sherly.modules.storage.OssClientFactory;
 import com.guzi.sherly.modules.storage.model.OssClient;
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -45,7 +46,8 @@ public class OssUtil {
      * @return
      * @throws Exception
      */
-    public String accessUrl(String path) throws Exception {
+    @SneakyThrows
+    public String accessUrl(String path) {
         if (StrUtil.isBlank(path)) {
             return GlobalPropertiesUtil.SHERLY_PROPERTIES.getDefaultAvatar();
         }

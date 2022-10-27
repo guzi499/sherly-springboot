@@ -1,6 +1,5 @@
 package com.guzi.sherly.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.guzi.sherly.model.Result;
 import com.guzi.sherly.model.dto.UserOnlineSelectDTO;
 import com.guzi.sherly.model.vo.UserOnlineSelectVO;
@@ -31,7 +30,7 @@ public class UserOnlineController {
     @GetMapping("/list_all")
     @PreAuthorize("hasAnyAuthority('user_online:list_all')")
     @ApiOperation("在线用户列表")
-    public Result<List<UserOnlineSelectVO>> listAll(@Valid UserOnlineSelectDTO dto) throws JsonProcessingException {
+    public Result<List<UserOnlineSelectVO>> listAll(@Valid UserOnlineSelectDTO dto) {
         return Result.success(userOnlineService.listAll(dto));
     }
 
