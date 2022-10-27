@@ -7,7 +7,6 @@ import com.guzi.sherly.model.exception.BizException;
 import com.guzi.sherly.modules.security.model.LoginUserDetails;
 import com.guzi.sherly.modules.security.util.SecurityUtil;
 import com.guzi.sherly.util.LogRecordUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -17,6 +16,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Collections;
 import java.util.List;
@@ -33,25 +33,25 @@ import static com.guzi.sherly.model.exception.enums.AdminErrorEnum.*;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    @Autowired
+    @Resource
     private UserManager userManager;
 
-    @Autowired
+    @Resource
     private UserRoleManager userRoleManager;
 
-    @Autowired
+    @Resource
     private MenuManager menuManager;
 
-    @Autowired
+    @Resource
     private RoleMenuManager roleMenuManager;
 
-    @Autowired
+    @Resource
     private AccountUserManager accountUserManager;
 
-    @Autowired
+    @Resource
     private TenantManager tenantManager;
 
-    @Autowired
+    @Resource
     private LogRecordUtil logRecordUtil;
 
     @Override

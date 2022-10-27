@@ -8,9 +8,9 @@ import com.guzi.sherly.model.dto.ModuleUpdateDTO;
 import com.guzi.sherly.model.exception.BizException;
 import com.guzi.sherly.model.vo.ModuleVO;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
@@ -27,10 +27,10 @@ import static com.guzi.sherly.model.exception.enums.AdminErrorEnum.MODULE_REPEAT
 @Service
 public class ModuleService {
 
-    @Autowired
+    @Resource
     private ModuleManager moduleManager;
 
-    @Autowired
+    @Resource
     private ErrorCodeManager errorCodeManager;
 
     /**

@@ -25,7 +25,6 @@ import com.guzi.sherly.util.JwtUtil;
 import com.guzi.sherly.util.LogRecordUtil;
 import net.dreamlu.mica.ip2region.core.Ip2regionSearcher;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -37,6 +36,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
@@ -56,31 +56,31 @@ public class LoginService {
 
     private static final ObjectMapper OBJECTMAPPER = new ObjectMapper();
 
-    @Autowired
+    @Resource
     private AuthenticationProvider authenticationProvider;
 
-    @Autowired
+    @Resource
     private RedisTemplate<String, String> redisTemplate;
 
-    @Autowired
+    @Resource
     private UserManager userManager;
 
-    @Autowired
+    @Resource
     private AccountUserManager accountUserManager;
 
-    @Autowired
+    @Resource
     private TenantManager tenantManager;
 
-    @Autowired
+    @Resource
     private LogRecordUtil logRecordUtil;
 
-    @Autowired
+    @Resource
     private Ip2regionSearcher ip2regionSearcher;
 
-    @Autowired
+    @Resource
     private UserDetailsService userDetailsService;
 
-    @Autowired
+    @Resource
     private PasswordEncoder passwordEncoder;
 
     /**

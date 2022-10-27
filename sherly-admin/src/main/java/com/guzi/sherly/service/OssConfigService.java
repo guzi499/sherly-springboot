@@ -16,9 +16,9 @@ import com.guzi.sherly.modules.storage.OssClientFactory;
 import com.guzi.sherly.modules.storage.enums.OssTypeEnum;
 import com.guzi.sherly.modules.storage.model.OssClientConfig;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -36,10 +36,10 @@ public class OssConfigService {
 
     private static final ObjectMapper OBJECTMAPPER = new ObjectMapper();
 
-    @Autowired
+    @Resource
     private OssConfigManager ossConfigManager;
 
-    @Autowired
+    @Resource
     private OssClientFactory ossClientFactory;
 
     /**

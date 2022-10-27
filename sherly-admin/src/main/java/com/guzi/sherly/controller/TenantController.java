@@ -11,11 +11,11 @@ import com.guzi.sherly.model.vo.TenantPageVO;
 import com.guzi.sherly.service.TenantService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
@@ -34,7 +34,7 @@ import static com.guzi.sherly.model.exception.enums.AdminErrorEnum.DELETE_TENANT
 @Validated
 public class TenantController {
 
-    @Autowired
+    @Resource
     private TenantService tenantService;
 
     @GetMapping("/list_page")

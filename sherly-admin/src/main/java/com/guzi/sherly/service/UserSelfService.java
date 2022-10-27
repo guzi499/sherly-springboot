@@ -16,10 +16,10 @@ import com.guzi.sherly.modules.log.model.OperationLog;
 import com.guzi.sherly.modules.security.util.SecurityUtil;
 import com.guzi.sherly.util.OssUtil;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -36,28 +36,28 @@ import static com.guzi.sherly.model.exception.enums.AdminErrorEnum.USER_PASSWORD
 @Service
 public class UserSelfService {
 
-    @Autowired
+    @Resource
     private PasswordEncoder passwordEncoder;
 
-    @Autowired
+    @Resource
     private UserManager userManager;
 
-    @Autowired
+    @Resource
     private UserRoleManager userRoleManager;
 
-    @Autowired
+    @Resource
     private RoleManager roleManager;
 
-    @Autowired
+    @Resource
     private DepartmentManager departmentManager;
 
-    @Autowired
+    @Resource
     private AccountUserManager accountUserManager;
 
-    @Autowired
+    @Resource
     private OperationLogManager operationLogManager;
 
-    @Autowired
+    @Resource
     private OssUtil ossUtil;
 
     /**

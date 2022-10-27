@@ -4,8 +4,9 @@ import com.guzi.sherly.model.dto.FlowInstanceStartupDTO;
 import com.guzi.sherly.modules.security.util.SecurityUtil;
 import org.flowable.common.engine.impl.identity.Authentication;
 import org.flowable.engine.RuntimeService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 /**
  * @author 谷子毅
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class FlowInstanceService {
 
-    @Autowired
+    @Resource
     private RuntimeService runtimeService;
 
     public void startup(FlowInstanceStartupDTO dto) {

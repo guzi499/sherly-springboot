@@ -19,11 +19,11 @@ import com.guzi.sherly.model.vo.UserVo;
 import com.guzi.sherly.modules.security.util.SecurityUtil;
 import com.guzi.sherly.util.GlobalPropertiesUtil;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -42,22 +42,22 @@ import static com.guzi.sherly.model.exception.enums.AdminErrorEnum.*;
 @Service
 public class UserService {
 
-    @Autowired
+    @Resource
     private PasswordEncoder passwordEncoder;
 
-    @Autowired
+    @Resource
     private UserManager userManager;
 
-    @Autowired
+    @Resource
     private UserRoleManager userRoleManager;
 
-    @Autowired
+    @Resource
     private DepartmentManager departmentManager;
 
-    @Autowired
+    @Resource
     private AccountUserManager accountUserManager;
 
-    @Autowired
+    @Resource
     private TenantManager tenantManager;
 
     /**

@@ -14,10 +14,10 @@ import com.guzi.sherly.modules.storage.model.OssClient;
 import com.guzi.sherly.util.OssUtil;
 import lombok.SneakyThrows;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,10 +30,10 @@ import static com.guzi.sherly.model.exception.enums.AdminErrorEnum.NO_OSS_CONFIG
 @Service
 public class OssService {
 
-    @Autowired
+    @Resource
     private OssUtil ossUtil;
 
-    @Autowired
+    @Resource
     private OssFileManager ossFileManager;
 
     /**

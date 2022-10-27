@@ -3,8 +3,9 @@ package com.guzi.sherly.service;
 import com.guzi.sherly.model.dto.TaskHandleDTO;
 import com.guzi.sherly.modules.security.util.SecurityUtil;
 import org.flowable.engine.TaskService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 /**
  * @author 谷子毅
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class FlowTaskService {
 
-    @Autowired
+    @Resource
     private TaskService taskService;
 
     public void handle(TaskHandleDTO dto) {

@@ -17,9 +17,9 @@ import org.flowable.task.api.TaskQuery;
 import org.flowable.task.api.history.HistoricTaskInstance;
 import org.flowable.task.api.history.HistoricTaskInstanceQuery;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,10 +30,10 @@ import java.util.stream.Collectors;
 @Service
 public class FlowMatchService {
 
-    @Autowired
+    @Resource
     private TaskService taskService;
 
-    @Autowired
+    @Resource
     private HistoryService historyService;
 
     public PageResult<FlowMatchTodoPageVO> todo(FlowMatchTodoPageDTO dto) {

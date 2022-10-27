@@ -4,7 +4,6 @@ import com.guzi.sherly.model.exception.BizException;
 import com.guzi.sherly.modules.security.model.LoginUserDetails;
 import com.guzi.sherly.modules.security.service.UserDetailsServiceImpl;
 import com.guzi.sherly.util.LogRecordUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -14,6 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Objects;
 
@@ -30,13 +30,13 @@ import static com.guzi.sherly.model.exception.enums.AdminErrorEnum.ERR_USR_PWD;
 @Component
 public class SherlyAuthenticationManager implements AuthenticationProvider {
 
-    @Autowired
+    @Resource
     private PasswordEncoder passwordEncoder;
 
-    @Autowired
+    @Resource
     private UserDetailsServiceImpl userDetailsServiceImpl;
 
-    @Autowired
+    @Resource
     private LogRecordUtil logRecordUtil;
 
     @Override

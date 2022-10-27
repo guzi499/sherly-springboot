@@ -7,11 +7,11 @@ import com.guzi.sherly.model.vo.EmailConfigVO;
 import com.guzi.sherly.service.EmailService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.validation.Valid;
 
 /**
@@ -24,7 +24,7 @@ import javax.validation.Valid;
 @Validated
 public class EmailController {
 
-    @Autowired
+    @Resource
     private EmailService emailService;
 
     @GetMapping("/get_one")

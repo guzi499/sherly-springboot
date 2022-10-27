@@ -11,10 +11,10 @@ import com.guzi.sherly.model.vo.FlowModelVO;
 import com.guzi.sherly.service.FlowModelService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.validation.Valid;
 
 /**
@@ -27,7 +27,7 @@ import javax.validation.Valid;
 @Validated
 public class FlowModelController {
 
-    @Autowired
+    @Resource
     private FlowModelService flowModelService;
 
     @PostMapping("/save_one")

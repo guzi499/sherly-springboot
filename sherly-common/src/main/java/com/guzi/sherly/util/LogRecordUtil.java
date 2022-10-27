@@ -6,12 +6,12 @@ import cn.hutool.http.useragent.UserAgentUtil;
 import com.guzi.sherly.modules.log.manager.LoginLogManager;
 import com.guzi.sherly.modules.log.model.LoginLog;
 import net.dreamlu.mica.ip2region.core.Ip2regionSearcher;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
@@ -22,10 +22,10 @@ import java.util.Date;
 @Component
 public class LogRecordUtil {
 
-    @Autowired
+    @Resource
     private LoginLogManager loginLogManager;
 
-    @Autowired
+    @Resource
     private Ip2regionSearcher regionSearcher;
 
     @Transactional(propagation = Propagation.NOT_SUPPORTED)

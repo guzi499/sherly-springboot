@@ -9,8 +9,9 @@ import com.guzi.sherly.model.dto.EmailSendDTO;
 import com.guzi.sherly.model.exception.BizException;
 import com.guzi.sherly.model.vo.EmailConfigVO;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
 
 import static com.guzi.sherly.model.exception.enums.AdminErrorEnum.NO_EMAIL_CONFIG;
 
@@ -21,7 +22,7 @@ import static com.guzi.sherly.model.exception.enums.AdminErrorEnum.NO_EMAIL_CONF
 @Service
 public class EmailService {
 
-    @Autowired
+    @Resource
     private EmailConfigManager emailConfigManager;
 
     /**

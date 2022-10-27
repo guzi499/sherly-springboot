@@ -16,12 +16,12 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
@@ -46,7 +46,7 @@ public class SherlyLogAop {
 
     ThreadLocal<Long> recordTime = new ThreadLocal<>();
 
-    @Autowired
+    @Resource
     private Ip2regionSearcher regionSearcher;
 
     public SherlyLogAop(OperationLogService operationLogService) {

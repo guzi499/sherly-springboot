@@ -9,10 +9,11 @@ import com.guzi.sherly.modules.log.annotation.SherlyLog;
 import com.guzi.sherly.modules.log.service.OperationLogService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
 
 /**
  * @author 谷子毅
@@ -24,7 +25,7 @@ import org.springframework.web.bind.annotation.*;
 @Validated
 public class OperationLogController {
 
-    @Autowired
+    @Resource
     private OperationLogService operationLogService;
 
     @GetMapping("/list_page")

@@ -8,13 +8,13 @@ import com.guzi.sherly.model.vo.OssFilePageVO;
 import com.guzi.sherly.service.OssService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.net.URLEncoder;
 
@@ -28,7 +28,7 @@ import java.net.URLEncoder;
 @Validated
 public class OssController {
 
-    @Autowired
+    @Resource
     private OssService ossService;
 
     @GetMapping("/list_page")

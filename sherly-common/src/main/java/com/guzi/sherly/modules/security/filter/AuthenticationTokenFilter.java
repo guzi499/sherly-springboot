@@ -6,7 +6,6 @@ import com.guzi.sherly.constants.RedisKey;
 import com.guzi.sherly.modules.security.model.RedisSecurityModel;
 import com.guzi.sherly.modules.security.model.SecurityModel;
 import com.guzi.sherly.util.JwtUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -15,6 +14,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import javax.annotation.Resource;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -33,7 +33,7 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
 
     private static final ObjectMapper OBJECTMAPPER = new ObjectMapper();
 
-    @Autowired
+    @Resource
     private RedisTemplate<String, String> redisTemplate;
 
 

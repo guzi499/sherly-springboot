@@ -5,11 +5,12 @@ import com.guzi.sherly.model.dto.TaskHandleDTO;
 import com.guzi.sherly.service.FlowTaskService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
 
 /**
  * @author 谷子毅
@@ -21,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Validated
 public class FlowTaskController {
 
-    @Autowired
+    @Resource
     private FlowTaskService flowTaskService;
 
     @PostMapping("handle")

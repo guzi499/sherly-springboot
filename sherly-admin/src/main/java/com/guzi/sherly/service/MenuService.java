@@ -8,9 +8,9 @@ import com.guzi.sherly.model.dto.MenuUpdateDTO;
 import com.guzi.sherly.model.exception.BizException;
 import com.guzi.sherly.model.vo.MenuVO;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
@@ -26,10 +26,10 @@ import static com.guzi.sherly.model.exception.enums.AdminErrorEnum.*;
 @Service
 public class MenuService {
 
-    @Autowired
+    @Resource
     private MenuManager menuManager;
 
-    @Autowired
+    @Resource
     private RoleMenuManager roleMenuManager;
 
     /**

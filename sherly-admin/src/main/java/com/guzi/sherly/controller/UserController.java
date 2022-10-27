@@ -12,11 +12,11 @@ import com.guzi.sherly.model.vo.UserVo;
 import com.guzi.sherly.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
@@ -32,7 +32,7 @@ import java.util.List;
 @Validated
 public class UserController {
 
-    @Autowired
+    @Resource
     private UserService userService;
 
     @GetMapping("/list_page")

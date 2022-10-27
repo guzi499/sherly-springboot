@@ -6,8 +6,9 @@ import com.guzi.sherly.model.admin.OssConfig;
 import com.guzi.sherly.modules.security.util.SecurityUtil;
 import com.guzi.sherly.modules.storage.OssClientFactory;
 import com.guzi.sherly.modules.storage.model.OssClient;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
 
 /**
  * @author 谷子毅
@@ -16,10 +17,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class OssUtil {
 
-    @Autowired
+    @Resource
     private OssClientFactory ossClientFactory;
 
-    @Autowired
+    @Resource
     private OssConfigManager ossConfigManager;
 
     /**

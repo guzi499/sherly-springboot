@@ -21,11 +21,11 @@ import com.guzi.sherly.modules.security.util.SecurityUtil;
 import com.guzi.sherly.util.ExecSqlUtil;
 import com.guzi.sherly.util.GlobalPropertiesUtil;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -47,31 +47,31 @@ import static com.guzi.sherly.model.exception.enums.AdminErrorEnum.TENANT_REPEAT
 @Service
 public class TenantService {
 
-    @Autowired
+    @Resource
     private TenantManager tenantManager;
 
-    @Autowired
+    @Resource
     private UserManager userManager;
 
-    @Autowired
+    @Resource
     private RoleManager roleManager;
 
-    @Autowired
+    @Resource
     private UserRoleManager userRoleManager;
 
-    @Autowired
+    @Resource
     private DepartmentManager departmentManager;
 
-    @Autowired
+    @Resource
     private MenuManager menuManager;
 
-    @Autowired
+    @Resource
     private RoleMenuManager roleMenuManager;
 
-    @Autowired
+    @Resource
     private PasswordEncoder passwordEncoder;
 
-    @Autowired
+    @Resource
     private AccountUserManager accountUserManager;
 
     /**
