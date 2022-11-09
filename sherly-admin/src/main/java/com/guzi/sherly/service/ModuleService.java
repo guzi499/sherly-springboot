@@ -30,9 +30,6 @@ public class ModuleService {
     @Resource
     private ModuleManager moduleManager;
 
-    @Resource
-    private ErrorCodeManager errorCodeManager;
-
     /**
      * 查询模块树
      * @return
