@@ -1,6 +1,5 @@
 package com.guzi.sherly.modules.log.aop;
 
-import cn.hutool.extra.servlet.ServletUtil;
 import cn.hutool.http.useragent.UserAgent;
 import cn.hutool.http.useragent.UserAgentUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -8,9 +7,9 @@ import com.guzi.sherly.modules.log.annotation.SherlyLog;
 import com.guzi.sherly.modules.log.model.OperationLog;
 import com.guzi.sherly.modules.log.service.OperationLogService;
 import com.guzi.sherly.modules.security.util.SecurityUtil;
+import com.guzi.sherly.util.IpUtil;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import net.dreamlu.mica.ip2region.core.Ip2regionSearcher;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -21,7 +20,6 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
@@ -45,9 +43,6 @@ public class SherlyLogAop {
     private final OperationLogService operationLogService;
 
     ThreadLocal<Long> recordTime = new ThreadLocal<>();
-
-    @Resource
-    private Ip2regionSearcher regionSearcher;
 
     public SherlyLogAop(OperationLogService operationLogService) {
         this.operationLogService = operationLogService;
@@ -92,7 +87,8 @@ public class SherlyLogAop {
     private void saveOne(Long duration, ProceedingJoinPoint joinPoint, Integer type, Throwable exception) throws Exception {
         OperationLog operationLog = new OperationLog();
         HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
-        String ip = ServletUtil.getClientIP(request);
+        String ip = IpUtil.getIp(request);
+        String address = IpUtil.getAddress(ip);
         String userAgent = request.getHeader("User-Agent");
         if (userAgent != null) {
             UserAgent agent = UserAgentUtil.parse(userAgent);
@@ -117,7 +113,7 @@ public class SherlyLogAop {
         operationLog.setUri(uri);
         operationLog.setRequestParams(requestParams);
         operationLog.setIp(ip);
-        operationLog.setAddress(regionSearcher.getAddress(ip));
+        operationLog.setAddress(address);
 
         if (exception != null) {
             List<String> list = Arrays.stream(exception.getStackTrace()).map(Objects::toString).filter(e -> e.startsWith("com.guzi")).collect(Collectors.toList());

@@ -37,6 +37,7 @@ import java.util.stream.Collectors;
 
 import static com.guzi.sherly.model.contants.CommonConstants.ENABLE;
 import static com.guzi.sherly.model.contants.CommonConstants.ROOT_PARENT_ID;
+import static com.guzi.sherly.model.exception.enums.AdminErrorEnum.DELETE_TENANT_ERROR;
 import static com.guzi.sherly.model.exception.enums.AdminErrorEnum.TENANT_REPEAT;
 
 
@@ -79,7 +80,7 @@ public class TenantService {
      * @param dto
      * @return
      */
-    public PageResult listPage(TenantPageDTO dto) {
+    public PageResult<TenantPageVO> listPage(TenantPageDTO dto) {
 
         IPage<Tenant> page = tenantManager.listPage(dto);
 
@@ -179,6 +180,9 @@ public class TenantService {
      * @param tenantId
      */
     public void removeOne(Long tenantId) {
+        if (Objects.equals(tenantId, 1L)) {
+            throw new BizException(DELETE_TENANT_ERROR);
+        }
         tenantManager.removeById(tenantId);
     }
 

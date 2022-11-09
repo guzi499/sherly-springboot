@@ -21,9 +21,9 @@ import com.guzi.sherly.modules.security.model.RedisSecurityModel;
 import com.guzi.sherly.modules.security.model.SecurityModel;
 import com.guzi.sherly.modules.security.util.SecurityUtil;
 import com.guzi.sherly.util.GlobalPropertiesUtil;
+import com.guzi.sherly.util.IpUtil;
 import com.guzi.sherly.util.JwtUtil;
 import com.guzi.sherly.util.LogRecordUtil;
-import net.dreamlu.mica.ip2region.core.Ip2regionSearcher;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -73,9 +73,6 @@ public class LoginService {
 
     @Resource
     private LogRecordUtil logRecordUtil;
-
-    @Resource
-    private Ip2regionSearcher ip2regionSearcher;
 
     @Resource
     private UserDetailsService userDetailsService;
@@ -218,7 +215,7 @@ public class LoginService {
         // redis缓存登录用户信息
         RedisSecurityModel redisSecurityModel = loginUserDetails.getRedisSecurityModel(request);
         UserOnline userOnline = redisSecurityModel.getUserOnline();
-        userOnline.setAddress(ip2regionSearcher.getAddress(userOnline.getIp()));
+        userOnline.setAddress(IpUtil.getAddress(userOnline.getIp()));
         redisSecurityModel.setUserOnline(userOnline);
         if (sessionId != null) {
             redisSecurityModel.getSecurityModel().setSessionId(sessionId);
