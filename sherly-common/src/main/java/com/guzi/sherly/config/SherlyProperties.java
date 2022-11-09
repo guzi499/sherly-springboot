@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
+ * yml文件的框架属性配置
  * @author 谷子毅
  * @date 2022/7/22
  */

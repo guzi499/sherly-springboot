@@ -6,23 +6,19 @@ import com.guzi.sherly.model.dto.TenantInsertDTO;
 import com.guzi.sherly.model.dto.TenantMenuUpdateDTO;
 import com.guzi.sherly.model.dto.TenantPageDTO;
 import com.guzi.sherly.model.dto.TenantUpdateDTO;
-import com.guzi.sherly.model.exception.BizException;
 import com.guzi.sherly.model.vo.TenantPageVO;
 import com.guzi.sherly.service.TenantService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
-
-import static com.guzi.sherly.model.exception.enums.AdminErrorEnum.DELETE_TENANT_ERROR;
 
 /**
  * @author 谷子毅
@@ -34,7 +30,7 @@ import static com.guzi.sherly.model.exception.enums.AdminErrorEnum.DELETE_TENANT
 @Validated
 public class TenantController {
 
-    @Autowired
+    @Resource
     private TenantService tenantService;
 
     @GetMapping("/list_page")
@@ -65,9 +61,6 @@ public class TenantController {
     @PreAuthorize("hasAnyAuthority('tenant:remove_one')")
     @ApiOperation("租户删除")
     public Result removeOne(@RequestParam Long tenantId) {
-        if (Objects.equals(tenantId, 1L)) {
-            throw new BizException(DELETE_TENANT_ERROR);
-        }
         tenantService.removeOne(tenantId);
         return Result.success();
     }

@@ -3,6 +3,7 @@ package com.guzi.sherly.manager;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.guzi.sherly.mapper.EmailConfigMapper;
 import com.guzi.sherly.model.admin.EmailConfig;
+import com.guzi.sherly.modules.mybatisplus.service.SherlyServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**
@@ -10,5 +11,5 @@ import org.springframework.stereotype.Service;
  * @date 2022/6/8
  */
 @Service
-public class EmailConfigManager extends ServiceImpl<EmailConfigMapper, EmailConfig> {
+public class EmailConfigManager extends SherlyServiceImpl<EmailConfigMapper, EmailConfig> {
 }

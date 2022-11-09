@@ -1,20 +1,20 @@
 package com.guzi.sherly.service;
 
+import cn.hutool.json.JSONUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.guzi.sherly.constants.RedisKey;
 import com.guzi.sherly.model.admin.UserOnline;
 import com.guzi.sherly.model.dto.UserOnlineSelectDTO;
 import com.guzi.sherly.model.vo.UserOnlineSelectVO;
 import com.guzi.sherly.modules.security.model.RedisSecurityModel;
 import com.guzi.sherly.modules.security.util.SecurityUtil;
+import lombok.SneakyThrows;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import javax.annotation.Resource;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -25,9 +25,7 @@ import java.util.stream.Collectors;
 @Service
 public class UserOnlineService {
 
-    private static final ObjectMapper OBJECTMAPPER = new ObjectMapper();
-
-    @Autowired
+    @Resource
     private RedisTemplate<String, String> redisTemplate;
 
     /**
@@ -36,7 +34,8 @@ public class UserOnlineService {
      * @return
      * @throws JsonProcessingException
      */
-    public List<UserOnlineSelectVO> listAll(UserOnlineSelectDTO dto) throws JsonProcessingException {
+    @SneakyThrows
+    public List<UserOnlineSelectVO> listAll(UserOnlineSelectDTO dto) {
         // 获取所有在线用户的redisKey
         Set<String> keys = redisTemplate.keys(RedisKey.SESSION_ID + "*");
 
@@ -50,7 +49,7 @@ public class UserOnlineService {
 
             String redisString = redisTemplate.opsForValue().get(key);
             String sessionId = key.split(":")[1];
-            RedisSecurityModel redisSecurityModel = OBJECTMAPPER.readValue(redisString, new TypeReference<RedisSecurityModel>() {});
+            RedisSecurityModel redisSecurityModel = JSONUtil.toBean(redisString, RedisSecurityModel.class);
             UserOnline userOnline = redisSecurityModel.getUserOnline();
 
             // 只查询当前租户下登录用户

@@ -2,8 +2,8 @@ package com.guzi.sherly.service;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.servlet.ServletUtil;
+import cn.hutool.json.JSONUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.guzi.sherly.constants.RedisKey;
 import com.guzi.sherly.manager.AccountUserManager;
 import com.guzi.sherly.manager.TenantManager;
@@ -21,11 +21,10 @@ import com.guzi.sherly.modules.security.model.RedisSecurityModel;
 import com.guzi.sherly.modules.security.model.SecurityModel;
 import com.guzi.sherly.modules.security.util.SecurityUtil;
 import com.guzi.sherly.util.GlobalPropertiesUtil;
+import com.guzi.sherly.util.IpUtil;
 import com.guzi.sherly.util.JwtUtil;
 import com.guzi.sherly.util.LogRecordUtil;
-import net.dreamlu.mica.ip2region.core.Ip2regionSearcher;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -37,6 +36,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
@@ -54,33 +54,28 @@ import static com.guzi.sherly.model.exception.enums.AdminErrorEnum.*;
 @Service
 public class LoginService {
 
-    private static final ObjectMapper OBJECTMAPPER = new ObjectMapper();
-
-    @Autowired
+    @Resource
     private AuthenticationProvider authenticationProvider;
 
-    @Autowired
+    @Resource
     private RedisTemplate<String, String> redisTemplate;
 
-    @Autowired
+    @Resource
     private UserManager userManager;
 
-    @Autowired
+    @Resource
     private AccountUserManager accountUserManager;
 
-    @Autowired
+    @Resource
     private TenantManager tenantManager;
 
-    @Autowired
+    @Resource
     private LogRecordUtil logRecordUtil;
 
-    @Autowired
-    private Ip2regionSearcher ip2regionSearcher;
-
-    @Autowired
+    @Resource
     private UserDetailsService userDetailsService;
 
-    @Autowired
+    @Resource
     private PasswordEncoder passwordEncoder;
 
     /**
@@ -218,14 +213,14 @@ public class LoginService {
         // redis缓存登录用户信息
         RedisSecurityModel redisSecurityModel = loginUserDetails.getRedisSecurityModel(request);
         UserOnline userOnline = redisSecurityModel.getUserOnline();
-        userOnline.setAddress(ip2regionSearcher.getAddress(userOnline.getIp()));
+        userOnline.setAddress(IpUtil.getAddress(userOnline.getIp()));
         redisSecurityModel.setUserOnline(userOnline);
         if (sessionId != null) {
             redisSecurityModel.getSecurityModel().setSessionId(sessionId);
         }
 
         // 权限信息更新到redis
-        String redisString = OBJECTMAPPER.writeValueAsString(redisSecurityModel);
+        String redisString = JSONUtil.toJsonStr(redisSecurityModel);
         redisTemplate.opsForValue().set(RedisKey.SESSION_ID + redisSecurityModel.getSecurityModel().getSessionId(), redisString, 6, TimeUnit.HOURS);
 
         // 更新用户信息

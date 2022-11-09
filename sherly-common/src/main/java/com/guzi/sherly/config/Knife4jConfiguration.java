@@ -2,7 +2,6 @@ package com.guzi.sherly.config;
 
 import com.github.xiaoymin.knife4j.spring.extension.OpenApiExtensionResolver;
 import com.guzi.sherly.util.GlobalPropertiesUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -24,7 +23,6 @@ public class Knife4jConfiguration {
 
     private final OpenApiExtensionResolver openApiExtensionResolver;
 
-    @Autowired
     public Knife4jConfiguration(OpenApiExtensionResolver openApiExtensionResolver) {
         this.openApiExtensionResolver = openApiExtensionResolver;
     }

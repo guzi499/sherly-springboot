@@ -16,12 +16,13 @@ import com.guzi.sherly.modules.log.model.OperationLog;
 import com.guzi.sherly.modules.security.util.SecurityUtil;
 import com.guzi.sherly.util.OssUtil;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -36,28 +37,28 @@ import static com.guzi.sherly.model.exception.enums.AdminErrorEnum.USER_PASSWORD
 @Service
 public class UserSelfService {
 
-    @Autowired
+    @Resource
     private PasswordEncoder passwordEncoder;
 
-    @Autowired
+    @Resource
     private UserManager userManager;
 
-    @Autowired
+    @Resource
     private UserRoleManager userRoleManager;
 
-    @Autowired
+    @Resource
     private RoleManager roleManager;
 
-    @Autowired
+    @Resource
     private DepartmentManager departmentManager;
 
-    @Autowired
+    @Resource
     private AccountUserManager accountUserManager;
 
-    @Autowired
+    @Resource
     private OperationLogManager operationLogManager;
 
-    @Autowired
+    @Resource
     private OssUtil ossUtil;
 
     /**
@@ -65,7 +66,7 @@ public class UserSelfService {
      *
      * @return
      */
-    public UserSelfVO getSelf() throws Exception {
+    public UserSelfVO getSelf() {
         User user = userManager.getById(SecurityUtil.getUserId());
 
         // 查询角色
@@ -76,6 +77,7 @@ public class UserSelfService {
 
         // 查询部门
         List<Department> departmentList = departmentManager.list();
+        Map<Long, String> departmentIdMapName = departmentList.stream().collect(Collectors.toMap(Department::getDepartmentId, Department::getDepartmentName));
 
         // 组装vo
         UserSelfVO vo = new UserSelfVO();
@@ -84,7 +86,7 @@ public class UserSelfService {
         vo.setRoleIds(roleIds);
         vo.setRoleNames(roleNames);
         vo.setGenderStr(Objects.equals(vo.getGender(), MALE) ? "男" : "女");
-        vo.setDepartmentName(departmentList.stream().filter(x -> Objects.equals(x.getDepartmentId(), vo.getDepartmentId())).map(Department::getDepartmentName).collect(Collectors.joining(",")));
+        vo.setDepartmentName(departmentIdMapName.get(vo.getDepartmentId()));
         vo.setTenantName(SecurityUtil.getTenantCode());
 
         return vo;
@@ -103,11 +105,14 @@ public class UserSelfService {
         String phone = SecurityUtil.getPhone();
         AccountUser accountUser = accountUserManager.getByPhone(phone);
 
+        // 旧密码正确性验证
         boolean match = passwordEncoder.matches(dto.getOldPassword(), accountUser.getPassword());
         if (!match) {
             // 旧密码不正确
             throw new BizException(USER_PASSWORD_ERROR);
         }
+
+        // 密码加密后存储到db
         accountUser.setPassword(passwordEncoder.encode(dto.getNewPassword()));
         accountUserManager.updateById(accountUser);
     }
@@ -140,10 +145,14 @@ public class UserSelfService {
      * @return
      */
     public PageResult<OperationLogPageVO> operationLogListPage(OperationLogSelfPageDTO dto) {
+        // 设置日志操作人为当前登录用户
         OperationLogPageDTO operationLogPageDTO = new OperationLogPageDTO();
         BeanUtils.copyProperties(dto, operationLogPageDTO);
         operationLogPageDTO.setUserIds(Collections.singletonList(SecurityUtil.getUserId()));
+
+        // 分页查询操作日志
         Page<OperationLog> page = operationLogManager.listPage(operationLogPageDTO);
+
         List<OperationLogPageVO> result = page.getRecords().stream().map(e -> {
             OperationLogPageVO vo = new OperationLogPageVO();
             BeanUtils.copyProperties(e, vo);

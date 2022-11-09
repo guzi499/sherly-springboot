@@ -7,7 +7,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.guzi.sherly.mapper.TenantMapper;
 import com.guzi.sherly.model.admin.Tenant;
 import com.guzi.sherly.model.dto.TenantPageDTO;
-import com.guzi.sherly.util.SherlyLambdaQueryWrapper;
+import com.guzi.sherly.modules.mybatisplus.service.SherlyServiceImpl;
+import com.guzi.sherly.modules.mybatisplus.wrapper.SherlyLambdaQueryWrapper;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -18,7 +19,7 @@ import java.util.List;
  * @date 2022/3/25
  */
 @Service
-public class TenantManager extends ServiceImpl<TenantMapper, Tenant> {
+public class TenantManager extends SherlyServiceImpl<TenantMapper, Tenant> {
 
     /**
      * 租户查重

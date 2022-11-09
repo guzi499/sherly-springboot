@@ -1,17 +1,16 @@
 package com.guzi.sherly.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.guzi.sherly.model.Result;
 import com.guzi.sherly.model.dto.UserOnlineSelectDTO;
 import com.guzi.sherly.model.vo.UserOnlineSelectVO;
 import com.guzi.sherly.service.UserOnlineService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -25,13 +24,13 @@ import java.util.List;
 @Validated
 public class UserOnlineController {
 
-    @Autowired
+    @Resource
     private UserOnlineService userOnlineService;
 
     @GetMapping("/list_all")
     @PreAuthorize("hasAnyAuthority('user_online:list_all')")
     @ApiOperation("在线用户列表")
-    public Result<List<UserOnlineSelectVO>> listAll(@Valid UserOnlineSelectDTO dto) throws JsonProcessingException {
+    public Result<List<UserOnlineSelectVO>> listAll(@Valid UserOnlineSelectDTO dto) {
         return Result.success(userOnlineService.listAll(dto));
     }
 

@@ -8,7 +8,8 @@ import com.guzi.sherly.mapper.RoleMapper;
 import com.guzi.sherly.model.admin.Role;
 import com.guzi.sherly.model.dto.RolePageDTO;
 import com.guzi.sherly.model.dto.RoleSelectDTO;
-import com.guzi.sherly.util.SherlyLambdaQueryWrapper;
+import com.guzi.sherly.modules.mybatisplus.service.SherlyServiceImpl;
+import com.guzi.sherly.modules.mybatisplus.wrapper.SherlyLambdaQueryWrapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,7 +19,7 @@ import java.util.List;
  * @date 2022/3/25
  */
 @Service
-public class RoleManager extends ServiceImpl<RoleMapper, Role> {
+public class RoleManager extends SherlyServiceImpl<RoleMapper, Role> {
 
     /**
      * 角色分页

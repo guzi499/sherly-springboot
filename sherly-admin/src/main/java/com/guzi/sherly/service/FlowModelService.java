@@ -12,9 +12,9 @@ import org.flowable.engine.RepositoryService;
 import org.flowable.engine.repository.Model;
 import org.flowable.engine.repository.ModelQuery;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 @Service
 public class FlowModelService {
 
-    @Autowired
+    @Resource
     private RepositoryService repositoryService;
 
     /**
@@ -105,7 +105,7 @@ public class FlowModelService {
                 .name(model.getName())
                 .key(model.getKey())
                 .category(model.getCategory())
-                .addBytes(model.getName(), modelXmlBytes)
+                .addBytes(model.getName() + ".bpmn20.xml", modelXmlBytes)
                 .deploy();
     }
 }

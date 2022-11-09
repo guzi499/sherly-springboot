@@ -9,10 +9,10 @@ import com.guzi.sherly.model.vo.BasicUserInfoVO;
 import com.guzi.sherly.modules.security.util.SecurityUtil;
 import com.guzi.sherly.util.OssUtil;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import javax.annotation.Resource;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -28,25 +28,25 @@ import static com.guzi.sherly.model.contants.CommonConstants.*;
 @Service
 public class GenericService {
 
-    @Autowired
+    @Resource
     private UserManager userManager;
 
-    @Autowired
+    @Resource
     private RoleManager roleManager;
 
-    @Autowired
+    @Resource
     private MenuManager menuManager;
 
-    @Autowired
+    @Resource
     private RoleMenuManager roleMenuManager;
 
-    @Autowired
+    @Resource
     private UserRoleManager userRoleManager;
 
-    @Autowired
+    @Resource
     private TenantManager tenantManager;
 
-    @Autowired
+    @Resource
     private OssUtil ossUtil;
 
     /**

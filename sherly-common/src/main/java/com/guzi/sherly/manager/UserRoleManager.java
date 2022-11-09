@@ -1,13 +1,13 @@
 package com.guzi.sherly.manager;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.guzi.sherly.mapper.UserRoleMapper;
 import com.guzi.sherly.model.admin.UserRole;
-import com.guzi.sherly.util.SherlyLambdaQueryWrapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.guzi.sherly.modules.mybatisplus.service.SherlyServiceImpl;
+import com.guzi.sherly.modules.mybatisplus.wrapper.SherlyLambdaQueryWrapper;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,9 +16,9 @@ import java.util.List;
  * @date 2022/3/25
  */
 @Service
-public class UserRoleManager extends ServiceImpl<UserRoleMapper, UserRole> {
+public class UserRoleManager extends SherlyServiceImpl<UserRoleMapper, UserRole> {
 
-    @Autowired
+    @Resource
     private UserRoleMapper userRoleMapper;
 
     /**

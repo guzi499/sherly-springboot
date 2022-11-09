@@ -1,22 +1,20 @@
 package com.guzi.sherly.modules.log.aop;
 
-import cn.hutool.extra.servlet.ServletUtil;
 import cn.hutool.http.useragent.UserAgent;
 import cn.hutool.http.useragent.UserAgentUtil;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import cn.hutool.json.JSONUtil;
 import com.guzi.sherly.modules.log.annotation.SherlyLog;
 import com.guzi.sherly.modules.log.model.OperationLog;
 import com.guzi.sherly.modules.log.service.OperationLogService;
 import com.guzi.sherly.modules.security.util.SecurityUtil;
+import com.guzi.sherly.util.IpUtil;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import net.dreamlu.mica.ip2region.core.Ip2regionSearcher;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -40,14 +38,9 @@ import static com.guzi.sherly.model.contants.CommonConstants.NORMAL_LOG;
 @Component
 public class SherlyLogAop {
 
-    private static final ObjectMapper OBJECTMAPPER = new ObjectMapper();
-
     private final OperationLogService operationLogService;
 
     ThreadLocal<Long> recordTime = new ThreadLocal<>();
-
-    @Autowired
-    private Ip2regionSearcher regionSearcher;
 
     public SherlyLogAop(OperationLogService operationLogService) {
         this.operationLogService = operationLogService;
@@ -92,7 +85,8 @@ public class SherlyLogAop {
     private void saveOne(Long duration, ProceedingJoinPoint joinPoint, Integer type, Throwable exception) throws Exception {
         OperationLog operationLog = new OperationLog();
         HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
-        String ip = ServletUtil.getClientIP(request);
+        String ip = IpUtil.getIp(request);
+        String address = IpUtil.getAddress(ip);
         String userAgent = request.getHeader("User-Agent");
         if (userAgent != null) {
             UserAgent agent = UserAgentUtil.parse(userAgent);
@@ -117,12 +111,12 @@ public class SherlyLogAop {
         operationLog.setUri(uri);
         operationLog.setRequestParams(requestParams);
         operationLog.setIp(ip);
-        operationLog.setAddress(regionSearcher.getAddress(ip));
+        operationLog.setAddress(address);
 
         if (exception != null) {
             List<String> list = Arrays.stream(exception.getStackTrace()).map(Objects::toString).filter(e -> e.startsWith("com.guzi")).collect(Collectors.toList());
             list.add(0, exception.getMessage());
-            operationLog.setException(OBJECTMAPPER.writeValueAsString(list));
+            operationLog.setException(JSONUtil.toJsonStr(list));
         }
 
         Long createTimeMills = recordTime.get();
@@ -155,6 +149,6 @@ public class SherlyLogAop {
             return "";
         }
 
-        return OBJECTMAPPER.writeValueAsString(map);
+        return JSONUtil.toJsonStr(map);
     }
 }

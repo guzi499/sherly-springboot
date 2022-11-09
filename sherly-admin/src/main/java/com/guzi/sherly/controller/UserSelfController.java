@@ -6,15 +6,16 @@ import com.guzi.sherly.model.dto.OperationLogSelfPageDTO;
 import com.guzi.sherly.model.dto.UserSelfUpdateDTO;
 import com.guzi.sherly.model.dto.UserUpdatePasswordDTO;
 import com.guzi.sherly.model.vo.OperationLogPageVO;
+import com.guzi.sherly.model.vo.UserSelfVO;
 import com.guzi.sherly.service.OssService;
 import com.guzi.sherly.service.UserSelfService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import javax.validation.Valid;
 
 /**
@@ -27,15 +28,15 @@ import javax.validation.Valid;
 @Validated
 public class UserSelfController {
 
-    @Autowired
+    @Resource
     private UserSelfService userSelfService;
 
-    @Autowired
+    @Resource
     private OssService ossService;
 
     @GetMapping("/get_self")
     @ApiOperation("用户个人中心")
-    public Result getSelf() throws Exception {
+    public Result<UserSelfVO> getSelf() {
         return Result.success(userSelfService.getSelf());
     }
 

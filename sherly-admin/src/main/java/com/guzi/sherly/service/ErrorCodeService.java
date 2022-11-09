@@ -12,9 +12,9 @@ import com.guzi.sherly.model.dto.ErrorCodeUpdateDTO;
 import com.guzi.sherly.model.exception.BizException;
 import com.guzi.sherly.model.vo.ErrorCodePageVO;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -28,10 +28,10 @@ import static com.guzi.sherly.model.exception.enums.AdminErrorEnum.ERROR_REPEAT;
 @Service
 public class ErrorCodeService {
 
-    @Autowired
+    @Resource
     private ErrorCodeManager errorCodeManager;
 
-    @Autowired
+    @Resource
     private ModuleManager moduleManager;
 
     /**

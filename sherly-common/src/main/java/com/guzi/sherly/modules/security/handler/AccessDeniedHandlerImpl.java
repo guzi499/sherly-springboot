@@ -1,6 +1,6 @@
 package com.guzi.sherly.modules.security.handler;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import cn.hutool.json.JSONUtil;
 import com.guzi.sherly.model.Result;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
@@ -19,12 +19,10 @@ import static com.guzi.sherly.model.exception.enums.CommonErrorEnum.ACCESS_DENY;
 @Component
 public class AccessDeniedHandlerImpl implements AccessDeniedHandler {
 
-    private static final ObjectMapper OBJECTMAPPER = new ObjectMapper();
-
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException {
         Result result = Result.error(ACCESS_DENY);
-        String jsonResult = OBJECTMAPPER.writeValueAsString(result);
+        String jsonResult = JSONUtil.toJsonStr(result);
 
         response.setStatus(200);
         response.setContentType("application/json");

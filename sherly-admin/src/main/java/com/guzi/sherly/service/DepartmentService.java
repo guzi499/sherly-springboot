@@ -8,10 +8,10 @@ import com.guzi.sherly.model.dto.DepartmentUpdateDTO;
 import com.guzi.sherly.model.exception.BizException;
 import com.guzi.sherly.model.vo.DepartmentVO;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
@@ -27,10 +27,10 @@ import static com.guzi.sherly.model.exception.enums.AdminErrorEnum.*;
 @Service
 public class DepartmentService {
 
-    @Autowired
+    @Resource
     private DepartmentManager departmentManager;
 
-    @Autowired
+    @Resource
     private UserManager userManager;
 
     /**

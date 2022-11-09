@@ -16,11 +16,11 @@ import com.guzi.sherly.model.vo.RolePageVO;
 import com.guzi.sherly.model.vo.RoleSelectVO;
 import com.guzi.sherly.model.vo.RoleVO;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -33,13 +33,13 @@ import static com.guzi.sherly.model.exception.enums.AdminErrorEnum.*;
  */
 @Service
 public class RoleService {
-    @Autowired
+    @Resource
     private RoleManager roleManager;
 
-    @Autowired
+    @Resource
     private RoleMenuManager roleMenuManager;
 
-    @Autowired
+    @Resource
     private UserRoleManager userRoleManager;
 
     /**

@@ -1,12 +1,10 @@
 package com.guzi.sherly.modules.security.filter;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import cn.hutool.json.JSONUtil;
 import com.guzi.sherly.constants.RedisKey;
 import com.guzi.sherly.modules.security.model.RedisSecurityModel;
 import com.guzi.sherly.modules.security.model.SecurityModel;
 import com.guzi.sherly.util.JwtUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -15,6 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import javax.annotation.Resource;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -31,9 +30,7 @@ import java.util.stream.Collectors;
 @Component
 public class AuthenticationTokenFilter extends OncePerRequestFilter {
 
-    private static final ObjectMapper OBJECTMAPPER = new ObjectMapper();
-
-    @Autowired
+    @Resource
     private RedisTemplate<String, String> redisTemplate;
 
 
@@ -67,7 +64,7 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
         // redis续期
         redisTemplate.expire(RedisKey.SESSION_ID + sessionId, 6, TimeUnit.HOURS);
 
-        RedisSecurityModel redisSecurityModel = OBJECTMAPPER.readValue(redisString, new TypeReference<RedisSecurityModel>() {});
+        RedisSecurityModel redisSecurityModel = JSONUtil.toBean(redisString, RedisSecurityModel.class);
 
         SecurityModel securityModel = redisSecurityModel.getSecurityModel();
         List<SimpleGrantedAuthority> authorities = redisSecurityModel.getPermissions().stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());

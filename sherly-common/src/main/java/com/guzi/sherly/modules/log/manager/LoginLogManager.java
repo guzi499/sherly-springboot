@@ -5,7 +5,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.guzi.sherly.model.dto.LoginLogPageDTO;
 import com.guzi.sherly.modules.log.mapper.LoginLogMapper;
 import com.guzi.sherly.modules.log.model.LoginLog;
-import com.guzi.sherly.util.SherlyLambdaQueryWrapper;
+import com.guzi.sherly.modules.mybatisplus.service.SherlyServiceImpl;
+import com.guzi.sherly.modules.mybatisplus.wrapper.SherlyLambdaQueryWrapper;
 import org.springframework.stereotype.Service;
 
 /**
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Service;
  * @date 2022/7/14
  */
 @Service
-public class LoginLogManager extends ServiceImpl<LoginLogMapper, LoginLog> {
+public class LoginLogManager extends SherlyServiceImpl<LoginLogMapper, LoginLog> {
 
     /**
      * 日志分页

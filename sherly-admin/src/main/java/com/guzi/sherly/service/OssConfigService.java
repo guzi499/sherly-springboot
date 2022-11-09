@@ -1,8 +1,8 @@
 package com.guzi.sherly.service;
 
+import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.guzi.sherly.manager.OssConfigManager;
 import com.guzi.sherly.model.PageResult;
 import com.guzi.sherly.model.admin.OssConfig;
@@ -16,9 +16,9 @@ import com.guzi.sherly.modules.storage.OssClientFactory;
 import com.guzi.sherly.modules.storage.enums.OssTypeEnum;
 import com.guzi.sherly.modules.storage.model.OssClientConfig;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -34,12 +34,10 @@ import static com.guzi.sherly.model.contants.CommonConstants.ENABLE;
 @Service
 public class OssConfigService {
 
-    private static final ObjectMapper OBJECTMAPPER = new ObjectMapper();
-
-    @Autowired
+    @Resource
     private OssConfigManager ossConfigManager;
 
-    @Autowired
+    @Resource
     private OssClientFactory ossClientFactory;
 
     /**
@@ -67,8 +65,8 @@ public class OssConfigService {
     public OssConfigVO getOne(Long configId) throws Exception {
         OssConfig ossConfig = ossConfigManager.getById(configId);
         OssClientConfig config = ossConfig.getConfig();
-        String configStr = OBJECTMAPPER.writeValueAsString(config);
-        Map<String, Object> map = OBJECTMAPPER.readValue(configStr, Map.class);
+        String configStr = JSONUtil.toJsonStr(config);
+        Map<String, Object> map = JSONUtil.toBean(configStr, Map.class);
 
         OssConfigVO vo = new OssConfigVO();
         BeanUtils.copyProperties(ossConfig, vo);
@@ -116,8 +114,8 @@ public class OssConfigService {
      */
     private OssClientConfig parseConfig(Integer type, Map<String, Object> config) throws Exception {
         Class<?> configClass = OssTypeEnum.getByType(type).getOssConfigClass();
-        String configStr = OBJECTMAPPER.writeValueAsString(config);
-        return (OssClientConfig) OBJECTMAPPER.readValue(configStr, configClass);
+        String configStr = JSONUtil.toJsonStr(config);
+        return (OssClientConfig) JSONUtil.toBean(configStr, configClass);
     }
 
     /**

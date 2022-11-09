@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
+ * yml文件的项目属性配置
  * @author 谷子毅
  * @date 2022/7/22
  */

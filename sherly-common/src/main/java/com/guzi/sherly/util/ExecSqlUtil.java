@@ -29,6 +29,7 @@ public class ExecSqlUtil {
             sql = sql.replace(entity.getKey(), entity.getValue());
         }
         ScriptRunner scriptRunner = new ScriptRunner(DATA_SOURCE.getConnection());
+
         // 执行SQL
         scriptRunner.runScript(new StringReader(sql));
     }

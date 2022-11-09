@@ -24,7 +24,7 @@
     - 新增的时候使用InsertDTO，InsertVO做后缀
     - 更新的时候使用UpdateDTO，UpdateVO做后缀
     - ===========================
-6. 所有注入一律使用 @Autowired，不要使用 @Resource。
+6. 所有注入一律使用 @Resource，不要使用 @Autowired。
 #### 【2】OOP规约      
 1. 关于基本数据类型与包装数据类型的使用标准如下： 
    - 所有的POJO类属性必须使用包装数据类型。 
