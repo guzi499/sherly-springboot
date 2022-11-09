@@ -2,8 +2,8 @@ package com.guzi.sherly.service;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.servlet.ServletUtil;
+import cn.hutool.json.JSONUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.guzi.sherly.constants.RedisKey;
 import com.guzi.sherly.manager.AccountUserManager;
 import com.guzi.sherly.manager.TenantManager;
@@ -53,8 +53,6 @@ import static com.guzi.sherly.model.exception.enums.AdminErrorEnum.*;
  */
 @Service
 public class LoginService {
-
-    private static final ObjectMapper OBJECTMAPPER = new ObjectMapper();
 
     @Resource
     private AuthenticationProvider authenticationProvider;
@@ -222,7 +220,7 @@ public class LoginService {
         }
 
         // 权限信息更新到redis
-        String redisString = OBJECTMAPPER.writeValueAsString(redisSecurityModel);
+        String redisString = JSONUtil.toJsonStr(redisSecurityModel);
         redisTemplate.opsForValue().set(RedisKey.SESSION_ID + redisSecurityModel.getSecurityModel().getSessionId(), redisString, 6, TimeUnit.HOURS);
 
         // 更新用户信息

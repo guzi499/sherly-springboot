@@ -2,7 +2,7 @@ package com.guzi.sherly.modules.log.aop;
 
 import cn.hutool.http.useragent.UserAgent;
 import cn.hutool.http.useragent.UserAgentUtil;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import cn.hutool.json.JSONUtil;
 import com.guzi.sherly.modules.log.annotation.SherlyLog;
 import com.guzi.sherly.modules.log.model.OperationLog;
 import com.guzi.sherly.modules.log.service.OperationLogService;
@@ -37,8 +37,6 @@ import static com.guzi.sherly.model.contants.CommonConstants.NORMAL_LOG;
 @Aspect
 @Component
 public class SherlyLogAop {
-
-    private static final ObjectMapper OBJECTMAPPER = new ObjectMapper();
 
     private final OperationLogService operationLogService;
 
@@ -118,7 +116,7 @@ public class SherlyLogAop {
         if (exception != null) {
             List<String> list = Arrays.stream(exception.getStackTrace()).map(Objects::toString).filter(e -> e.startsWith("com.guzi")).collect(Collectors.toList());
             list.add(0, exception.getMessage());
-            operationLog.setException(OBJECTMAPPER.writeValueAsString(list));
+            operationLog.setException(JSONUtil.toJsonStr(list));
         }
 
         Long createTimeMills = recordTime.get();
@@ -151,6 +149,6 @@ public class SherlyLogAop {
             return "";
         }
 
-        return OBJECTMAPPER.writeValueAsString(map);
+        return JSONUtil.toJsonStr(map);
     }
 }

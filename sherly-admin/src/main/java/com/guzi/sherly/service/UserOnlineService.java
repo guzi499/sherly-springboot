@@ -1,8 +1,7 @@
 package com.guzi.sherly.service;
 
+import cn.hutool.json.JSONUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.guzi.sherly.constants.RedisKey;
 import com.guzi.sherly.model.admin.UserOnline;
 import com.guzi.sherly.model.dto.UserOnlineSelectDTO;
@@ -25,8 +24,6 @@ import java.util.stream.Collectors;
  */
 @Service
 public class UserOnlineService {
-
-    private static final ObjectMapper OBJECTMAPPER = new ObjectMapper();
 
     @Resource
     private RedisTemplate<String, String> redisTemplate;
@@ -52,7 +49,7 @@ public class UserOnlineService {
 
             String redisString = redisTemplate.opsForValue().get(key);
             String sessionId = key.split(":")[1];
-            RedisSecurityModel redisSecurityModel = OBJECTMAPPER.readValue(redisString, new TypeReference<RedisSecurityModel>() {});
+            RedisSecurityModel redisSecurityModel = JSONUtil.toBean(redisString, RedisSecurityModel.class);
             UserOnline userOnline = redisSecurityModel.getUserOnline();
 
             // 只查询当前租户下登录用户
