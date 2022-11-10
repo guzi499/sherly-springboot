@@ -1,8 +1,7 @@
-package com.guzi.sherly.manager;
+package com.guzi.sherly.dao;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.guzi.sherly.mapper.OssFileMapper;
 import com.guzi.sherly.model.admin.OssFile;
 import com.guzi.sherly.model.dto.OssFilePageDTO;
@@ -15,7 +14,7 @@ import org.springframework.stereotype.Service;
  * @date 2022/6/29
  */
 @Service
-public class OssFileManager extends SherlyServiceImpl<OssFileMapper, OssFile> {
+public class OssFileDao extends SherlyServiceImpl<OssFileMapper, OssFile> {
     /**
      * 文件分页
      * @param dto

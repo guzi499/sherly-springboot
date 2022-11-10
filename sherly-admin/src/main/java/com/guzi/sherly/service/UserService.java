@@ -4,7 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.write.style.column.LongestMatchColumnWidthStyleStrategy;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.guzi.sherly.manager.*;
+import com.guzi.sherly.dao.*;
 import com.guzi.sherly.model.PageResult;
 import com.guzi.sherly.model.admin.*;
 import com.guzi.sherly.model.dto.UserInsertDTO;
@@ -47,19 +47,19 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
 
     @Resource
-    private UserManager userManager;
+    private UserDao userDao;
 
     @Resource
-    private UserRoleManager userRoleManager;
+    private UserRoleDao userRoleDao;
 
     @Resource
-    private DepartmentManager departmentManager;
+    private DepartmentDao departmentDao;
 
     @Resource
-    private AccountUserManager accountUserManager;
+    private AccountUserDao accountUserDao;
 
     @Resource
-    private TenantManager tenantManager;
+    private TenantDao tenantDao;
 
     /**
      * 用户分页
@@ -68,8 +68,8 @@ public class UserService {
      */
     public PageResult<UserPageVo> listPage(UserPageDTO dto) {
         // 分页查询
-        IPage<User> page = userManager.listPage(dto);
-        List<Department> departmentList = departmentManager.list();
+        IPage<User> page = userDao.listPage(dto);
+        List<Department> departmentList = departmentDao.list();
 
         // 对象转换成vo类型
         List<UserPageVo> result = page.getRecords().stream().map(e -> {
@@ -87,8 +87,8 @@ public class UserService {
      * @param response
      */
     public void listExport(HttpServletResponse response) throws IOException {
-        List<User> userList = userManager.list();
-        List<Department> departmentList = departmentManager.list();
+        List<User> userList = userDao.list();
+        List<Department> departmentList = departmentDao.list();
         Map<Long, String> departmentIdMapName = departmentList.stream().collect(Collectors.toMap(Department::getDepartmentId, Department::getDepartmentName));
 
         List<UserEO> result = userList.stream().map(e -> {
@@ -118,10 +118,10 @@ public class UserService {
      */
     public UserVo getOne(Long userId) {
 
-        User user = userManager.getById(userId);
+        User user = userDao.getById(userId);
 
         // 查询角色
-        List<UserRole> userRoles = userRoleManager.listByUserId(userId);
+        List<UserRole> userRoles = userRoleDao.listByUserId(userId);
         List<Long> roleIds = userRoles.stream().map(UserRole::getRoleId).collect(Collectors.toList());
 
         // 组装vo
@@ -140,44 +140,44 @@ public class UserService {
     public void saveOne(UserInsertDTO dto) {
         // 去重
         String phone = dto.getPhone();
-        User one = userManager.getByPhone(phone);
+        User one = userDao.getByPhone(phone);
         if (one != null) {
             throw new BizException(USER_REPEAT);
         }
 
-        long userNum = userManager.count();
+        long userNum = userDao.count();
 
         // 注册用户上限校验
-        Tenant tenant = tenantManager.getByTenantCode(SecurityUtil.getTenantCode());
+        Tenant tenant = tenantDao.getByTenantCode(SecurityUtil.getTenantCode());
         if (tenant.getUserLimit() <= userNum) {
             throw new BizException(USER_LIMIT);
         }
 
         // 同步用户账户信息
-        AccountUser accountUser = accountUserManager.getByPhone(phone);
+        AccountUser accountUser = accountUserDao.getByPhone(phone);
         if (accountUser == null) {
             accountUser = new AccountUser();
             accountUser.setPhone(phone);
             accountUser.setPassword(passwordEncoder.encode(GlobalPropertiesUtil.SHERLY_PROPERTIES.getDefaultPassword()));
             accountUser.setTenantData(SecurityUtil.getTenantCode());
             accountUser.setLastLoginTenantCode(SecurityUtil.getTenantCode());
-            accountUserManager.save(accountUser);
+            accountUserDao.save(accountUser);
         } else {
             List<String> split = StrUtil.split(accountUser.getTenantData(), ",");
             split.add(SecurityUtil.getTenantCode());
             split = split.stream().filter(StrUtil::isNotBlank).collect(Collectors.toList());
             String tenantData = String.join(",", split);
             accountUser.setTenantData(tenantData);
-            accountUserManager.updateById(accountUser);
+            accountUserDao.updateById(accountUser);
         }
 
         User user = new User();
         BeanUtils.copyProperties(dto, user);
         user.setEnable(ENABLE);
-        userManager.save(user);
+        userDao.save(user);
 
         // 保存用户角色数据
-        userRoleManager.saveUserRole(user.getUserId(), dto.getRoleIds());
+        userRoleDao.saveUserRole(user.getUserId(), dto.getRoleIds());
     }
 
     /**
@@ -191,10 +191,10 @@ public class UserService {
         }
         User user = new User();
         BeanUtils.copyProperties(dto, user);
-        userManager.updateById(user);
+        userDao.updateById(user);
 
-        userRoleManager.removeUserRoleByUserId(dto.getUserId());
-        userRoleManager.saveUserRole(dto.getUserId(), dto.getRoleIds());
+        userRoleDao.removeUserRoleByUserId(dto.getUserId());
+        userRoleDao.saveUserRole(dto.getUserId(), dto.getRoleIds());
     }
 
     /**
@@ -207,15 +207,15 @@ public class UserService {
             throw new BizException(DELETE_USER_ERROR);
         }
 
-        User user = userManager.getById(userId);
-        AccountUser accountUser = accountUserManager.getByPhone(user.getPhone());
+        User user = userDao.getById(userId);
+        AccountUser accountUser = accountUserDao.getByPhone(user.getPhone());
         List<String> split = StrUtil.split(accountUser.getTenantData(), ",");
         split.remove(SecurityUtil.getTenantCode());
         String tenantCode = String.join(",", split);
         accountUser.setTenantData(tenantCode);
-        accountUserManager.updateById(accountUser);
+        accountUserDao.updateById(accountUser);
 
-        userManager.removeById(userId);
+        userDao.removeById(userId);
     }
 
     /**
@@ -226,7 +226,7 @@ public class UserService {
         if (Objects.equals(userId, 1L)) {
             throw new BizException(BAN_USER_ERROR);
         }
-        userManager.banOne(userId, enable);
+        userDao.banOne(userId, enable);
     }
 
     /**
@@ -236,11 +236,11 @@ public class UserService {
      */
     public List<UserSelectVO> listAll(UserSelectDTO dto) {
 
-        List<UserRole> userRoles = userRoleManager.listByRoleIds(dto.getRoleIds());
+        List<UserRole> userRoles = userRoleDao.listByRoleIds(dto.getRoleIds());
         List<Long> userIds = userRoles.stream().map(UserRole::getUserId).collect(Collectors.toList());
         dto.setUserIds(userIds);
 
-        List<User> users = userManager.listAll(dto);
+        List<User> users = userDao.listAll(dto);
 
         return users.stream().map(e -> {
             UserSelectVO vo = new UserSelectVO();

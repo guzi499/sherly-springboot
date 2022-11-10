@@ -7,7 +7,7 @@ import com.alibaba.excel.write.style.column.LongestMatchColumnWidthStyleStrategy
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.guzi.sherly.constants.SqlParam;
 import com.guzi.sherly.constants.SqlStatement;
-import com.guzi.sherly.manager.*;
+import com.guzi.sherly.dao.*;
 import com.guzi.sherly.model.PageResult;
 import com.guzi.sherly.model.admin.*;
 import com.guzi.sherly.model.dto.TenantInsertDTO;
@@ -49,31 +49,31 @@ import static com.guzi.sherly.model.exception.enums.AdminErrorEnum.TENANT_REPEAT
 public class TenantService {
 
     @Resource
-    private TenantManager tenantManager;
+    private TenantDao tenantDao;
 
     @Resource
-    private UserManager userManager;
+    private UserDao userDao;
 
     @Resource
-    private RoleManager roleManager;
+    private RoleDao roleDao;
 
     @Resource
-    private UserRoleManager userRoleManager;
+    private UserRoleDao userRoleDao;
 
     @Resource
-    private DepartmentManager departmentManager;
+    private DepartmentDao departmentDao;
 
     @Resource
-    private MenuManager menuManager;
+    private MenuDao menuDao;
 
     @Resource
-    private RoleMenuManager roleMenuManager;
+    private RoleMenuDao roleMenuDao;
 
     @Resource
     private PasswordEncoder passwordEncoder;
 
     @Resource
-    private AccountUserManager accountUserManager;
+    private AccountUserDao accountUserDao;
 
     /**
      * 租户条件分页
@@ -82,7 +82,7 @@ public class TenantService {
      */
     public PageResult<TenantPageVO> listPage(TenantPageDTO dto) {
 
-        IPage<Tenant> page = tenantManager.listPage(dto);
+        IPage<Tenant> page = tenantDao.listPage(dto);
 
         List<TenantPageVO> result = page.getRecords().stream().map(e -> {
             TenantPageVO vo = new TenantPageVO();
@@ -100,34 +100,34 @@ public class TenantService {
     @Transactional(rollbackFor = Exception.class)
     public void saveOne(TenantInsertDTO dto) {
         // 查重
-        Tenant one = tenantManager.getByTenantNameOrTenantCode(dto.getTenantName(), dto.getTenantCode());
+        Tenant one = tenantDao.getByTenantNameOrTenantCode(dto.getTenantName(), dto.getTenantCode());
         if (one != null) {
             throw new BizException(TENANT_REPEAT);
         }
 
         Tenant tenant = new Tenant();
         BeanUtils.copyProperties(dto, tenant);
-        tenantManager.save(tenant);
+        tenantDao.save(tenant);
 
         // 执行sql语句创建新租户的数据库表
         ExecSqlUtil.execSql(SqlStatement.CREATE_TENANT, Collections.singletonMap(SqlParam.DATABASE, dto.getTenantCode()));
 
         // 新建用户租户
-        AccountUser accountUser = accountUserManager.getByPhone(dto.getContactPhone());
+        AccountUser accountUser = accountUserDao.getByPhone(dto.getContactPhone());
         if (accountUser == null) {
             accountUser = new AccountUser();
             accountUser.setPhone(dto.getContactPhone());
             accountUser.setPassword(passwordEncoder.encode(GlobalPropertiesUtil.SHERLY_PROPERTIES.getDefaultPassword()));
             accountUser.setTenantData(dto.getTenantCode());
             accountUser.setLastLoginTenantCode(dto.getTenantCode());
-            accountUserManager.save(accountUser);
+            accountUserDao.save(accountUser);
         } else {
             List<String> split = StrUtil.split(accountUser.getTenantData(), ",");
             split.add(dto.getTenantCode());
             split = split.stream().filter(StrUtil::isNotBlank).collect(Collectors.toList());
             String tenantData = String.join(",", split);
             accountUser.setTenantData(tenantData);
-            accountUserManager.updateById(accountUser);
+            accountUserDao.updateById(accountUser);
         }
 
         // 设置要操作的租户数据库
@@ -138,12 +138,12 @@ public class TenantService {
         department.setDepartmentName(dto.getTenantName());
         department.setParentId(ROOT_PARENT_ID);
         department.setSort(1);
-        departmentManager.save(department);
+        departmentDao.save(department);
 
         // 新建角色
         Role role = new Role();
         role.setRoleName("超级管理员");
-        roleManager.save(role);
+        roleDao.save(role);
 
         // 新建用户
         User user = new User();
@@ -153,13 +153,13 @@ public class TenantService {
         user.setEnable(ENABLE);
         user.setDepartmentId(department.getDepartmentId());
         user.setGender(1);
-        userManager.save(user);
+        userDao.save(user);
 
         // 关联用户角色
         UserRole userRole = new UserRole();
         userRole.setRoleId(role.getRoleId());
         userRole.setUserId(user.getUserId());
-        userRoleManager.save(userRole);
+        userRoleDao.save(userRole);
 
         SecurityUtil.clearOperateTenantCode();
 
@@ -172,7 +172,7 @@ public class TenantService {
     public void updateOne(TenantUpdateDTO dto) {
         Tenant tenant = new Tenant();
         BeanUtils.copyProperties(dto, tenant);
-        tenantManager.updateById(tenant);
+        tenantDao.updateById(tenant);
     }
 
     /**
@@ -183,7 +183,7 @@ public class TenantService {
         if (Objects.equals(tenantId, 1L)) {
             throw new BizException(DELETE_TENANT_ERROR);
         }
-        tenantManager.removeById(tenantId);
+        tenantDao.removeById(tenantId);
     }
 
     /**
@@ -192,35 +192,35 @@ public class TenantService {
      */
     @Transactional(rollbackFor = Exception.class)
     public void updateMenu(TenantMenuUpdateDTO dto) {
-        Tenant tenant = tenantManager.getById(dto.getTenantId());
+        Tenant tenant = tenantDao.getById(dto.getTenantId());
         if (tenant.getTenantCode().equals(GlobalPropertiesUtil.SHERLY_PROPERTIES.getDefaultDb())) {
             return;
         }
 
         List<Long> menuIds = dto.getMenuIds();
-        List<Menu> menus = menuManager.listByIds(menuIds);
+        List<Menu> menus = menuDao.listByIds(menuIds);
 
         SecurityUtil.setOperateTenantCode(tenant.getTenantCode());
 
         // 先清空菜单，再分配新的菜单
-        menuManager.removeAll();
-        menuManager.saveBatch(menus);
+        menuDao.removeAll();
+        menuDao.saveBatch(menus);
 
         // 处理角色菜单数据
-        List<Role> roles = roleManager.list();
+        List<Role> roles = roleDao.list();
         roles.forEach(e -> {
             // 如果是管理员
             if (Objects.equals(e.getRoleId(), 1L)) {
-                roleMenuManager.removeRoleMenuByRoleId(1L);
-                roleMenuManager.saveRoleMenu(1L, menuIds);
+                roleMenuDao.removeRoleMenuByRoleId(1L);
+                roleMenuDao.saveRoleMenu(1L, menuIds);
                 return;
             }
             // 如果是其他角色
-            List<RoleMenu> roleMenus = roleMenuManager.listByRoleId(e.getRoleId());
+            List<RoleMenu> roleMenus = roleMenuDao.listByRoleId(e.getRoleId());
             List<Long> oldMenuIds = roleMenus.stream().map(RoleMenu::getMenuId).collect(Collectors.toList());
             Set<Long> resultMenuIds = CollUtil.intersectionDistinct(menuIds, oldMenuIds);
-            roleMenuManager.removeRoleMenuByRoleId(e.getRoleId());
-            roleMenuManager.saveRoleMenu(e.getRoleId(), resultMenuIds);
+            roleMenuDao.removeRoleMenuByRoleId(e.getRoleId());
+            roleMenuDao.saveRoleMenu(e.getRoleId(), resultMenuIds);
         });
 
         SecurityUtil.clearOperateTenantCode();
@@ -232,10 +232,10 @@ public class TenantService {
      * @return
      */
     public List<Long> listMenu(Long tenantId) {
-        Tenant tenant = tenantManager.getById(tenantId);
+        Tenant tenant = tenantDao.getById(tenantId);
 
         SecurityUtil.setOperateTenantCode(tenant.getTenantCode());
-        List<Menu> list = menuManager.list();
+        List<Menu> list = menuDao.list();
         SecurityUtil.clearOperateTenantCode();
 
         return list.stream().map(Menu::getMenuId).collect(Collectors.toList());
@@ -246,7 +246,7 @@ public class TenantService {
      * @param response
      */
     public void listExport(HttpServletResponse response) throws IOException {
-        List<Tenant> list = tenantManager.list();
+        List<Tenant> list = tenantDao.list();
 
         List<TenantEO> result = list.stream().map(e -> {
             TenantEO tenantEO = new TenantEO();

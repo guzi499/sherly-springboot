@@ -4,7 +4,7 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.guzi.sherly.manager.OssFileManager;
+import com.guzi.sherly.dao.OssFileDao;
 import com.guzi.sherly.model.PageResult;
 import com.guzi.sherly.model.admin.OssFile;
 import com.guzi.sherly.model.dto.OssFilePageDTO;
@@ -34,7 +34,7 @@ public class OssService {
     private OssUtil ossUtil;
 
     @Resource
-    private OssFileManager ossFileManager;
+    private OssFileDao ossFileDao;
 
     /**
      * 文件上传
@@ -69,7 +69,7 @@ public class OssService {
         ossFile.setConfigId(ossClient.getConfigId());
         ossFile.setPath(relativePath);
         ossFile.setSize((int) file.getSize());
-        ossFileManager.save(ossFile);
+        ossFileDao.save(ossFile);
 
         return relativePath;
     }
@@ -80,7 +80,7 @@ public class OssService {
      */
     @SneakyThrows
     public void removeOne(Long fileId) {
-        ossFileManager.removeById(fileId);
+        ossFileDao.removeById(fileId);
     }
 
     /**
@@ -105,7 +105,7 @@ public class OssService {
             return PageResult.buildEmpty();
         }
         dto.setConfigId(ossClient.getConfigId());
-        IPage<OssFile> page = ossFileManager.listPage(dto);
+        IPage<OssFile> page = ossFileDao.listPage(dto);
 
         List<OssFilePageVO> result = page.getRecords().stream().map(e -> {
             OssFilePageVO ossFilePageVO = new OssFilePageVO();

@@ -1,8 +1,8 @@
 package com.guzi.sherly.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.guzi.sherly.manager.ErrorCodeManager;
-import com.guzi.sherly.manager.ModuleManager;
+import com.guzi.sherly.dao.ErrorCodeDao;
+import com.guzi.sherly.dao.ModuleDao;
 import com.guzi.sherly.model.PageResult;
 import com.guzi.sherly.model.admin.ErrorCode;
 import com.guzi.sherly.model.admin.Module;
@@ -29,10 +29,10 @@ import static com.guzi.sherly.model.exception.enums.AdminErrorEnum.ERROR_REPEAT;
 public class ErrorCodeService {
 
     @Resource
-    private ErrorCodeManager errorCodeManager;
+    private ErrorCodeDao errorCodeDao;
 
     @Resource
-    private ModuleManager moduleManager;
+    private ModuleDao moduleDao;
 
     /**
      * 错误新增
@@ -40,14 +40,14 @@ public class ErrorCodeService {
      */
     public void saveOne(ErrorCodeInsertDTO dto) {
         // 查重
-        ErrorCode one = errorCodeManager.getByErrorCode(dto.getErrorCode());
+        ErrorCode one = errorCodeDao.getByErrorCode(dto.getErrorCode());
         if (one != null) {
             throw new BizException(ERROR_REPEAT);
         }
 
         ErrorCode errorCode = new ErrorCode();
         BeanUtils.copyProperties(dto, errorCode);
-        errorCodeManager.save(errorCode);
+        errorCodeDao.save(errorCode);
     }
 
     /**
@@ -57,7 +57,7 @@ public class ErrorCodeService {
     public void updateOne(ErrorCodeUpdateDTO dto) {
         ErrorCode errorCode = new ErrorCode();
         BeanUtils.copyProperties(dto, errorCode);
-        errorCodeManager.updateById(errorCode);
+        errorCodeDao.updateById(errorCode);
     }
 
     /**
@@ -65,7 +65,7 @@ public class ErrorCodeService {
      * @param errorId
      */
     public void removeOne(Integer errorId) {
-        errorCodeManager.removeById(errorId);
+        errorCodeDao.removeById(errorId);
     }
 
     /**
@@ -74,10 +74,10 @@ public class ErrorCodeService {
      * @return
      */
     public PageResult<ErrorCodePageVO> listPage(ErrorCodePageDTO dto) {
-        IPage<ErrorCode> page = errorCodeManager.listPage(dto);
+        IPage<ErrorCode> page = errorCodeDao.listPage(dto);
 
         List<Integer> moduleIds = page.getRecords().stream().map(ErrorCode::getModuleId).collect(Collectors.toList());
-        List<Module> modules = moduleManager.listByIds(moduleIds);
+        List<Module> modules = moduleDao.listByIds(moduleIds);
         Map<Integer, String> idMapCode = modules.stream().collect(Collectors.toMap(Module::getModuleId, Module::getModuleCode));
 
         List<ErrorCodePageVO> result = page.getRecords().stream().map(e -> {

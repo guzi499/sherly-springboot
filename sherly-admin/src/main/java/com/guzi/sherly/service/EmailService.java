@@ -2,7 +2,7 @@ package com.guzi.sherly.service;
 
 import cn.hutool.extra.mail.Mail;
 import cn.hutool.extra.mail.MailAccount;
-import com.guzi.sherly.manager.EmailConfigManager;
+import com.guzi.sherly.dao.EmailConfigDao;
 import com.guzi.sherly.model.admin.EmailConfig;
 import com.guzi.sherly.model.dto.EmailConfigDTO;
 import com.guzi.sherly.model.dto.EmailSendDTO;
@@ -23,14 +23,14 @@ import static com.guzi.sherly.model.exception.enums.AdminErrorEnum.NO_EMAIL_CONF
 public class EmailService {
 
     @Resource
-    private EmailConfigManager emailConfigManager;
+    private EmailConfigDao emailConfigDao;
 
     /**
      * 邮箱配置查询
      * @return
      */
     public EmailConfigVO getOne() {
-        EmailConfig emailConfig = emailConfigManager.getOne(null);
+        EmailConfig emailConfig = emailConfigDao.getOne(null);
         EmailConfigVO emailConfigVO = new EmailConfigVO();
         if (emailConfig == null) {
             return emailConfigVO;
@@ -46,7 +46,7 @@ public class EmailService {
     public void saveOrUpdate(EmailConfigDTO dto) {
         EmailConfig emailConfig = new EmailConfig();
         BeanUtils.copyProperties(dto, emailConfig);
-        emailConfigManager.saveOrUpdate(emailConfig);
+        emailConfigDao.saveOrUpdate(emailConfig);
     }
 
     /**
@@ -54,7 +54,7 @@ public class EmailService {
      * @param dto
      */
     public void send(EmailSendDTO dto) {
-        EmailConfig emailConfig = emailConfigManager.getOne(null);
+        EmailConfig emailConfig = emailConfigDao.getOne(null);
         if (emailConfig == null) {
             throw new BizException(NO_EMAIL_CONFIG);
         }

@@ -1,9 +1,8 @@
-package com.guzi.sherly.manager;
+package com.guzi.sherly.dao;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.guzi.sherly.mapper.TenantMapper;
 import com.guzi.sherly.model.admin.Tenant;
 import com.guzi.sherly.model.dto.TenantPageDTO;
@@ -19,7 +18,7 @@ import java.util.List;
  * @date 2022/3/25
  */
 @Service
-public class TenantManager extends SherlyServiceImpl<TenantMapper, Tenant> {
+public class TenantDao extends SherlyServiceImpl<TenantMapper, Tenant> {
 
     /**
      * 租户查重

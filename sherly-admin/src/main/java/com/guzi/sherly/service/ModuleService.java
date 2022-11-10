@@ -1,7 +1,6 @@
 package com.guzi.sherly.service;
 
-import com.guzi.sherly.manager.ErrorCodeManager;
-import com.guzi.sherly.manager.ModuleManager;
+import com.guzi.sherly.dao.ModuleDao;
 import com.guzi.sherly.model.admin.Module;
 import com.guzi.sherly.model.dto.ModuleInsertDTO;
 import com.guzi.sherly.model.dto.ModuleUpdateDTO;
@@ -28,14 +27,14 @@ import static com.guzi.sherly.model.exception.enums.AdminErrorEnum.MODULE_REPEAT
 public class ModuleService {
 
     @Resource
-    private ModuleManager moduleManager;
+    private ModuleDao moduleDao;
 
     /**
      * 查询模块树
      * @return
      */
     public List<ModuleVO> listTree() {
-        List<Module> list = moduleManager.list();
+        List<Module> list = moduleDao.list();
 
         //对象转换为vo类型
         List<ModuleVO> all = list.stream()
@@ -72,14 +71,14 @@ public class ModuleService {
      */
     public void saveOne(ModuleInsertDTO dto) {
         // 查重
-        Module one = moduleManager.getByParentIdAndModuleNameOrModuleCode(dto.getParentId(), dto.getModuleName(), dto.getModuleCode());
+        Module one = moduleDao.getByParentIdAndModuleNameOrModuleCode(dto.getParentId(), dto.getModuleName(), dto.getModuleCode());
         if (one != null) {
             throw new BizException(MODULE_REPEAT);
         }
 
         Module module = new Module();
         BeanUtils.copyProperties(dto, module);
-        moduleManager.save(module);
+        moduleDao.save(module);
     }
 
     /**
@@ -88,7 +87,7 @@ public class ModuleService {
      */
     public void updateOne(ModuleUpdateDTO dto) {
         // 查重
-        Module one = moduleManager.getByParentIdAndModuleNameOrModuleCode(dto.getParentId(), dto.getModuleName(), dto.getModuleCode());
+        Module one = moduleDao.getByParentIdAndModuleNameOrModuleCode(dto.getParentId(), dto.getModuleName(), dto.getModuleCode());
         // 如果待修改名称已存在且不为自身
         if (one != null && !Objects.equals(one.getModuleId(), dto.getModuleId())) {
             throw new BizException(MODULE_REPEAT);
@@ -96,7 +95,7 @@ public class ModuleService {
 
         Module module = new Module();
         BeanUtils.copyProperties(dto, module);
-        moduleManager.updateById(module);
+        moduleDao.updateById(module);
     }
 
     /**
@@ -105,10 +104,10 @@ public class ModuleService {
      */
     public void removeOne(Integer moduleId) {
         //是否存在子模块
-        Long count = moduleManager.countByParentId(moduleId);
+        Long count = moduleDao.countByParentId(moduleId);
         if (count > 0) {
             throw new BizException(MODULE_HAS_CHILDREN);
         }
-        moduleManager.removeById(moduleId);
+        moduleDao.removeById(moduleId);
     }
 }

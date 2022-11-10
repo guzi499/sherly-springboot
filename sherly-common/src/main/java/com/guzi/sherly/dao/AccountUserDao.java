@@ -1,7 +1,6 @@
-package com.guzi.sherly.manager;
+package com.guzi.sherly.dao;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.guzi.sherly.mapper.AccountUserMapper;
 import com.guzi.sherly.model.admin.AccountUser;
 import com.guzi.sherly.modules.mybatisplus.service.SherlyServiceImpl;
@@ -12,7 +11,7 @@ import org.springframework.stereotype.Service;
  * @date 2022/4/27
  */
 @Service
-public class AccountUserManager extends SherlyServiceImpl<AccountUserMapper, AccountUser> {
+public class AccountUserDao extends SherlyServiceImpl<AccountUserMapper, AccountUser> {
 
     /**
      * 根据手机号查询账户用户数据

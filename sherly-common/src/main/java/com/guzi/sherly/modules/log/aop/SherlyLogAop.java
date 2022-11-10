@@ -5,7 +5,7 @@ import cn.hutool.http.useragent.UserAgentUtil;
 import cn.hutool.json.JSONUtil;
 import com.guzi.sherly.modules.log.annotation.SherlyLog;
 import com.guzi.sherly.modules.log.model.OperationLog;
-import com.guzi.sherly.modules.log.service.OperationLogService;
+import com.guzi.sherly.modules.log.service.OperationLogManager;
 import com.guzi.sherly.modules.security.util.SecurityUtil;
 import com.guzi.sherly.util.IpUtil;
 import io.swagger.annotations.ApiOperation;
@@ -38,12 +38,12 @@ import static com.guzi.sherly.model.contants.CommonConstants.NORMAL_LOG;
 @Component
 public class SherlyLogAop {
 
-    private final OperationLogService operationLogService;
+    private final OperationLogManager operationLogManager;
 
     ThreadLocal<Long> recordTime = new ThreadLocal<>();
 
-    public SherlyLogAop(OperationLogService operationLogService) {
-        this.operationLogService = operationLogService;
+    public SherlyLogAop(OperationLogManager operationLogManager) {
+        this.operationLogManager = operationLogManager;
     }
 
     @Pointcut("execution(* com.guzi.sherly..*Controller.*(..))")
@@ -123,7 +123,7 @@ public class SherlyLogAop {
         operationLog.setCreateTime(new Date(createTimeMills));
         operationLog.setCreateUserId(SecurityUtil.getUserId());
 
-        operationLogService.saveOne(operationLog);
+        operationLogManager.saveOne(operationLog);
     }
 
     /**

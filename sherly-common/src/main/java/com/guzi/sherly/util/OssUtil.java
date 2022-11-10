@@ -1,7 +1,7 @@
 package com.guzi.sherly.util;
 
 import cn.hutool.core.util.StrUtil;
-import com.guzi.sherly.manager.OssConfigManager;
+import com.guzi.sherly.dao.OssConfigDao;
 import com.guzi.sherly.model.admin.OssConfig;
 import com.guzi.sherly.modules.security.util.SecurityUtil;
 import com.guzi.sherly.modules.storage.OssClientFactory;
@@ -22,7 +22,7 @@ public class OssUtil {
     private OssClientFactory ossClientFactory;
 
     @Resource
-    private OssConfigManager ossConfigManager;
+    private OssConfigDao ossConfigDao;
 
     /**
      * 获取对象存储服务客户端
@@ -31,7 +31,7 @@ public class OssUtil {
     public OssClient getOssClient() {
         OssClient ossClient = ossClientFactory.getOssClient(SecurityUtil.getTenantCode());
         if (ossClient == null) {
-            OssConfig ossConfig = ossConfigManager.getEnable();
+            OssConfig ossConfig = ossConfigDao.getEnable();
             if (ossConfig == null) {
                 return null;
             }

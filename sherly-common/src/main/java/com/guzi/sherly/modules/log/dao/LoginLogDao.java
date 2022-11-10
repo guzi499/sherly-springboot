@@ -1,7 +1,6 @@
-package com.guzi.sherly.modules.log.manager;
+package com.guzi.sherly.modules.log.dao;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.guzi.sherly.model.dto.LoginLogPageDTO;
 import com.guzi.sherly.modules.log.mapper.LoginLogMapper;
 import com.guzi.sherly.modules.log.model.LoginLog;
@@ -14,7 +13,7 @@ import org.springframework.stereotype.Service;
  * @date 2022/7/14
  */
 @Service
-public class LoginLogManager extends SherlyServiceImpl<LoginLogMapper, LoginLog> {
+public class LoginLogDao extends SherlyServiceImpl<LoginLogMapper, LoginLog> {
 
     /**
      * 日志分页

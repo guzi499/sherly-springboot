@@ -1,6 +1,6 @@
 package com.guzi.sherly.service;
 
-import com.guzi.sherly.manager.*;
+import com.guzi.sherly.dao.*;
 import com.guzi.sherly.model.admin.*;
 import com.guzi.sherly.model.vo.BasicInfoVO;
 import com.guzi.sherly.model.vo.BasicMenuInfoVO;
@@ -29,22 +29,22 @@ import static com.guzi.sherly.model.contants.CommonConstants.*;
 public class GenericService {
 
     @Resource
-    private UserManager userManager;
+    private UserDao userDao;
 
     @Resource
-    private RoleManager roleManager;
+    private RoleDao roleDao;
 
     @Resource
-    private MenuManager menuManager;
+    private MenuDao menuDao;
 
     @Resource
-    private RoleMenuManager roleMenuManager;
+    private RoleMenuDao roleMenuDao;
 
     @Resource
-    private UserRoleManager userRoleManager;
+    private UserRoleDao userRoleDao;
 
     @Resource
-    private TenantManager tenantManager;
+    private TenantDao tenantDao;
 
     @Resource
     private OssUtil ossUtil;
@@ -55,10 +55,10 @@ public class GenericService {
      */
     public BasicInfoVO getBasicData() throws Exception {
         Long userId = SecurityUtil.getUserId();
-        Tenant tenant = tenantManager.getByTenantCode(SecurityUtil.getTenantCode());
+        Tenant tenant = tenantDao.getByTenantCode(SecurityUtil.getTenantCode());
 
         // 用户信息收集
-        User user = userManager.getById(userId);
+        User user = userDao.getById(userId);
         BasicUserInfoVO userVO = new BasicUserInfoVO();
         BeanUtils.copyProperties(user, userVO);
         userVO.setAvatar(ossUtil.accessUrl(userVO.getAvatar()));
@@ -66,9 +66,9 @@ public class GenericService {
         userVO.setTenantName(tenant.getTenantName());
 
         // 角色信息收集
-        List<UserRole> userRoles = userRoleManager.listByUserId(userId);
+        List<UserRole> userRoles = userRoleDao.listByUserId(userId);
         List<Long> roleIds = userRoles.stream().map(UserRole::getRoleId).collect(Collectors.toList());
-        List<Role> roles = roleManager.listByIds(roleIds);
+        List<Role> roles = roleDao.listByIds(roleIds);
         List<BasicRoleInfoVO> roleVOList = roles.stream().map(e -> {
             BasicRoleInfoVO basicRoleInfoVO = new BasicRoleInfoVO();
             BeanUtils.copyProperties(e, basicRoleInfoVO);
@@ -76,7 +76,7 @@ public class GenericService {
         }).collect(Collectors.toList());
 
         // 菜单信息收集
-        List<RoleMenu> roleMenus = roleMenuManager.listByRoleIds(roleIds);
+        List<RoleMenu> roleMenus = roleMenuDao.listByRoleIds(roleIds);
         List<Long> menuIds = roleMenus.stream().map(RoleMenu::getMenuId).collect(Collectors.toList());
         if (CollectionUtils.isEmpty(menuIds)) {
             // 组装结果
@@ -87,7 +87,7 @@ public class GenericService {
             basicInfoVO.setBasicPermissionVO(Collections.emptyList());
             return basicInfoVO;
         }
-        List<Menu> menus = menuManager.listByIds(menuIds);
+        List<Menu> menus = menuDao.listByIds(menuIds);
 
         // 跳转相关
         List<Menu> jumps = menus.stream().filter(e -> !Objects.equals(e.getMenuType(), BUTTON)).sorted(Comparator.comparing(Menu::getSort)).collect(Collectors.toList());

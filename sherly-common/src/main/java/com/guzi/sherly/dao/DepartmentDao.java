@@ -1,7 +1,6 @@
-package com.guzi.sherly.manager;
+package com.guzi.sherly.dao;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.guzi.sherly.mapper.DepartmentMapper;
 import com.guzi.sherly.model.admin.Department;
 import com.guzi.sherly.modules.mybatisplus.service.SherlyServiceImpl;
@@ -12,7 +11,7 @@ import org.springframework.stereotype.Service;
  * @date 2022/3/30
  */
 @Service
-public class DepartmentManager extends SherlyServiceImpl<DepartmentMapper, Department> {
+public class DepartmentDao extends SherlyServiceImpl<DepartmentMapper, Department> {
 
     /**
      * 根据部门名称查询部门数据

@@ -1,10 +1,9 @@
-package com.guzi.sherly.manager;
+package com.guzi.sherly.dao;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.guzi.sherly.mapper.UserMapper;
 import com.guzi.sherly.model.admin.User;
 import com.guzi.sherly.model.dto.UserPageDTO;
@@ -20,7 +19,7 @@ import java.util.List;
  * @date 2022/3/25
  */
 @Service
-public class UserManager extends SherlyServiceImpl<UserMapper, User> {
+public class UserDao extends SherlyServiceImpl<UserMapper, User> {
 
     /**
      * 用户分页

@@ -11,7 +11,7 @@ import org.springframework.scheduling.annotation.Async;
  * @author 谷子毅
  * @date 2022/7/14
  */
-public interface OperationLogService {
+public interface OperationLogManager {
 
     /**
      * 日志记录

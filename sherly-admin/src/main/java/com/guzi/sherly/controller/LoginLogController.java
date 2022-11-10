@@ -1,10 +1,10 @@
 package com.guzi.sherly.controller;
 
+import com.guzi.sherly.manager.LoginLogManager;
 import com.guzi.sherly.model.PageResult;
 import com.guzi.sherly.model.Result;
 import com.guzi.sherly.model.dto.LoginLogPageDTO;
 import com.guzi.sherly.model.vo.LoginLogPageVO;
-import com.guzi.sherly.service.LoginLogService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -27,20 +27,20 @@ import javax.annotation.Resource;
 public class LoginLogController {
 
     @Resource
-    private LoginLogService loginLogService;
+    private LoginLogManager loginLogManager;
 
     @GetMapping("/list_page")
     @PreAuthorize("hasAnyAuthority('login_log:list_page')")
     @ApiOperation("登录日志分页")
     public Result<PageResult<LoginLogPageVO>> listPage(LoginLogPageDTO dto) {
-        return Result.success(loginLogService.listPage(dto));
+        return Result.success(loginLogManager.listPage(dto));
     }
 
     @DeleteMapping("/remove_all")
     @PreAuthorize("hasAnyAuthority('login_log:remove_all')")
     @ApiOperation("登录日志清空")
     public Result removeAll() {
-        loginLogService.removeAll();
+        loginLogManager.removeAll();
         return Result.success();
     }
 
