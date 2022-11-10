@@ -3,7 +3,6 @@ package com.guzi.sherly.modules.security.manager;
 import com.guzi.sherly.model.exception.BizException;
 import com.guzi.sherly.modules.security.model.LoginUserDetails;
 import com.guzi.sherly.modules.security.service.UserDetailsServiceImpl;
-import com.guzi.sherly.util.LogRecordUtil;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -36,9 +35,6 @@ public class SherlyAuthenticationManager implements AuthenticationProvider {
     @Resource
     private UserDetailsServiceImpl userDetailsServiceImpl;
 
-    @Resource
-    private LogRecordUtil logRecordUtil;
-
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 
@@ -50,9 +46,6 @@ public class SherlyAuthenticationManager implements AuthenticationProvider {
         if (passwordEncoder.matches(password, loginUserDetails.getPassword())) {
             return new UsernamePasswordAuthenticationToken(loginUserDetails, null, loginUserDetails.getAuthorities());
         } else {
-            HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
-            // 记录日志
-            logRecordUtil.recordLoginLog(request, phone, LOGIN_LOG_FAIL, LOGIN_TYPE_PASSWORD);
             throw new BizException(ERR_USR_PWD);
         }
 

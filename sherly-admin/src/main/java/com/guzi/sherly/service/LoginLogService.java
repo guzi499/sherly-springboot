@@ -7,6 +7,7 @@ import com.guzi.sherly.model.vo.LoginLogPageVO;
 import com.guzi.sherly.modules.log.manager.LoginLogManager;
 import com.guzi.sherly.modules.log.model.LoginLog;
 import org.springframework.beans.BeanUtils;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -45,5 +46,10 @@ public class LoginLogService {
      */
     public void removeAll() {
         loginLogManager.removeAll();
+    }
+
+    @Async
+    public void saveOne(LoginLog loginLog) {
+        loginLogManager.save(loginLog);
     }
 }

@@ -6,7 +6,6 @@ import com.guzi.sherly.model.admin.*;
 import com.guzi.sherly.model.exception.BizException;
 import com.guzi.sherly.modules.security.model.LoginUserDetails;
 import com.guzi.sherly.modules.security.util.SecurityUtil;
-import com.guzi.sherly.util.LogRecordUtil;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -51,9 +50,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Resource
     private TenantManager tenantManager;
 
-    @Resource
-    private LogRecordUtil logRecordUtil;
-
     @Override
     public UserDetails loadUserByUsername(String phone) throws UsernameNotFoundException {
 
@@ -76,8 +72,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         User user = userManager.getByPhone(phone);
 
         if (Objects.equals(user.getEnable(), DISABLE)) {
-            HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
-            logRecordUtil.recordLoginLog(request, phone, LOGIN_LOG_DISABLE, LOGIN_TYPE_PASSWORD);
             throw new BizException(FORBIDDEN);
         }
 

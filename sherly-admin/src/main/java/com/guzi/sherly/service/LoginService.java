@@ -2,6 +2,8 @@ package com.guzi.sherly.service;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.servlet.ServletUtil;
+import cn.hutool.http.useragent.UserAgent;
+import cn.hutool.http.useragent.UserAgentUtil;
 import cn.hutool.json.JSONUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.guzi.sherly.constants.RedisKey;
@@ -16,6 +18,8 @@ import com.guzi.sherly.model.dto.LoginDTO;
 import com.guzi.sherly.model.exception.BizException;
 import com.guzi.sherly.model.vo.LoginTenantVO;
 import com.guzi.sherly.model.vo.LoginVO;
+import com.guzi.sherly.modules.log.manager.LoginLogManager;
+import com.guzi.sherly.modules.log.model.LoginLog;
 import com.guzi.sherly.modules.security.model.LoginUserDetails;
 import com.guzi.sherly.modules.security.model.RedisSecurityModel;
 import com.guzi.sherly.modules.security.model.SecurityModel;
@@ -23,9 +27,10 @@ import com.guzi.sherly.modules.security.util.SecurityUtil;
 import com.guzi.sherly.util.GlobalPropertiesUtil;
 import com.guzi.sherly.util.IpUtil;
 import com.guzi.sherly.util.JwtUtil;
-import com.guzi.sherly.util.LogRecordUtil;
+import liquibase.pro.packaged.E;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -33,6 +38,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
@@ -43,8 +49,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-import static com.guzi.sherly.model.contants.CommonConstants.LOGIN_LOG_SUCCESS;
-import static com.guzi.sherly.model.contants.CommonConstants.LOGIN_TYPE_PASSWORD;
+import static com.guzi.sherly.model.contants.CommonConstants.*;
 import static com.guzi.sherly.model.exception.enums.AdminErrorEnum.*;
 
 /**
@@ -70,13 +75,13 @@ public class LoginService {
     private TenantManager tenantManager;
 
     @Resource
-    private LogRecordUtil logRecordUtil;
-
-    @Resource
     private UserDetailsService userDetailsService;
 
     @Resource
     private PasswordEncoder passwordEncoder;
+
+    @Resource
+    private LoginLogManager loginLogManager;
 
     /**
      * 登录
@@ -101,7 +106,20 @@ public class LoginService {
                 new UsernamePasswordAuthenticationToken(dto.getPhone(), dto.getPassword());
 
         // 登录校验
-        Authentication authentication = authenticationProvider.authenticate(authenticationToken);
+        Authentication authentication;
+        try {
+            authentication = authenticationProvider.authenticate(authenticationToken);
+        } catch (Exception e) {
+            if (e instanceof BizException) {
+                BizException exception = (BizException) e;
+                if (exception.getCode().equals(ERR_USR_PWD.getCode())) {
+                    this.recordLoginLog(request, dto.getPhone(), LOGIN_LOG_FAIL, LOGIN_TYPE_PASSWORD);
+                } else if (exception.getCode().equals(FORBIDDEN.getCode())) {
+                    this.recordLoginLog(request, dto.getPhone(), LOGIN_LOG_DISABLE, LOGIN_TYPE_PASSWORD);
+                }
+            }
+            throw e;
+        }
 
         // 获取登录用户信息
         LoginUserDetails loginUserDetails = (LoginUserDetails) authentication.getPrincipal();
@@ -113,10 +131,40 @@ public class LoginService {
 
         // 生成token返回前端
         LoginVO loginVO = new LoginVO(JwtUtil.generateToken(sessionId));
+
         // 记录日志
-        logRecordUtil.recordLoginLog(request, dto.getPhone(), LOGIN_LOG_SUCCESS, LOGIN_TYPE_PASSWORD);
+        this.recordLoginLog(request, dto.getPhone(), LOGIN_LOG_SUCCESS, LOGIN_TYPE_PASSWORD);
 
         return loginVO;
+    }
+
+    @Transactional(propagation = Propagation.NOT_SUPPORTED)
+    public void recordLoginLog(HttpServletRequest request, String username, Integer result, Integer type) {
+        LoginLog loginLog = new LoginLog();
+
+        String userAgent = request.getHeader("User-Agent");
+        if (userAgent != null) {
+            UserAgent agent = UserAgentUtil.parse(userAgent);
+            loginLog.setOs(agent.getOs().toString());
+            loginLog.setBrowser(agent.getBrowser().toString());
+        }
+
+        String ip = IpUtil.getIp(request);
+        String address = IpUtil.getAddress(ip);
+
+        loginLog.setIp(ip);
+        loginLog.setAddress(address);
+        loginLog.setUsername(username);
+        loginLog.setType(type);
+        loginLog.setResult(result);
+        loginLog.setCreateTime(new Date());
+
+        this.saveLoginLog(loginLog);
+    }
+
+    @Async
+    public void saveLoginLog(LoginLog loginLog) {
+        loginLogManager.save(loginLog);
     }
 
     /**

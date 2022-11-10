@@ -46,6 +46,7 @@ logging:
   level:
     # mysql日志
     -com.guzi.sherly.mapper: debug
+    -com.guzi.sherly.modules.log.mapper: debug
     # knife4j日志
     -springfox: warn
     # flowable日志
