@@ -2,6 +2,7 @@ package com.guzi.sherly.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.guzi.sherly.dao.*;
+import com.guzi.sherly.manager.OssManager;
 import com.guzi.sherly.model.PageResult;
 import com.guzi.sherly.model.admin.*;
 import com.guzi.sherly.model.dto.OperationLogPageDTO;
@@ -14,7 +15,6 @@ import com.guzi.sherly.model.vo.UserSelfVO;
 import com.guzi.sherly.modules.log.dao.OperationLogDao;
 import com.guzi.sherly.modules.log.model.OperationLog;
 import com.guzi.sherly.modules.security.util.SecurityUtil;
-import com.guzi.sherly.util.OssUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -59,7 +59,7 @@ public class UserSelfService {
     private OperationLogDao operationLogDao;
 
     @Resource
-    private OssUtil ossUtil;
+    private OssManager ossManager;
 
     /**
      * 用户个人中心
@@ -82,7 +82,7 @@ public class UserSelfService {
         // 组装vo
         UserSelfVO vo = new UserSelfVO();
         BeanUtils.copyProperties(user, vo);
-        vo.setAvatar(ossUtil.accessUrl(vo.getAvatar()));
+        vo.setAvatar(ossManager.accessUrl(vo.getAvatar()));
         vo.setRoleIds(roleIds);
         vo.setRoleNames(roleNames);
         vo.setGenderStr(Objects.equals(vo.getGender(), MALE) ? "男" : "女");

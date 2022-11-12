@@ -1,5 +1,6 @@
 package com.guzi.sherly.controller;
 
+import com.guzi.sherly.manager.OssManager;
 import com.guzi.sherly.model.PageResult;
 import com.guzi.sherly.model.Result;
 import com.guzi.sherly.model.dto.OperationLogSelfPageDTO;
@@ -7,7 +8,6 @@ import com.guzi.sherly.model.dto.UserSelfUpdateDTO;
 import com.guzi.sherly.model.dto.UserUpdatePasswordDTO;
 import com.guzi.sherly.model.vo.OperationLogPageVO;
 import com.guzi.sherly.model.vo.UserSelfVO;
-import com.guzi.sherly.service.OssService;
 import com.guzi.sherly.service.UserSelfService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -32,7 +32,7 @@ public class UserSelfController {
     private UserSelfService userSelfService;
 
     @Resource
-    private OssService ossService;
+    private OssManager ossManager;
 
     @GetMapping("/get_self")
     @ApiOperation("用户个人中心")
@@ -57,7 +57,7 @@ public class UserSelfController {
     @PutMapping("/update_avatar")
     @ApiOperation("用户修改头像")
     public Result updateAvatar(@RequestParam MultipartFile file) {
-        String avatarPath = ossService.uploadOne(file, "avatar/");
+        String avatarPath = ossManager.uploadOne(file, "avatar/");
         userSelfService.updateAvatar(avatarPath);
         return Result.success();
     }

@@ -1,17 +1,21 @@
-package com.guzi.sherly.service;
+package com.guzi.sherly.manager;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.guzi.sherly.dao.OssConfigDao;
 import com.guzi.sherly.dao.OssFileDao;
 import com.guzi.sherly.model.PageResult;
+import com.guzi.sherly.model.admin.OssConfig;
 import com.guzi.sherly.model.admin.OssFile;
 import com.guzi.sherly.model.dto.OssFilePageDTO;
 import com.guzi.sherly.model.exception.BizException;
 import com.guzi.sherly.model.vo.OssFilePageVO;
+import com.guzi.sherly.modules.security.util.SecurityUtil;
+import com.guzi.sherly.modules.storage.OssClientFactory;
 import com.guzi.sherly.modules.storage.model.OssClient;
-import com.guzi.sherly.util.OssUtil;
+import com.guzi.sherly.util.GlobalPropertiesUtil;
 import lombok.SneakyThrows;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -28,13 +32,16 @@ import static com.guzi.sherly.model.exception.enums.AdminErrorEnum.NO_OSS_CONFIG
  * @date 2022/6/26
  */
 @Service
-public class OssService {
-
-    @Resource
-    private OssUtil ossUtil;
+public class OssManager {
 
     @Resource
     private OssFileDao ossFileDao;
+
+    @Resource
+    private OssClientFactory ossClientFactory;
+
+    @Resource
+    private OssConfigDao ossConfigDao;
 
     /**
      * 文件上传
@@ -43,7 +50,7 @@ public class OssService {
      */
     @SneakyThrows
     public String uploadOne(MultipartFile file, String prefix) {
-        OssClient ossClient = ossUtil.getOssClient();
+        OssClient ossClient = this.getOssClient();
         if (ossClient == null) {
             throw new BizException(NO_OSS_CONFIG);
         }
@@ -90,7 +97,7 @@ public class OssService {
      */
     @SneakyThrows
     public byte[] downloadOne(String path) {
-        OssClient ossClient = ossUtil.getOssClient();
+        OssClient ossClient = this.getOssClient();
         return ossClient.download(path);
     }
 
@@ -100,7 +107,7 @@ public class OssService {
      * @return
      */
     public PageResult<OssFilePageVO> listPage(OssFilePageDTO dto) {
-        OssClient ossClient = ossUtil.getOssClient();
+        OssClient ossClient = this.getOssClient();
         if (ossClient == null) {
             return PageResult.buildEmpty();
         }
@@ -122,8 +129,35 @@ public class OssService {
      * @param path
      * @return
      */
+
+    /**
+     * 获取对象存储服务客户端
+     * @return
+     */
+    private OssClient getOssClient() {
+        OssClient ossClient = ossClientFactory.getOssClient(SecurityUtil.getTenantCode());
+        if (ossClient == null) {
+            OssConfig ossConfig = ossConfigDao.getEnable();
+            if (ossConfig == null) {
+                return null;
+            }
+            return ossClientFactory.createOssClient(SecurityUtil.getTenantCode(), ossConfig.getConfigId(), ossConfig.getType(), ossConfig.getConfig());
+        }
+        return ossClient;
+    }
+
+    /**
+     * 文件链接（如果是S3的话是带过期时间、带url参数签名认证的url）
+     * @param path
+     * @return
+     * @throws Exception
+     */
     @SneakyThrows
     public String accessUrl(String path) {
-        return ossUtil.accessUrl(path);
+        if (StrUtil.isBlank(path)) {
+            return GlobalPropertiesUtil.SHERLY_PROPERTIES.getDefaultAvatar();
+        }
+        OssClient ossClient = this.getOssClient();
+        return ossClient.getAccessUrl(path);
     }
 }

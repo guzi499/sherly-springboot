@@ -1,4 +1,4 @@
-package com.guzi.sherly.service;
+package com.guzi.sherly.manager;
 
 import cn.hutool.extra.mail.Mail;
 import cn.hutool.extra.mail.MailAccount;
@@ -20,7 +20,7 @@ import static com.guzi.sherly.model.exception.enums.AdminErrorEnum.NO_EMAIL_CONF
  * @date 2022/6/8
  */
 @Service
-public class EmailService {
+public class EmailManager {
 
     @Resource
     private EmailConfigDao emailConfigDao;

@@ -1,13 +1,13 @@
 package com.guzi.sherly.service;
 
 import com.guzi.sherly.dao.*;
+import com.guzi.sherly.manager.OssManager;
 import com.guzi.sherly.model.admin.*;
 import com.guzi.sherly.model.vo.BasicInfoVO;
 import com.guzi.sherly.model.vo.BasicMenuInfoVO;
 import com.guzi.sherly.model.vo.BasicRoleInfoVO;
 import com.guzi.sherly.model.vo.BasicUserInfoVO;
 import com.guzi.sherly.modules.security.util.SecurityUtil;
-import com.guzi.sherly.util.OssUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -47,7 +47,7 @@ public class GenericService {
     private TenantDao tenantDao;
 
     @Resource
-    private OssUtil ossUtil;
+    private OssManager ossManager;
 
     /**
      * 获取登录基本信息
@@ -61,7 +61,7 @@ public class GenericService {
         User user = userDao.getById(userId);
         BasicUserInfoVO userVO = new BasicUserInfoVO();
         BeanUtils.copyProperties(user, userVO);
-        userVO.setAvatar(ossUtil.accessUrl(userVO.getAvatar()));
+        userVO.setAvatar(ossManager.accessUrl(userVO.getAvatar()));
         userVO.setTenantCode(tenant.getTenantCode());
         userVO.setTenantName(tenant.getTenantName());
 
