@@ -2,7 +2,6 @@ package com.guzi.sherly.service;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.servlet.ServletUtil;
-import cn.hutool.json.JSONUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.guzi.sherly.constants.RedisKey;
 import com.guzi.sherly.dao.AccountUserDao;
@@ -57,7 +56,7 @@ public class LoginService {
     private AuthenticationProvider authenticationProvider;
 
     @Resource
-    private RedisTemplate<String, String> redisTemplate;
+    private RedisTemplate<String, Object> redisTemplate;
 
     @Resource
     private UserDao userDao;
@@ -232,8 +231,7 @@ public class LoginService {
         }
 
         // 权限信息更新到redis
-        String redisString = JSONUtil.toJsonStr(redisSecurityModel);
-        redisTemplate.opsForValue().set(RedisKey.SESSION_ID + redisSecurityModel.getSecurityModel().getSessionId(), redisString, 6, TimeUnit.HOURS);
+        redisTemplate.opsForValue().set(RedisKey.SESSION_ID + redisSecurityModel.getSecurityModel().getSessionId(), redisSecurityModel, 6, TimeUnit.HOURS);
 
         // 更新用户信息
         this.updateUser(loginUserDetails.getUser(), request);

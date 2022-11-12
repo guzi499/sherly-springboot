@@ -1,6 +1,5 @@
 package com.guzi.sherly.service;
 
-import cn.hutool.json.JSONUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.guzi.sherly.constants.RedisKey;
 import com.guzi.sherly.model.admin.UserOnline;
@@ -26,7 +25,7 @@ import java.util.stream.Collectors;
 public class UserOnlineService {
 
     @Resource
-    private RedisTemplate<String, String> redisTemplate;
+    private RedisTemplate<String, Object> redisTemplate;
 
     /**
      * 在线用户列表
@@ -47,9 +46,11 @@ public class UserOnlineService {
         List<UserOnlineSelectVO> result = new ArrayList<>();
         for (String key : keys) {
 
-            String redisString = redisTemplate.opsForValue().get(key);
+            RedisSecurityModel redisSecurityModel = (RedisSecurityModel) redisTemplate.opsForValue().get(key);
+            if (redisSecurityModel == null) {
+                continue;
+            }
             String sessionId = key.split(":")[1];
-            RedisSecurityModel redisSecurityModel = JSONUtil.toBean(redisString, RedisSecurityModel.class);
             UserOnline userOnline = redisSecurityModel.getUserOnline();
 
             // 只查询当前租户下登录用户
