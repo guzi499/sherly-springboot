@@ -81,10 +81,9 @@ public class LoginService {
      * @param dto
      * @param request
      * @return
-     * @throws Exception
      */
     @Transactional(rollbackFor = Exception.class)
-    public LoginVO login(LoginDTO dto, HttpServletRequest request) throws Exception {
+    public LoginVO login(LoginDTO dto, HttpServletRequest request) {
 
         // 因为登录前不存在Authentication，必须手动设置特殊操作数据库code，
         SecurityModel securityModel = new SecurityModel();
@@ -205,7 +204,7 @@ public class LoginService {
      * 切换登录租户
      */
     @Transactional(rollbackFor = Exception.class)
-    public void loginChange(String tenantCode, HttpServletRequest request) throws Exception {
+    public void loginChange(String tenantCode, HttpServletRequest request) {
         String phone = SecurityUtil.getPhone();
         String sessionId = SecurityUtil.getSessionId();
 
@@ -220,7 +219,7 @@ public class LoginService {
         this.updateCache(loginUserDetails, sessionId, request);
     }
 
-    public void updateCache(LoginUserDetails loginUserDetails, String sessionId, HttpServletRequest request) throws JsonProcessingException {
+    public void updateCache(LoginUserDetails loginUserDetails, String sessionId, HttpServletRequest request) {
         // redis缓存登录用户信息
         RedisSecurityModel redisSecurityModel = loginUserDetails.getRedisSecurityModel(request);
         UserOnline userOnline = redisSecurityModel.getUserOnline();

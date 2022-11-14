@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.net.URLEncoder;
 
 /**
@@ -48,7 +49,7 @@ public class OssController {
     @GetMapping("/download_one")
     @PreAuthorize("hasAnyAuthority('oss:download_one')")
     @ApiOperation("文件下载")
-    public void downloadOne(HttpServletResponse response, @RequestParam String path) throws Exception {
+    public void downloadOne(HttpServletResponse response, @RequestParam String path) throws IOException {
         byte[] fileBytes = ossManager.downloadOne(path);
         response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(path, "UTF-8"));
         response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);

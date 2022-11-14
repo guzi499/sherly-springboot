@@ -32,7 +32,7 @@ public class LoginController {
     @PostMapping("/login")
     @ApiOperation("登录")
     @SherlyLog(noRecord = true)
-    public Result<LoginVO> login(@RequestBody @Valid LoginDTO dto, HttpServletRequest request) throws Exception {
+    public Result<LoginVO> login(@RequestBody @Valid LoginDTO dto, HttpServletRequest request) {
         return Result.success(loginService.login(dto, request));
     }
 
@@ -60,7 +60,7 @@ public class LoginController {
 
     @PutMapping("/login_change")
     @ApiOperation("切换登录租户")
-    public Result loginChange(@RequestParam String tenantCode, HttpServletRequest request) throws Exception {
+    public Result loginChange(@RequestParam String tenantCode, HttpServletRequest request) {
         loginService.loginChange(tenantCode, request);
         return Result.success();
     }

@@ -150,7 +150,6 @@ public class OssManager {
      * 文件链接（如果是S3的话是带过期时间、带url参数签名认证的url）
      * @param path
      * @return
-     * @throws Exception
      */
     @SneakyThrows
     public String accessUrl(String path) {

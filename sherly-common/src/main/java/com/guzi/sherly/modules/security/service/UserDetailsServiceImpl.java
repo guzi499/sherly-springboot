@@ -49,7 +49,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private TenantDao tenantDao;
 
     @Override
-    public UserDetails loadUserByUsername(String phone) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String phone) {
 
         // 查询用户账户信息
         AccountUser accountUser = accountUserDao.getByPhone(phone);

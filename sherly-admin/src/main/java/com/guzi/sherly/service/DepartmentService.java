@@ -21,7 +21,7 @@ import static com.guzi.sherly.model.contants.CommonConstants.ROOT_PARENT_ID;
 import static com.guzi.sherly.model.exception.enums.AdminErrorEnum.*;
 
 /**
- * @author 周孟凡
+ * @author 谷子毅
  * @date 2022/3/30
  */
 @Service
@@ -96,6 +96,7 @@ public class DepartmentService {
         }
         // 查重 排除自身
         Department one = departmentDao.getByDepartmentName(dto.getDepartmentName());
+
         // 如果待修改名称已存在且不为自身
         if (one != null && !Objects.equals(one.getDepartmentId(), dto.getDepartmentId())) {
             throw new BizException(DEPARTMENT_REPEAT);

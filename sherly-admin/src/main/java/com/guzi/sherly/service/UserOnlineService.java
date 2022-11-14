@@ -31,7 +31,6 @@ public class UserOnlineService {
      * 在线用户列表
      * @param dto
      * @return
-     * @throws JsonProcessingException
      */
     @SneakyThrows
     public List<UserOnlineSelectVO> listAll(UserOnlineSelectDTO dto) {

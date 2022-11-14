@@ -53,7 +53,7 @@ public class GenericService {
      * 获取登录基本信息
      * @return
      */
-    public BasicInfoVO getBasicData() throws Exception {
+    public BasicInfoVO getBasicData() {
         Long userId = SecurityUtil.getUserId();
         Tenant tenant = tenantDao.getByTenantCode(SecurityUtil.getTenantCode());
 

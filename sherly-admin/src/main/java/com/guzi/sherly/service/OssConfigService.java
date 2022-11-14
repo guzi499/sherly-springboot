@@ -62,7 +62,7 @@ public class OssConfigService {
      * @param configId
      * @return
      */
-    public OssConfigVO getOne(Long configId) throws Exception {
+    public OssConfigVO getOne(Long configId) {
         OssConfig ossConfig = ossConfigDao.getById(configId);
         OssClientConfig config = ossConfig.getConfig();
         String configStr = JSONUtil.toJsonStr(config);
@@ -78,9 +78,8 @@ public class OssConfigService {
     /**
      * 对象存储配置新增
      * @param dto
-     * @throws Exception
      */
-    public void saveOne(OssConfigInsertDTO dto) throws Exception {
+    public void saveOne(OssConfigInsertDTO dto) {
         OssConfig ossConfig = new OssConfig();
         BeanUtils.copyProperties(dto, ossConfig);
         ossConfig.setEnable(DISABLE);
@@ -91,9 +90,8 @@ public class OssConfigService {
     /**
      * 对象存储配置更新
      * @param dto
-     * @throws Exception
      */
-    public void updateOne(OssConfigUpdateDTO dto) throws Exception {
+    public void updateOne(OssConfigUpdateDTO dto) {
         OssConfig ossConfig = new OssConfig();
         BeanUtils.copyProperties(dto, ossConfig);
         ossConfig.setConfig(parseConfig(dto.getType(), dto.getConfig()));
@@ -110,9 +108,8 @@ public class OssConfigService {
      * @param type
      * @param config
      * @return
-     * @throws Exception
      */
-    private OssClientConfig parseConfig(Integer type, Map<String, Object> config) throws Exception {
+    private OssClientConfig parseConfig(Integer type, Map<String, Object> config) {
         Class<?> configClass = OssTypeEnum.getByType(type).getOssConfigClass();
         String configStr = JSONUtil.toJsonStr(config);
         return (OssClientConfig) JSONUtil.toBean(configStr, configClass);

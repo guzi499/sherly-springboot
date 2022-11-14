@@ -80,9 +80,8 @@ public class SherlyLogAop {
      * @param joinPoint
      * @param type
      * @param exception
-     * @throws Exception
      */
-    private void saveOne(Long duration, ProceedingJoinPoint joinPoint, Integer type, Throwable exception) throws Exception {
+    private void saveOne(Long duration, ProceedingJoinPoint joinPoint, Integer type, Throwable exception) {
         OperationLog operationLog = new OperationLog();
         HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
         String ip = IpUtil.getIp(request);
@@ -131,9 +130,8 @@ public class SherlyLogAop {
      * @param methodSignature
      * @param args
      * @return
-     * @throws Exception
      */
-    private String parseArgs(MethodSignature methodSignature, Object[] args) throws Exception {
+    private String parseArgs(MethodSignature methodSignature, Object[] args) {
         String[] paramNames = methodSignature.getParameterNames();
 
         Map<String, Object> map = new HashMap<>(args.length);

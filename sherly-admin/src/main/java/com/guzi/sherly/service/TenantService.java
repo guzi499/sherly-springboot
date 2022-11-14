@@ -20,6 +20,7 @@ import com.guzi.sherly.model.vo.TenantPageVO;
 import com.guzi.sherly.modules.security.util.SecurityUtil;
 import com.guzi.sherly.util.ExecSqlUtil;
 import com.guzi.sherly.util.GlobalPropertiesUtil;
+import lombok.SneakyThrows;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -245,7 +246,8 @@ public class TenantService {
      * 租户导出
      * @param response
      */
-    public void listExport(HttpServletResponse response) throws IOException {
+    @SneakyThrows
+    public void listExport(HttpServletResponse response) {
         List<Tenant> list = tenantDao.list();
 
         List<TenantEO> result = list.stream().map(e -> {

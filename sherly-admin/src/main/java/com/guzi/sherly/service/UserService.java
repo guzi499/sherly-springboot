@@ -18,6 +18,7 @@ import com.guzi.sherly.model.vo.UserSelectVO;
 import com.guzi.sherly.model.vo.UserVo;
 import com.guzi.sherly.modules.security.util.SecurityUtil;
 import com.guzi.sherly.util.GlobalPropertiesUtil;
+import lombok.SneakyThrows;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -86,7 +87,8 @@ public class UserService {
      * 用户导出
      * @param response
      */
-    public void listExport(HttpServletResponse response) throws IOException {
+    @SneakyThrows
+    public void listExport(HttpServletResponse response) {
         List<User> userList = userDao.list();
         List<Department> departmentList = departmentDao.list();
         Map<Long, String> departmentIdMapName = departmentList.stream().collect(Collectors.toMap(Department::getDepartmentId, Department::getDepartmentName));
