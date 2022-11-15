@@ -115,7 +115,7 @@ public class RoleService {
         roleDao.updateById(role);
 
         // 先全部删除角色菜单数据
-        roleMenuDao.removeRoleMenuByRoleId(dto.getRoleId());
+        roleMenuDao.removeByRoleId(dto.getRoleId());
 
         // 再保存角色菜单数据
         if (!CollectionUtils.isEmpty(dto.getMenuIds())) {
@@ -139,7 +139,7 @@ public class RoleService {
         roleDao.removeById(roleId);
 
         // 删除角色菜单、用户角色数据
-        roleMenuDao.removeRoleMenuByRoleId(roleId);
+        roleMenuDao.removeByRoleId(roleId);
         userRoleDao.removeUserRoleByRoleId(roleId);
     }
 

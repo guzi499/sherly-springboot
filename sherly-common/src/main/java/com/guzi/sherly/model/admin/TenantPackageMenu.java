@@ -11,19 +11,15 @@ import lombok.Data;
  * @date 2022/11/15
  */
 @Data
-@TableName("ge_tenant_package")
-public class TenantPackage extends BaseModel {
+@TableName("ge_tenant_package_menu")
+public class TenantPackageMenu extends BaseModel {
+    /** id */
+    @TableId(type = IdType.AUTO)
+    private Long id;
 
     /** 租户套餐id */
-    @TableId(type = IdType.AUTO)
     private Long tenantPackageId;
 
-    /** 租户套餐名称 */
-    private String tenantPackageName;
-
-    /** 描述 */
-    private String description;
-
-    /** 启用禁用[enum] */
-    private Integer enable;
+    /** 菜单id */
+    private Long menuId;
 }

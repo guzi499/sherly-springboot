@@ -18,6 +18,7 @@ public class TenantPackageDao extends SherlyServiceImpl<TenantPackageMapper, Ten
 
     public IPage<TenantPackage> listPage(TenantPackagePageDTO dto) {
         SherlyLambdaQueryWrapper<TenantPackage> wrapper = new SherlyLambdaQueryWrapper<>();
+        wrapper.likeIfExist(TenantPackage::getTenantPackageName, dto.getTenantPackageName());
         return this.page(new Page<>(dto.getCurrent(), dto.getSize()), wrapper);
     }
 }

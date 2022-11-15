@@ -10,10 +10,12 @@ import com.guzi.sherly.constants.SqlStatement;
 import com.guzi.sherly.dao.*;
 import com.guzi.sherly.model.PageResult;
 import com.guzi.sherly.model.admin.*;
-import com.guzi.sherly.model.dto.*;
+import com.guzi.sherly.model.dto.TenantInsertDTO;
+import com.guzi.sherly.model.dto.TenantMenuUpdateDTO;
+import com.guzi.sherly.model.dto.TenantPageDTO;
+import com.guzi.sherly.model.dto.TenantUpdateDTO;
 import com.guzi.sherly.model.eo.TenantEO;
 import com.guzi.sherly.model.exception.BizException;
-import com.guzi.sherly.model.vo.TenantPackagePageVO;
 import com.guzi.sherly.model.vo.TenantPageVO;
 import com.guzi.sherly.modules.security.util.SecurityUtil;
 import com.guzi.sherly.util.ExecSqlUtil;
@@ -72,9 +74,6 @@ public class TenantService {
 
     @Resource
     private AccountUserDao accountUserDao;
-
-    @Resource
-    private TenantPackageDao tenantPackageDao;
 
     /**
      * 租户条件分页
@@ -212,7 +211,7 @@ public class TenantService {
         roles.forEach(e -> {
             // 如果是管理员
             if (Objects.equals(e.getRoleId(), 1L)) {
-                roleMenuDao.removeRoleMenuByRoleId(1L);
+                roleMenuDao.removeByRoleId(1L);
                 roleMenuDao.saveRoleMenu(1L, menuIds);
                 return;
             }
@@ -220,7 +219,7 @@ public class TenantService {
             List<RoleMenu> roleMenus = roleMenuDao.listByRoleId(e.getRoleId());
             List<Long> oldMenuIds = roleMenus.stream().map(RoleMenu::getMenuId).collect(Collectors.toList());
             Set<Long> resultMenuIds = CollUtil.intersectionDistinct(menuIds, oldMenuIds);
-            roleMenuDao.removeRoleMenuByRoleId(e.getRoleId());
+            roleMenuDao.removeByRoleId(e.getRoleId());
             roleMenuDao.saveRoleMenu(e.getRoleId(), resultMenuIds);
         });
 
@@ -267,20 +266,5 @@ public class TenantService {
                 .doWrite(result);
     }
 
-    /**
-     * 租户套餐列表
-     * @param dto
-     * @return
-     */
-    public PageResult<TenantPackagePageVO> listPackage(TenantPackagePageDTO dto) {
-        IPage<TenantPackage> page = tenantPackageDao.listPage(dto);
 
-        List<TenantPackagePageVO> result = page.getRecords().stream().map(e -> {
-            TenantPackagePageVO tenantPackagePageVO = new TenantPackagePageVO();
-            BeanUtils.copyProperties(e, tenantPackagePageVO);
-            return tenantPackagePageVO;
-        }).collect(Collectors.toList());
-
-        return PageResult.build(result, page.getTotal());
-    }
 }
