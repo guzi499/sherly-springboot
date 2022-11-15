@@ -20,6 +20,8 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
     public void insertFill(MetaObject metaObject) {
         this.strictInsertFill(metaObject, "createTime", Date::new, Date.class);
         this.strictInsertFill(metaObject, "createUserId", Long.class, SecurityUtil.getUserId());
+        this.strictInsertFill(metaObject, "updateTime", Date::new, Date.class);
+        this.strictInsertFill(metaObject, "updateUserId", Long.class, SecurityUtil.getUserId());
     }
 
 
