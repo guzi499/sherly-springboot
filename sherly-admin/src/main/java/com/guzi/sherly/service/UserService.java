@@ -26,8 +26,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.net.URLEncoder;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -176,6 +176,8 @@ public class UserService {
         User user = new User();
         BeanUtils.copyProperties(dto, user);
         user.setEnable(ENABLE);
+        user.setAccountUserId(accountUser.getAccountUserId());
+        user.setLastLoginTime(new Date());
         userDao.save(user);
 
         // 保存用户角色数据

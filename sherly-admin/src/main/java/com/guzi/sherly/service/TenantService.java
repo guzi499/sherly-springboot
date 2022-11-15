@@ -29,10 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.net.URLEncoder;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.guzi.sherly.model.contants.CommonConstants.ENABLE;
@@ -153,6 +150,7 @@ public class TenantService {
         user.setEnable(ENABLE);
         user.setDepartmentId(department.getDepartmentId());
         user.setGender(1);
+        user.setLastLoginTime(new Date());
         userDao.save(user);
 
         // 关联用户角色
