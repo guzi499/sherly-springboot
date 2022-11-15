@@ -2,10 +2,8 @@ package com.guzi.sherly.controller;
 
 import com.guzi.sherly.model.PageResult;
 import com.guzi.sherly.model.Result;
-import com.guzi.sherly.model.dto.TenantInsertDTO;
-import com.guzi.sherly.model.dto.TenantMenuUpdateDTO;
-import com.guzi.sherly.model.dto.TenantPageDTO;
-import com.guzi.sherly.model.dto.TenantUpdateDTO;
+import com.guzi.sherly.model.dto.*;
+import com.guzi.sherly.model.vo.TenantPackagePageVO;
 import com.guzi.sherly.model.vo.TenantPageVO;
 import com.guzi.sherly.service.TenantService;
 import io.swagger.annotations.Api;
@@ -17,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -84,5 +81,11 @@ public class TenantController {
     @ApiOperation(value = "租户导出", produces = "application/octet-stream")
     public void listExport(HttpServletResponse response) {
         tenantService.listExport(response);
+    }
+
+    @GetMapping("/list_package")
+    @ApiOperation(value = "租户套餐列表")
+    public Result<PageResult<TenantPackagePageVO>> listPackage(TenantPackagePageDTO dto) {
+        return Result.success(tenantService.listPackage(dto));
     }
 }

@@ -10,12 +10,10 @@ import com.guzi.sherly.constants.SqlStatement;
 import com.guzi.sherly.dao.*;
 import com.guzi.sherly.model.PageResult;
 import com.guzi.sherly.model.admin.*;
-import com.guzi.sherly.model.dto.TenantInsertDTO;
-import com.guzi.sherly.model.dto.TenantMenuUpdateDTO;
-import com.guzi.sherly.model.dto.TenantPageDTO;
-import com.guzi.sherly.model.dto.TenantUpdateDTO;
+import com.guzi.sherly.model.dto.*;
 import com.guzi.sherly.model.eo.TenantEO;
 import com.guzi.sherly.model.exception.BizException;
+import com.guzi.sherly.model.vo.TenantPackagePageVO;
 import com.guzi.sherly.model.vo.TenantPageVO;
 import com.guzi.sherly.modules.security.util.SecurityUtil;
 import com.guzi.sherly.util.ExecSqlUtil;
@@ -28,7 +26,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.Collections;
 import java.util.List;
@@ -75,6 +72,9 @@ public class TenantService {
 
     @Resource
     private AccountUserDao accountUserDao;
+
+    @Resource
+    private TenantPackageDao tenantPackageDao;
 
     /**
      * 租户条件分页
@@ -267,4 +267,20 @@ public class TenantService {
                 .doWrite(result);
     }
 
+    /**
+     * 租户套餐列表
+     * @param dto
+     * @return
+     */
+    public PageResult<TenantPackagePageVO> listPackage(TenantPackagePageDTO dto) {
+        IPage<TenantPackage> page = tenantPackageDao.listPage(dto);
+
+        List<TenantPackagePageVO> result = page.getRecords().stream().map(e -> {
+            TenantPackagePageVO tenantPackagePageVO = new TenantPackagePageVO();
+            BeanUtils.copyProperties(e, tenantPackagePageVO);
+            return tenantPackagePageVO;
+        }).collect(Collectors.toList());
+
+        return PageResult.build(result, page.getTotal());
+    }
 }
