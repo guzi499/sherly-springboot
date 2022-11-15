@@ -16,30 +16,26 @@ public interface OssClient {
      * 上传文件
      * @param fileBytes 文件的字节流
      * @param path 相对路径
-     * @throws Exception 上传文件时抛出的异常
      */
-    void upload(byte[] fileBytes, String path) throws Exception;
+    void upload(byte[] fileBytes, String path);
 
     /**
      * 删除文件
      * @param path 相对路径
-     * @throws Exception 删除文件时抛出的异常
      */
-    void delete(String path) throws Exception;
+    void delete(String path);
 
     /**
      * 下载文件
      * @param path 相对路径
      * @return 文件的字节流
-     * @throws Exception 下载文件时抛出的异常
      */
-    byte[] download(String path) throws Exception;
+    byte[] download(String path);
 
     /**
      * 获取访问url
      * @param path 相对路径
      * @return 访问url
-     * @throws Exception
      */
-    String getAccessUrl(String path) throws Exception;
+    String getAccessUrl(String path);
 }

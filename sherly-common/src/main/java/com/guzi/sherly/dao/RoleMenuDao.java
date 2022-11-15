@@ -1,7 +1,6 @@
-package com.guzi.sherly.manager;
+package com.guzi.sherly.dao;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.guzi.sherly.mapper.RoleMenuMapper;
 import com.guzi.sherly.model.admin.RoleMenu;
 import com.guzi.sherly.modules.mybatisplus.service.SherlyServiceImpl;
@@ -16,7 +15,7 @@ import java.util.List;
  * @date 2022/4/6
  */
 @Service
-public class RoleMenuManager extends SherlyServiceImpl<RoleMenuMapper, RoleMenu> {
+public class RoleMenuDao extends SherlyServiceImpl<RoleMenuMapper, RoleMenu> {
 
     /**
      * 根据菜单id删除角色菜单表数据

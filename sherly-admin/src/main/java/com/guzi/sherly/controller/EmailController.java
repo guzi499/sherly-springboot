@@ -1,10 +1,10 @@
 package com.guzi.sherly.controller;
 
+import com.guzi.sherly.manager.EmailManager;
 import com.guzi.sherly.model.Result;
 import com.guzi.sherly.model.dto.EmailConfigDTO;
 import com.guzi.sherly.model.dto.EmailSendDTO;
 import com.guzi.sherly.model.vo.EmailConfigVO;
-import com.guzi.sherly.service.EmailService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -25,20 +25,20 @@ import javax.validation.Valid;
 public class EmailController {
 
     @Resource
-    private EmailService emailService;
+    private EmailManager emailManager;
 
     @GetMapping("/get_one")
     @PreAuthorize("hasAnyAuthority('email:get_one')")
     @ApiOperation("邮件配置详情")
     public Result<EmailConfigVO> getOne() {
-        return Result.success(emailService.getOne());
+        return Result.success(emailManager.getOne());
     }
 
     @PostMapping("/save_or_update")
     @PreAuthorize("hasAnyAuthority('email:save_or_update')")
     @ApiOperation("邮件配置保存或修改")
     public Result saveOrUpdateOne(@RequestBody @Valid EmailConfigDTO dto) {
-        emailService.saveOrUpdate(dto);
+        emailManager.saveOrUpdate(dto);
         return Result.success();
     }
 
@@ -46,7 +46,7 @@ public class EmailController {
     @PreAuthorize("hasAnyAuthority('email:send')")
     @ApiOperation("邮件发送")
     public Result send(@RequestBody @Valid EmailSendDTO dto) {
-        emailService.send(dto);
+        emailManager.send(dto);
         return Result.success();
     }
 

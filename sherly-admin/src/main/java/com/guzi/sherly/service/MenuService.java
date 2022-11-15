@@ -1,7 +1,7 @@
 package com.guzi.sherly.service;
 
-import com.guzi.sherly.manager.MenuManager;
-import com.guzi.sherly.manager.RoleMenuManager;
+import com.guzi.sherly.dao.MenuDao;
+import com.guzi.sherly.dao.RoleMenuDao;
 import com.guzi.sherly.model.admin.Menu;
 import com.guzi.sherly.model.dto.MenuInsertDTO;
 import com.guzi.sherly.model.dto.MenuUpdateDTO;
@@ -27,17 +27,17 @@ import static com.guzi.sherly.model.exception.enums.AdminErrorEnum.*;
 public class MenuService {
 
     @Resource
-    private MenuManager menuManager;
+    private MenuDao menuDao;
 
     @Resource
-    private RoleMenuManager roleMenuManager;
+    private RoleMenuDao roleMenuDao;
 
     /**
      * 查询菜单树
      * @return
      */
     public List<MenuVO> listTree() {
-        List<Menu> list = menuManager.list();
+        List<Menu> list = menuDao.list();
 
         // 对象转换成vo类型
         List<MenuVO> all = list.stream().map(e -> {
@@ -71,7 +71,7 @@ public class MenuService {
     public void saveOne(MenuInsertDTO dto) {
         Menu menu = new Menu();
         BeanUtils.copyProperties(dto, menu);
-        menuManager.save(menu);
+        menuDao.save(menu);
     }
 
     /**
@@ -79,13 +79,13 @@ public class MenuService {
      * @param menuId
      */
     public void removeOne(Long menuId) {
-        if (roleMenuManager.countByMenuId(menuId) > 0) {
+        if (roleMenuDao.countByMenuId(menuId) > 0) {
             throw new BizException(MENU_BOUND_ROLE);
         }
-        if (menuManager.countChildrenByMenuId(menuId) > 0) {
+        if (menuDao.countChildrenByMenuId(menuId) > 0) {
             throw new BizException(MENU_HAS_CHILDREN);
         }
-        menuManager.removeById(menuId);
+        menuDao.removeById(menuId);
     }
 
     /**
@@ -98,7 +98,7 @@ public class MenuService {
         }
         Menu menu = new Menu();
         BeanUtils.copyProperties(dto, menu);
-        menuManager.updateById(menu);
+        menuDao.updateById(menu);
     }
 
 }

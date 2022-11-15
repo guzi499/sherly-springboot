@@ -1,9 +1,8 @@
-package com.guzi.sherly.manager;
+package com.guzi.sherly.dao;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.guzi.sherly.mapper.ErrorCodeMapper;
 import com.guzi.sherly.model.admin.ErrorCode;
 import com.guzi.sherly.model.dto.ErrorCodePageDTO;
@@ -16,7 +15,7 @@ import org.springframework.stereotype.Service;
  * @date 2022/9/1
  */
 @Service
-public class ErrorCodeManager extends SherlyServiceImpl<ErrorCodeMapper, ErrorCode> {
+public class ErrorCodeDao extends SherlyServiceImpl<ErrorCodeMapper, ErrorCode> {
 
     /**
      * 根据错误代码查询错误数据

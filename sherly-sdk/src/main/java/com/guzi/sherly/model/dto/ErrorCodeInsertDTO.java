@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author 李仁杰
@@ -28,6 +29,6 @@ public class ErrorCodeInsertDTO {
 
     /** 模块id */
     @ApiModelProperty(value = "模块id", required = true)
-    @NotBlank
+    @NotNull
     private Integer moduleId;
 }

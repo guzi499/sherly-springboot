@@ -19,11 +19,11 @@ import java.util.List;
 
 @Configuration
 @EnableSwagger2WebMvc
-public class Knife4jConfiguration {
+public class Knife4jConfig {
 
     private final OpenApiExtensionResolver openApiExtensionResolver;
 
-    public Knife4jConfiguration(OpenApiExtensionResolver openApiExtensionResolver) {
+    public Knife4jConfig(OpenApiExtensionResolver openApiExtensionResolver) {
         this.openApiExtensionResolver = openApiExtensionResolver;
     }
 

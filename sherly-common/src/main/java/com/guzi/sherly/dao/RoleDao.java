@@ -1,9 +1,8 @@
-package com.guzi.sherly.manager;
+package com.guzi.sherly.dao;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.guzi.sherly.mapper.RoleMapper;
 import com.guzi.sherly.model.admin.Role;
 import com.guzi.sherly.model.dto.RolePageDTO;
@@ -19,7 +18,7 @@ import java.util.List;
  * @date 2022/3/25
  */
 @Service
-public class RoleManager extends SherlyServiceImpl<RoleMapper, Role> {
+public class RoleDao extends SherlyServiceImpl<RoleMapper, Role> {
 
     /**
      * 角色分页

@@ -82,7 +82,7 @@ public class TenantController {
 
     @GetMapping("/list_export")
     @ApiOperation(value = "租户导出", produces = "application/octet-stream")
-    public void listExport(HttpServletResponse response) throws IOException {
+    public void listExport(HttpServletResponse response) {
         tenantService.listExport(response);
     }
 }

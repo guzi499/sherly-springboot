@@ -1,7 +1,8 @@
 package com.guzi.sherly.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.guzi.sherly.manager.*;
+import com.guzi.sherly.dao.*;
+import com.guzi.sherly.manager.OssManager;
 import com.guzi.sherly.model.PageResult;
 import com.guzi.sherly.model.admin.*;
 import com.guzi.sherly.model.dto.OperationLogPageDTO;
@@ -11,10 +12,9 @@ import com.guzi.sherly.model.dto.UserUpdatePasswordDTO;
 import com.guzi.sherly.model.exception.BizException;
 import com.guzi.sherly.model.vo.OperationLogPageVO;
 import com.guzi.sherly.model.vo.UserSelfVO;
-import com.guzi.sherly.modules.log.manager.OperationLogManager;
+import com.guzi.sherly.modules.log.dao.OperationLogDao;
 import com.guzi.sherly.modules.log.model.OperationLog;
 import com.guzi.sherly.modules.security.util.SecurityUtil;
-import com.guzi.sherly.util.OssUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -41,25 +41,25 @@ public class UserSelfService {
     private PasswordEncoder passwordEncoder;
 
     @Resource
-    private UserManager userManager;
+    private UserDao userDao;
 
     @Resource
-    private UserRoleManager userRoleManager;
+    private UserRoleDao userRoleDao;
 
     @Resource
-    private RoleManager roleManager;
+    private RoleDao roleDao;
 
     @Resource
-    private DepartmentManager departmentManager;
+    private DepartmentDao departmentDao;
 
     @Resource
-    private AccountUserManager accountUserManager;
+    private AccountUserDao accountUserDao;
 
     @Resource
-    private OperationLogManager operationLogManager;
+    private OperationLogDao operationLogDao;
 
     @Resource
-    private OssUtil ossUtil;
+    private OssManager ossManager;
 
     /**
      * 用户个人中心
@@ -67,22 +67,22 @@ public class UserSelfService {
      * @return
      */
     public UserSelfVO getSelf() {
-        User user = userManager.getById(SecurityUtil.getUserId());
+        User user = userDao.getById(SecurityUtil.getUserId());
 
         // 查询角色
-        List<UserRole> userRoles = userRoleManager.listByUserId(SecurityUtil.getUserId());
+        List<UserRole> userRoles = userRoleDao.listByUserId(SecurityUtil.getUserId());
         List<Long> roleIds = userRoles.stream().map(UserRole::getRoleId).collect(Collectors.toList());
-        List<Role> roles = roleManager.listByIds(roleIds);
+        List<Role> roles = roleDao.listByIds(roleIds);
         List<String> roleNames = roles.stream().map(Role::getRoleName).collect(Collectors.toList());
 
         // 查询部门
-        List<Department> departmentList = departmentManager.list();
+        List<Department> departmentList = departmentDao.list();
         Map<Long, String> departmentIdMapName = departmentList.stream().collect(Collectors.toMap(Department::getDepartmentId, Department::getDepartmentName));
 
         // 组装vo
         UserSelfVO vo = new UserSelfVO();
         BeanUtils.copyProperties(user, vo);
-        vo.setAvatar(ossUtil.accessUrl(vo.getAvatar()));
+        vo.setAvatar(ossManager.accessUrl(vo.getAvatar()));
         vo.setRoleIds(roleIds);
         vo.setRoleNames(roleNames);
         vo.setGenderStr(Objects.equals(vo.getGender(), MALE) ? "男" : "女");
@@ -103,7 +103,7 @@ public class UserSelfService {
         }
 
         String phone = SecurityUtil.getPhone();
-        AccountUser accountUser = accountUserManager.getByPhone(phone);
+        AccountUser accountUser = accountUserDao.getByPhone(phone);
 
         // 旧密码正确性验证
         boolean match = passwordEncoder.matches(dto.getOldPassword(), accountUser.getPassword());
@@ -114,7 +114,7 @@ public class UserSelfService {
 
         // 密码加密后存储到db
         accountUser.setPassword(passwordEncoder.encode(dto.getNewPassword()));
-        accountUserManager.updateById(accountUser);
+        accountUserDao.updateById(accountUser);
     }
 
     /**
@@ -125,7 +125,7 @@ public class UserSelfService {
         User user = new User();
         user.setUserId(SecurityUtil.getUserId());
         BeanUtils.copyProperties(dto, user);
-        userManager.updateById(user);
+        userDao.updateById(user);
     }
 
     /**
@@ -136,7 +136,7 @@ public class UserSelfService {
         User user = new User();
         user.setUserId(SecurityUtil.getUserId());
         user.setAvatar(avatarPath);
-        userManager.updateById(user);
+        userDao.updateById(user);
     }
 
     /**
@@ -151,7 +151,7 @@ public class UserSelfService {
         operationLogPageDTO.setUserIds(Collections.singletonList(SecurityUtil.getUserId()));
 
         // 分页查询操作日志
-        Page<OperationLog> page = operationLogManager.listPage(operationLogPageDTO);
+        Page<OperationLog> page = operationLogDao.listPage(operationLogPageDTO);
 
         List<OperationLogPageVO> result = page.getRecords().stream().map(e -> {
             OperationLogPageVO vo = new OperationLogPageVO();

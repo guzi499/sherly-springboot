@@ -27,7 +27,7 @@ public class GenericController {
 
     @GetMapping("/basic_data")
     @ApiOperation("用户登录基本信息")
-    public Result<BasicInfoVO> getBasicData() throws Exception {
+    public Result<BasicInfoVO> getBasicData() {
         return Result.success(genericService.getBasicData());
     }
 

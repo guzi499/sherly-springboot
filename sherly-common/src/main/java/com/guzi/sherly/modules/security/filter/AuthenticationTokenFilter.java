@@ -1,6 +1,5 @@
 package com.guzi.sherly.modules.security.filter;
 
-import cn.hutool.json.JSONUtil;
 import com.guzi.sherly.constants.RedisKey;
 import com.guzi.sherly.modules.security.model.RedisSecurityModel;
 import com.guzi.sherly.modules.security.model.SecurityModel;
@@ -31,7 +30,7 @@ import java.util.stream.Collectors;
 public class AuthenticationTokenFilter extends OncePerRequestFilter {
 
     @Resource
-    private RedisTemplate<String, String> redisTemplate;
+    private RedisTemplate<String, Object> redisTemplate;
 
 
     @Override
@@ -55,16 +54,14 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
         }
 
         // 从redis获取redisSecurityModel
-        String redisString = redisTemplate.opsForValue().get(RedisKey.SESSION_ID + sessionId);
-        if (redisString == null) {
+        RedisSecurityModel redisSecurityModel = (RedisSecurityModel) redisTemplate.opsForValue().get(RedisKey.SESSION_ID + sessionId);
+        if (redisSecurityModel == null) {
             filterChain.doFilter(request, response);
             return;
         }
 
         // redis续期
         redisTemplate.expire(RedisKey.SESSION_ID + sessionId, 6, TimeUnit.HOURS);
-
-        RedisSecurityModel redisSecurityModel = JSONUtil.toBean(redisString, RedisSecurityModel.class);
 
         SecurityModel securityModel = redisSecurityModel.getSecurityModel();
         List<SimpleGrantedAuthority> authorities = redisSecurityModel.getPermissions().stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());

@@ -1,4 +1,4 @@
-package com.guzi.sherly.manager;
+package com.guzi.sherly.dao;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.guzi.sherly.mapper.UserRoleMapper;
@@ -16,7 +16,7 @@ import java.util.List;
  * @date 2022/3/25
  */
 @Service
-public class UserRoleManager extends SherlyServiceImpl<UserRoleMapper, UserRole> {
+public class UserRoleDao extends SherlyServiceImpl<UserRoleMapper, UserRole> {
 
     @Resource
     private UserRoleMapper userRoleMapper;

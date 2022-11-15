@@ -1,4 +1,4 @@
-package com.guzi.sherly.modules.log.manager;
+package com.guzi.sherly.modules.log.dao;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.guzi.sherly.model.dto.OperationLogPageDTO;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  * @date 2022/7/14
  */
 @Service
-public class OperationLogManager extends SherlyServiceImpl<OperationLogMapper, OperationLog> {
+public class OperationLogDao extends SherlyServiceImpl<OperationLogMapper, OperationLog> {
     public Page<OperationLog> listPage(OperationLogPageDTO dto) {
         SherlyLambdaQueryWrapper<OperationLog> wrapper = new SherlyLambdaQueryWrapper<>();
         wrapper

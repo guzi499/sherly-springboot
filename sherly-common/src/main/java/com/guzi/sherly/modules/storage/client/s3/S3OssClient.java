@@ -4,6 +4,7 @@ import cn.hutool.core.io.IoUtil;
 import com.guzi.sherly.modules.storage.model.AbstractOssClient;
 import io.minio.*;
 import io.minio.http.Method;
+import lombok.SneakyThrows;
 
 import java.io.ByteArrayInputStream;
 import java.util.concurrent.TimeUnit;
@@ -32,7 +33,8 @@ public class S3OssClient extends AbstractOssClient<S3OssClientConfig> {
     }
 
     @Override
-    public void upload(byte[] fileBytes, String path) throws Exception {
+    @SneakyThrows
+    public void upload(byte[] fileBytes, String path) {
         // 执行上传
         client.putObject(PutObjectArgs.builder()
                 .bucket(config.getBucket())
@@ -42,7 +44,8 @@ public class S3OssClient extends AbstractOssClient<S3OssClientConfig> {
     }
 
     @Override
-    public void delete(String path) throws Exception {
+    @SneakyThrows
+    public void delete(String path) {
         client.removeObject(RemoveObjectArgs.builder()
                 .bucket(config.getBucket())
                 .object(path)
@@ -50,7 +53,8 @@ public class S3OssClient extends AbstractOssClient<S3OssClientConfig> {
     }
 
     @Override
-    public byte[] download(String path) throws Exception {
+    @SneakyThrows
+    public byte[] download(String path) {
         GetObjectResponse response = client.getObject(GetObjectArgs.builder()
                 .bucket(config.getBucket())
                 .object(path)
@@ -59,7 +63,8 @@ public class S3OssClient extends AbstractOssClient<S3OssClientConfig> {
     }
 
     @Override
-    public String getAccessUrl(String path) throws Exception {
+    @SneakyThrows
+    public String getAccessUrl(String path) {
         return client.getPresignedObjectUrl(GetPresignedObjectUrlArgs.builder()
                 .method(Method.GET)
                 .expiry(6, TimeUnit.HOURS)

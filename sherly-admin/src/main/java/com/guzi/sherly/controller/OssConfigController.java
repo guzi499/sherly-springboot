@@ -41,7 +41,7 @@ public class OssConfigController {
     @GetMapping("/get_one")
     @PreAuthorize("hasAnyAuthority('oss_config:get_one')")
     @ApiOperation("对象存储配置详情")
-    public Result<OssConfigVO> getOne(@RequestParam Long configId) throws Exception {
+    public Result<OssConfigVO> getOne(@RequestParam Long configId) {
         return Result.success(ossConfigService.getOne(configId));
     }
 
@@ -56,7 +56,7 @@ public class OssConfigController {
     @PostMapping("/save_one")
     @PreAuthorize("hasAnyAuthority('oss_config:save_one')")
     @ApiOperation("对象存储配置新增")
-    public Result saveOne(@RequestBody @Valid OssConfigInsertDTO dto) throws Exception {
+    public Result saveOne(@RequestBody @Valid OssConfigInsertDTO dto) {
         ossConfigService.saveOne(dto);
         return Result.success();
     }
@@ -64,7 +64,7 @@ public class OssConfigController {
     @PutMapping("/update_one")
     @PreAuthorize("hasAnyAuthority('oss_config:update_one')")
     @ApiOperation("对象存储配置更新")
-    public Result updateOne(@RequestBody @Valid OssConfigUpdateDTO dto) throws Exception {
+    public Result updateOne(@RequestBody @Valid OssConfigUpdateDTO dto) {
         ossConfigService.updateOne(dto);
         return Result.success();
     }

@@ -1,9 +1,9 @@
 package com.guzi.sherly.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.guzi.sherly.manager.RoleManager;
-import com.guzi.sherly.manager.RoleMenuManager;
-import com.guzi.sherly.manager.UserRoleManager;
+import com.guzi.sherly.dao.RoleDao;
+import com.guzi.sherly.dao.RoleMenuDao;
+import com.guzi.sherly.dao.UserRoleDao;
 import com.guzi.sherly.model.PageResult;
 import com.guzi.sherly.model.admin.Role;
 import com.guzi.sherly.model.admin.RoleMenu;
@@ -34,13 +34,13 @@ import static com.guzi.sherly.model.exception.enums.AdminErrorEnum.*;
 @Service
 public class RoleService {
     @Resource
-    private RoleManager roleManager;
+    private RoleDao roleDao;
 
     @Resource
-    private RoleMenuManager roleMenuManager;
+    private RoleMenuDao roleMenuDao;
 
     @Resource
-    private UserRoleManager userRoleManager;
+    private UserRoleDao userRoleDao;
 
     /**
      * 角色分页
@@ -49,7 +49,7 @@ public class RoleService {
      */
     public PageResult listPage(RolePageDTO dto) {
         // 分页查询
-        IPage<Role> page = roleManager.listPage(dto);
+        IPage<Role> page = roleDao.listPage(dto);
 
         // 对象转换成vo类型
         List<RolePageVO> result = page.getRecords().stream().map(e -> {
@@ -67,10 +67,10 @@ public class RoleService {
      * @return
      */
     public RoleVO getOne(Long roleId) {
-        Role role = roleManager.getById(roleId);
+        Role role = roleDao.getById(roleId);
 
         // 查询菜单
-        List<RoleMenu> roleMenus = roleMenuManager.listByRoleId(roleId);
+        List<RoleMenu> roleMenus = roleMenuDao.listByRoleId(roleId);
         List<Long> menuIds = roleMenus.stream().map(RoleMenu::getMenuId).collect(Collectors.toList());
 
         // 组装vo
@@ -87,14 +87,14 @@ public class RoleService {
      */
     public void saveOne(RoleInsertDTO dto) {
         // 去重
-        Role one = roleManager.getByRoleName(dto.getRoleName());
+        Role one = roleDao.getByRoleName(dto.getRoleName());
         if (one != null) {
             throw new BizException(ROLE_REPEAT);
         }
 
         Role role = new Role();
         BeanUtils.copyProperties(dto, role);
-        roleManager.save(role);
+        roleDao.save(role);
     }
 
     /**
@@ -104,7 +104,7 @@ public class RoleService {
     @Transactional(rollbackFor = Exception.class)
     public void updateOne(RoleUpdateDTO dto) {
         // 去重
-        Role one = roleManager.getByRoleName(dto.getRoleName());
+        Role one = roleDao.getByRoleName(dto.getRoleName());
         // 如果待修改名称已存在且不为自身
         if (one != null && !Objects.equals(one.getRoleId(), dto.getRoleId())) {
             throw new BizException(ROLE_REPEAT);
@@ -112,14 +112,14 @@ public class RoleService {
 
         Role role = new Role();
         BeanUtils.copyProperties(dto, role);
-        roleManager.updateById(role);
+        roleDao.updateById(role);
 
         // 先全部删除角色菜单数据
-        roleMenuManager.removeRoleMenuByRoleId(dto.getRoleId());
+        roleMenuDao.removeRoleMenuByRoleId(dto.getRoleId());
 
         // 再保存角色菜单数据
         if (!CollectionUtils.isEmpty(dto.getMenuIds())) {
-            roleMenuManager.saveRoleMenu(dto.getRoleId(), dto.getMenuIds());
+            roleMenuDao.saveRoleMenu(dto.getRoleId(), dto.getMenuIds());
         }
     }
 
@@ -132,15 +132,15 @@ public class RoleService {
         if (Objects.equals(roleId, 1L)) {
             throw new BizException(DELETE_ROLE_ERROR);
         }
-        if (userRoleManager.countByRoleId(roleId) > 0) {
+        if (userRoleDao.countByRoleId(roleId) > 0) {
             throw new BizException(ROLE_BOUND_USER);
         }
 
-        roleManager.removeById(roleId);
+        roleDao.removeById(roleId);
 
         // 删除角色菜单、用户角色数据
-        roleMenuManager.removeRoleMenuByRoleId(roleId);
-        userRoleManager.removeUserRoleByRoleId(roleId);
+        roleMenuDao.removeRoleMenuByRoleId(roleId);
+        userRoleDao.removeUserRoleByRoleId(roleId);
     }
 
     /**
@@ -149,7 +149,7 @@ public class RoleService {
      * @return
      */
     public List<RoleSelectVO> listAll(RoleSelectDTO dto) {
-        List<Role> roles = roleManager.listAll(dto);
+        List<Role> roles = roleDao.listAll(dto);
 
         return roles.stream().map(e -> {
             RoleSelectVO vo = new RoleSelectVO();

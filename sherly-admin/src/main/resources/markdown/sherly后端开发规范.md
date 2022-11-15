@@ -110,11 +110,12 @@
 3. 一般来说，小的枚举类型使用tinyint
 ### 工程结构
 #### 【1】应用分层
-1. 根据业务架构，将系统分为四层。controller、service、manager、mapper。
-    - 其中controller层只做接DTO，调用service层获取VO,并返回Result。
-    - 其中service层只做业务逻辑，service层不允许有数据库相关内容，与操作数据库相关代码一律编写在manager层。
-    - 其中manager层只做数据库CRUD，继承mybatis-plus的ServiceImpl，可直接调用简单增删改查。否则一律使用wrapper包装生成sql。
-    - 其中mapper层只参与对应xml文件，无其他作用。
+1. 根据业务架构，将系统分为四层。controller、service、manager、dao、mapper。
+    - 其中controller层只做接收DTO，调用service层获取VO,并包装返回Result。
+    - 其中service层只做高级业务逻辑，service层不允许有数据库相关内容，与操作数据库相关代码一律编写在Dao层。
+    - 其中manager层只做通用业务逻辑，如对象存储，日志等通用业务代码。是为了防止service层之间互相调用导致的循环依赖，manager层不允许有数据库相关内容，与操作数据库相关代码一律编写在Dao层。
+    - 其中dao层只做数据库CRUD，继承mybatis-plus的ServiceImpl，可直接调用简单增删改查。否则一律使用wrapper包装生成sql。
+    - 其中mapper层只负责mybatis-plus的mapper拓展和简单sql编写，无其他作用。
 
 ### 版本记录
 - `v1.0 & 2022-03-31 : 初稿编写完成。`

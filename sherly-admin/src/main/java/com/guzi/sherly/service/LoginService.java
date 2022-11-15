@@ -2,12 +2,12 @@ package com.guzi.sherly.service;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.servlet.ServletUtil;
-import cn.hutool.json.JSONUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.guzi.sherly.constants.RedisKey;
-import com.guzi.sherly.manager.AccountUserManager;
-import com.guzi.sherly.manager.TenantManager;
-import com.guzi.sherly.manager.UserManager;
+import com.guzi.sherly.dao.AccountUserDao;
+import com.guzi.sherly.dao.TenantDao;
+import com.guzi.sherly.dao.UserDao;
+import com.guzi.sherly.manager.LoginLogManager;
 import com.guzi.sherly.model.admin.AccountUser;
 import com.guzi.sherly.model.admin.Tenant;
 import com.guzi.sherly.model.admin.User;
@@ -23,7 +23,6 @@ import com.guzi.sherly.modules.security.util.SecurityUtil;
 import com.guzi.sherly.util.GlobalPropertiesUtil;
 import com.guzi.sherly.util.IpUtil;
 import com.guzi.sherly.util.JwtUtil;
-import com.guzi.sherly.util.LogRecordUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -43,8 +42,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-import static com.guzi.sherly.model.contants.CommonConstants.LOGIN_LOG_SUCCESS;
-import static com.guzi.sherly.model.contants.CommonConstants.LOGIN_TYPE_PASSWORD;
+import static com.guzi.sherly.model.contants.CommonConstants.*;
 import static com.guzi.sherly.model.exception.enums.AdminErrorEnum.*;
 
 /**
@@ -58,19 +56,16 @@ public class LoginService {
     private AuthenticationProvider authenticationProvider;
 
     @Resource
-    private RedisTemplate<String, String> redisTemplate;
+    private RedisTemplate<String, Object> redisTemplate;
 
     @Resource
-    private UserManager userManager;
+    private UserDao userDao;
 
     @Resource
-    private AccountUserManager accountUserManager;
+    private AccountUserDao accountUserDao;
 
     @Resource
-    private TenantManager tenantManager;
-
-    @Resource
-    private LogRecordUtil logRecordUtil;
+    private TenantDao tenantDao;
 
     @Resource
     private UserDetailsService userDetailsService;
@@ -78,15 +73,17 @@ public class LoginService {
     @Resource
     private PasswordEncoder passwordEncoder;
 
+    @Resource
+    private LoginLogManager loginLogManager;
+
     /**
      * 登录
      * @param dto
      * @param request
      * @return
-     * @throws Exception
      */
     @Transactional(rollbackFor = Exception.class)
-    public LoginVO login(LoginDTO dto, HttpServletRequest request) throws Exception {
+    public LoginVO login(LoginDTO dto, HttpServletRequest request) {
 
         // 因为登录前不存在Authentication，必须手动设置特殊操作数据库code，
         SecurityModel securityModel = new SecurityModel();
@@ -101,7 +98,20 @@ public class LoginService {
                 new UsernamePasswordAuthenticationToken(dto.getPhone(), dto.getPassword());
 
         // 登录校验
-        Authentication authentication = authenticationProvider.authenticate(authenticationToken);
+        Authentication authentication;
+        try {
+            authentication = authenticationProvider.authenticate(authenticationToken);
+        } catch (Exception e) {
+            if (e instanceof BizException) {
+                BizException exception = (BizException) e;
+                if (exception.getCode().equals(ERR_USR_PWD.getCode())) {
+                    loginLogManager.saveOne(request, dto.getPhone(), LOGIN_LOG_FAIL, LOGIN_TYPE_PASSWORD);
+                } else if (exception.getCode().equals(FORBIDDEN.getCode())) {
+                    loginLogManager.saveOne(request, dto.getPhone(), LOGIN_LOG_DISABLE, LOGIN_TYPE_PASSWORD);
+                }
+            }
+            throw e;
+        }
 
         // 获取登录用户信息
         LoginUserDetails loginUserDetails = (LoginUserDetails) authentication.getPrincipal();
@@ -113,8 +123,9 @@ public class LoginService {
 
         // 生成token返回前端
         LoginVO loginVO = new LoginVO(JwtUtil.generateToken(sessionId));
+
         // 记录日志
-        logRecordUtil.recordLoginLog(request, dto.getPhone(), LOGIN_LOG_SUCCESS, LOGIN_TYPE_PASSWORD);
+        loginLogManager.saveOne(request, dto.getPhone(), LOGIN_LOG_SUCCESS, LOGIN_TYPE_PASSWORD);
 
         return loginVO;
     }
@@ -125,14 +136,14 @@ public class LoginService {
      */
     private void dealWithTenantCode(LoginDTO dto) {
         if (StrUtil.isNotBlank(dto.getTenantCode())) {
-            Tenant tenant = tenantManager.getByTenantCode(dto.getTenantCode());
+            Tenant tenant = tenantDao.getByTenantCode(dto.getTenantCode());
             // 如果租户不存在
             if (tenant == null) {
                 throw new BizException(TENANT_MISS);
             }
 
             // 如果在选择租户下无该账号
-            AccountUser accountUser = accountUserManager.getByPhone(dto.getPhone());
+            AccountUser accountUser = accountUserDao.getByPhone(dto.getPhone());
             List<String> split = StrUtil.split(accountUser.getTenantData(), ",");
             if (!split.contains(dto.getTenantCode())) {
                 throw new BizException(NOT_IN_ACCOUNT);
@@ -144,7 +155,7 @@ public class LoginService {
             }
             // 校验租户是否可用，如果可用，那么最近登陆租户切换成该租户code
             accountUser.setLastLoginTenantCode(dto.getTenantCode());
-            accountUserManager.updateById(accountUser);
+            accountUserDao.updateById(accountUser);
         }
     }
 
@@ -157,7 +168,7 @@ public class LoginService {
         String ip = ServletUtil.getClientIP(request);
         user.setLastLoginTime(new Date());
         user.setLastLoginIp(ip);
-        userManager.updateById(user);
+        userDao.updateById(user);
     }
 
     /**
@@ -165,7 +176,6 @@ public class LoginService {
      */
     public void logout() {
         redisTemplate.delete(RedisKey.SESSION_ID + SecurityUtil.getSessionId());
-
     }
 
     /**
@@ -175,9 +185,9 @@ public class LoginService {
      */
     public List<LoginTenantVO> availableList(String phone) {
 
-        AccountUser accountUser = accountUserManager.getByPhone(phone);
+        AccountUser accountUser = accountUserDao.getByPhone(phone);
         List<String> tenantCodes = StrUtil.split(accountUser.getTenantData(), ",");
-        List<Tenant> tenants = tenantManager.listAvailableByTenantCodes(tenantCodes);
+        List<Tenant> tenants = tenantDao.listAvailableByTenantCodes(tenantCodes);
         if (CollectionUtils.isEmpty(tenants)) {
             throw new BizException(NO_TENANT);
         }
@@ -194,22 +204,22 @@ public class LoginService {
      * 切换登录租户
      */
     @Transactional(rollbackFor = Exception.class)
-    public void loginChange(String tenantCode, HttpServletRequest request) throws Exception {
+    public void loginChange(String tenantCode, HttpServletRequest request) {
         String phone = SecurityUtil.getPhone();
         String sessionId = SecurityUtil.getSessionId();
 
         SecurityModel securityModel = new SecurityModel();
         securityModel.setTenantCode(GlobalPropertiesUtil.SHERLY_PROPERTIES.getDefaultDb());
         SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(securityModel, null));
-        AccountUser accountUser = accountUserManager.getByPhone(phone);
+        AccountUser accountUser = accountUserDao.getByPhone(phone);
         accountUser.setLastLoginTenantCode(tenantCode);
-        accountUserManager.updateById(accountUser);
+        accountUserDao.updateById(accountUser);
 
         LoginUserDetails loginUserDetails = (LoginUserDetails)userDetailsService.loadUserByUsername(phone);
         this.updateCache(loginUserDetails, sessionId, request);
     }
 
-    public void updateCache(LoginUserDetails loginUserDetails, String sessionId, HttpServletRequest request) throws JsonProcessingException {
+    public void updateCache(LoginUserDetails loginUserDetails, String sessionId, HttpServletRequest request) {
         // redis缓存登录用户信息
         RedisSecurityModel redisSecurityModel = loginUserDetails.getRedisSecurityModel(request);
         UserOnline userOnline = redisSecurityModel.getUserOnline();
@@ -220,8 +230,7 @@ public class LoginService {
         }
 
         // 权限信息更新到redis
-        String redisString = JSONUtil.toJsonStr(redisSecurityModel);
-        redisTemplate.opsForValue().set(RedisKey.SESSION_ID + redisSecurityModel.getSecurityModel().getSessionId(), redisString, 6, TimeUnit.HOURS);
+        redisTemplate.opsForValue().set(RedisKey.SESSION_ID + redisSecurityModel.getSecurityModel().getSessionId(), redisSecurityModel, 6, TimeUnit.HOURS);
 
         // 更新用户信息
         this.updateUser(loginUserDetails.getUser(), request);
@@ -233,7 +242,7 @@ public class LoginService {
      * @return
      */
     public List<LoginTenantVO> availableListCheck(LoginDTO dto) {
-        AccountUser accountUser = accountUserManager.getByPhone(dto.getPhone());
+        AccountUser accountUser = accountUserDao.getByPhone(dto.getPhone());
         if (accountUser == null) {
             throw new BizException(NO_REGISTER);
         }
@@ -241,7 +250,7 @@ public class LoginService {
             throw new BizException(ERR_USR_PWD);
         }
         List<String> tenantCodes = StrUtil.split(accountUser.getTenantData(), ",");
-        List<Tenant> tenants = tenantManager.listAvailableByTenantCodes(tenantCodes);
+        List<Tenant> tenants = tenantDao.listAvailableByTenantCodes(tenantCodes);
 
         if (CollectionUtils.isEmpty(tenants)) {
             throw new BizException(NO_TENANT);
