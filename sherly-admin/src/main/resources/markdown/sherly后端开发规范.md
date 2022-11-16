@@ -104,10 +104,52 @@
 1. 系统定义了全局异常处理器，分别处理业务异常，空指针异常和其他异常四种。如果代码会出现可能的异常，请使用throw抛出异常交给全局异常处理器处理，而不是自己使用try-catch。
 #### 【3】日志规约
 ### 数据库设计
-#### 【1】表设计
-1. 一般来说，主键策略选择自增id，使用unsigned bigint
-2. 一般来说，时间类型选择datetime
-3. 一般来说，小的枚举类型使用tinyint
+#### 【1】库设计
+1. 库名一律英文小写，不同单词使用下划线分割。
+2. 创建数据库时必须显式指定字符集，且字符集只能是utf8或utf8mb4。
+#### 【2】表设计
+1. 表名，列明一律英文小写，不同单词使用下划线分割。
+2. 创建表时必须显式指定字符集，且字符集只能是utf8或utf8mb4。
+3. 创建表时必须显式指定存储引擎，如无特殊需求，一律使用innodb。
+4. 建表必须有comment。
+5. 建表时必须有且只有唯一主键，且主键类型只能为unsigned int或unsigned bigint，且为auto_increment。因为如果主键值为随机插入，则会导致innodb内部页分裂和大量随机I/O，性能下降。
+6. 一般来说，表中都需要有create_time，update_time，create_user_id，update_user_id，is_deleted五个字段。
+7. 表中所有字段尽可能都为NOT NULL，业务可以根据需要定义DEFAULT值。因为使用NULL值会占用额外存储空间、数据迁移容易出错、聚合函数计算结果偏差等问题。
+8. 一般来说，时间类型选择datetime，对应实体类型为Date。
+9. 一般来说，小的枚举类型或布尔类型使用unsigned tinyint，对应实体类用Integer。
+10. 一般来说，表示是否的字段，必须使用is_xxx的方式命名，数据类型是unsigned tinyint，1表示是，0表示否。对应的实体类不可用is_xxx，直接使用xxx。如数据库中使用is_deleted，映射时使用delete。
+11. 小数类型为decimal，禁止使用float和double。在存储的时候，float和double 都存在精度损失的问题，很可能在比较值的时候，得到不正确的结果。如果存储的数据范围超过decimal的范围，建议将数据拆成整数和小数并分开存储。
+12. 如果存储的字符串长度几乎相等，使用char定长字符串类型。
+13. varchar是可变长字符串，不预先分配存储空间，长度不要超过5000，如果存储长度大于此值，定义字段类型为text。如果需要，可以独立出来一张表，用主键来对应，避免影响其它字段索引效率。
+14. 设置数据类型时，一般都需要跟显示宽度，如果没有特殊需求，请参考列举案例：
+   ```text
+      tinyint(3)
+      int(11)
+      bigint(20)
+   ```
+15. 下面给出数据表创建演示
+   ```mysql
+      CREATE TABLE `sys_user` (
+        `user_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '用户id',
+        `account_user_id` bigint(20) unsigned NOT NULL COMMENT '账户用户id',
+        `nickname` varchar(255) NOT NULL DEFAULT '' COMMENT '昵称',
+        `real_name` varchar(255) NOT NULL COMMENT '姓名',
+        `phone` char(11) NOT NULL COMMENT '手机号',
+        `avatar` varchar(255) NOT NULL DEFAULT '' COMMENT '用户头像',
+        `email` varchar(255) NOT NULL DEFAULT '' COMMENT '用户邮箱',
+        `gender` tinyint(3) unsigned NOT NULL COMMENT '性别[enum]',
+        `department_id` bigint(20) unsigned NOT NULL COMMENT '部门id',
+        `enable` tinyint(3) unsigned NOT NULL COMMENT '启用禁用[enum]',
+        `last_login_time` datetime NOT NULL COMMENT '最后登录时间',
+        `last_login_ip` varchar(255) NOT NULL DEFAULT '' COMMENT '最后登录IP',
+        `create_time` datetime NOT NULL COMMENT '创建时间',
+        `update_time` datetime NOT NULL COMMENT '更新时间',
+        `create_user_id` bigint(20) unsigned NOT NULL COMMENT '创建人id',
+        `update_user_id` bigint(20) unsigned NOT NULL COMMENT '更新人id',
+        `is_deleted` tinyint(3) NOT NULL DEFAULT '0' COMMENT '逻辑删除[enum]',
+        PRIMARY KEY (`user_id`) USING BTREE
+      ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC
+   ```
 ### 工程结构
 #### 【1】应用分层
 1. 根据业务架构，将系统分为四层。controller、service、manager、dao、mapper。
@@ -123,3 +165,4 @@
 - `v1.2 & 2022-05-13 : 更新校验注解的使用`
 - `v1.3 & 2022-06-16 : 更新git提交规范`
 - `v1.4 & 2022-07-19 : 更新mysql表设计规范`
+- `v1.5 & 2022-11-16 : 对mysql库表设计规范进行补充`
