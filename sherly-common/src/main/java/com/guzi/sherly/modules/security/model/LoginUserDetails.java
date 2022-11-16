@@ -34,7 +34,7 @@ public class LoginUserDetails implements UserDetails {
     /** 权限list */
     private List<String> permissions;
 
-    /** 会话id */
+    /** 会话编号 */
     private String sessionId;
 
     /**

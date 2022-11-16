@@ -12,8 +12,8 @@ import java.util.Date;
  */
 @Data
 public class TenantUpdateDTO {
-    /** 租户id */
-    @ApiModelProperty(value = "租户id", required = true)
+    /** 租户编号 */
+    @ApiModelProperty(value = "租户编号", required = true)
     @NotNull
     private Long tenantId;
 

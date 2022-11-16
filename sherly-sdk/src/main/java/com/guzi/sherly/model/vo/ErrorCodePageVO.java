@@ -12,8 +12,8 @@ import java.util.Date;
 @Data
 public class ErrorCodePageVO {
 
-    /** 错误id */
-    @ApiModelProperty(value = "错误id")
+    /** 错误编号 */
+    @ApiModelProperty(value = "错误编号")
     private Integer errorId;
 
     /** 错误码 */

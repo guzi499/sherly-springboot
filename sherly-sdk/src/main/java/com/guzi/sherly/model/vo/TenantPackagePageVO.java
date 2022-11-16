@@ -11,8 +11,8 @@ import java.util.Date;
  */
 @Data
 public class TenantPackagePageVO {
-    /** 租户套餐id */
-    @ApiModelProperty("租户套餐id")
+    /** 租户套餐编号 */
+    @ApiModelProperty("租户套餐编号")
     private String tenantPackageId;
 
     /** 租户套餐名称 */

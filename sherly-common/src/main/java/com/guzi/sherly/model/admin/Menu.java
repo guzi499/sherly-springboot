@@ -13,7 +13,7 @@ import lombok.Data;
 @Data
 @TableName("sys_menu")
 public class Menu extends BaseModel {
-    /** 菜单id */
+    /** 菜单编号 */
     @TableId(type = IdType.AUTO)
     private Long menuId;
 
@@ -26,7 +26,7 @@ public class Menu extends BaseModel {
     /** 权限 */
     private String permission;
 
-    /** 父菜单id */
+    /** 父菜单编号 */
     private Long parentId;
 
     /** 菜单路径 */

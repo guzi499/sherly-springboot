@@ -11,12 +11,12 @@ import java.util.Date;
  */
 @Data
 public class TenantPageVO {
-    /** 租户id */
-    @ApiModelProperty(value = "租户id")
+    /** 租户编号 */
+    @ApiModelProperty(value = "租户编号")
     private Long tenantId;
 
-    /** 租户code */
-    @ApiModelProperty(value = "租户code")
+    /** 租户代码 */
+    @ApiModelProperty(value = "租户代码")
     private String tenantCode;
 
     /** 租户名称 */

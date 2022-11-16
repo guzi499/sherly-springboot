@@ -11,8 +11,8 @@ import java.util.Date;
  */
 @Data
 public class OssFilePageVO {
-    /** 文件id */
-    @ApiModelProperty(value = "文件id")
+    /** 文件编号 */
+    @ApiModelProperty(value = "文件编号")
     private Long fileId;
 
     /** 文件名称 */

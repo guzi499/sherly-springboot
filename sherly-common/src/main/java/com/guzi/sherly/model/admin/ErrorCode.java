@@ -13,7 +13,7 @@ import lombok.Data;
 @Data
 @TableName("ge_error_code")
 public class ErrorCode extends BaseModel {
-    /** 错误id */
+    /** 错误编号 */
     @TableId(type = IdType.AUTO)
     private Integer errorId;
 
@@ -26,6 +26,6 @@ public class ErrorCode extends BaseModel {
     /** 描述 */
     private String description;
 
-    /** 模块id */
+    /** 模块编号 */
     private Integer moduleId;
 }

@@ -13,14 +13,14 @@ import lombok.Data;
 @Data
 @TableName("sys_oss_file")
 public class OssFile extends BaseModel {
-    /** 文件id */
+    /** 文件编号 */
     @TableId(type = IdType.AUTO)
     private Long fileId;
 
     /** 文件名称 */
     private String fileName;
 
-    /** 配置id */
+    /** 配置编号 */
     private Long configId;
 
     /** 文件相对路径 */

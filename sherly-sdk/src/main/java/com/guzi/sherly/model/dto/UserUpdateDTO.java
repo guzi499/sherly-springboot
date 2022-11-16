@@ -12,8 +12,8 @@ import java.util.List;
  */
 @Data
 public class UserUpdateDTO {
-    /** 用户id */
-    @ApiModelProperty(value = "用户id", required = true)
+    /** 用户编号 */
+    @ApiModelProperty(value = "用户编号", required = true)
     @NotNull
     private Long userId;
 
@@ -27,8 +27,8 @@ public class UserUpdateDTO {
     @NotNull
     private Integer gender;
 
-    /** 部门id */
-    @ApiModelProperty(value = "部门id")
+    /** 部门编号 */
+    @ApiModelProperty(value = "部门编号")
     private Long departmentId;
 
     /** 角色ids */

@@ -9,8 +9,8 @@ import lombok.Data;
  */
 @Data
 public class BasicRoleInfoVO {
-    /** 角色id */
-    @ApiModelProperty(value = "角色id")
+    /** 角色编号 */
+    @ApiModelProperty(value = "角色编号")
     private Long roleId;
 
     /** 角色名称 */

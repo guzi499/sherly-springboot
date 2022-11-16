@@ -11,8 +11,8 @@ import java.util.Date;
  */
 @Data
 public class OperationLogPageVO {
-    /** 日志id */
-    @ApiModelProperty(value = "日志id")
+    /** 日志编号 */
+    @ApiModelProperty(value = "日志编号")
     private Long logId;
 
     /** 日志类型[enum] */

@@ -8,7 +8,7 @@ import lombok.Data;
  */
 @Data
 public class FlowModelVO {
-    /** 模型id */
+    /** 模型编号 */
     private String id;
 
     /** 模型名称 */

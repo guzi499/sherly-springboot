@@ -14,8 +14,8 @@ import java.util.Map;
 @Data
 public class OssConfigUpdateDTO {
 
-    /** 配置id */
-    @ApiModelProperty(value = "配置id", required = true)
+    /** 配置编号 */
+    @ApiModelProperty(value = "配置编号", required = true)
     @NotNull
     private Long configId;
 

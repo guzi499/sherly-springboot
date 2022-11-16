@@ -12,7 +12,7 @@ import java.util.List;
 @Data
 public class TenantMenuUpdateDTO {
 
-    /** 租户id */
+    /** 租户编号 */
     @NotNull
     private Integer tenantId;
 

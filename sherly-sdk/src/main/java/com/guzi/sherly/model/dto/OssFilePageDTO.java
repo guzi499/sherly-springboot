@@ -15,8 +15,8 @@ import java.util.Date;
 @Data
 public class OssFilePageDTO extends PageQuery {
 
-    /** 配置id */
-    @ApiModelProperty(value = "配置id")
+    /** 配置编号 */
+    @ApiModelProperty(value = "配置编号")
     private Long configId;
 
     /** 文件名称 */

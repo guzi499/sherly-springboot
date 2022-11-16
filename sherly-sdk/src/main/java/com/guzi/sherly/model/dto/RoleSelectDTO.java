@@ -9,7 +9,7 @@ import lombok.Data;
  */
 @Data
 public class RoleSelectDTO {
-    /** 角色id */
-    @ApiModelProperty("角色id")
+    /** 角色编号 */
+    @ApiModelProperty("角色编号")
     private Long roleId;
 }

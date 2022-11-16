@@ -27,8 +27,8 @@ public class MenuInsertDTO {
     @ApiModelProperty(value = "权限")
     private String permission;
 
-    /** 父菜单id */
-    @ApiModelProperty(value = "父菜单id", required = true)
+    /** 父菜单编号 */
+    @ApiModelProperty(value = "父菜单编号", required = true)
     @NotNull
     private Long parentId;
 

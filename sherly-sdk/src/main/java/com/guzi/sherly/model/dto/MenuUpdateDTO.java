@@ -13,8 +13,8 @@ import javax.validation.constraints.NotNull;
 @Data
 public class MenuUpdateDTO {
 
-    /** 菜单id */
-    @ApiModelProperty(value = "菜单id", required = true)
+    /** 菜单编号 */
+    @ApiModelProperty(value = "菜单编号", required = true)
     @NotNull
     private Long menuId;
 
@@ -32,8 +32,8 @@ public class MenuUpdateDTO {
     @ApiModelProperty(value = "权限")
     private String permission;
 
-    /** 父菜单id */
-    @ApiModelProperty(value = "父菜单id", required = true)
+    /** 父菜单编号 */
+    @ApiModelProperty(value = "父菜单编号", required = true)
     @NotNull
     private Long parentId;
 

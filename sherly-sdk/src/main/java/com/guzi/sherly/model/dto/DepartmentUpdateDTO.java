@@ -12,8 +12,8 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 public class DepartmentUpdateDTO {
-    /** 部门id */
-    @ApiModelProperty(value = "部门id", required = true)
+    /** 部门编号 */
+    @ApiModelProperty(value = "部门编号", required = true)
     @NotNull
     private Long departmentId;
 
@@ -26,8 +26,8 @@ public class DepartmentUpdateDTO {
     @ApiModelProperty(value = "描述")
     private String description;
 
-    /** 父部门id */
-    @ApiModelProperty(value = "父部门id", required = true)
+    /** 父部门编号 */
+    @ApiModelProperty(value = "父部门编号", required = true)
     @NotNull
     private Long parentId;
 

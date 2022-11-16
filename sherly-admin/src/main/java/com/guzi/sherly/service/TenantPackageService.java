@@ -6,11 +6,9 @@ import com.guzi.sherly.dao.TenantPackageMenuDao;
 import com.guzi.sherly.model.PageResult;
 import com.guzi.sherly.model.admin.TenantPackage;
 import com.guzi.sherly.model.admin.TenantPackageMenu;
-import com.guzi.sherly.model.dto.TenantPackageInsertDTO;
-import com.guzi.sherly.model.dto.TenantPackageMenuUpdateDTO;
-import com.guzi.sherly.model.dto.TenantPackagePageDTO;
-import com.guzi.sherly.model.dto.TenantPackageUpdateDTO;
+import com.guzi.sherly.model.dto.*;
 import com.guzi.sherly.model.vo.TenantPackagePageVO;
+import com.guzi.sherly.model.vo.TenantPackageSelectVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -107,5 +105,29 @@ public class TenantPackageService {
             return tenantPackageMenu;
         }).collect(Collectors.toList());
         tenantPackageMenuDao.saveBatch(tenantPackageMenus);
+    }
+
+    /**
+     * 租户套餐查询
+     * @param dto
+     * @return
+     */
+    public List<TenantPackageSelectVO> listAll(TenantPackageSelectDTO dto) {
+        List<TenantPackage> tenantPackages = tenantPackageDao.listAll(dto);
+
+        return tenantPackages.stream().map(e -> {
+            TenantPackageSelectVO tenantPackageSelectVO = new TenantPackageSelectVO();
+            BeanUtils.copyProperties(e, tenantPackageSelectVO);
+            return tenantPackageSelectVO;
+        }).collect(Collectors.toList());
+    }
+
+    /**
+     * 租户套餐禁用/启用
+     * @param tenantPackageId
+     * @param enable
+     */
+    public void banOne(Long tenantPackageId, Integer enable) {
+        tenantPackageDao.banOne(tenantPackageId, enable);
     }
 }

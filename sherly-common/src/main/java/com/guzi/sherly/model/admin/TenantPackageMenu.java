@@ -13,13 +13,13 @@ import lombok.Data;
 @Data
 @TableName("ge_tenant_package_menu")
 public class TenantPackageMenu extends BaseModel {
-    /** id */
+    /** 编号 */
     @TableId(type = IdType.AUTO)
     private Long id;
 
-    /** 租户套餐id */
+    /** 租户套餐编号 */
     private Long tenantPackageId;
 
-    /** 菜单id */
+    /** 菜单编号 */
     private Long menuId;
 }

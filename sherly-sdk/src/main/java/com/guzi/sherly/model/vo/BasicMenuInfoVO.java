@@ -11,8 +11,8 @@ import java.util.List;
  */
 @Data
 public class BasicMenuInfoVO {
-    /** 菜单id */
-    @ApiModelProperty(value = "菜单id")
+    /** 菜单编号 */
+    @ApiModelProperty(value = "菜单编号")
     private Long menuId;
 
     /** 菜单名称 */

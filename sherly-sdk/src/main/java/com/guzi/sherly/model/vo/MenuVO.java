@@ -12,8 +12,8 @@ import java.util.List;
  */
 @Data
 public class MenuVO {
-    /** 菜单id */
-    @ApiModelProperty(value = "菜单id")
+    /** 菜单编号 */
+    @ApiModelProperty(value = "菜单编号")
     private Long menuId;
 
     /** 菜单类型[enum] */
@@ -28,8 +28,8 @@ public class MenuVO {
     @ApiModelProperty(value = "菜单名称")
     private String menuName;
 
-    /** 父菜单id */
-    @ApiModelProperty(value = "父菜单id")
+    /** 父菜单编号 */
+    @ApiModelProperty(value = "父菜单编号")
     private Long parentId;
 
     /** 菜单路径 */

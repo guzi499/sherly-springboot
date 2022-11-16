@@ -12,8 +12,8 @@ import java.util.List;
 @Data
 public class TenantPackageMenuUpdateDTO {
 
-    /** 租户套餐id */
-    @ApiModelProperty(value = "租户套餐id")
+    /** 租户套餐编号 */
+    @ApiModelProperty(value = "租户套餐编号")
     private Long tenantPackageId;
 
     /** 菜单ids */

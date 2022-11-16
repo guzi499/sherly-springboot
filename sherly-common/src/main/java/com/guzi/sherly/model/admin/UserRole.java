@@ -14,13 +14,13 @@ import lombok.Data;
 @Data
 @TableName("sys_user_role")
 public class UserRole extends BaseModel {
-    /** id */
+    /** 编号 */
     @TableId(type = IdType.AUTO)
     private Long id;
 
-    /** 用户id */
+    /** 用户编号 */
     private Long userId;
 
-    /** 角色id */
+    /** 角色编号 */
     private Long roleId;
 }

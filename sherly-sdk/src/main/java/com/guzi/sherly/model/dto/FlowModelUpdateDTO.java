@@ -11,8 +11,8 @@ import javax.validation.constraints.NotBlank;
  */
 @Data
 public class FlowModelUpdateDTO {
-    /** 模型id */
-    @ApiModelProperty(value = "模型id")
+    /** 模型编号 */
+    @ApiModelProperty(value = "模型编号")
     @NotBlank
     private String id;
 

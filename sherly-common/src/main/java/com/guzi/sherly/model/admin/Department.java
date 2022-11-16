@@ -13,7 +13,7 @@ import lombok.Data;
 @Data
 @TableName("sys_department")
 public class Department extends BaseModel {
-    /** 部门id */
+    /** 部门编号 */
     @TableId(type = IdType.AUTO)
     private Long departmentId;
 
@@ -23,7 +23,7 @@ public class Department extends BaseModel {
     /** 描述 */
     private String description;
 
-    /** 父部门id */
+    /** 父部门编号 */
     private Long parentId;
 
     /** 排序 */

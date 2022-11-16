@@ -13,7 +13,7 @@ import java.util.Date;
 @TableName("ge_account_user")
 public class AccountUser {
 
-    /** 账户用户id */
+    /** 账户用户编号 */
     @TableId(type = IdType.AUTO)
     private Long accountUserId;
 

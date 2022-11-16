@@ -15,7 +15,7 @@ import java.util.Date;
 @TableName("sys_operation_log")
 public class OperationLog {
 
-    /** 日志id */
+    /** 日志编号 */
     @TableId(type = IdType.AUTO)
     private Long logId;
 
@@ -55,6 +55,6 @@ public class OperationLog {
     /** 创建时间 */
     private Date createTime;
 
-    /** 创建人id */
+    /** 创建人编号 */
     private Long createUserId;
 }

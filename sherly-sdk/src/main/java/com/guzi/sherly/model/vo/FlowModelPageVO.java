@@ -10,7 +10,7 @@ import java.util.Date;
  */
 @Data
 public class FlowModelPageVO {
-    /** 模型id */
+    /** 模型编号 */
     private String id;
 
     /** 模型名称 */

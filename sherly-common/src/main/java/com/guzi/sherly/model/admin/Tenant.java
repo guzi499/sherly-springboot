@@ -16,11 +16,11 @@ import java.util.Date;
 @TableName("ge_tenant")
 public class Tenant extends BaseModel {
 
-    /** 租户id */
+    /** 租户编号 */
     @TableId(type = IdType.AUTO)
     private Long tenantId;
 
-    /** 租户code */
+    /** 租户代码 */
     private String tenantCode;
 
     /** 租户名称 */

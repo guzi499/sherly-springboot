@@ -11,8 +11,8 @@ import java.util.Date;
  */
 @Data
 public class OssConfigPageVO {
-    /** 配置id */
-    @ApiModelProperty(value = "配置id")
+    /** 配置编号 */
+    @ApiModelProperty(value = "配置编号")
     private Long configId;
 
     /** 配置名称 */
