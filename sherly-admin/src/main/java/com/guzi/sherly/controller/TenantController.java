@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -85,4 +84,5 @@ public class TenantController {
     public void listExport(HttpServletResponse response) {
         tenantService.listExport(response);
     }
+
 }

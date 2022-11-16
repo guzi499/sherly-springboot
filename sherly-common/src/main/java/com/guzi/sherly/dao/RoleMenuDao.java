@@ -18,20 +18,10 @@ import java.util.List;
 public class RoleMenuDao extends SherlyServiceImpl<RoleMenuMapper, RoleMenu> {
 
     /**
-     * 根据菜单id删除角色菜单表数据
-     * @param menuId
-     */
-    public void removeRoleMenuByMenuId(Long menuId) {
-        LambdaQueryWrapper<RoleMenu> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(RoleMenu::getMenuId, menuId);
-        this.remove(wrapper);
-    }
-
-    /**
      * 根据角色id删除角色菜单数据
      * @param roleId
      */
-    public void removeRoleMenuByRoleId(Long roleId) {
+    public void removeByRoleId(Long roleId) {
         LambdaQueryWrapper<RoleMenu> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(RoleMenu::getRoleId, roleId);
         this.remove(wrapper);

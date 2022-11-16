@@ -28,12 +28,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.net.URLEncoder;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.guzi.sherly.model.contants.CommonConstants.ENABLE;
@@ -154,6 +150,7 @@ public class TenantService {
         user.setEnable(ENABLE);
         user.setDepartmentId(department.getDepartmentId());
         user.setGender(1);
+        user.setLastLoginTime(new Date());
         userDao.save(user);
 
         // 关联用户角色
@@ -212,7 +209,7 @@ public class TenantService {
         roles.forEach(e -> {
             // 如果是管理员
             if (Objects.equals(e.getRoleId(), 1L)) {
-                roleMenuDao.removeRoleMenuByRoleId(1L);
+                roleMenuDao.removeByRoleId(1L);
                 roleMenuDao.saveRoleMenu(1L, menuIds);
                 return;
             }
@@ -220,7 +217,7 @@ public class TenantService {
             List<RoleMenu> roleMenus = roleMenuDao.listByRoleId(e.getRoleId());
             List<Long> oldMenuIds = roleMenus.stream().map(RoleMenu::getMenuId).collect(Collectors.toList());
             Set<Long> resultMenuIds = CollUtil.intersectionDistinct(menuIds, oldMenuIds);
-            roleMenuDao.removeRoleMenuByRoleId(e.getRoleId());
+            roleMenuDao.removeByRoleId(e.getRoleId());
             roleMenuDao.saveRoleMenu(e.getRoleId(), resultMenuIds);
         });
 
@@ -266,5 +263,6 @@ public class TenantService {
                 .sheet("租户列表")
                 .doWrite(result);
     }
+
 
 }
