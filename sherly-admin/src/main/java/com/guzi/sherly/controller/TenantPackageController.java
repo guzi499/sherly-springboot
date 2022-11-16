@@ -2,10 +2,7 @@ package com.guzi.sherly.controller;
 
 import com.guzi.sherly.model.PageResult;
 import com.guzi.sherly.model.Result;
-import com.guzi.sherly.model.dto.TenantPackageInsertDTO;
-import com.guzi.sherly.model.dto.TenantPackageMenuUpdateDTO;
-import com.guzi.sherly.model.dto.TenantPackagePageDTO;
-import com.guzi.sherly.model.dto.TenantPackageUpdateDTO;
+import com.guzi.sherly.model.dto.*;
 import com.guzi.sherly.model.vo.TenantPackagePageVO;
 import com.guzi.sherly.service.TenantPackageService;
 import io.swagger.annotations.Api;
@@ -57,6 +54,12 @@ public class TenantPackageController {
         return Result.success();
     }
 
+    @GetMapping("/list_all")
+    @ApiOperation("租户套餐查询")
+    public Result<List> listAll(TenantPackageSelectDTO dto) {
+        return Result.success(tenantPackageService.listAll(dto));
+    }
+
     @GetMapping("/list_menu")
     @ApiOperation("租户套餐菜单列表")
     public Result<List<Long>> listMenu(@RequestParam Long tenantPackageId) {
@@ -67,6 +70,13 @@ public class TenantPackageController {
     @ApiOperation("租户套餐菜单更新")
     public Result updateMenu(@RequestBody @Valid TenantPackageMenuUpdateDTO dto) {
         tenantPackageService.updateMenu(dto);
+        return Result.success();
+    }
+
+    @PutMapping("/ban_one")
+    @ApiOperation(value = "租户套餐禁用/启用")
+    public Result banOne(@RequestParam Long tenantPackageId, @RequestParam Integer enable) {
+        tenantPackageService.banOne(tenantPackageId, enable);
         return Result.success();
     }
 }

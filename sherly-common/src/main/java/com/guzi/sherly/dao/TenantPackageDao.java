@@ -1,13 +1,17 @@
 package com.guzi.sherly.dao;
 
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.guzi.sherly.mapper.TenantPackageMapper;
 import com.guzi.sherly.model.admin.TenantPackage;
 import com.guzi.sherly.model.dto.TenantPackagePageDTO;
+import com.guzi.sherly.model.dto.TenantPackageSelectDTO;
 import com.guzi.sherly.modules.mybatisplus.service.SherlyServiceImpl;
 import com.guzi.sherly.modules.mybatisplus.wrapper.SherlyLambdaQueryWrapper;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author 谷子毅
@@ -20,5 +24,18 @@ public class TenantPackageDao extends SherlyServiceImpl<TenantPackageMapper, Ten
         SherlyLambdaQueryWrapper<TenantPackage> wrapper = new SherlyLambdaQueryWrapper<>();
         wrapper.likeIfExist(TenantPackage::getTenantPackageName, dto.getTenantPackageName());
         return this.page(new Page<>(dto.getCurrent(), dto.getSize()), wrapper);
+    }
+
+    public List<TenantPackage> listAll(TenantPackageSelectDTO dto) {
+        SherlyLambdaQueryWrapper<TenantPackage> wrapper = new SherlyLambdaQueryWrapper<>();
+        wrapper.eqIfExist(TenantPackage::getEnable, dto.getEnable());
+        return this.list(wrapper);
+    }
+
+    public void banOne(Long tenantPackageId, Integer enable) {
+        LambdaUpdateWrapper<TenantPackage> wrapper = new LambdaUpdateWrapper<>();
+        wrapper.set(TenantPackage::getEnable, enable)
+                .eq(TenantPackage::getTenantPackageId, tenantPackageId);
+        this.update(wrapper);
     }
 }
