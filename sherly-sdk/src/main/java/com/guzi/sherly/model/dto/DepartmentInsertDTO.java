@@ -21,8 +21,8 @@ public class DepartmentInsertDTO {
     @ApiModelProperty(value = "描述")
     private String description;
 
-    /** 父部门id */
-    @ApiModelProperty(value = "父部门id", required = true)
+    /** 父部门编号 */
+    @ApiModelProperty(value = "父部门编号", required = true)
     @NotNull
     private Long parentId;
 

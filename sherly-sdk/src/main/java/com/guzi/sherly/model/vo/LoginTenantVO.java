@@ -9,8 +9,8 @@ import lombok.Data;
  */
 @Data
 public class LoginTenantVO {
-    /** 租户code */
-    @ApiModelProperty(value = "租户code")
+    /** 租户代码 */
+    @ApiModelProperty(value = "租户代码")
     private String tenantCode;
 
     /** 租户名称 */

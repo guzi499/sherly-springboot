@@ -11,8 +11,8 @@ import java.util.List;
  */
 @Data
 public class UserVo {
-    /** 用户id */
-    @ApiModelProperty(value = "用户id")
+    /** 用户编号 */
+    @ApiModelProperty(value = "用户编号")
     private Long userId;
 
     /** 昵称 */
@@ -35,8 +35,8 @@ public class UserVo {
     @ApiModelProperty(value = "性别[enum]")
     private Integer gender;
 
-    /** 部门id */
-    @ApiModelProperty(value = "部门id")
+    /** 部门编号 */
+    @ApiModelProperty(value = "部门编号")
     private Long departmentId;
 
     /** 角色ids */

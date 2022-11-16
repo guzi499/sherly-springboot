@@ -27,8 +27,8 @@ public class ErrorCodeInsertDTO {
     @ApiModelProperty(value = "错误描述")
     private String description;
 
-    /** 模块id */
-    @ApiModelProperty(value = "模块id", required = true)
+    /** 模块编号 */
+    @ApiModelProperty(value = "模块编号", required = true)
     @NotNull
     private Integer moduleId;
 }

@@ -12,13 +12,13 @@ import java.util.Date;
 @Data
 public class UserOnline {
 
-    /** 用户id */
+    /** 用户编号 */
     private Long userId;
 
     /** 手机号 */
     private String phone;
 
-    /** 登录租户code */
+    /** 登录租户代码 */
     private String loginTenantCode;
 
     /** 昵称 */

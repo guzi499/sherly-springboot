@@ -12,8 +12,8 @@ import java.util.List;
  */
 @Data
 public class UserSelfVO {
-    /** 用户id */
-    @ApiModelProperty(value = "用户id")
+    /** 用户编号 */
+    @ApiModelProperty(value = "用户编号")
     private Long userId;
 
     /** 昵称 */
@@ -44,8 +44,8 @@ public class UserSelfVO {
     @ApiModelProperty(value = "性别")
     private String genderStr;
 
-    /** 部门id */
-    @ApiModelProperty(value = "部门id")
+    /** 部门编号 */
+    @ApiModelProperty(value = "部门编号")
     private Long departmentId;
 
     /** 部门名称 */

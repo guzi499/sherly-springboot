@@ -12,8 +12,8 @@ import java.util.Date;
 @Data
 public class TenantEO {
 
-    /** 租户code */
-    @ExcelProperty("租户code")
+    /** 租户代码 */
+    @ExcelProperty("租户代码")
     private String tenantCode;
 
     /** 租户名称 */

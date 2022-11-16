@@ -13,13 +13,13 @@ import lombok.Data;
 @Data
 @TableName("sys_role_menu")
 public class RoleMenu extends BaseModel {
-    /** id */
+    /** 编号 */
     @TableId(type = IdType.AUTO)
     private Long id;
 
-    /** 角色id */
+    /** 角色编号 */
     private Long roleId;
 
-    /** 菜单id */
+    /** 菜单编号 */
     private Long menuId;
 }

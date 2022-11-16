@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 @Data
 public class ModuleUpdateDTO {
 
-    @ApiModelProperty(value = "模块id", required = true)
+    @ApiModelProperty(value = "模块编号", required = true)
     @NotNull
     private Integer moduleId;
 
@@ -25,7 +25,7 @@ public class ModuleUpdateDTO {
     @NotBlank
     private String moduleCode;
 
-    @ApiModelProperty(value = "父模块id", required = true)
+    @ApiModelProperty(value = "父模块编号", required = true)
     @NotNull
     private Integer parentId;
 

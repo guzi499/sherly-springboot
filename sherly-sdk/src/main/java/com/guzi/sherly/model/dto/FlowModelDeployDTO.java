@@ -9,7 +9,7 @@ import lombok.Data;
  */
 @Data
 public class FlowModelDeployDTO {
-    /** 模型id */
-    @ApiModelProperty(value = "模型id", required = true)
+    /** 模型编号 */
+    @ApiModelProperty(value = "模型编号", required = true)
     private String id;
 }

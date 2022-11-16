@@ -16,7 +16,7 @@ import lombok.Data;
 @Data
 @TableName(value = "sys_oss_config", autoResultMap = true)
 public class OssConfig extends BaseModel {
-    /** 配置id */
+    /** 配置编号 */
     @TableId(type = IdType.AUTO)
     private Long configId;
 

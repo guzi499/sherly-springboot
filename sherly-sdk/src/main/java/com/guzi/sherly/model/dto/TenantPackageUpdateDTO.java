@@ -12,8 +12,8 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 public class TenantPackageUpdateDTO {
-    /** 租户套餐id */
-    @ApiModelProperty(value = "租户套餐id")
+    /** 租户套餐编号 */
+    @ApiModelProperty(value = "租户套餐编号")
     @NotNull
     private Long tenantPackageId;
 

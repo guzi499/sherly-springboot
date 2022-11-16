@@ -11,13 +11,13 @@ import lombok.Data;
 @Data
 public class SecurityModel {
 
-    /** 用户id */
+    /** 用户编号 */
     private Long userId;
 
     /** 手机号 */
     private String phone;
 
-    /** 租户code */
+    /** 租户代码 */
     private String tenantCode;
 
     /** 特殊操作数据库code */
@@ -29,6 +29,6 @@ public class SecurityModel {
     /** 姓名 */
     private String realName;
 
-    /** 会话id */
+    /** 会话编号 */
     private String sessionId;
 }

@@ -13,8 +13,8 @@ import java.util.List;
  */
 @Data
 public class RoleUpdateDTO {
-    /** 角色id */
-    @ApiModelProperty(value = "角色id", required = true)
+    /** 角色编号 */
+    @ApiModelProperty(value = "角色编号", required = true)
     @NotNull
     private Long roleId;
 

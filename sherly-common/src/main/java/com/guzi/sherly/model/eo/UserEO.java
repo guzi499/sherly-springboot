@@ -12,8 +12,8 @@ import java.util.Date;
 @Data
 public class UserEO {
 
-    /** 用户id */
-    @ExcelProperty("用户id")
+    /** 用户编号 */
+    @ExcelProperty("用户编号")
     private Long userId;
 
     /** 昵称 */

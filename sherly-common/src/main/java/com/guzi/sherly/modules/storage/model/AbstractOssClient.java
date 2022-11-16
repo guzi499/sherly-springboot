@@ -8,7 +8,7 @@ import java.util.Objects;
  * @date 2022/6/24
  */
 public abstract class AbstractOssClient<Config extends OssClientConfig> implements OssClient{
-    /** 当前对象存储服务配置id */
+    /** 当前对象存储服务配置编号 */
     private final Long configId;
 
     /** 当前对象存储服务配置 */

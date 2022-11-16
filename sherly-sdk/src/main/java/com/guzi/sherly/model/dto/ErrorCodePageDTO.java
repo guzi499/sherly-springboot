@@ -19,7 +19,7 @@ public class ErrorCodePageDTO extends PageQuery {
     @ApiModelProperty(value = "错误信息")
     private String message;
 
-    /** 模块id */
-    @ApiModelProperty(value = "模块id")
+    /** 模块编号 */
+    @ApiModelProperty(value = "模块编号")
     private Integer moduleId;
 }

@@ -13,8 +13,8 @@ import javax.validation.constraints.NotNull;
 @Data
 public class ErrorCodeUpdateDTO {
 
-    /** 错误id */
-    @ApiModelProperty(value = "错误id", required = true)
+    /** 错误编号 */
+    @ApiModelProperty(value = "错误编号", required = true)
     @NotNull
     private Integer errorId;
 

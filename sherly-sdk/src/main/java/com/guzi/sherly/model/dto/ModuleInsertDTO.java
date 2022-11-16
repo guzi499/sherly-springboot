@@ -25,7 +25,7 @@ public class ModuleInsertDTO {
     @NotNull
     private Integer sort;
 
-    @ApiModelProperty(value = "父模块id", required = true)
+    @ApiModelProperty(value = "父模块编号", required = true)
     @NotNull
     private Integer parentId;
 }

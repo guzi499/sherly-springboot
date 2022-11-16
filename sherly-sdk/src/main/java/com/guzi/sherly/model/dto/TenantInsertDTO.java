@@ -15,8 +15,8 @@ import java.util.Date;
  */
 @Data
 public class TenantInsertDTO {
-    /** 租户code */
-    @ApiModelProperty(value = "租户code", required = true)
+    /** 租户代码 */
+    @ApiModelProperty(value = "租户代码", required = true)
     @NotBlank
     private String tenantCode;
 

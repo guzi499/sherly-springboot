@@ -23,11 +23,11 @@ public abstract class BaseModel {
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date updateTime;
 
-    /** 创建人id */
+    /** 创建人编号 */
     @TableField(fill = FieldFill.INSERT)
     private Long createUserId;
 
-    /** 更新人id */
+    /** 更新人编号 */
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Long updateUserId;
 

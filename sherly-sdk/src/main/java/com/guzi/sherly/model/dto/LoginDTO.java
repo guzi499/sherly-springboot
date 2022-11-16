@@ -22,7 +22,7 @@ public class LoginDTO {
     @NotBlank
     private String password;
 
-    /** 租户code */
-    @ApiModelProperty(value = "租户code")
+    /** 租户代码 */
+    @ApiModelProperty(value = "租户代码")
     private String tenantCode;
 }

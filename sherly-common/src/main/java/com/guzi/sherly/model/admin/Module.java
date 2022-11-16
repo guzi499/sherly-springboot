@@ -14,7 +14,7 @@ import lombok.Data;
 @TableName("ge_module")
 public class Module extends BaseModel {
 
-    /** 模块id */
+    /** 模块编号 */
     @TableId(type = IdType.AUTO)
     private Integer moduleId;
 
@@ -27,6 +27,6 @@ public class Module extends BaseModel {
     /** 排序 */
     private Integer sort;
 
-    /** 父模块id */
+    /** 父模块编号 */
     private Integer parentId;
 }

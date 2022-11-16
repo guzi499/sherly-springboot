@@ -14,7 +14,7 @@ import lombok.Data;
 @TableName("ge_tenant_package")
 public class TenantPackage extends BaseModel {
 
-    /** 租户套餐id */
+    /** 租户套餐编号 */
     @TableId(type = IdType.AUTO)
     private Long tenantPackageId;
 

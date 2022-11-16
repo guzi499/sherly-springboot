@@ -29,8 +29,8 @@ public class UserInsertDTO {
     @NotNull
     private Integer gender;
 
-    /** 部门id */
-    @ApiModelProperty(value = "部门id")
+    /** 部门编号 */
+    @ApiModelProperty(value = "部门编号")
     private Long departmentId;
 
     /** 角色ids */

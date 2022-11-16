@@ -12,8 +12,8 @@ import java.util.List;
  */
 @Data
 public class DepartmentVO {
-    /** 部门id */
-    @ApiModelProperty(value = "部门id")
+    /** 部门编号 */
+    @ApiModelProperty(value = "部门编号")
     private Long departmentId;
 
     /** 部门名称 */
@@ -24,8 +24,8 @@ public class DepartmentVO {
     @ApiModelProperty(value = "描述")
     private String description;
 
-    /** 父部门id */
-    @ApiModelProperty(value = "父部门id")
+    /** 父部门编号 */
+    @ApiModelProperty(value = "父部门编号")
     private Long parentId;
 
     /** 排序 */

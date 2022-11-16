@@ -13,8 +13,8 @@ import java.util.List;
 @Data
 public class ModuleVO {
 
-    /** 模块id */
-    @ApiModelProperty(value = "模块id")
+    /** 模块编号 */
+    @ApiModelProperty(value = "模块编号")
     private Integer moduleId;
 
     /** 模块代码 */
@@ -29,8 +29,8 @@ public class ModuleVO {
     @ApiModelProperty(value = "排序")
     private Integer sort;
 
-    /** 父模块id */
-    @ApiModelProperty(value = "父模块id")
+    /** 父模块编号 */
+    @ApiModelProperty(value = "父模块编号")
     private Integer parentId;
 
     /** 创建时间 */

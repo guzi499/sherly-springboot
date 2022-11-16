@@ -15,11 +15,11 @@ import java.util.Date;
 @Data
 @TableName("sys_user")
 public class User extends BaseModel {
-    /** 用户id */
+    /** 用户编号 */
     @TableId(type = IdType.AUTO)
     private Long userId;
 
-    /** 账户用户id */
+    /** 账户用户编号 */
     private Long accountUserId;
 
     /** 昵称 */
@@ -40,7 +40,7 @@ public class User extends BaseModel {
     /** 性别[enum] */
     private Integer gender;
 
-    /** 部门id */
+    /** 部门编号 */
     private Long departmentId;
 
     /** 启用禁用[enum] */

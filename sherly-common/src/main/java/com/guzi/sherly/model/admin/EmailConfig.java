@@ -13,7 +13,7 @@ import lombok.Data;
 @Data
 @TableName("sys_email_config")
 public class EmailConfig extends BaseModel {
-    /** id */
+    /** 编号 */
     @TableId(type = IdType.AUTO)
     private Integer id;
 
