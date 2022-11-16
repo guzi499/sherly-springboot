@@ -34,5 +34,5 @@ public abstract class BaseModel {
     /** 逻辑删除[enum] */
     @TableField("is_deleted")
     @TableLogic
-    private Integer deleted = 0;
+    private Integer deleted;
 }
