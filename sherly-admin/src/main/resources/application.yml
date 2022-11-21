@@ -44,13 +44,3 @@ knife4j:
     - locations: classpath:markdown/*
       name: 前后端联调文档
       group: default
-
-flowable:
-  check-process-definitions: false
-  async-executor-activate: false
-  idm:
-    enabled: false
-  cmmn:
-    enabled: false
-  dmn:
-    enabled: false

@@ -49,7 +49,3 @@ logging:
     -com.guzi.sherly.modules.log.mapper: debug
     # knife4j日志
     -springfox: warn
-    # flowable日志
-    # -org.flowable.task.service.impl.persistence.entity.*: debug
-    # -org.flowable.engine.impl.persistence.entity.*: debug
-    -org.flowable.*: debug
