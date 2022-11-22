@@ -37,5 +37,12 @@
             <artifactId>hutool-all</artifactId>
         </dependency>
 
+        <!-- springboot-starter -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <version>${spring.boot.version}</version>
+        </dependency>
+
     </dependencies>
 </project>
