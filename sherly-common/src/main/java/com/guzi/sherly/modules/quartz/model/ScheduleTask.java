@@ -1,4 +1,4 @@
-package com.guzi.sherly.model.admin;
+package com.guzi.sherly.modules.quartz.model;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -14,24 +14,21 @@ import lombok.Data;
 @TableName("ge_schedule_task")
 public class ScheduleTask extends BaseModel {
 
-    /** 定时任务id */
+    /** 定时任务编号 */
     @TableId(type = IdType.AUTO)
     private Integer scheduleTaskId;
 
     /** 定时任务名称 */
-    private Integer scheduleTaskName;
+    private String scheduleTaskName;
 
-    /** 调用类 */
-    private Integer invokeClass;
-
-    /** 调用方法 */
-    private Integer invokeMethod;
+    /** 调用类及方法 */
+    private String invokeClassAndMethod;
 
     /** 调用参数 */
-    private Integer invokeParam;
+    private String invokeParam;
 
     /** corn表达式 */
-    private Integer cronExpression;
+    private String cronExpression;
 
     /** 启用禁用[enum] */
     private Integer enable;
