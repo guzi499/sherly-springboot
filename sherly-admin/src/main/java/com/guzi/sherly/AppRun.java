@@ -16,7 +16,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @Slf4j
 @EnableAsync
 @SpringBootApplication
-@MapperScan({"com.guzi.sherly.mapper", "com.guzi.sherly.modules.log.mapper"})
+@MapperScan({"com.guzi.sherly.mapper", "com.guzi.sherly.modules"})
 public class AppRun {
     @SneakyThrows
     public static void main(String[] args) {
