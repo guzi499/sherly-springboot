@@ -17,7 +17,7 @@ import java.util.List;
 public class OperationLogPageDTO extends PageQuery {
     /** 日志类型[enum] */
     @ApiModelProperty(value = "日志类型[enum]")
-    private String type;
+    private Integer type;
 
     /** 用户ids */
     @ApiModelProperty(value = "用户ids")

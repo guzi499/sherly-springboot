@@ -106,6 +106,13 @@
                 <version>${spring.boot.version}</version>
             </dependency>
 
+            <!-- springboot-quartz -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-quartz</artifactId>
+                <version>${spring.boot.version}</version>
+            </dependency>
+
             <!-- springboot-mysql -->
             <dependency>
                 <groupId>mysql</groupId>
