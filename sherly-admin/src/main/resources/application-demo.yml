@@ -6,7 +6,7 @@ sherly:
   demo-env: true
 
 server:
-  port: 8887
+  port: 9999
 
 spring:
 
