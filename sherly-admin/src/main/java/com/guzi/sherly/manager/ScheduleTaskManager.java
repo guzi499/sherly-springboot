@@ -18,6 +18,8 @@ import javax.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.guzi.sherly.modules.quartz.constants.ScheduleTaskConstants.SCHEDULE_TASK_NAME;
+
 /**
  * @author 谷子毅
  * @date 2022/12/5
@@ -68,6 +70,6 @@ public class ScheduleTaskManager {
      */
     @SneakyThrows
     public void runOnce(Integer scheduleTaskId) {
-        scheduler.triggerJob(JobKey.jobKey("name" + scheduleTaskId));
+        scheduler.triggerJob(JobKey.jobKey(SCHEDULE_TASK_NAME + scheduleTaskId));
     }
 }
