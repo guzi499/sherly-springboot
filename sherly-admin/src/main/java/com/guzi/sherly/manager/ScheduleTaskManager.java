@@ -8,6 +8,8 @@ import com.guzi.sherly.model.vo.ScheduleTaskPageVO;
 import com.guzi.sherly.modules.quartz.dao.ScheduleTaskDao;
 import com.guzi.sherly.modules.quartz.model.ScheduleTask;
 import com.guzi.sherly.modules.quartz.util.ScheduleTaskUtil;
+import lombok.SneakyThrows;
+import org.quartz.JobKey;
 import org.quartz.Scheduler;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -55,7 +57,17 @@ public class ScheduleTaskManager {
         BeanUtils.copyProperties(dto, scheduleTask);
         //boolean isSave = scheduleTaskDao.save(scheduleTask);
         //if (isSave) {
+        scheduleTask.setScheduleTaskId(1);
             ScheduleTaskUtil.createScheduleTaskJob(scheduler, scheduleTask);
         //}
+    }
+
+    /**
+     * 定时任务执行一次
+     * @param scheduleTaskId
+     */
+    @SneakyThrows
+    public void runOnce(Integer scheduleTaskId) {
+        scheduler.triggerJob(JobKey.jobKey("name" + scheduleTaskId));
     }
 }

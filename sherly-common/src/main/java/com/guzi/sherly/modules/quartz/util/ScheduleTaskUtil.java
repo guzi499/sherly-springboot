@@ -33,6 +33,6 @@ public class ScheduleTaskUtil {
 
         scheduler.scheduleJob(jobDetail, cronTrigger);
 
-        scheduler.start();
+        scheduler.pauseJob(JobKey.jobKey("name" + scheduleTaskId));
     }
 }
