@@ -11,6 +11,8 @@ import org.springframework.beans.BeanUtils;
 import java.lang.reflect.Method;
 import java.util.List;
 
+import static com.guzi.sherly.modules.quartz.constants.ScheduleTaskConstants.SCHEDULE_TASK_PARAMS;
+
 /**
  * @author 谷子毅
  * @date 2022/12/6
@@ -22,7 +24,7 @@ public class SherlyJob implements Job {
     @Override
     public void execute(JobExecutionContext jobExecutionContext) {
         ScheduleTask scheduleTask = new ScheduleTask();
-        Object object = jobExecutionContext.getMergedJobDataMap().get("params");
+        Object object = jobExecutionContext.getMergedJobDataMap().get(SCHEDULE_TASK_PARAMS);
         BeanUtils.copyProperties(object, scheduleTask);
         doExecute(jobExecutionContext, scheduleTask);
         log.info("我执行了");

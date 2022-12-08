@@ -5,6 +5,7 @@ import com.guzi.sherly.model.PageResult;
 import com.guzi.sherly.model.Result;
 import com.guzi.sherly.model.dto.ScheduleTaskInsertDTO;
 import com.guzi.sherly.model.dto.ScheduleTaskPageDTO;
+import com.guzi.sherly.model.dto.ScheduleTaskUpdateDTO;
 import com.guzi.sherly.model.vo.ScheduleTaskPageVO;
 import com.guzi.sherly.modules.log.annotation.SherlyLog;
 import io.swagger.annotations.Api;
@@ -40,11 +41,26 @@ public class ScheduleTaskController {
         return Result.success();
     }
 
-    @PostMapping("/run_once")
+    @GetMapping("/run_once")
     @ApiOperation("定时任务执行一次")
     @SherlyLog(noRecord = true)
     public Result runOnce(@RequestParam Integer scheduleTaskId) {
         scheduleTaskManager.runOnce(scheduleTaskId);
         return Result.success();
     }
+
+    @DeleteMapping("/remove_one")
+    @ApiOperation("定时任务删除")
+    public Result removeOne(@RequestParam Integer scheduleTaskId) {
+        scheduleTaskManager.removeOne(scheduleTaskId);
+        return Result.success();
+    }
+
+    @PutMapping("/update_one")
+    @ApiOperation("定时任务更新")
+    public Result updateOne(@RequestBody ScheduleTaskUpdateDTO dto) {
+        scheduleTaskManager.updateOne(dto);
+        return Result.success();
+    }
+
 }

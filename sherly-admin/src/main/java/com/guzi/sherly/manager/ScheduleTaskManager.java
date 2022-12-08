@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.guzi.sherly.model.PageResult;
 import com.guzi.sherly.model.dto.ScheduleTaskInsertDTO;
 import com.guzi.sherly.model.dto.ScheduleTaskPageDTO;
+import com.guzi.sherly.model.dto.ScheduleTaskUpdateDTO;
 import com.guzi.sherly.model.vo.ScheduleTaskPageVO;
 import com.guzi.sherly.modules.quartz.dao.ScheduleTaskDao;
 import com.guzi.sherly.modules.quartz.model.ScheduleTask;
@@ -14,6 +15,7 @@ import org.quartz.Scheduler;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,6 +34,19 @@ public class ScheduleTaskManager {
 
     @Resource
     private Scheduler scheduler;
+
+    /**
+     * 项目启动时，从数据库查出所有定时任务并初始化
+     */
+    @PostConstruct
+    @SneakyThrows
+    public void init() {
+        List<ScheduleTask> list = scheduleTaskDao.list();
+        for (ScheduleTask scheduleTask : list) {
+            ScheduleTaskUtil.createScheduleTaskJob(scheduler, scheduleTask);
+        }
+    }
+
 
     /**
      * 定时任务分页
@@ -57,11 +72,8 @@ public class ScheduleTaskManager {
     public void saveOne(ScheduleTaskInsertDTO dto) {
         ScheduleTask scheduleTask = new ScheduleTask();
         BeanUtils.copyProperties(dto, scheduleTask);
-        //boolean isSave = scheduleTaskDao.save(scheduleTask);
-        //if (isSave) {
-        scheduleTask.setScheduleTaskId(1);
-            ScheduleTaskUtil.createScheduleTaskJob(scheduler, scheduleTask);
-        //}
+        scheduleTaskDao.save(scheduleTask);
+        ScheduleTaskUtil.createScheduleTaskJob(scheduler, scheduleTask);
     }
 
     /**
@@ -71,5 +83,28 @@ public class ScheduleTaskManager {
     @SneakyThrows
     public void runOnce(Integer scheduleTaskId) {
         scheduler.triggerJob(JobKey.jobKey(SCHEDULE_TASK_NAME + scheduleTaskId));
+    }
+
+    /**
+     * 定时任务删除
+     * @param scheduleTaskId
+     */
+    @SneakyThrows
+    public void removeOne(Integer scheduleTaskId) {
+        scheduleTaskDao.removeById(scheduleTaskId);
+        scheduler.deleteJob(JobKey.jobKey(SCHEDULE_TASK_NAME + scheduleTaskId));
+    }
+
+    /**
+     * 定时任务更新
+     * @param dto
+     */
+    @SneakyThrows
+    public void updateOne(ScheduleTaskUpdateDTO dto) {
+        ScheduleTask scheduleTask = new ScheduleTask();
+        BeanUtils.copyProperties(dto, scheduleTask);
+        scheduleTaskDao.updateById(scheduleTask);
+        scheduler.deleteJob(JobKey.jobKey(SCHEDULE_TASK_NAME + dto.getScheduleTaskId()));
+        ScheduleTaskUtil.createScheduleTaskJob(scheduler, scheduleTask);
     }
 }
