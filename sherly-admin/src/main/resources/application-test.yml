@@ -12,9 +12,9 @@ spring:
 
   # redis配置
   redis:
-    host: 101.34.169.185
+    host: 123.249.17.195
     port: 6379
-    password: mpw:tNvIJM/7zuhDi3RoOr2KAA==
+    password: mpw:OzY2EcaElivXd6NjEv4Opg==
     database: 0
     lettuce:
       pool:
@@ -27,7 +27,7 @@ spring:
   # mysql配置
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://101.34.169.185:3306/sherly?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai&allowMultiQueries=true&rewriteBatchedStatements=true
+    url: jdbc:mysql://123.249.17.195:3306/sherly?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai&allowMultiQueries=true&rewriteBatchedStatements=true
     username: mpw:tNvIJM/7zuhDi3RoOr2KAA==
     password: mpw:OzY2EcaElivXd6NjEv4Opg==
     hikari:
