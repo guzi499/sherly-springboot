@@ -5,8 +5,13 @@ import com.guzi.sherly.modules.quartz.model.SherlyJob;
 import lombok.SneakyThrows;
 import org.quartz.*;
 
+import java.util.List;
+import java.util.Objects;
+
+import static com.guzi.sherly.model.contants.CommonConstants.DISABLE;
 import static com.guzi.sherly.modules.quartz.constants.ScheduleTaskConstants.SCHEDULE_TASK_NAME;
 import static com.guzi.sherly.modules.quartz.constants.ScheduleTaskConstants.SCHEDULE_TASK_PARAMS;
+import static com.guzi.sherly.modules.quartz.model.SherlyJob.keyPointRecord;
 
 /**
  * @author 谷子毅
@@ -36,6 +41,19 @@ public class ScheduleTaskUtil {
 
         scheduler.scheduleJob(jobDetail, cronTrigger);
 
-        scheduler.pauseJob(JobKey.jobKey(SCHEDULE_TASK_NAME + scheduleTaskId));
+        if (Objects.equals(scheduleTask.getEnable(), DISABLE)) {
+            scheduler.pauseJob(JobKey.jobKey(SCHEDULE_TASK_NAME + scheduleTaskId));
+        }
     }
+
+    /**
+     * 定时任务执行时的步骤记录
+     * @param keyPoint
+     */
+    public static void log(String keyPoint) {
+        List<String> list = keyPointRecord.get();
+        list.add(keyPoint);
+        keyPointRecord.set(list);
+    }
+
 }

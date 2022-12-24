@@ -4,6 +4,8 @@ sherly:
     - ge_tenant
     - ge_modules
     - ge_error_code
+    - ge_schedule_task
+    - ge_schedule_task_log
 
 spring:
   profiles:

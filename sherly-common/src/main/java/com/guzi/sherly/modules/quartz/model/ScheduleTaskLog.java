@@ -3,8 +3,9 @@ package com.guzi.sherly.modules.quartz.model;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.guzi.sherly.model.BaseModel;
 import lombok.Data;
+
+import java.util.Date;
 
 /**
  * @author 谷子毅
@@ -12,10 +13,10 @@ import lombok.Data;
  */
 @Data
 @TableName("ge_schedule_task_log")
-public class ScheduleTaskLog extends BaseModel {
+public class ScheduleTaskLog {
     /** 定时任务日志编号 */
     @TableId(type = IdType.AUTO)
-    private Integer scheduleTaskLogId;
+    private Long scheduleTaskLogId;
 
     /** 定时任务名称 */
     private String scheduleTaskName;
@@ -29,10 +30,15 @@ public class ScheduleTaskLog extends BaseModel {
     /** 日志类型[enum] */
     private Integer type;
 
+    /** 耗时 */
+    private Long duration;
+
     /** 关键点记录 */
     private String keyPointRecord;
 
     /** 异常描述 */
     private String exception;
 
+    /** 创建时间 */
+    private Date createTime;
 }
