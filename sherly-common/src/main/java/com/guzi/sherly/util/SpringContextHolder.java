@@ -22,4 +22,9 @@ public class SpringContextHolder implements ApplicationContextAware {
     public static <T> T getBean(Class<T> clazz) {
         return applicationContext.getBean(clazz);
     }
+
+    @SuppressWarnings("unchecked")
+    public static <T> T getBean(String className) {
+        return (T) applicationContext.getBean(className);
+    }
 }

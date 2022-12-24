@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.guzi.sherly.modules.quartz.dao.ScheduleTaskLogDao;
 import com.guzi.sherly.modules.quartz.util.ScheduleTaskUtil;
+import com.guzi.sherly.util.SpringContextHolder;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.DisallowConcurrentExecution;
@@ -104,7 +105,13 @@ public class SherlyJob implements Job {
         List<String> split = StrUtil.split(invokeClassAndMethod, "-");
         String className = split.get(0);
         String methodName = split.get(1);
-        Object bean = Class.forName(className).newInstance();
+
+        Object bean;
+        if (className.contains(".")) {
+            bean = Class.forName(className).newInstance();
+        } else {
+            bean = SpringContextHolder.getBean(className);
+        }
         Method method = bean.getClass().getMethod(methodName);
         method.invoke(bean);
     }
