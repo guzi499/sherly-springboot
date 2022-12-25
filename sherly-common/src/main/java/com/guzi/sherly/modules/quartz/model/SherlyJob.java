@@ -73,6 +73,7 @@ public class SherlyJob implements Job {
         for (String record : records) {
             log.info(record);
         }
+        exception.printStackTrace();
         this.saveOne(duration, scheduleTask, records, exception);
     }
 
@@ -102,6 +103,8 @@ public class SherlyJob implements Job {
     @SneakyThrows
     protected void doExecute(JobExecutionContext context, ScheduleTask scheduleTask) {
         String invokeClassAndMethod = scheduleTask.getInvokeClassAndMethod();
+        String invokeParam = scheduleTask.getInvokeParam();
+
         List<String> split = StrUtil.split(invokeClassAndMethod, "-");
         String className = split.get(0);
         String methodName = split.get(1);
@@ -112,7 +115,40 @@ public class SherlyJob implements Job {
         } else {
             bean = SpringContextHolder.getBean(className);
         }
-        Method method = bean.getClass().getMethod(methodName);
-        method.invoke(bean);
+
+        if (StrUtil.isBlank(invokeParam)) {
+            Method method = bean.getClass().getMethod(methodName);
+            method.invoke(bean);
+        } else {
+            List<String> params = StrUtil.split(invokeParam, ",");
+
+            Class<?>[] realClassType = new Class<?>[params.size()];
+            Object[] realClassValue = new Object[params.size()];
+
+            for (int i = 0; i < params.size(); i++) {
+                String param = params.get(i);
+                param = StrUtil.trimToEmpty(param);
+                if (StrUtil.startWith(param, "'")) {
+                    realClassType[i] = String.class;
+                    realClassValue[i] = StrUtil.sub(param, 1, -1);
+                } else if (Objects.equals("true", param) || Objects.equals("false", param)) {
+                    realClassType[i] = Boolean.class;
+                    realClassValue[i] = Boolean.valueOf(param);
+                } else if (StrUtil.endWith(param, "D")) {
+                    realClassType[i] = Double.class;
+                    realClassValue[i] = Double.valueOf(StrUtil.sub(param, 0, -1));
+                } else if (StrUtil.endWith(param, "L")) {
+                    realClassType[i] = Long.class;
+                    realClassValue[i] = Long.valueOf(StrUtil.sub(param, 0, -1));
+                } else {
+                    realClassType[i] = Integer.class;
+                    realClassValue[i] = Integer.valueOf(StrUtil.sub(param, 0, -1));
+                }
+            }
+
+            Method method = bean.getClass().getMethod(methodName, realClassType);
+            method.invoke(bean, realClassValue);
+
+        }
     }
 }
