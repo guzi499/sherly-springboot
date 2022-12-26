@@ -63,4 +63,11 @@ public class ScheduleTaskController {
         return Result.success();
     }
 
+    @PutMapping("/enable_one")
+    @ApiOperation("定时任务禁用/启用")
+    public Result enableOne(@RequestParam Integer scheduleTaskId, @RequestParam Integer enable) {
+        scheduleTaskManager.enableOne(scheduleTaskId, enable);
+        return Result.success();
+    }
+
 }

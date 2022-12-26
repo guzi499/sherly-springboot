@@ -73,7 +73,9 @@ public class SherlyJob implements Job {
         for (String record : records) {
             log.info(record);
         }
-        exception.printStackTrace();
+        if (exception != null) {
+            exception.printStackTrace();
+        }
         this.saveOne(duration, scheduleTask, records, exception);
     }
 

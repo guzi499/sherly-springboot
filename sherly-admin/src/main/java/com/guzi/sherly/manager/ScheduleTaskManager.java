@@ -18,8 +18,11 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static com.guzi.sherly.model.contants.CommonConstants.DISABLE;
+import static com.guzi.sherly.model.contants.CommonConstants.ENABLE;
 import static com.guzi.sherly.modules.quartz.constants.ScheduleTaskConstants.SCHEDULE_TASK_NAME;
 
 /**
@@ -106,5 +109,18 @@ public class ScheduleTaskManager {
         scheduleTaskDao.updateById(scheduleTask);
         scheduler.deleteJob(JobKey.jobKey(SCHEDULE_TASK_NAME + dto.getScheduleTaskId()));
         ScheduleTaskUtil.createScheduleTaskJob(scheduler, scheduleTask);
+    }
+
+    @SneakyThrows
+    public void enableOne(Integer scheduleTaskId, Integer enable) {
+        ScheduleTask scheduleTask = new ScheduleTask();
+        scheduleTask.setScheduleTaskId(scheduleTaskId);
+        scheduleTask.setEnable(enable);
+        scheduleTaskDao.updateById(scheduleTask);
+        if (Objects.equals(enable, ENABLE)) {
+            scheduler.resumeJob(JobKey.jobKey(SCHEDULE_TASK_NAME + scheduleTaskId));
+        } else if (Objects.equals(enable, DISABLE)){
+            scheduler.pauseJob(JobKey.jobKey(SCHEDULE_TASK_NAME + scheduleTaskId));
+        }
     }
 }
