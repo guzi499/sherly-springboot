@@ -81,6 +81,7 @@ public class SherlyJob implements Job {
 
     private void saveOne(Long duration, ScheduleTask scheduleTask, List<String> records, Throwable exception) {
         ScheduleTaskLog scheduleTaskLog = new ScheduleTaskLog();
+        scheduleTaskLog.setScheduleTaskId(scheduleTask.getScheduleTaskId());
         scheduleTaskLog.setScheduleTaskName(scheduleTask.getScheduleTaskName());
         scheduleTaskLog.setInvokeClassAndMethod(scheduleTask.getInvokeClassAndMethod());
         scheduleTaskLog.setInvokeParam(scheduleTask.getInvokeParam());
