@@ -17,15 +17,18 @@ public class Notice extends SimpleBaseModel {
     @TableId(type = IdType.AUTO)
     private Long noticeId;
 
-    /** 消息类型 */
+    /** 消息类型[enum] */
     private Integer noticeType;
 
     /** 关联用户编号 */
-    private Integer noticeUserId;
+    private Long noticeUserId;
+
+    /** 消息标题 */
+    private String noticeTitle;
 
     /** 消息内容 */
-    private Integer noticeText;
+    private String noticeText;
 
     /** 状态[enum] */
-    private Integer status;
+    private Integer noticeStatus;
 }
