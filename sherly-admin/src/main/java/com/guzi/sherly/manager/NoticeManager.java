@@ -2,6 +2,7 @@ package com.guzi.sherly.manager;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.guzi.sherly.model.PageResult;
+import com.guzi.sherly.model.dto.NoticeClearListDTO;
 import com.guzi.sherly.model.dto.NoticePageDTO;
 import com.guzi.sherly.model.vo.NoticePageVO;
 import com.guzi.sherly.modules.notice.dao.NoticeDao;
@@ -54,4 +55,12 @@ public class NoticeManager {
         return PageResult.build(result, page.getTotal());
     }
 
+    public void clearList(NoticeClearListDTO dto) {
+        List<Long> noticeIds = dto.getNoticeIds();
+        noticeDao.clearList(noticeIds);
+    }
+
+    public void clearAll() {
+        noticeDao.clearAll();
+    }
 }
