@@ -4,6 +4,7 @@ import cn.hutool.core.date.DatePattern;
 import com.guzi.sherly.model.PageQuery;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
@@ -14,6 +15,7 @@ import java.util.List;
  * @date 2022/4/9
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class UserPageDTO extends PageQuery {
     /** 昵称 */
     @ApiModelProperty(value = "昵称")
