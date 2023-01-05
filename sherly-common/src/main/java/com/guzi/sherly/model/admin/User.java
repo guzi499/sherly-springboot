@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.guzi.sherly.model.BaseModel;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.Date;
 
@@ -14,6 +15,7 @@ import java.util.Date;
  */
 @Data
 @TableName("sys_user")
+@EqualsAndHashCode(callSuper = true)
 public class User extends BaseModel {
     /** 用户编号 */
     @TableId(type = IdType.AUTO)

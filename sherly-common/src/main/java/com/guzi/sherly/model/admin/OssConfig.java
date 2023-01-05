@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import com.guzi.sherly.model.BaseModel;
 import com.guzi.sherly.modules.storage.model.OssClientConfig;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * @author 谷子毅
@@ -15,6 +16,7 @@ import lombok.Data;
  */
 @Data
 @TableName(value = "sys_oss_config", autoResultMap = true)
+@EqualsAndHashCode(callSuper = true)
 public class OssConfig extends BaseModel {
     /** 配置编号 */
     @TableId(type = IdType.AUTO)

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.guzi.sherly.model.BaseModel;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * @author 谷子毅
@@ -12,6 +13,7 @@ import lombok.Data;
  */
 @Data
 @TableName("sys_menu")
+@EqualsAndHashCode(callSuper = true)
 public class Menu extends BaseModel {
     /** 菜单编号 */
     @TableId(type = IdType.AUTO)

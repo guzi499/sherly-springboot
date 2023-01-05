@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.guzi.sherly.model.BaseModel;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * @author 谷子毅
@@ -12,6 +13,7 @@ import lombok.Data;
  */
 @Data
 @TableName("sys_department")
+@EqualsAndHashCode(callSuper = true)
 public class Department extends BaseModel {
     /** 部门编号 */
     @TableId(type = IdType.AUTO)
