@@ -1,0 +1,52 @@
+sherly:
+  dev-flag: false
+  default-db: sherly_demo
+  default-password: 123456
+  default-avatar: https://portrait.gitee.com/uploads/avatars/user/2730/8190589_guzi499_1602830711.png!avatar200
+  demo-env: true
+
+server:
+  port: 9999
+
+spring:
+
+  # redis配置
+  redis:
+    host: 123.249.17.195
+    port: 6379
+    password: mpw:svub+7BH4vk4cw+gu1+Htg==
+    database: 6
+    lettuce:
+      pool:
+        max-active: 20
+        max-wait: -1
+        max-idle: 5
+        min-idle: 0
+    timeout: 1800000
+
+  # mysql配置
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://123.249.17.195:3306/sherly_demo?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai&allowMultiQueries=true&rewriteBatchedStatements=true
+    username: mpw:tNvIJM/7zuhDi3RoOr2KAA==
+    password: mpw:svub+7BH4vk4cw+gu1+Htg==
+    hikari:
+      connection-timeout: 60000
+      validation-timeout: 3000
+      login-timeout: 5
+      max-lifetime: 60000
+      maximum-pool-size: 10
+      minimum-idle: 10
+      read-only: false
+
+logging:
+  file:
+    name: .sherly-log/sherly.log
+  level:
+    # mysql日志
+    -com.guzi.sherly.mapper: debug
+    # knife4j日志
+    -springfox: warn
+
+knife4j:
+  production: true

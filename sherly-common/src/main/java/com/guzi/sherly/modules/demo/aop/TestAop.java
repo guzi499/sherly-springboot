@@ -1,7 +1,7 @@
 package com.guzi.sherly.modules.demo.aop;
 
-import com.guzi.sherly.model.exception.BizException;
-import com.guzi.sherly.util.GlobalPropertiesUtil;
+import com.guzi.sherly.common.exception.BizException;
+import com.guzi.sherly.common.util.GlobalPropertiesUtil;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -15,8 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static com.guzi.sherly.model.contants.CommonConstants.FALSE;
-import static com.guzi.sherly.model.exception.enums.CommonErrorEnum.DEMO_ENV;
+import static com.guzi.sherly.common.contants.CommonConstants.FALSE;
+import static com.guzi.sherly.common.exception.enums.CommonErrorEnum.DEMO_ENV;
 
 /**
  * 演示环境aop

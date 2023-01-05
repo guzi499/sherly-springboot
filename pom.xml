@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.1</version>
+        <version>2.7.7</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -17,7 +17,7 @@
     <modules>
         <module>sherly-sdk</module>
         <module>sherly-common</module>
-        <module>sherly-admin</module>
+        <module>sherly-boot</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -27,7 +27,7 @@
         <knife4j>2.0.7</knife4j>
         <java.jwt>3.19.0</java.jwt>
         <dom4j>1.6.1</dom4j>
-        <hutool.version>5.8.0</hutool.version>
+        <hutool.version>5.8.11</hutool.version>
         <easyexcel>3.0.5</easyexcel>
         <minio>8.2.2</minio>
         <ip2region>2.7.0</ip2region>
@@ -50,10 +50,10 @@
                 <version>${project.version}</version>
             </dependency>
 
-            <!-- sherly-upr-admin -->
+            <!-- sherly-upr-boot -->
             <dependency>
                 <groupId>com.guzi.sherly</groupId>
-                <artifactId>sherly-admin</artifactId>
+                <artifactId>sherly-boot</artifactId>
                 <version>${project.version}</version>
             </dependency>
 

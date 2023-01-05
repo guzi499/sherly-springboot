@@ -1,7 +1,7 @@
 package com.guzi.sherly.modules.security.handler;
 
 import cn.hutool.json.JSONUtil;
-import com.guzi.sherly.model.Result;
+import com.guzi.sherly.common.model.Result;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static com.guzi.sherly.model.exception.enums.CommonErrorEnum.UNAUTHORIZED;
+import static com.guzi.sherly.common.exception.enums.CommonErrorEnum.UNAUTHORIZED;
 
 /**
  * @author 谷子毅

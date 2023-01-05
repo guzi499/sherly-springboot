@@ -2,9 +2,9 @@ package com.guzi.sherly.modules.quartz.model;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
+import com.guzi.sherly.common.util.SpringContextHolder;
 import com.guzi.sherly.modules.quartz.dao.ScheduleTaskLogDao;
 import com.guzi.sherly.modules.quartz.util.ScheduleTaskUtil;
-import com.guzi.sherly.util.SpringContextHolder;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.DisallowConcurrentExecution;
@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 import static com.guzi.sherly.modules.log.enums.LogTypeEnum.EXCEPTION_LOG;
 import static com.guzi.sherly.modules.log.enums.LogTypeEnum.NORMAL_LOG;
-import static com.guzi.sherly.modules.quartz.constants.ScheduleTaskConstants.SCHEDULE_TASK_PARAMS;
+import static com.guzi.sherly.modules.quartz.contants.ScheduleTaskConstants.SCHEDULE_TASK_PARAMS;
 
 /**
  * @author 谷子毅

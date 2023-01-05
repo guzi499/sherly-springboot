@@ -3,7 +3,7 @@ package com.guzi.sherly.modules.notice.model;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.guzi.sherly.model.SimpleBaseModel;
+import com.guzi.sherly.common.model.SimpleBaseModel;
 import com.guzi.sherly.modules.notice.enums.NoticeStatusEnum;
 import com.guzi.sherly.modules.notice.enums.NoticeTypeEnum;
 import lombok.Data;

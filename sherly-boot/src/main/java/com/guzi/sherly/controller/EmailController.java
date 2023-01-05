@@ -1,0 +1,53 @@
+package com.guzi.sherly.controller;
+
+import com.guzi.sherly.common.model.Result;
+import com.guzi.sherly.manager.EmailManager;
+import com.guzi.sherly.modules.email.dto.EmailConfigDTO;
+import com.guzi.sherly.modules.email.dto.EmailSendDTO;
+import com.guzi.sherly.modules.email.vo.EmailConfigVO;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import javax.annotation.Resource;
+import javax.validation.Valid;
+
+/**
+ * @author 谷子毅
+ * @date 2022/6/8
+ */
+@RestController
+@RequestMapping("/api/email")
+@Api(tags = "邮件相关")
+@Validated
+public class EmailController {
+
+    @Resource
+    private EmailManager emailManager;
+
+    @GetMapping("/get_one")
+    @PreAuthorize("hasAnyAuthority('email:get_one')")
+    @ApiOperation("邮件配置详情")
+    public Result<EmailConfigVO> getOne() {
+        return Result.success(emailManager.getOne());
+    }
+
+    @PostMapping("/save_or_update")
+    @PreAuthorize("hasAnyAuthority('email:save_or_update')")
+    @ApiOperation("邮件配置保存或修改")
+    public Result saveOrUpdateOne(@RequestBody @Valid EmailConfigDTO dto) {
+        emailManager.saveOrUpdate(dto);
+        return Result.success();
+    }
+
+    @PostMapping("/send")
+    @PreAuthorize("hasAnyAuthority('email:send')")
+    @ApiOperation("邮件发送")
+    public Result send(@RequestBody @Valid EmailSendDTO dto) {
+        emailManager.send(dto);
+        return Result.success();
+    }
+
+}

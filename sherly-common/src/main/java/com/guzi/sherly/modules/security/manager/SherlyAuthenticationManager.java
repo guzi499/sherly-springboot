@@ -1,6 +1,6 @@
 package com.guzi.sherly.modules.security.manager;
 
-import com.guzi.sherly.model.exception.BizException;
+import com.guzi.sherly.common.exception.BizException;
 import com.guzi.sherly.modules.security.model.LoginUserDetails;
 import com.guzi.sherly.modules.security.service.UserDetailsServiceImpl;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 
-import static com.guzi.sherly.model.exception.enums.AdminErrorEnum.ERR_USR_PWD;
+import static com.guzi.sherly.common.exception.enums.AdminErrorEnum.ERR_USR_PWD;
 
 /**
  * 自定义登录校验方法

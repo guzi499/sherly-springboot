@@ -1,7 +1,7 @@
 package com.guzi.sherly.modules.log.dao;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.guzi.sherly.model.dto.OperationLogPageDTO;
+import com.guzi.sherly.modules.log.dto.OperationLogPageDTO;
 import com.guzi.sherly.modules.log.mapper.OperationLogMapper;
 import com.guzi.sherly.modules.log.model.OperationLog;
 import com.guzi.sherly.modules.mybatisplus.service.SherlyServiceImpl;

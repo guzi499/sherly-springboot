@@ -1,9 +1,9 @@
 package com.guzi.sherly.modules.security.filter;
 
-import com.guzi.sherly.constants.RedisKey;
+import com.guzi.sherly.common.constants.RedisKey;
+import com.guzi.sherly.common.util.JwtUtil;
 import com.guzi.sherly.modules.security.model.RedisSecurityModel;
 import com.guzi.sherly.modules.security.model.SecurityModel;
-import com.guzi.sherly.util.JwtUtil;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

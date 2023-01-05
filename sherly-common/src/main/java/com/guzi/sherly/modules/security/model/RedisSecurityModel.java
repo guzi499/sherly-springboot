@@ -1,6 +1,6 @@
 package com.guzi.sherly.modules.security.model;
 
-import com.guzi.sherly.model.admin.UserOnline;
+import com.guzi.sherly.admin.useronline.model.UserOnline;
 import lombok.Data;
 
 import java.util.List;

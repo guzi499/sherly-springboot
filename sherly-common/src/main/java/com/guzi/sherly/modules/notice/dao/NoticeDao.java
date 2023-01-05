@@ -2,9 +2,9 @@ package com.guzi.sherly.modules.notice.dao;
 
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.guzi.sherly.model.dto.NoticePageDTO;
 import com.guzi.sherly.modules.mybatisplus.service.SherlyServiceImpl;
 import com.guzi.sherly.modules.mybatisplus.wrapper.SherlyLambdaQueryWrapper;
+import com.guzi.sherly.modules.notice.dto.NoticePageDTO;
 import com.guzi.sherly.modules.notice.mapper.NoticeMapper;
 import com.guzi.sherly.modules.notice.model.Notice;
 import com.guzi.sherly.modules.security.util.SecurityUtil;

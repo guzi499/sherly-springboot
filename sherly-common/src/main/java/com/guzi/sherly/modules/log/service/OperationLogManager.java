@@ -1,10 +1,10 @@
 package com.guzi.sherly.modules.log.service;
 
-import com.guzi.sherly.model.PageResult;
-import com.guzi.sherly.model.dto.OperationLogPageDTO;
-import com.guzi.sherly.model.vo.OperationLogPageVO;
-import com.guzi.sherly.model.vo.OperationLogVO;
+import com.guzi.sherly.common.model.PageResult;
+import com.guzi.sherly.modules.log.dto.OperationLogPageDTO;
 import com.guzi.sherly.modules.log.model.OperationLog;
+import com.guzi.sherly.modules.log.vo.OperationLogPageVO;
+import com.guzi.sherly.modules.log.vo.OperationLogVO;
 import org.springframework.scheduling.annotation.Async;
 
 /**
