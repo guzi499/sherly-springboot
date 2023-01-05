@@ -10,7 +10,6 @@ import com.guzi.sherly.modules.quartz.dao.ScheduleTaskDao;
 import com.guzi.sherly.modules.quartz.model.ScheduleTask;
 import com.guzi.sherly.modules.quartz.util.ScheduleTaskUtil;
 import lombok.SneakyThrows;
-import org.quartz.JobKey;
 import org.quartz.Scheduler;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -23,7 +22,7 @@ import java.util.stream.Collectors;
 
 import static com.guzi.sherly.model.contants.CommonConstants.DISABLE;
 import static com.guzi.sherly.model.contants.CommonConstants.ENABLE;
-import static com.guzi.sherly.modules.quartz.constants.ScheduleTaskConstants.SCHEDULE_TASK_NAME;
+import static com.guzi.sherly.modules.quartz.util.ScheduleTaskUtil.getJobKey;
 
 /**
  * @author 谷子毅
@@ -85,7 +84,7 @@ public class ScheduleTaskManager {
      */
     @SneakyThrows
     public void runOnce(Integer scheduleTaskId) {
-        scheduler.triggerJob(JobKey.jobKey(SCHEDULE_TASK_NAME + scheduleTaskId));
+        scheduler.triggerJob(getJobKey(scheduleTaskId));
     }
 
     /**
@@ -95,7 +94,7 @@ public class ScheduleTaskManager {
     @SneakyThrows
     public void removeOne(Integer scheduleTaskId) {
         scheduleTaskDao.removeById(scheduleTaskId);
-        scheduler.deleteJob(JobKey.jobKey(SCHEDULE_TASK_NAME + scheduleTaskId));
+        scheduler.deleteJob(getJobKey(scheduleTaskId));
     }
 
     /**
@@ -107,20 +106,22 @@ public class ScheduleTaskManager {
         ScheduleTask scheduleTask = new ScheduleTask();
         BeanUtils.copyProperties(dto, scheduleTask);
         scheduleTaskDao.updateById(scheduleTask);
-        scheduler.deleteJob(JobKey.jobKey(SCHEDULE_TASK_NAME + dto.getScheduleTaskId()));
+        scheduler.deleteJob(getJobKey(dto.getScheduleTaskId()));
         ScheduleTaskUtil.createScheduleTaskJob(scheduler, scheduleTask);
     }
 
+    /**
+     * 定时任务禁用/启用
+     * @param scheduleTaskId
+     * @param enable
+     */
     @SneakyThrows
     public void enableOne(Integer scheduleTaskId, Integer enable) {
-        ScheduleTask scheduleTask = new ScheduleTask();
-        scheduleTask.setScheduleTaskId(scheduleTaskId);
-        scheduleTask.setEnable(enable);
-        scheduleTaskDao.updateById(scheduleTask);
+        scheduleTaskDao.enableOne(scheduleTaskId, enable);
         if (Objects.equals(enable, ENABLE)) {
-            scheduler.resumeJob(JobKey.jobKey(SCHEDULE_TASK_NAME + scheduleTaskId));
+            scheduler.resumeJob(getJobKey(scheduleTaskId));
         } else if (Objects.equals(enable, DISABLE)){
-            scheduler.pauseJob(JobKey.jobKey(SCHEDULE_TASK_NAME + scheduleTaskId));
+            scheduler.pauseJob(getJobKey(scheduleTaskId));
         }
     }
 }

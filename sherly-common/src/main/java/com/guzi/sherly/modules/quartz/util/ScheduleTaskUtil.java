@@ -19,6 +19,11 @@ import static com.guzi.sherly.modules.quartz.model.SherlyJob.keyPointRecord;
  */
 public class ScheduleTaskUtil {
 
+    /**
+     * 创建定时任务实例
+     * @param scheduler
+     * @param scheduleTask
+     */
     @SneakyThrows
     public static void createScheduleTaskJob(Scheduler scheduler, ScheduleTask scheduleTask) {
         Class<SherlyJob> sherlyJobClass = SherlyJob.class;
@@ -28,12 +33,12 @@ public class ScheduleTaskUtil {
 
         JobDetail jobDetail = JobBuilder
                 .newJob(sherlyJobClass)
-                .withIdentity(JobKey.jobKey(SCHEDULE_TASK_NAME + scheduleTaskId))
+                .withIdentity(getJobKey(scheduleTaskId))
                 .build();
 
         CronTrigger cronTrigger = TriggerBuilder
                 .newTrigger()
-                .withIdentity(TriggerKey.triggerKey(SCHEDULE_TASK_NAME + scheduleTaskId))
+                .withIdentity(getTriggerKey(scheduleTaskId))
                 .withSchedule(CronScheduleBuilder.cronSchedule(cronExpression))
                 .build();
 
@@ -42,7 +47,7 @@ public class ScheduleTaskUtil {
         scheduler.scheduleJob(jobDetail, cronTrigger);
 
         if (Objects.equals(scheduleTask.getEnable(), DISABLE)) {
-            scheduler.pauseJob(JobKey.jobKey(SCHEDULE_TASK_NAME + scheduleTaskId));
+            scheduler.pauseJob(getJobKey(scheduleTaskId));
         }
     }
 
@@ -54,6 +59,24 @@ public class ScheduleTaskUtil {
         List<String> list = keyPointRecord.get();
         list.add(keyPoint);
         keyPointRecord.set(list);
+    }
+
+    /**
+     * 生成定时任务标识key
+     * @param scheduleTaskId
+     * @return
+     */
+    public static JobKey getJobKey(Integer scheduleTaskId) {
+        return JobKey.jobKey(SCHEDULE_TASK_NAME + scheduleTaskId);
+    }
+
+    /**
+     * 生成定时任务触发key
+     * @param scheduleTaskId
+     * @return
+     */
+    public static TriggerKey getTriggerKey(Integer scheduleTaskId) {
+        return TriggerKey.triggerKey(SCHEDULE_TASK_NAME + scheduleTaskId);
     }
 
 }
