@@ -59,12 +59,4 @@ public class CommonConstants {
     /** 菜单类型：按钮 */
     public static final Integer BUTTON = 3;
 
-    /*=============================日志类型========================*/
-
-    /** 日志类型：正常 */
-    public static final Integer NORMAL_LOG = 0;
-
-    /** 日志类型：异常 */
-    public static final Integer EXCEPTION_LOG = 1;
-
 }

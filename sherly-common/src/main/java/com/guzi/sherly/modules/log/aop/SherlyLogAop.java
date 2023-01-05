@@ -26,8 +26,8 @@ import java.lang.reflect.Method;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.guzi.sherly.model.contants.CommonConstants.EXCEPTION_LOG;
-import static com.guzi.sherly.model.contants.CommonConstants.NORMAL_LOG;
+import static com.guzi.sherly.modules.log.enums.LogTypeEnum.EXCEPTION_LOG;
+import static com.guzi.sherly.modules.log.enums.LogTypeEnum.NORMAL_LOG;
 
 /**
  * @author 谷子毅
@@ -63,11 +63,11 @@ public class SherlyLogAop {
             recordTime.set(System.currentTimeMillis());
             Object result = joinPoint.proceed();
             Long duration = System.currentTimeMillis() - recordTime.get();
-            this.saveOne(duration, joinPoint, NORMAL_LOG, null);
+            this.saveOne(duration, joinPoint, NORMAL_LOG.getType(), null);
             return result;
         } catch (Throwable exception) {
             Long duration = System.currentTimeMillis() - recordTime.get();
-            this.saveOne(duration, joinPoint, EXCEPTION_LOG, exception);
+            this.saveOne(duration, joinPoint, EXCEPTION_LOG.getType(), exception);
             throw exception;
         } finally {
             recordTime.remove();
