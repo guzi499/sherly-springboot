@@ -5,6 +5,7 @@ import com.guzi.sherly.model.PageResult;
 import com.guzi.sherly.model.Result;
 import com.guzi.sherly.model.dto.NoticeClearListDTO;
 import com.guzi.sherly.model.dto.NoticePageDTO;
+import com.guzi.sherly.model.dto.NoticeResetListDTO;
 import com.guzi.sherly.model.vo.NoticePageVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -46,6 +47,13 @@ public class NoticeController {
     @ApiOperation("消息全部设置已读")
     public Result clearAll() {
         noticeManager.clearAll();
+        return Result.success();
+    }
+
+    @PutMapping("/reset_list")
+    @ApiOperation("消息部分设置未读")
+    public Result resetList(NoticeResetListDTO dto) {
+        noticeManager.resetList(dto);
         return Result.success();
     }
 

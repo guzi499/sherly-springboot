@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.guzi.sherly.model.PageResult;
 import com.guzi.sherly.model.dto.NoticeClearListDTO;
 import com.guzi.sherly.model.dto.NoticePageDTO;
+import com.guzi.sherly.model.dto.NoticeResetListDTO;
 import com.guzi.sherly.model.vo.NoticePageVO;
 import com.guzi.sherly.modules.notice.dao.NoticeDao;
 import com.guzi.sherly.modules.notice.model.Notice;
@@ -44,6 +45,11 @@ public class NoticeManager {
         noticeDao.saveBatch(list);
     }
 
+    /**
+     * 消息分页
+     * @param dto
+     * @return
+     */
     public PageResult<NoticePageVO> listPage(NoticePageDTO dto) {
         Page<Notice> page = noticeDao.listPage(dto);
         List<NoticePageVO> result = page.getRecords().stream().map(e -> {
@@ -55,12 +61,28 @@ public class NoticeManager {
         return PageResult.build(result, page.getTotal());
     }
 
+    /**
+     * 消息部分设置已读
+     * @param dto
+     */
     public void clearList(NoticeClearListDTO dto) {
         List<Long> noticeIds = dto.getNoticeIds();
         noticeDao.clearList(noticeIds);
     }
 
+    /**
+     * 消息全部设置已读
+     */
     public void clearAll() {
         noticeDao.clearAll();
+    }
+
+    /**
+     * 消息部分设置未读
+     * @param dto
+     */
+    public void resetList(NoticeResetListDTO dto) {
+        List<Long> noticeIds = dto.getNoticeIds();
+        noticeDao.resetList(noticeIds);
     }
 }
