@@ -2,7 +2,6 @@ package com.guzi.sherly.service;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.servlet.ServletUtil;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.guzi.sherly.constants.RedisKey;
 import com.guzi.sherly.dao.AccountUserDao;
 import com.guzi.sherly.dao.TenantDao;
@@ -42,8 +41,9 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-import static com.guzi.sherly.model.contants.CommonConstants.*;
 import static com.guzi.sherly.model.exception.enums.AdminErrorEnum.*;
+import static com.guzi.sherly.modules.log.enums.LoginResultEnum.*;
+import static com.guzi.sherly.modules.log.enums.LoginTypeEnum.LOGIN_TYPE_PASSWORD;
 
 /**
  * @author 谷子毅
@@ -105,9 +105,9 @@ public class LoginService {
             if (e instanceof BizException) {
                 BizException exception = (BizException) e;
                 if (exception.getCode().equals(ERR_USR_PWD.getCode())) {
-                    loginLogManager.saveOne(request, dto.getPhone(), LOGIN_LOG_FAIL, LOGIN_TYPE_PASSWORD);
+                    loginLogManager.saveOne(request, dto.getPhone(), LOGIN_LOG_FAIL.getResult(), LOGIN_TYPE_PASSWORD.getType());
                 } else if (exception.getCode().equals(FORBIDDEN.getCode())) {
-                    loginLogManager.saveOne(request, dto.getPhone(), LOGIN_LOG_DISABLE, LOGIN_TYPE_PASSWORD);
+                    loginLogManager.saveOne(request, dto.getPhone(), LOGIN_LOG_DISABLE.getResult(), LOGIN_TYPE_PASSWORD.getType());
                 }
             }
             throw e;
@@ -125,7 +125,7 @@ public class LoginService {
         LoginVO loginVO = new LoginVO(JwtUtil.generateToken(sessionId));
 
         // 记录日志
-        loginLogManager.saveOne(request, dto.getPhone(), LOGIN_LOG_SUCCESS, LOGIN_TYPE_PASSWORD);
+        loginLogManager.saveOne(request, dto.getPhone(), LOGIN_LOG_SUCCESS.getResult(), LOGIN_TYPE_PASSWORD.getType());
 
         return loginVO;
     }

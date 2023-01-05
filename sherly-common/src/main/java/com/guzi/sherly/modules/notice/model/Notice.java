@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.guzi.sherly.model.SimpleBaseModel;
+import com.guzi.sherly.modules.notice.enums.NoticeStatusEnum;
+import com.guzi.sherly.modules.notice.enums.NoticeTypeEnum;
 import lombok.Data;
 
 /**
@@ -17,7 +19,7 @@ public class Notice extends SimpleBaseModel {
     @TableId(type = IdType.AUTO)
     private Long noticeId;
 
-    /** 消息类型[enum] */
+    /** 消息类型{@link NoticeTypeEnum} */
     private Integer noticeType;
 
     /** 关联用户编号 */
@@ -29,6 +31,6 @@ public class Notice extends SimpleBaseModel {
     /** 消息内容 */
     private String noticeText;
 
-    /** 状态[enum] */
+    /** 状态{@link NoticeStatusEnum} */
     private Integer noticeStatus;
 }

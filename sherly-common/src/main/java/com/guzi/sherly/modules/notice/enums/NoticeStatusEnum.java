@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
+ * 消息状态枚举
  * @author 谷子毅
  * @date 2022/12/29
  */
