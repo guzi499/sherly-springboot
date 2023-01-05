@@ -3,12 +3,14 @@ package com.guzi.sherly.model.dto;
 import com.guzi.sherly.model.PageQuery;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * @author 李仁杰
  * @date 2022/9/1
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class ErrorCodePageDTO extends PageQuery {
 
     /** 错误代码 */
