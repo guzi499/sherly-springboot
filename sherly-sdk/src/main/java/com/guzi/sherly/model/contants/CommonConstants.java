@@ -67,35 +67,4 @@ public class CommonConstants {
     /** 日志类型：异常 */
     public static final Integer EXCEPTION_LOG = 1;
 
-    /*=============================登录结果========================*/
-
-    /** 登录结果：成功 */
-    public static final Integer LOGIN_LOG_SUCCESS = 0;
-
-    /** 登录结果：账号或密码不正确 */
-    public static final Integer LOGIN_LOG_FAIL = 1;
-
-    /** 登录结果：用户禁用 */
-    public static final Integer LOGIN_LOG_DISABLE = 2;
-
-    /** 登录结果：其他 */
-    public static final Integer LOGIN_LOG_OTHER = 9;
-
-    /*=============================登录方式========================*/
-
-    /** 登录方式：密码 */
-    public static final Integer LOGIN_TYPE_PASSWORD = 0;
-
-    /** 登录方式：二维码 */
-    public static final Integer LOGIN_TYPE_QRCODE = 1;
-
-    /** 登录方式：QQ */
-    public static final Integer LOGIN_TYPE_QQ = 2;
-
-    /** 登录方式：微信 */
-    public static final Integer LOGIN_TYPE_WX = 3;
-
-    /** 登录方式：支付宝 */
-    public static final Integer LOGIN_TYPE_ZFB = 4;
-
 }

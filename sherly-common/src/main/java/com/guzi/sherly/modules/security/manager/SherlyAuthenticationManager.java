@@ -9,15 +9,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import java.util.Objects;
 
-import static com.guzi.sherly.model.contants.CommonConstants.LOGIN_LOG_FAIL;
-import static com.guzi.sherly.model.contants.CommonConstants.LOGIN_TYPE_PASSWORD;
 import static com.guzi.sherly.model.exception.enums.AdminErrorEnum.ERR_USR_PWD;
 
 /**
