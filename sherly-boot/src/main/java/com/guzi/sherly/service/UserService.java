@@ -41,8 +41,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static com.guzi.sherly.admin.user.enums.GenderEnum.MALE;
 import static com.guzi.sherly.common.contants.CommonConstants.ENABLE;
-import static com.guzi.sherly.common.contants.CommonConstants.MALE;
 import static com.guzi.sherly.common.exception.enums.AdminErrorEnum.*;
 
 /**
@@ -106,7 +106,7 @@ public class UserService {
             BeanUtils.copyProperties(e, userEO);
             userEO.setEnable(Objects.equals(e.getEnable(), ENABLE) ? "启用" : "禁用");
             userEO.setDepartmentName(departmentIdMapName.get(e.getDepartmentId()));
-            userEO.setGender(Objects.equals(e.getGender(), MALE) ? "男" : "女");
+            userEO.setGender(Objects.equals(e.getGender(), MALE.getGender()) ? "男" : "女");
             return userEO;
         }).collect(Collectors.toList());
 

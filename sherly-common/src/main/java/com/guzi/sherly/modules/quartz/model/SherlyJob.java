@@ -17,8 +17,8 @@ import java.lang.reflect.Method;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.guzi.sherly.modules.log.enums.LogTypeEnum.EXCEPTION_LOG;
-import static com.guzi.sherly.modules.log.enums.LogTypeEnum.NORMAL_LOG;
+import static com.guzi.sherly.modules.log.enums.OperationLogTypeEnum.EXCEPTION_LOG;
+import static com.guzi.sherly.modules.log.enums.OperationLogTypeEnum.NORMAL_LOG;
 import static com.guzi.sherly.modules.quartz.contants.ScheduleTaskConstants.SCHEDULE_TASK_PARAMS;
 
 /**

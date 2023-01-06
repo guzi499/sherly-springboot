@@ -2,7 +2,7 @@ package com.guzi.sherly.modules.log.dto;
 
 import cn.hutool.core.date.DatePattern;
 import com.guzi.sherly.common.model.PageQuery;
-import com.guzi.sherly.modules.log.enums.LogTypeEnum;
+import com.guzi.sherly.modules.log.enums.OperationLogTypeEnum;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,7 +18,7 @@ import java.util.List;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class OperationLogPageDTO extends PageQuery {
-    /** 日志类型{@link LogTypeEnum} */
+    /** 日志类型{@link OperationLogTypeEnum} */
     @ApiModelProperty(value = "日志类型[enum]")
     private Integer type;
 

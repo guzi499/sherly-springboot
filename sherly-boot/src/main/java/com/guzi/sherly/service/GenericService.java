@@ -29,7 +29,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static com.guzi.sherly.common.contants.CommonConstants.*;
+import static com.guzi.sherly.admin.menu.enums.MenuTypeEnum.BUTTON;
+import static com.guzi.sherly.admin.menu.enums.MenuTypeEnum.DIR;
+import static com.guzi.sherly.common.contants.CommonConstants.ROOT_PARENT_ID;
 
 /**
  * @author 谷子毅
@@ -100,9 +102,9 @@ public class GenericService {
         List<Menu> menus = menuDao.listByIds(menuIds);
 
         // 跳转相关
-        List<Menu> jumps = menus.stream().filter(e -> !Objects.equals(e.getMenuType(), BUTTON)).sorted(Comparator.comparing(Menu::getSort)).collect(Collectors.toList());
+        List<Menu> jumps = menus.stream().filter(e -> !Objects.equals(e.getMenuType(), BUTTON.getType())).sorted(Comparator.comparing(Menu::getSort)).collect(Collectors.toList());
         // 权限相关
-        List<Menu> permissions = menus.stream().filter(e -> !Objects.equals(e.getMenuType(), DIR)).collect(Collectors.toList());
+        List<Menu> permissions = menus.stream().filter(e -> !Objects.equals(e.getMenuType(), DIR.getType())).collect(Collectors.toList());
 
         // 跳转相关数据转换成树
         List<BasicMenuInfoVO> menuVOList = jumps.stream().filter(e -> Objects.equals(e.getParentId(), ROOT_PARENT_ID)).map(e -> {

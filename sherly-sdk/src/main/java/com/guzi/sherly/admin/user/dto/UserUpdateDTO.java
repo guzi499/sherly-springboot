@@ -1,5 +1,6 @@
 package com.guzi.sherly.admin.user.dto;
 
+import com.guzi.sherly.admin.user.enums.GenderEnum;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -22,7 +23,7 @@ public class UserUpdateDTO {
     @NotNull
     private String realName;
 
-    /** 性别[enum] */
+    /** 性别{@link GenderEnum} */
     @ApiModelProperty(value = "性别[enum]", required = true)
     @NotNull
     private Integer gender;

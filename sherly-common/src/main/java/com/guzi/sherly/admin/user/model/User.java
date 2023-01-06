@@ -3,6 +3,7 @@ package com.guzi.sherly.admin.user.model;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.guzi.sherly.admin.user.enums.GenderEnum;
 import com.guzi.sherly.common.model.BaseModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -39,7 +40,7 @@ public class User extends BaseModel {
     /** 用户邮箱 */
     private String email;
 
-    /** 性别[enum] */
+    /** 性别{@link GenderEnum} */
     private Integer gender;
 
     /** 部门编号 */

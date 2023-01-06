@@ -1,5 +1,6 @@
 package com.guzi.sherly.admin.menu.dto;
 
+import com.guzi.sherly.admin.menu.enums.MenuTypeEnum;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -18,7 +19,7 @@ public class MenuInsertDTO {
     @NotBlank
     private String menuName;
 
-    /** 菜单类型[enum] */
+    /** 菜单类型{@link MenuTypeEnum} */
     @ApiModelProperty(value = "菜单类型[enum]", required = true)
     @NotNull
     private Integer menuType;

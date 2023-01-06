@@ -1,5 +1,6 @@
 package com.guzi.sherly.modules.quartz.vo;
 
+import com.guzi.sherly.modules.quartz.enums.ScheduleTaskLogTypeEnum;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -31,7 +32,7 @@ public class ScheduleTaskLogVO {
     @ApiModelProperty(value = "调用参数")
     private String invokeParam;
 
-    /** 日志类型[enum] */
+    /** 日志类型{@link ScheduleTaskLogTypeEnum} */
     @ApiModelProperty(value = "日志类型[enum]")
     private Integer type;
 

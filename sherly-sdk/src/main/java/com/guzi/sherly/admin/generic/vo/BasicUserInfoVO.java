@@ -1,5 +1,6 @@
 package com.guzi.sherly.admin.generic.vo;
 
+import com.guzi.sherly.admin.user.enums.GenderEnum;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -33,7 +34,7 @@ public class BasicUserInfoVO {
     @ApiModelProperty(value = "用户邮箱")
     private String email;
 
-    /** 性别[enum] */
+    /** 性别{@link GenderEnum} */
     @ApiModelProperty(value = "性别[enum]")
     private Integer gender;
 

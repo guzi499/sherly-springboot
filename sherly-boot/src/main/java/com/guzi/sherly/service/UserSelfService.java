@@ -34,7 +34,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static com.guzi.sherly.common.contants.CommonConstants.MALE;
+import static com.guzi.sherly.admin.user.enums.GenderEnum.MALE;
 import static com.guzi.sherly.common.exception.enums.AdminErrorEnum.USER_PASSWORD_ERROR;
 import static com.guzi.sherly.common.exception.enums.AdminErrorEnum.USER_PASSWORD_REPEAT;
 
@@ -93,7 +93,7 @@ public class UserSelfService {
         vo.setAvatar(ossManager.accessUrl(vo.getAvatar()));
         vo.setRoleIds(roleIds);
         vo.setRoleNames(roleNames);
-        vo.setGenderStr(Objects.equals(vo.getGender(), MALE) ? "男" : "女");
+        vo.setGenderStr(Objects.equals(vo.getGender(), MALE.getGender()) ? "男" : "女");
         vo.setDepartmentName(departmentIdMapName.get(vo.getDepartmentId()));
         vo.setTenantName(SecurityUtil.getTenantCode());
 

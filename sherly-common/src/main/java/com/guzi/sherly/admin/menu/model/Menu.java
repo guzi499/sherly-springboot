@@ -3,6 +3,7 @@ package com.guzi.sherly.admin.menu.model;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.guzi.sherly.admin.menu.enums.MenuTypeEnum;
 import com.guzi.sherly.common.model.BaseModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -22,7 +23,7 @@ public class Menu extends BaseModel {
     /** 菜单名称 */
     private String menuName;
 
-    /** 菜单类型[enum] */
+    /** 菜单类型{@link MenuTypeEnum} */
     private Integer menuType;
 
     /** 权限 */

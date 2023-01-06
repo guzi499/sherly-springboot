@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static com.guzi.sherly.common.contants.CommonConstants.DIR;
+import static com.guzi.sherly.admin.menu.enums.MenuTypeEnum.DIR;
 import static com.guzi.sherly.common.contants.CommonConstants.DISABLE;
 import static com.guzi.sherly.common.exception.enums.AdminErrorEnum.*;
 
@@ -90,7 +90,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         List<String> permissions = Collections.emptyList();
         if (!CollectionUtils.isEmpty(menuIds)) {
             List<Menu> menus = menuDao.listByIds(menuIds);
-            permissions = menus.stream().filter(e -> !Objects.equals(e.getMenuType(), DIR)).map(Menu::getPermission).filter(StringUtils::hasText).collect(Collectors.toList());
+            permissions = menus.stream().filter(e -> !Objects.equals(e.getMenuType(), DIR.getType())).map(Menu::getPermission).filter(StringUtils::hasText).collect(Collectors.toList());
         }
 
         // 响应userDetails用于登录校验

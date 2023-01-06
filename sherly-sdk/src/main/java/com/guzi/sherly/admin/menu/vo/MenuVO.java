@@ -1,5 +1,6 @@
 package com.guzi.sherly.admin.menu.vo;
 
+import com.guzi.sherly.admin.menu.enums.MenuTypeEnum;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -16,7 +17,7 @@ public class MenuVO {
     @ApiModelProperty(value = "菜单编号")
     private Long menuId;
 
-    /** 菜单类型[enum] */
+    /** 菜单类型{@link MenuTypeEnum} */
     @ApiModelProperty(value = "菜单类型[enum]")
     private Integer menuType;
 
