@@ -8,11 +8,12 @@
 
 ### 编程规约
 #### 【1】命名风格
-1. 类名使用UpperCamelCase风格，但以下情形例外：DTO / VO / EO。如UserDTO, UserVO；
+1. 类名使用UpperCamelCase风格，但以下情形例外：DTO / VO / EO，结尾必须全部大写。其中 DTO 为入参，VO 为出参，EO 为Excel导入导出对象，如UserDTO, UserVO。
 2. 常量命名全部大写，单词间用下划线隔开，力求语义表达完整清楚，不要嫌名字长。
-3. 接口类中的方法和属性不要加任何修饰符号（public 也不要加），保持代码的简洁性，并加上有效的Javadoc注释。尽量不要在接口里定义变量，如果一定要定义变量，确定与接口方法相关，并且是整个应用的基础常量。
-4. 请求uri中不可使用驼峰式命名，使用下划线"_"隔离单词。
-5. 各层命名规约：
+3. 枚举类型全部以Enum结尾，命名尽量表达清楚，在注释上不可以列出枚举项，而是使用{@link}标出具体的枚举类。
+4. 接口类中的方法和属性不要加任何修饰符号（public 也不要加），保持代码的简洁性，并加上有效的Javadoc注释。尽量不要在接口里定义变量，如果一定要定义变量，确定与接口方法相关，并且是整个应用的基础常量。
+5. 请求uri中不可使用驼峰式命名，使用下划线"_"隔离单词。
+6. 各层命名规约：
     - 对单个对象的方法和uri用get做前缀，如`getOne()`， `"get_one"`。
     - 获取多个对象的方法和uri用list做前缀，如`listPage()`，`"list_page"`，`listTree()`，`"list_tree"`。
     - 获取统计值的方法和uri用count做前缀
@@ -24,7 +25,7 @@
     - 新增的时候使用InsertDTO，InsertVO做后缀
     - 更新的时候使用UpdateDTO，UpdateVO做后缀
     - ===========================
-6. 所有注入一律使用 @Resource，不要使用 @Autowired。
+7. 所有注入一律使用 @Resource，不要使用 @Autowired。
 #### 【2】OOP规约      
 1. 关于基本数据类型与包装数据类型的使用标准如下： 
    - 所有的POJO类属性必须使用包装数据类型。 
@@ -84,15 +85,20 @@
       revert -> 回滚
    ```
 #### 【7】knife4j文档
-1. 所有VO/DTO都需要加**行形式**文档注释和@ApiModelProperty注解
+1. 所有VO / DTO都需要加**行形式**文档注释和@ApiModelProperty注解，左右各保留一个空格。
+   ```txt
+      /** 我是注释 */
+      @ApiModelProperty(value = "")
+   ```
 2. 所有Controller类上需要加@Api(tags = "xxx")注解
 3. 所有Controller方法需要加@ApiOperation("xxx")注解
 4. 如果Result中data有数据，Controller方法中返回值必须写完整的类型。如 Result<List<UserVO>>。
 #### 【8】mybatis-plus
 1. 因为加了mybatis-plus逻辑删除。所有逻辑删除不要使用update更新，而是直接删除。
-2. 所有自增主键一律加注解 @TableId(type = IdType.AUTO)。
+2. 所有自增主键一律加注解 @TableId(type = IdType.AUTO)，否则自定主键策略，ORM映射不可没有@TableId注解，即有且必须有一个主键。
 #### 【9】lombok
 1. @Data：注解在类上，相当于同时使用了@ToString、@EqualsAndHashCode、@Getter、@Setter和@RequiredArgsConstrutor这些注解，对于POJO类十分有用。除特殊情况，不要再添加其他lombok注解。
+2. 如果该类继承了其他类，必须加上注解@EqualsAndHashCode(callSuper = true)
 #### 【10】validation
 1. 增删改时必填字段,只加在DTO字段上：如果为字符串类型使用@NotBlank注解，如果为其他类型使用@NotNull注解
 #### 【11】其他
@@ -121,7 +127,7 @@
 11. 小数类型为decimal，禁止使用float和double。在存储的时候，float和double 都存在精度损失的问题，很可能在比较值的时候，得到不正确的结果。如果存储的数据范围超过decimal的范围，建议将数据拆成整数和小数并分开存储。
 12. 如果存储的字符串长度几乎相等，使用char定长字符串类型。
 13. varchar是可变长字符串，不预先分配存储空间，长度不要超过5000，如果存储长度大于此值，定义字段类型为text。如果需要，可以独立出来一张表，用主键来对应，避免影响其它字段索引效率。
-14. 设置数据类型时，一般都需要跟显示宽度，如果没有特殊需求，请参考列举案例：
+14. 低版本数据库设置数据类型时，一般都需要跟显示宽度，如果没有特殊需求，请参考列举案例：
    ```text
       tinyint(4)
       int(11)
