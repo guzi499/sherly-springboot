@@ -12,8 +12,8 @@ import com.guzi.sherly.modules.oss.dao.OssConfigDao;
 import com.guzi.sherly.modules.oss.dao.OssFileDao;
 import com.guzi.sherly.modules.oss.dto.OssFilePageDTO;
 import com.guzi.sherly.modules.oss.model.OssClient;
-import com.guzi.sherly.modules.oss.model.OssConfig;
-import com.guzi.sherly.modules.oss.model.OssFile;
+import com.guzi.sherly.modules.oss.model.OssConfigDO;
+import com.guzi.sherly.modules.oss.model.OssFileDO;
 import com.guzi.sherly.modules.oss.vo.OssFilePageVO;
 import com.guzi.sherly.modules.security.util.SecurityUtil;
 import lombok.SneakyThrows;
@@ -70,13 +70,13 @@ public class OssManager {
 
         // 4. 如果path为空，则还需记录保存信息
         ossClient.upload(file.getBytes(), relativePath);
-        OssFile ossFile = new OssFile();
-        ossFile.setFileType(suffix);
-        ossFile.setFileName(fileName);
-        ossFile.setConfigId(ossClient.getConfigId());
-        ossFile.setPath(relativePath);
-        ossFile.setSize((int) file.getSize());
-        ossFileDao.save(ossFile);
+        OssFileDO ossFileDO = new OssFileDO();
+        ossFileDO.setFileType(suffix);
+        ossFileDO.setFileName(fileName);
+        ossFileDO.setConfigId(ossClient.getConfigId());
+        ossFileDO.setPath(relativePath);
+        ossFileDO.setSize((int) file.getSize());
+        ossFileDao.save(ossFileDO);
 
         return relativePath;
     }
@@ -112,7 +112,7 @@ public class OssManager {
             return PageResult.buildEmpty();
         }
         dto.setConfigId(ossClient.getConfigId());
-        IPage<OssFile> page = ossFileDao.listPage(dto);
+        IPage<OssFileDO> page = ossFileDao.listPage(dto);
 
         List<OssFilePageVO> result = page.getRecords().stream().map(e -> {
             OssFilePageVO ossFilePageVO = new OssFilePageVO();
@@ -137,11 +137,11 @@ public class OssManager {
     private OssClient getOssClient() {
         OssClient ossClient = ossClientFactory.getOssClient(SecurityUtil.getTenantCode());
         if (ossClient == null) {
-            OssConfig ossConfig = ossConfigDao.getEnable();
-            if (ossConfig == null) {
+            OssConfigDO ossConfigDO = ossConfigDao.getEnable();
+            if (ossConfigDO == null) {
                 return null;
             }
-            return ossClientFactory.createOssClient(SecurityUtil.getTenantCode(), ossConfig.getConfigId(), ossConfig.getType(), ossConfig.getConfig());
+            return ossClientFactory.createOssClient(SecurityUtil.getTenantCode(), ossConfigDO.getConfigId(), ossConfigDO.getType(), ossConfigDO.getConfig());
         }
         return ossClient;
     }

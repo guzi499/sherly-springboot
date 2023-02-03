@@ -1,7 +1,7 @@
 package com.guzi.sherly.modules.oss.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.guzi.sherly.modules.oss.model.OssConfig;
+import com.guzi.sherly.modules.oss.model.OssConfigDO;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
  * @date 2022/6/24
  */
 @Repository
-public interface OssConfigMapper extends BaseMapper<OssConfig> {
+public interface OssConfigMapper extends BaseMapper<OssConfigDO> {
 }

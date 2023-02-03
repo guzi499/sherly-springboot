@@ -1,7 +1,7 @@
 package com.guzi.sherly.admin.role.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.guzi.sherly.admin.role.model.RoleMenu;
+import com.guzi.sherly.admin.role.model.RoleMenuDO;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
  * @date 2022/3/22
  */
 @Repository
-public interface RoleMenuMapper extends BaseMapper<RoleMenu> {
+public interface RoleMenuMapper extends BaseMapper<RoleMenuDO> {
 
 }

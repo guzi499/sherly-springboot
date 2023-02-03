@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.guzi.sherly.admin.role.dto.RolePageDTO;
 import com.guzi.sherly.admin.role.dto.RoleSelectDTO;
 import com.guzi.sherly.admin.role.mapper.RoleMapper;
-import com.guzi.sherly.admin.role.model.Role;
+import com.guzi.sherly.admin.role.model.RoleDO;
 import com.guzi.sherly.modules.mybatisplus.service.SherlyServiceImpl;
 import com.guzi.sherly.modules.mybatisplus.wrapper.SherlyLambdaQueryWrapper;
 import org.springframework.stereotype.Service;
@@ -18,17 +18,17 @@ import java.util.List;
  * @date 2022/3/25
  */
 @Service
-public class RoleDao extends SherlyServiceImpl<RoleMapper, Role> {
+public class RoleDao extends SherlyServiceImpl<RoleMapper, RoleDO> {
 
     /**
      * 角色分页
      * @param dto
      * @return
      */
-    public IPage<Role> listPage(RolePageDTO dto) {
-        SherlyLambdaQueryWrapper<Role> wrapper = new SherlyLambdaQueryWrapper<>();
+    public IPage<RoleDO> listPage(RolePageDTO dto) {
+        SherlyLambdaQueryWrapper<RoleDO> wrapper = new SherlyLambdaQueryWrapper<>();
         wrapper
-                .likeIfExist(Role::getRoleName, dto.getRoleName());
+                .likeIfExist(RoleDO::getRoleName, dto.getRoleName());
         return this.page(new Page<>(dto.getCurrent(), dto.getSize()), wrapper);
     }
 
@@ -37,9 +37,9 @@ public class RoleDao extends SherlyServiceImpl<RoleMapper, Role> {
      * @param roleName
      * @return
      */
-    public Role getByRoleName(String roleName) {
-        LambdaQueryWrapper<Role> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(Role::getRoleName, roleName);
+    public RoleDO getByRoleName(String roleName) {
+        LambdaQueryWrapper<RoleDO> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(RoleDO::getRoleName, roleName);
         return this.getOne(wrapper, false);
     }
 
@@ -48,8 +48,8 @@ public class RoleDao extends SherlyServiceImpl<RoleMapper, Role> {
      * @param dto
      * @return
      */
-    public List<Role> listAll(RoleSelectDTO dto) {
-        LambdaQueryWrapper<Role> wrapper = new LambdaQueryWrapper<>();
+    public List<RoleDO> listAll(RoleSelectDTO dto) {
+        LambdaQueryWrapper<RoleDO> wrapper = new LambdaQueryWrapper<>();
         return this.list(wrapper);
     }
 }

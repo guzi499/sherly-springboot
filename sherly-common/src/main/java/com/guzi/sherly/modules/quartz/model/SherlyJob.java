@@ -39,33 +39,33 @@ public class SherlyJob implements Job {
 
     @Override
     public void execute(JobExecutionContext context) {
-        ScheduleTask scheduleTask = new ScheduleTask();
+        ScheduleTaskDO scheduleTaskDO = new ScheduleTaskDO();
         Object object = context.getMergedJobDataMap().get(SCHEDULE_TASK_PARAMS);
-        BeanUtils.copyProperties(object, scheduleTask);
+        BeanUtils.copyProperties(object, scheduleTaskDO);
         keyPointRecord.set(new ArrayList<>());
         List<String> records;
         try {
-            before(context, scheduleTask);
+            before(context, scheduleTaskDO);
             ScheduleTaskUtil.log("定时任务开始执行！");
-            doExecute(context, scheduleTask);
+            doExecute(context, scheduleTaskDO);
             records = keyPointRecord.get();
             ScheduleTaskUtil.log("定时任务正常结束！");
-            after(context, scheduleTask, records, null);
+            after(context, scheduleTaskDO, records, null);
         } catch (Throwable exception) {
             ScheduleTaskUtil.log("定时任务异常终止！");
             records = keyPointRecord.get();
-            after(context, scheduleTask, records, exception);
+            after(context, scheduleTaskDO, records, exception);
         } finally {
             recordTime.remove();
             keyPointRecord.remove();
         }
     }
 
-    private void before(JobExecutionContext context, ScheduleTask scheduleTask) {
+    private void before(JobExecutionContext context, ScheduleTaskDO scheduleTaskDO) {
         recordTime.set(System.currentTimeMillis());
     }
 
-    private void after(JobExecutionContext context, ScheduleTask scheduleTask, List<String> records, Throwable exception) {
+    private void after(JobExecutionContext context, ScheduleTaskDO scheduleTaskDO, List<String> records, Throwable exception) {
         Long startTime = recordTime.get();
         Long duration = System.currentTimeMillis() - startTime;
         log.info("任务耗时{}ms", duration);
@@ -76,37 +76,37 @@ public class SherlyJob implements Job {
         if (exception != null) {
             exception.printStackTrace();
         }
-        this.saveOne(duration, scheduleTask, records, exception);
+        this.saveOne(duration, scheduleTaskDO, records, exception);
     }
 
-    private void saveOne(Long duration, ScheduleTask scheduleTask, List<String> records, Throwable exception) {
-        ScheduleTaskLog scheduleTaskLog = new ScheduleTaskLog();
-        scheduleTaskLog.setScheduleTaskId(scheduleTask.getScheduleTaskId());
-        scheduleTaskLog.setScheduleTaskName(scheduleTask.getScheduleTaskName());
-        scheduleTaskLog.setInvokeClassAndMethod(scheduleTask.getInvokeClassAndMethod());
-        scheduleTaskLog.setInvokeParam(scheduleTask.getInvokeParam());
-        scheduleTaskLog.setType(exception == null ? NORMAL_LOG.getType() : EXCEPTION_LOG.getType());
-        scheduleTaskLog.setDuration(duration);
-        scheduleTaskLog.setKeyPointRecord(JSONUtil.toJsonStr(records));
+    private void saveOne(Long duration, ScheduleTaskDO scheduleTaskDO, List<String> records, Throwable exception) {
+        ScheduleTaskLogDO scheduleTaskLogDO = new ScheduleTaskLogDO();
+        scheduleTaskLogDO.setScheduleTaskId(scheduleTaskDO.getScheduleTaskId());
+        scheduleTaskLogDO.setScheduleTaskName(scheduleTaskDO.getScheduleTaskName());
+        scheduleTaskLogDO.setInvokeClassAndMethod(scheduleTaskDO.getInvokeClassAndMethod());
+        scheduleTaskLogDO.setInvokeParam(scheduleTaskDO.getInvokeParam());
+        scheduleTaskLogDO.setType(exception == null ? NORMAL_LOG.getType() : EXCEPTION_LOG.getType());
+        scheduleTaskLogDO.setDuration(duration);
+        scheduleTaskLogDO.setKeyPointRecord(JSONUtil.toJsonStr(records));
         if (exception != null) {
             List<String> list = Arrays.stream(exception.getStackTrace()).map(Objects::toString).collect(Collectors.toList());
             list.add(0, exception.getMessage());
-            scheduleTaskLog.setException(JSONUtil.toJsonStr(list));
+            scheduleTaskLogDO.setException(JSONUtil.toJsonStr(list));
         }
-        scheduleTaskLog.setCreateTime(new Date(recordTime.get()));
-        scheduleTaskLogDao.save(scheduleTaskLog);
+        scheduleTaskLogDO.setCreateTime(new Date(recordTime.get()));
+        scheduleTaskLogDao.save(scheduleTaskLogDO);
     }
 
     /**
      * 真正的执行
      *
      * @param context
-     * @param scheduleTask
+     * @param scheduleTaskDO
      */
     @SneakyThrows
-    protected void doExecute(JobExecutionContext context, ScheduleTask scheduleTask) {
-        String invokeClassAndMethod = scheduleTask.getInvokeClassAndMethod();
-        String invokeParam = scheduleTask.getInvokeParam();
+    protected void doExecute(JobExecutionContext context, ScheduleTaskDO scheduleTaskDO) {
+        String invokeClassAndMethod = scheduleTaskDO.getInvokeClassAndMethod();
+        String invokeParam = scheduleTaskDO.getInvokeParam();
 
         List<String> split = StrUtil.split(invokeClassAndMethod, "-");
         String className = split.get(0);

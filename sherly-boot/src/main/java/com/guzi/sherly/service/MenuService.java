@@ -3,7 +3,7 @@ package com.guzi.sherly.service;
 import com.guzi.sherly.admin.menu.dao.MenuDao;
 import com.guzi.sherly.admin.menu.dto.MenuInsertDTO;
 import com.guzi.sherly.admin.menu.dto.MenuUpdateDTO;
-import com.guzi.sherly.admin.menu.model.Menu;
+import com.guzi.sherly.admin.menu.model.MenuDO;
 import com.guzi.sherly.admin.menu.vo.MenuVO;
 import com.guzi.sherly.admin.role.dao.RoleMenuDao;
 import com.guzi.sherly.common.exception.BizException;
@@ -37,7 +37,7 @@ public class MenuService {
      * @return
      */
     public List<MenuVO> listTree() {
-        List<Menu> list = menuDao.list();
+        List<MenuDO> list = menuDao.list();
 
         // 对象转换成vo类型
         List<MenuVO> all = list.stream().map(e -> {
@@ -69,9 +69,9 @@ public class MenuService {
      * @param dto
      */
     public void saveOne(MenuInsertDTO dto) {
-        Menu menu = new Menu();
-        BeanUtils.copyProperties(dto, menu);
-        menuDao.save(menu);
+        MenuDO menuDO = new MenuDO();
+        BeanUtils.copyProperties(dto, menuDO);
+        menuDao.save(menuDO);
     }
 
     /**
@@ -96,9 +96,9 @@ public class MenuService {
         if (Objects.equals(dto.getParentId(), dto.getMenuId())) {
             throw new BizException(MENU_PARENT_SELF);
         }
-        Menu menu = new Menu();
-        BeanUtils.copyProperties(dto, menu);
-        menuDao.updateById(menu);
+        MenuDO menuDO = new MenuDO();
+        BeanUtils.copyProperties(dto, menuDO);
+        menuDao.updateById(menuDO);
     }
 
 }

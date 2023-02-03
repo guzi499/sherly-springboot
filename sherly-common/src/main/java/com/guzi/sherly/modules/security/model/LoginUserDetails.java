@@ -3,8 +3,8 @@ package com.guzi.sherly.modules.security.model;
 import cn.hutool.extra.servlet.ServletUtil;
 import cn.hutool.http.useragent.UserAgent;
 import cn.hutool.http.useragent.UserAgentUtil;
-import com.guzi.sherly.admin.accountuser.model.AccountUser;
-import com.guzi.sherly.admin.user.model.User;
+import com.guzi.sherly.admin.accountuser.model.AccountUserDO;
+import com.guzi.sherly.admin.user.model.UserDO;
 import com.guzi.sherly.admin.useronline.model.UserOnline;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;
@@ -26,10 +26,10 @@ import java.util.stream.Collectors;
 public class LoginUserDetails implements UserDetails {
 
     /** 用户信息 */
-    private User user;
+    private UserDO userDO;
 
     /** 用户账户信息 */
-    private AccountUser accountUser;
+    private AccountUserDO accountUserDO;
 
     /** 权限list */
     private List<String> permissions;
@@ -47,13 +47,13 @@ public class LoginUserDetails implements UserDetails {
         RedisSecurityModel redisSecurityModel = new RedisSecurityModel();
 
         SecurityModel securityModel = new SecurityModel();
-        BeanUtils.copyProperties(user, securityModel);
+        BeanUtils.copyProperties(userDO, securityModel);
         securityModel.setSessionId(sessionId);
-        securityModel.setTenantCode(accountUser.getLastLoginTenantCode());
+        securityModel.setTenantCode(accountUserDO.getLastLoginTenantCode());
 
         UserOnline userOnline = new UserOnline();
-        BeanUtils.copyProperties(user, userOnline);
-        userOnline.setLoginTenantCode(accountUser.getLastLoginTenantCode());
+        BeanUtils.copyProperties(userDO, userOnline);
+        userOnline.setLoginTenantCode(accountUserDO.getLastLoginTenantCode());
         userOnline.setLoginTime(new Date());
 
         String ip = ServletUtil.getClientIP(request);
@@ -81,12 +81,12 @@ public class LoginUserDetails implements UserDetails {
 
     @Override
     public String getPassword() {
-        return accountUser.getPassword();
+        return accountUserDO.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return accountUser.getPhone();
+        return accountUserDO.getPhone();
     }
 
     @Override

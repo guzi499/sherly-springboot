@@ -3,7 +3,7 @@ package com.guzi.sherly.service;
 import com.guzi.sherly.admin.module.dao.ModuleDao;
 import com.guzi.sherly.admin.module.dto.ModuleInsertDTO;
 import com.guzi.sherly.admin.module.dto.ModuleUpdateDTO;
-import com.guzi.sherly.admin.module.model.Module;
+import com.guzi.sherly.admin.module.model.ModuleDO;
 import com.guzi.sherly.admin.module.vo.ModuleVO;
 import com.guzi.sherly.common.exception.BizException;
 import org.springframework.beans.BeanUtils;
@@ -34,11 +34,11 @@ public class ModuleService {
      * @return
      */
     public List<ModuleVO> listTree() {
-        List<Module> list = moduleDao.list();
+        List<ModuleDO> list = moduleDao.list();
 
         //对象转换为vo类型
         List<ModuleVO> all = list.stream()
-                .sorted(Comparator.comparing(Module::getSort))
+                .sorted(Comparator.comparing(ModuleDO::getSort))
                 .map(e -> {
                     ModuleVO vo = new ModuleVO();
                     BeanUtils.copyProperties(e, vo);
@@ -71,14 +71,14 @@ public class ModuleService {
      */
     public void saveOne(ModuleInsertDTO dto) {
         // 查重
-        Module one = moduleDao.getByParentIdAndModuleNameOrModuleCode(dto.getParentId(), dto.getModuleName(), dto.getModuleCode());
+        ModuleDO one = moduleDao.getByParentIdAndModuleNameOrModuleCode(dto.getParentId(), dto.getModuleName(), dto.getModuleCode());
         if (one != null) {
             throw new BizException(MODULE_REPEAT);
         }
 
-        Module module = new Module();
-        BeanUtils.copyProperties(dto, module);
-        moduleDao.save(module);
+        ModuleDO moduleDO = new ModuleDO();
+        BeanUtils.copyProperties(dto, moduleDO);
+        moduleDao.save(moduleDO);
     }
 
     /**
@@ -87,15 +87,15 @@ public class ModuleService {
      */
     public void updateOne(ModuleUpdateDTO dto) {
         // 查重
-        Module one = moduleDao.getByParentIdAndModuleNameOrModuleCode(dto.getParentId(), dto.getModuleName(), dto.getModuleCode());
+        ModuleDO one = moduleDao.getByParentIdAndModuleNameOrModuleCode(dto.getParentId(), dto.getModuleName(), dto.getModuleCode());
         // 如果待修改名称已存在且不为自身
         if (one != null && !Objects.equals(one.getModuleId(), dto.getModuleId())) {
             throw new BizException(MODULE_REPEAT);
         }
 
-        Module module = new Module();
-        BeanUtils.copyProperties(dto, module);
-        moduleDao.updateById(module);
+        ModuleDO moduleDO = new ModuleDO();
+        BeanUtils.copyProperties(dto, moduleDO);
+        moduleDao.updateById(moduleDO);
     }
 
     /**

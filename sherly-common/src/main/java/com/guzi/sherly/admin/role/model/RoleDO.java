@@ -12,16 +12,16 @@ import lombok.EqualsAndHashCode;
  * @date 2022/3/17
  */
 @Data
-@TableName("sys_role_menu")
+@TableName("sys_role")
 @EqualsAndHashCode(callSuper = true)
-public class RoleMenu extends BaseModel {
-    /** 编号 */
-    @TableId(type = IdType.AUTO)
-    private Long id;
-
+public class RoleDO extends BaseModel {
     /** 角色编号 */
+    @TableId(type = IdType.AUTO)
     private Long roleId;
 
-    /** 菜单编号 */
-    private Long menuId;
+    /** 角色名称 */
+    private String roleName;
+
+    /** 描述 */
+    private String description;
 }

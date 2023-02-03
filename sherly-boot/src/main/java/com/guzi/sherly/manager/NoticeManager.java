@@ -6,7 +6,7 @@ import com.guzi.sherly.modules.notice.dao.NoticeDao;
 import com.guzi.sherly.modules.notice.dto.NoticeClearListDTO;
 import com.guzi.sherly.modules.notice.dto.NoticePageDTO;
 import com.guzi.sherly.modules.notice.dto.NoticeResetListDTO;
-import com.guzi.sherly.modules.notice.model.Notice;
+import com.guzi.sherly.modules.notice.model.NoticeDO;
 import com.guzi.sherly.modules.notice.vo.NoticePageVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -33,13 +33,13 @@ public class NoticeManager {
      * @param userIds
      */
     public void saveList(Integer noticeType, String noticeTitle, String noticeText, List<Long> userIds) {
-        List<Notice> list = userIds.stream().map(userId -> {
-            Notice notice = new Notice();
-            notice.setNoticeType(noticeType);
-            notice.setNoticeTitle(noticeTitle);
-            notice.setNoticeText(noticeText);
-            notice.setNoticeUserId(userId);
-            return notice;
+        List<NoticeDO> list = userIds.stream().map(userId -> {
+            NoticeDO noticeDO = new NoticeDO();
+            noticeDO.setNoticeType(noticeType);
+            noticeDO.setNoticeTitle(noticeTitle);
+            noticeDO.setNoticeText(noticeText);
+            noticeDO.setNoticeUserId(userId);
+            return noticeDO;
         }).collect(Collectors.toList());
 
         noticeDao.saveBatch(list);
@@ -51,7 +51,7 @@ public class NoticeManager {
      * @return
      */
     public PageResult<NoticePageVO> listPage(NoticePageDTO dto) {
-        Page<Notice> page = noticeDao.listPage(dto);
+        Page<NoticeDO> page = noticeDao.listPage(dto);
         List<NoticePageVO> result = page.getRecords().stream().map(e -> {
             NoticePageVO vo = new NoticePageVO();
             BeanUtils.copyProperties(e, vo);

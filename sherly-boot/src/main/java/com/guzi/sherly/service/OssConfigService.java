@@ -11,7 +11,7 @@ import com.guzi.sherly.modules.oss.dto.OssConfigPageDTO;
 import com.guzi.sherly.modules.oss.dto.OssConfigUpdateDTO;
 import com.guzi.sherly.modules.oss.enums.OssTypeEnum;
 import com.guzi.sherly.modules.oss.model.OssClientConfig;
-import com.guzi.sherly.modules.oss.model.OssConfig;
+import com.guzi.sherly.modules.oss.model.OssConfigDO;
 import com.guzi.sherly.modules.oss.vo.OssConfigPageVO;
 import com.guzi.sherly.modules.oss.vo.OssConfigVO;
 import com.guzi.sherly.modules.security.util.SecurityUtil;
@@ -46,7 +46,7 @@ public class OssConfigService {
      * @return
      */
     public PageResult<OssConfigPageVO> listPage(OssConfigPageDTO dto) {
-        IPage<OssConfig> page = ossConfigDao.page(new Page<>(dto.getCurrent(), dto.getSize()));
+        IPage<OssConfigDO> page = ossConfigDao.page(new Page<>(dto.getCurrent(), dto.getSize()));
 
         List<OssConfigPageVO> result = page.getRecords().stream().map(e -> {
             OssConfigPageVO vo = new OssConfigPageVO();
@@ -63,13 +63,13 @@ public class OssConfigService {
      * @return
      */
     public OssConfigVO getOne(Long configId) {
-        OssConfig ossConfig = ossConfigDao.getById(configId);
-        OssClientConfig config = ossConfig.getConfig();
+        OssConfigDO ossConfigDO = ossConfigDao.getById(configId);
+        OssClientConfig config = ossConfigDO.getConfig();
         String configStr = JSONUtil.toJsonStr(config);
         Map<String, Object> map = JSONUtil.toBean(configStr, Map.class);
 
         OssConfigVO vo = new OssConfigVO();
-        BeanUtils.copyProperties(ossConfig, vo);
+        BeanUtils.copyProperties(ossConfigDO, vo);
         vo.setConfig(map);
 
         return vo;
@@ -80,11 +80,11 @@ public class OssConfigService {
      * @param dto
      */
     public void saveOne(OssConfigInsertDTO dto) {
-        OssConfig ossConfig = new OssConfig();
-        BeanUtils.copyProperties(dto, ossConfig);
-        ossConfig.setEnable(DISABLE);
-        ossConfig.setConfig(parseConfig(dto.getType(), dto.getConfig()));
-        ossConfigDao.save(ossConfig);
+        OssConfigDO ossConfigDO = new OssConfigDO();
+        BeanUtils.copyProperties(dto, ossConfigDO);
+        ossConfigDO.setEnable(DISABLE);
+        ossConfigDO.setConfig(parseConfig(dto.getType(), dto.getConfig()));
+        ossConfigDao.save(ossConfigDO);
     }
 
     /**
@@ -92,13 +92,13 @@ public class OssConfigService {
      * @param dto
      */
     public void updateOne(OssConfigUpdateDTO dto) {
-        OssConfig ossConfig = new OssConfig();
-        BeanUtils.copyProperties(dto, ossConfig);
-        ossConfig.setConfig(parseConfig(dto.getType(), dto.getConfig()));
-        ossConfigDao.updateById(ossConfig);
+        OssConfigDO ossConfigDO = new OssConfigDO();
+        BeanUtils.copyProperties(dto, ossConfigDO);
+        ossConfigDO.setConfig(parseConfig(dto.getType(), dto.getConfig()));
+        ossConfigDao.updateById(ossConfigDO);
 
         // 如果是激活状态那么需要从clients容器中删除该租户的client
-        if (Objects.equals(ossConfig.getEnable(), ENABLE)) {
+        if (Objects.equals(ossConfigDO.getEnable(), ENABLE)) {
             ossClientFactory.removeOssClient(SecurityUtil.getTenantCode());
         }
     }
@@ -120,7 +120,7 @@ public class OssConfigService {
      * @param configId
      */
     public void removeOne(Long configId) {
-        OssConfig config = ossConfigDao.getById(configId);
+        OssConfigDO config = ossConfigDao.getById(configId);
         ossConfigDao.removeById(configId);
         if (Objects.equals(config.getEnable(), ENABLE)) {
             // 从clients容器中删除该租户的client
@@ -133,7 +133,7 @@ public class OssConfigService {
      * @param configId
      */
     public void enableOne(Long configId) {
-        List<OssConfig> list = ossConfigDao.list();
+        List<OssConfigDO> list = ossConfigDao.list();
         list = list.stream().peek(e -> {
             e.setEnable(DISABLE);
             if (Objects.equals(configId, e.getConfigId())) {

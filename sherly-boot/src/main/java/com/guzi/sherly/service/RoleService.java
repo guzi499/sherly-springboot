@@ -7,8 +7,8 @@ import com.guzi.sherly.admin.role.dto.RoleInsertDTO;
 import com.guzi.sherly.admin.role.dto.RolePageDTO;
 import com.guzi.sherly.admin.role.dto.RoleSelectDTO;
 import com.guzi.sherly.admin.role.dto.RoleUpdateDTO;
-import com.guzi.sherly.admin.role.model.Role;
-import com.guzi.sherly.admin.role.model.RoleMenu;
+import com.guzi.sherly.admin.role.model.RoleDO;
+import com.guzi.sherly.admin.role.model.RoleMenuDO;
 import com.guzi.sherly.admin.role.vo.RolePageVO;
 import com.guzi.sherly.admin.role.vo.RoleSelectVO;
 import com.guzi.sherly.admin.role.vo.RoleVO;
@@ -49,7 +49,7 @@ public class RoleService {
      */
     public PageResult<RolePageVO> listPage(RolePageDTO dto) {
         // 分页查询
-        IPage<Role> page = roleDao.listPage(dto);
+        IPage<RoleDO> page = roleDao.listPage(dto);
 
         // 对象转换成vo类型
         List<RolePageVO> result = page.getRecords().stream().map(e -> {
@@ -67,15 +67,15 @@ public class RoleService {
      * @return
      */
     public RoleVO getOne(Long roleId) {
-        Role role = roleDao.getById(roleId);
+        RoleDO roleDO = roleDao.getById(roleId);
 
         // 查询菜单
-        List<RoleMenu> roleMenus = roleMenuDao.listByRoleId(roleId);
-        List<Long> menuIds = roleMenus.stream().map(RoleMenu::getMenuId).collect(Collectors.toList());
+        List<RoleMenuDO> roleMenuDOs = roleMenuDao.listByRoleId(roleId);
+        List<Long> menuIds = roleMenuDOs.stream().map(RoleMenuDO::getMenuId).collect(Collectors.toList());
 
         // 组装vo
         RoleVO vo = new RoleVO();
-        BeanUtils.copyProperties(role, vo);
+        BeanUtils.copyProperties(roleDO, vo);
         vo.setMenuIds(menuIds);
 
         return vo;
@@ -87,14 +87,14 @@ public class RoleService {
      */
     public void saveOne(RoleInsertDTO dto) {
         // 去重
-        Role one = roleDao.getByRoleName(dto.getRoleName());
+        RoleDO one = roleDao.getByRoleName(dto.getRoleName());
         if (one != null) {
             throw new BizException(ROLE_REPEAT);
         }
 
-        Role role = new Role();
-        BeanUtils.copyProperties(dto, role);
-        roleDao.save(role);
+        RoleDO roleDO = new RoleDO();
+        BeanUtils.copyProperties(dto, roleDO);
+        roleDao.save(roleDO);
     }
 
     /**
@@ -104,15 +104,15 @@ public class RoleService {
     @Transactional(rollbackFor = Exception.class)
     public void updateOne(RoleUpdateDTO dto) {
         // 去重
-        Role one = roleDao.getByRoleName(dto.getRoleName());
+        RoleDO one = roleDao.getByRoleName(dto.getRoleName());
         // 如果待修改名称已存在且不为自身
         if (one != null && !Objects.equals(one.getRoleId(), dto.getRoleId())) {
             throw new BizException(ROLE_REPEAT);
         }
 
-        Role role = new Role();
-        BeanUtils.copyProperties(dto, role);
-        roleDao.updateById(role);
+        RoleDO roleDO = new RoleDO();
+        BeanUtils.copyProperties(dto, roleDO);
+        roleDao.updateById(roleDO);
 
         // 先全部删除角色菜单数据
         roleMenuDao.removeByRoleId(dto.getRoleId());
@@ -149,9 +149,9 @@ public class RoleService {
      * @return
      */
     public List<RoleSelectVO> listAll(RoleSelectDTO dto) {
-        List<Role> roles = roleDao.listAll(dto);
+        List<RoleDO> roleDOs = roleDao.listAll(dto);
 
-        return roles.stream().map(e -> {
+        return roleDOs.stream().map(e -> {
             RoleSelectVO vo = new RoleSelectVO();
             BeanUtils.copyProperties(e, vo);
             return vo;

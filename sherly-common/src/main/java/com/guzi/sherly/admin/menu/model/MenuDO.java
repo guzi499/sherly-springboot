@@ -15,7 +15,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @TableName("sys_menu")
 @EqualsAndHashCode(callSuper = true)
-public class Menu extends BaseModel {
+public class MenuDO extends BaseModel {
     /** 菜单编号 */
     @TableId(type = IdType.AUTO)
     private Long menuId;

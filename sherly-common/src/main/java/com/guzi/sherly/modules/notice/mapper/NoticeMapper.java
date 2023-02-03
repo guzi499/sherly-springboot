@@ -1,7 +1,7 @@
 package com.guzi.sherly.modules.notice.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.guzi.sherly.modules.notice.model.Notice;
+import com.guzi.sherly.modules.notice.model.NoticeDO;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
  * @date 2022/12/29
  */
 @Repository
-public interface NoticeMapper extends BaseMapper<Notice> {
+public interface NoticeMapper extends BaseMapper<NoticeDO> {
 }

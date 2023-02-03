@@ -2,7 +2,7 @@ package com.guzi.sherly.admin.user.dao;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.guzi.sherly.admin.user.mapper.UserRoleMapper;
-import com.guzi.sherly.admin.user.model.UserRole;
+import com.guzi.sherly.admin.user.model.UserRoleDO;
 import com.guzi.sherly.modules.mybatisplus.service.SherlyServiceImpl;
 import com.guzi.sherly.modules.mybatisplus.wrapper.SherlyLambdaQueryWrapper;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ import java.util.List;
  * @date 2022/3/25
  */
 @Service
-public class UserRoleDao extends SherlyServiceImpl<UserRoleMapper, UserRole> {
+public class UserRoleDao extends SherlyServiceImpl<UserRoleMapper, UserRoleDO> {
 
     @Resource
     private UserRoleMapper userRoleMapper;
@@ -26,8 +26,8 @@ public class UserRoleDao extends SherlyServiceImpl<UserRoleMapper, UserRole> {
      * @param roleId
      */
     public void removeUserRoleByRoleId(Long roleId) {
-        LambdaQueryWrapper<UserRole> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(UserRole::getRoleId, roleId);
+        LambdaQueryWrapper<UserRoleDO> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(UserRoleDO::getRoleId, roleId);
         this.remove(wrapper);
     }
 
@@ -36,8 +36,8 @@ public class UserRoleDao extends SherlyServiceImpl<UserRoleMapper, UserRole> {
      * @param userId
      */
     public void removeUserRoleByUserId(Long userId) {
-        LambdaQueryWrapper<UserRole> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(UserRole::getUserId, userId);
+        LambdaQueryWrapper<UserRoleDO> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(UserRoleDO::getUserId, userId);
         this.remove(wrapper);
     }
 
@@ -47,12 +47,12 @@ public class UserRoleDao extends SherlyServiceImpl<UserRoleMapper, UserRole> {
      * @param roleIds
      */
     public void saveUserRole(Long userId, List<Long> roleIds) {
-        List<UserRole> list = new ArrayList<>();
+        List<UserRoleDO> list = new ArrayList<>();
         for (Long roleId : roleIds) {
-            UserRole userRole = new UserRole();
-            userRole.setUserId(userId);
-            userRole.setRoleId(roleId);
-            list.add(userRole);
+            UserRoleDO userRoleDO = new UserRoleDO();
+            userRoleDO.setUserId(userId);
+            userRoleDO.setRoleId(roleId);
+            list.add(userRoleDO);
         }
         this.saveBatch(list);
     }
@@ -63,8 +63,8 @@ public class UserRoleDao extends SherlyServiceImpl<UserRoleMapper, UserRole> {
      * @param roleId
      */
     public Long countByRoleId(Long roleId) {
-        LambdaQueryWrapper<UserRole> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(UserRole::getRoleId, roleId);
+        LambdaQueryWrapper<UserRoleDO> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(UserRoleDO::getRoleId, roleId);
         return this.count(wrapper);
     }
 
@@ -73,9 +73,9 @@ public class UserRoleDao extends SherlyServiceImpl<UserRoleMapper, UserRole> {
      * @param userId
      * @return
      */
-    public List<UserRole> listByUserId(Long userId) {
-        LambdaQueryWrapper<UserRole> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(UserRole::getUserId, userId);
+    public List<UserRoleDO> listByUserId(Long userId) {
+        LambdaQueryWrapper<UserRoleDO> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(UserRoleDO::getUserId, userId);
         return this.list(wrapper);
     }
 
@@ -84,9 +84,9 @@ public class UserRoleDao extends SherlyServiceImpl<UserRoleMapper, UserRole> {
      * @param roleIds
      * @return
      */
-    public List<UserRole> listByRoleIds(List<Long> roleIds) {
-        SherlyLambdaQueryWrapper<UserRole> wrapper = new SherlyLambdaQueryWrapper<>();
-        wrapper.inIfExist(UserRole::getRoleId, roleIds);
+    public List<UserRoleDO> listByRoleIds(List<Long> roleIds) {
+        SherlyLambdaQueryWrapper<UserRoleDO> wrapper = new SherlyLambdaQueryWrapper<>();
+        wrapper.inIfExist(UserRoleDO::getRoleId, roleIds);
         return this.list(wrapper);
     }
 }

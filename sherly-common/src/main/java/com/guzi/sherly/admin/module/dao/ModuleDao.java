@@ -2,7 +2,7 @@ package com.guzi.sherly.admin.module.dao;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.guzi.sherly.admin.module.mapper.ModuleMapper;
-import com.guzi.sherly.admin.module.model.Module;
+import com.guzi.sherly.admin.module.model.ModuleDO;
 import com.guzi.sherly.modules.mybatisplus.service.SherlyServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
  * @date 2022/9/1
  */
 @Service
-public class ModuleDao extends SherlyServiceImpl<ModuleMapper, Module> {
+public class ModuleDao extends SherlyServiceImpl<ModuleMapper, ModuleDO> {
 
     /**
      * 根据父模块id、模块名称或模块代码查询模块数据
@@ -20,13 +20,13 @@ public class ModuleDao extends SherlyServiceImpl<ModuleMapper, Module> {
      * @param parentId
      * @return
      */
-    public Module getByParentIdAndModuleNameOrModuleCode(Integer parentId, String moduleName, String moduleCode) {
-        LambdaQueryWrapper<Module> wrapper = new LambdaQueryWrapper<>();
+    public ModuleDO getByParentIdAndModuleNameOrModuleCode(Integer parentId, String moduleName, String moduleCode) {
+        LambdaQueryWrapper<ModuleDO> wrapper = new LambdaQueryWrapper<>();
         wrapper
-                .eq(Module::getParentId,parentId)
-                .eq(Module::getModuleName, moduleName)
+                .eq(ModuleDO::getParentId,parentId)
+                .eq(ModuleDO::getModuleName, moduleName)
                 .or()
-                .eq(Module::getModuleCode,moduleCode);
+                .eq(ModuleDO::getModuleCode,moduleCode);
         return this.getOne(wrapper, false);
     }
 
@@ -36,8 +36,8 @@ public class ModuleDao extends SherlyServiceImpl<ModuleMapper, Module> {
      * @return
      */
     public Long countByParentId(Integer moduleId) {
-        LambdaQueryWrapper<Module> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(Module::getParentId, moduleId);
+        LambdaQueryWrapper<ModuleDO> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(ModuleDO::getParentId, moduleId);
         return this.count(wrapper);
     }
 }

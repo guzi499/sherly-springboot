@@ -1,7 +1,7 @@
 package com.guzi.sherly.admin.tenant.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.guzi.sherly.admin.tenant.model.TenantPackageMenu;
+import com.guzi.sherly.admin.tenant.model.TenantPackageMenuDO;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
  * @date 2022/11/15
  */
 @Repository
-public interface TenantPackageMenuMapper extends BaseMapper<TenantPackageMenu> {
+public interface TenantPackageMenuMapper extends BaseMapper<TenantPackageMenuDO> {
 }

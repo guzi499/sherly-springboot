@@ -14,7 +14,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @TableName("ge_module")
 @EqualsAndHashCode(callSuper = true)
-public class Module extends BaseModel {
+public class ModuleDO extends BaseModel {
 
     /** 模块编号 */
     @TableId(type = IdType.AUTO)

@@ -13,7 +13,7 @@ import java.util.Date;
  */
 @Data
 @TableName("sys_operation_log")
-public class OperationLog {
+public class OperationLogDO {
 
     /** 日志编号 */
     @TableId(type = IdType.AUTO)

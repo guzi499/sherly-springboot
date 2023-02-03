@@ -2,7 +2,7 @@ package com.guzi.sherly.admin.role.dao;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.guzi.sherly.admin.role.mapper.RoleMenuMapper;
-import com.guzi.sherly.admin.role.model.RoleMenu;
+import com.guzi.sherly.admin.role.model.RoleMenuDO;
 import com.guzi.sherly.modules.mybatisplus.service.SherlyServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -15,15 +15,15 @@ import java.util.List;
  * @date 2022/4/6
  */
 @Service
-public class RoleMenuDao extends SherlyServiceImpl<RoleMenuMapper, RoleMenu> {
+public class RoleMenuDao extends SherlyServiceImpl<RoleMenuMapper, RoleMenuDO> {
 
     /**
      * 根据角色id删除角色菜单数据
      * @param roleId
      */
     public void removeByRoleId(Long roleId) {
-        LambdaQueryWrapper<RoleMenu> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(RoleMenu::getRoleId, roleId);
+        LambdaQueryWrapper<RoleMenuDO> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(RoleMenuDO::getRoleId, roleId);
         this.remove(wrapper);
     }
 
@@ -33,12 +33,12 @@ public class RoleMenuDao extends SherlyServiceImpl<RoleMenuMapper, RoleMenu> {
      * @param menuIds
      */
     public void saveRoleMenu(Long roleId, Collection<Long> menuIds) {
-        List<RoleMenu> list = new ArrayList<>();
+        List<RoleMenuDO> list = new ArrayList<>();
         for (Long menuId : menuIds) {
-            RoleMenu roleMenu = new RoleMenu();
-            roleMenu.setRoleId(roleId);
-            roleMenu.setMenuId(menuId);
-            list.add(roleMenu);
+            RoleMenuDO roleMenuDO = new RoleMenuDO();
+            roleMenuDO.setRoleId(roleId);
+            roleMenuDO.setMenuId(menuId);
+            list.add(roleMenuDO);
         }
         this.saveBatch(list);
     }
@@ -48,9 +48,9 @@ public class RoleMenuDao extends SherlyServiceImpl<RoleMenuMapper, RoleMenu> {
      * @param roleId
      * @return
      */
-    public List<RoleMenu> listByRoleId(Long roleId) {
-        LambdaQueryWrapper<RoleMenu> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(RoleMenu::getRoleId, roleId);
+    public List<RoleMenuDO> listByRoleId(Long roleId) {
+        LambdaQueryWrapper<RoleMenuDO> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(RoleMenuDO::getRoleId, roleId);
         return this.list(wrapper);
     }
 
@@ -59,9 +59,9 @@ public class RoleMenuDao extends SherlyServiceImpl<RoleMenuMapper, RoleMenu> {
      * @param roleIds
      * @return
      */
-    public List<RoleMenu> listByRoleIds(List<Long> roleIds) {
-        LambdaQueryWrapper<RoleMenu> wrapper = new LambdaQueryWrapper<>();
-        wrapper.in(RoleMenu::getRoleId, roleIds);
+    public List<RoleMenuDO> listByRoleIds(List<Long> roleIds) {
+        LambdaQueryWrapper<RoleMenuDO> wrapper = new LambdaQueryWrapper<>();
+        wrapper.in(RoleMenuDO::getRoleId, roleIds);
         return this.list(wrapper);
     }
 
@@ -71,8 +71,8 @@ public class RoleMenuDao extends SherlyServiceImpl<RoleMenuMapper, RoleMenu> {
      * @return
      */
     public Long countByMenuId(Long menuId) {
-        LambdaQueryWrapper<RoleMenu> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(RoleMenu::getMenuId, menuId);
+        LambdaQueryWrapper<RoleMenuDO> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(RoleMenuDO::getMenuId, menuId);
         return this.count(wrapper);
     }
 }

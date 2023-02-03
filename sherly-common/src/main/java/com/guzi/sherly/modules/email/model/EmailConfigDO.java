@@ -14,7 +14,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @TableName("sys_email_config")
 @EqualsAndHashCode(callSuper = true)
-public class EmailConfig extends BaseModel {
+public class EmailConfigDO extends BaseModel {
     /** 编号 */
     @TableId(type = IdType.AUTO)
     private Integer id;

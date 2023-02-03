@@ -3,14 +3,14 @@ package com.guzi.sherly.service;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.servlet.ServletUtil;
 import com.guzi.sherly.admin.accountuser.dao.AccountUserDao;
-import com.guzi.sherly.admin.accountuser.model.AccountUser;
+import com.guzi.sherly.admin.accountuser.model.AccountUserDO;
 import com.guzi.sherly.admin.login.dto.LoginDTO;
 import com.guzi.sherly.admin.login.vo.LoginTenantVO;
 import com.guzi.sherly.admin.login.vo.LoginVO;
 import com.guzi.sherly.admin.tenant.dao.TenantDao;
-import com.guzi.sherly.admin.tenant.model.Tenant;
+import com.guzi.sherly.admin.tenant.model.TenantDO;
 import com.guzi.sherly.admin.user.dao.UserDao;
-import com.guzi.sherly.admin.user.model.User;
+import com.guzi.sherly.admin.user.model.UserDO;
 import com.guzi.sherly.admin.useronline.model.UserOnline;
 import com.guzi.sherly.common.constants.RedisKey;
 import com.guzi.sherly.common.exception.BizException;
@@ -136,39 +136,39 @@ public class LoginService {
      */
     private void dealWithTenantCode(LoginDTO dto) {
         if (StrUtil.isNotBlank(dto.getTenantCode())) {
-            Tenant tenant = tenantDao.getByTenantCode(dto.getTenantCode());
+            TenantDO tenantDO = tenantDao.getByTenantCode(dto.getTenantCode());
             // 如果租户不存在
-            if (tenant == null) {
+            if (tenantDO == null) {
                 throw new BizException(TENANT_MISS);
             }
 
             // 如果在选择租户下无该账号
-            AccountUser accountUser = accountUserDao.getByPhone(dto.getPhone());
-            List<String> split = StrUtil.split(accountUser.getTenantData(), ",");
+            AccountUserDO accountUserDO = accountUserDao.getByPhone(dto.getPhone());
+            List<String> split = StrUtil.split(accountUserDO.getTenantData(), ",");
             if (!split.contains(dto.getTenantCode())) {
                 throw new BizException(NOT_IN_ACCOUNT);
             }
 
             // 如果选择的租户已过期
-            if (tenant.getExpireTime().getTime() <= System.currentTimeMillis()) {
-                throw new BizException(TENANT_EXPIRED, tenant.getTenantName());
+            if (tenantDO.getExpireTime().getTime() <= System.currentTimeMillis()) {
+                throw new BizException(TENANT_EXPIRED, tenantDO.getTenantName());
             }
             // 校验租户是否可用，如果可用，那么最近登陆租户切换成该租户code
-            accountUser.setLastLoginTenantCode(dto.getTenantCode());
-            accountUserDao.updateById(accountUser);
+            accountUserDO.setLastLoginTenantCode(dto.getTenantCode());
+            accountUserDao.updateById(accountUserDO);
         }
     }
 
     /**
      * 更新用户登录信息
-     * @param user
+     * @param userDO
      * @param request
      */
-    private void updateUser(User user, HttpServletRequest request) {
+    private void updateUser(UserDO userDO, HttpServletRequest request) {
         String ip = ServletUtil.getClientIP(request);
-        user.setLastLoginTime(new Date());
-        user.setLastLoginIp(ip);
-        userDao.updateById(user);
+        userDO.setLastLoginTime(new Date());
+        userDO.setLastLoginIp(ip);
+        userDao.updateById(userDO);
     }
 
     /**
@@ -185,14 +185,14 @@ public class LoginService {
      */
     public List<LoginTenantVO> availableList(String phone) {
 
-        AccountUser accountUser = accountUserDao.getByPhone(phone);
-        List<String> tenantCodes = StrUtil.split(accountUser.getTenantData(), ",");
-        List<Tenant> tenants = tenantDao.listAvailableByTenantCodes(tenantCodes);
-        if (CollectionUtils.isEmpty(tenants)) {
+        AccountUserDO accountUserDO = accountUserDao.getByPhone(phone);
+        List<String> tenantCodes = StrUtil.split(accountUserDO.getTenantData(), ",");
+        List<TenantDO> tenantDOs = tenantDao.listAvailableByTenantCodes(tenantCodes);
+        if (CollectionUtils.isEmpty(tenantDOs)) {
             throw new BizException(NO_TENANT);
         }
 
-        return tenants.stream().map(e -> {
+        return tenantDOs.stream().map(e -> {
             LoginTenantVO vo = new LoginTenantVO();
             BeanUtils.copyProperties(e, vo);
             return vo;
@@ -211,9 +211,9 @@ public class LoginService {
         SecurityModel securityModel = new SecurityModel();
         securityModel.setTenantCode(GlobalPropertiesUtil.SHERLY_PROPERTIES.getDefaultDb());
         SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(securityModel, null));
-        AccountUser accountUser = accountUserDao.getByPhone(phone);
-        accountUser.setLastLoginTenantCode(tenantCode);
-        accountUserDao.updateById(accountUser);
+        AccountUserDO accountUserDO = accountUserDao.getByPhone(phone);
+        accountUserDO.setLastLoginTenantCode(tenantCode);
+        accountUserDao.updateById(accountUserDO);
 
         LoginUserDetails loginUserDetails = (LoginUserDetails)userDetailsService.loadUserByUsername(phone);
         this.updateCache(loginUserDetails, sessionId, request);
@@ -233,7 +233,7 @@ public class LoginService {
         redisTemplate.opsForValue().set(RedisKey.SESSION_ID + redisSecurityModel.getSecurityModel().getSessionId(), redisSecurityModel, 6, TimeUnit.HOURS);
 
         // 更新用户信息
-        this.updateUser(loginUserDetails.getUser(), request);
+        this.updateUser(loginUserDetails.getUserDO(), request);
     }
 
     /**
@@ -242,21 +242,21 @@ public class LoginService {
      * @return
      */
     public List<LoginTenantVO> availableListCheck(LoginDTO dto) {
-        AccountUser accountUser = accountUserDao.getByPhone(dto.getPhone());
-        if (accountUser == null) {
+        AccountUserDO accountUserDO = accountUserDao.getByPhone(dto.getPhone());
+        if (accountUserDO == null) {
             throw new BizException(NO_REGISTER);
         }
-        if (!passwordEncoder.matches(dto.getPassword(), accountUser.getPassword())) {
+        if (!passwordEncoder.matches(dto.getPassword(), accountUserDO.getPassword())) {
             throw new BizException(ERR_USR_PWD);
         }
-        List<String> tenantCodes = StrUtil.split(accountUser.getTenantData(), ",");
-        List<Tenant> tenants = tenantDao.listAvailableByTenantCodes(tenantCodes);
+        List<String> tenantCodes = StrUtil.split(accountUserDO.getTenantData(), ",");
+        List<TenantDO> tenantDOs = tenantDao.listAvailableByTenantCodes(tenantCodes);
 
-        if (CollectionUtils.isEmpty(tenants)) {
+        if (CollectionUtils.isEmpty(tenantDOs)) {
             throw new BizException(NO_TENANT);
         }
 
-        return tenants.stream().map(e -> {
+        return tenantDOs.stream().map(e -> {
             LoginTenantVO vo = new LoginTenantVO();
             BeanUtils.copyProperties(e, vo);
             return vo;

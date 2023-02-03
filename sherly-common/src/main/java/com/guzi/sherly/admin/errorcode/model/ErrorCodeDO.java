@@ -1,4 +1,4 @@
-package com.guzi.sherly.admin.department.model;
+package com.guzi.sherly.admin.errorcode.model;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -9,25 +9,25 @@ import lombok.EqualsAndHashCode;
 
 /**
  * @author 谷子毅
- * @date 2022/3/28
+ * @date 2022/8/29
  */
 @Data
-@TableName("sys_department")
+@TableName("ge_error_code")
 @EqualsAndHashCode(callSuper = true)
-public class Department extends BaseModel {
-    /** 部门编号 */
+public class ErrorCodeDO extends BaseModel {
+    /** 错误编号 */
     @TableId(type = IdType.AUTO)
-    private Long departmentId;
+    private Integer errorId;
 
-    /** 部门名称 */
-    private String departmentName;
+    /** 错误代码 */
+    private String errorCode;
+
+    /** 错误信息 */
+    private String message;
 
     /** 描述 */
     private String description;
 
-    /** 父部门编号 */
-    private Long parentId;
-
-    /** 排序 */
-    private Integer sort;
+    /** 模块编号 */
+    private Integer moduleId;
 }

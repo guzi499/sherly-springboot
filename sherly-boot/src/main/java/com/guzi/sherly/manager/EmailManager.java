@@ -6,7 +6,7 @@ import com.guzi.sherly.common.exception.BizException;
 import com.guzi.sherly.modules.email.dao.EmailConfigDao;
 import com.guzi.sherly.modules.email.dto.EmailConfigDTO;
 import com.guzi.sherly.modules.email.dto.EmailSendDTO;
-import com.guzi.sherly.modules.email.model.EmailConfig;
+import com.guzi.sherly.modules.email.model.EmailConfigDO;
 import com.guzi.sherly.modules.email.vo.EmailConfigVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -30,12 +30,12 @@ public class EmailManager {
      * @return
      */
     public EmailConfigVO getOne() {
-        EmailConfig emailConfig = emailConfigDao.getOne(null);
+        EmailConfigDO emailConfigDO = emailConfigDao.getOne(null);
         EmailConfigVO emailConfigVO = new EmailConfigVO();
-        if (emailConfig == null) {
+        if (emailConfigDO == null) {
             return emailConfigVO;
         }
-        BeanUtils.copyProperties(emailConfig, emailConfigVO);
+        BeanUtils.copyProperties(emailConfigDO, emailConfigVO);
         return emailConfigVO;
     }
 
@@ -44,9 +44,9 @@ public class EmailManager {
      * @param dto
      */
     public void saveOrUpdate(EmailConfigDTO dto) {
-        EmailConfig emailConfig = new EmailConfig();
-        BeanUtils.copyProperties(dto, emailConfig);
-        emailConfigDao.saveOrUpdate(emailConfig);
+        EmailConfigDO emailConfigDO = new EmailConfigDO();
+        BeanUtils.copyProperties(dto, emailConfigDO);
+        emailConfigDao.saveOrUpdate(emailConfigDO);
     }
 
     /**
@@ -54,20 +54,20 @@ public class EmailManager {
      * @param dto
      */
     public void send(EmailSendDTO dto) {
-        EmailConfig emailConfig = emailConfigDao.getOne(null);
-        if (emailConfig == null) {
+        EmailConfigDO emailConfigDO = emailConfigDao.getOne(null);
+        if (emailConfigDO == null) {
             throw new BizException(NO_EMAIL_CONFIG);
         }
         // 封装
         MailAccount account = new MailAccount();
         // 设置用户
-        String user = emailConfig.getSenderEmail().split("@")[0];
+        String user = emailConfigDO.getSenderEmail().split("@")[0];
         account.setUser(user);
-        account.setHost(emailConfig.getHost());
-        account.setPort(Integer.parseInt(emailConfig.getPort()));
+        account.setHost(emailConfigDO.getHost());
+        account.setPort(Integer.parseInt(emailConfigDO.getPort()));
         account.setAuth(true);
-        account.setPass(emailConfig.getPassword());
-        account.setFrom(emailConfig.getSenderUser() + "<" + emailConfig.getSenderEmail() + ">");
+        account.setPass(emailConfigDO.getPassword());
+        account.setFrom(emailConfigDO.getSenderUser() + "<" + emailConfigDO.getSenderEmail() + ">");
         // ssl方式发送
         account.setSslEnable(true);
         // 使用STARTTLS安全连接

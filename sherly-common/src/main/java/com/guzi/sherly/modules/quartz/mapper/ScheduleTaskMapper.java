@@ -1,7 +1,7 @@
 package com.guzi.sherly.modules.quartz.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.guzi.sherly.modules.quartz.model.ScheduleTask;
+import com.guzi.sherly.modules.quartz.model.ScheduleTaskDO;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
  * @date 2022/12/5
  */
 @Repository
-public interface ScheduleTaskMapper extends BaseMapper<ScheduleTask> {
+public interface ScheduleTaskMapper extends BaseMapper<ScheduleTaskDO> {
 }

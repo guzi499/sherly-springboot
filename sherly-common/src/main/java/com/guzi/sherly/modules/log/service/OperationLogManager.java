@@ -2,7 +2,7 @@ package com.guzi.sherly.modules.log.service;
 
 import com.guzi.sherly.common.model.PageResult;
 import com.guzi.sherly.modules.log.dto.OperationLogPageDTO;
-import com.guzi.sherly.modules.log.model.OperationLog;
+import com.guzi.sherly.modules.log.model.OperationLogDO;
 import com.guzi.sherly.modules.log.vo.OperationLogPageVO;
 import com.guzi.sherly.modules.log.vo.OperationLogVO;
 import org.springframework.scheduling.annotation.Async;
@@ -15,10 +15,10 @@ public interface OperationLogManager {
 
     /**
      * 日志记录
-     * @param operationLog
+     * @param operationLogDO
      */
     @Async
-    void saveOne(OperationLog operationLog);
+    void saveOne(OperationLogDO operationLogDO);
 
     /**
      * 日志分页

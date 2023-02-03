@@ -1,7 +1,7 @@
 package com.guzi.sherly.modules.log.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.guzi.sherly.modules.log.model.LoginLog;
+import com.guzi.sherly.modules.log.model.LoginLogDO;
 import org.apache.ibatis.annotations.Delete;
 import org.springframework.stereotype.Repository;
 
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
  * @date 2022/7/14
  */
 @Repository
-public interface LoginLogMapper extends BaseMapper<LoginLog> {
+public interface LoginLogMapper extends BaseMapper<LoginLogDO> {
     /**
      * 清空日志表
      */

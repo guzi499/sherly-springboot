@@ -1,7 +1,7 @@
 package com.guzi.sherly.admin.module.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.guzi.sherly.admin.module.model.Module;
+import com.guzi.sherly.admin.module.model.ModuleDO;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
  * @date 2022/9/1
  */
 @Repository
-public interface ModuleMapper extends BaseMapper<Module> {
+public interface ModuleMapper extends BaseMapper<ModuleDO> {
 }

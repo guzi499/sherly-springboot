@@ -12,20 +12,16 @@ import lombok.EqualsAndHashCode;
  * @date 2022/11/15
  */
 @Data
-@TableName("ge_tenant_package")
+@TableName("ge_tenant_package_menu")
 @EqualsAndHashCode(callSuper = true)
-public class TenantPackage extends BaseModel {
+public class TenantPackageMenuDO extends BaseModel {
+    /** 编号 */
+    @TableId(type = IdType.AUTO)
+    private Long id;
 
     /** 租户套餐编号 */
-    @TableId(type = IdType.AUTO)
     private Long tenantPackageId;
 
-    /** 租户套餐名称 */
-    private String tenantPackageName;
-
-    /** 描述 */
-    private String description;
-
-    /** 启用禁用[enum] */
-    private Integer enable;
+    /** 菜单编号 */
+    private Long menuId;
 }

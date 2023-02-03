@@ -11,7 +11,7 @@ import java.util.Date;
  */
 @Data
 @TableName("ge_account_user")
-public class AccountUser {
+public class AccountUserDO {
 
     /** 账户用户编号 */
     @TableId(type = IdType.AUTO)

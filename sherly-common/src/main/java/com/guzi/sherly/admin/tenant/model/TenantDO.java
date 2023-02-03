@@ -16,7 +16,7 @@ import java.util.Date;
 @Data
 @TableName("ge_tenant")
 @EqualsAndHashCode(callSuper = true)
-public class Tenant extends BaseModel {
+public class TenantDO extends BaseModel {
 
     /** 租户编号 */
     @TableId(type = IdType.AUTO)

@@ -4,8 +4,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.guzi.sherly.admin.tenant.dao.TenantPackageDao;
 import com.guzi.sherly.admin.tenant.dao.TenantPackageMenuDao;
 import com.guzi.sherly.admin.tenant.dto.*;
-import com.guzi.sherly.admin.tenant.model.TenantPackage;
-import com.guzi.sherly.admin.tenant.model.TenantPackageMenu;
+import com.guzi.sherly.admin.tenant.model.TenantPackageDO;
+import com.guzi.sherly.admin.tenant.model.TenantPackageMenuDO;
 import com.guzi.sherly.admin.tenant.vo.TenantPackagePageVO;
 import com.guzi.sherly.admin.tenant.vo.TenantPackageSelectVO;
 import com.guzi.sherly.common.model.PageResult;
@@ -38,7 +38,7 @@ public class TenantPackageService {
      * @return
      */
     public PageResult<TenantPackagePageVO> listPage(TenantPackagePageDTO dto) {
-        IPage<TenantPackage> page = tenantPackageDao.listPage(dto);
+        IPage<TenantPackageDO> page = tenantPackageDao.listPage(dto);
 
         List<TenantPackagePageVO> result = page.getRecords().stream().map(e -> {
             TenantPackagePageVO tenantPackagePageVO = new TenantPackagePageVO();
@@ -54,10 +54,10 @@ public class TenantPackageService {
      * @param dto
      */
     public void saveOne(TenantPackageInsertDTO dto) {
-        TenantPackage tenantPackage = new TenantPackage();
-        BeanUtils.copyProperties(dto, tenantPackage);
-        tenantPackage.setEnable(ENABLE);
-        tenantPackageDao.save(tenantPackage);
+        TenantPackageDO tenantPackageDO = new TenantPackageDO();
+        BeanUtils.copyProperties(dto, tenantPackageDO);
+        tenantPackageDO.setEnable(ENABLE);
+        tenantPackageDao.save(tenantPackageDO);
     }
 
     /**
@@ -75,9 +75,9 @@ public class TenantPackageService {
      * @param dto
      */
     public void updateOne(TenantPackageUpdateDTO dto) {
-        TenantPackage tenantPackage = new TenantPackage();
-        BeanUtils.copyProperties(dto, tenantPackage);
-        tenantPackageDao.updateById(tenantPackage);
+        TenantPackageDO tenantPackageDO = new TenantPackageDO();
+        BeanUtils.copyProperties(dto, tenantPackageDO);
+        tenantPackageDao.updateById(tenantPackageDO);
     }
 
     /**
@@ -86,8 +86,8 @@ public class TenantPackageService {
      * @return
      */
     public List<Long> listMenu(Long tenantPackageId) {
-        List<TenantPackageMenu> tenantPackageMenus = tenantPackageMenuDao.getByTenantPackageId(tenantPackageId);
-        return tenantPackageMenus.stream().map(TenantPackageMenu::getMenuId).collect(Collectors.toList());
+        List<TenantPackageMenuDO> tenantPackageMenuDOs = tenantPackageMenuDao.getByTenantPackageId(tenantPackageId);
+        return tenantPackageMenuDOs.stream().map(TenantPackageMenuDO::getMenuId).collect(Collectors.toList());
     }
 
     /**
@@ -98,13 +98,13 @@ public class TenantPackageService {
     public void updateMenu(TenantPackageMenuUpdateDTO dto) {
         Long tenantPackageId = dto.getTenantPackageId();
         tenantPackageDao.removeById(tenantPackageId);
-        List<TenantPackageMenu> tenantPackageMenus = dto.getMenuIds().stream().map(e -> {
-            TenantPackageMenu tenantPackageMenu = new TenantPackageMenu();
-            tenantPackageMenu.setTenantPackageId(tenantPackageId);
-            tenantPackageMenu.setMenuId(e);
-            return tenantPackageMenu;
+        List<TenantPackageMenuDO> tenantPackageMenuDOs = dto.getMenuIds().stream().map(e -> {
+            TenantPackageMenuDO tenantPackageMenuDO = new TenantPackageMenuDO();
+            tenantPackageMenuDO.setTenantPackageId(tenantPackageId);
+            tenantPackageMenuDO.setMenuId(e);
+            return tenantPackageMenuDO;
         }).collect(Collectors.toList());
-        tenantPackageMenuDao.saveBatch(tenantPackageMenus);
+        tenantPackageMenuDao.saveBatch(tenantPackageMenuDOs);
     }
 
     /**
@@ -113,9 +113,9 @@ public class TenantPackageService {
      * @return
      */
     public List<TenantPackageSelectVO> listAll(TenantPackageSelectDTO dto) {
-        List<TenantPackage> tenantPackages = tenantPackageDao.listAll(dto);
+        List<TenantPackageDO> tenantPackageDOs = tenantPackageDao.listAll(dto);
 
-        return tenantPackages.stream().map(e -> {
+        return tenantPackageDOs.stream().map(e -> {
             TenantPackageSelectVO tenantPackageSelectVO = new TenantPackageSelectVO();
             BeanUtils.copyProperties(e, tenantPackageSelectVO);
             return tenantPackageSelectVO;

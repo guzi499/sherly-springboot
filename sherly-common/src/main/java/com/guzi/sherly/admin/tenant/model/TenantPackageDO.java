@@ -1,4 +1,4 @@
-package com.guzi.sherly.admin.errorcode.model;
+package com.guzi.sherly.admin.tenant.model;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -9,25 +9,23 @@ import lombok.EqualsAndHashCode;
 
 /**
  * @author 谷子毅
- * @date 2022/8/29
+ * @date 2022/11/15
  */
 @Data
-@TableName("ge_error_code")
+@TableName("ge_tenant_package")
 @EqualsAndHashCode(callSuper = true)
-public class ErrorCode extends BaseModel {
-    /** 错误编号 */
+public class TenantPackageDO extends BaseModel {
+
+    /** 租户套餐编号 */
     @TableId(type = IdType.AUTO)
-    private Integer errorId;
+    private Long tenantPackageId;
 
-    /** 错误代码 */
-    private String errorCode;
-
-    /** 错误信息 */
-    private String message;
+    /** 租户套餐名称 */
+    private String tenantPackageName;
 
     /** 描述 */
     private String description;
 
-    /** 模块编号 */
-    private Integer moduleId;
+    /** 启用禁用[enum] */
+    private Integer enable;
 }

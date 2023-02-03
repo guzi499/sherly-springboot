@@ -1,7 +1,7 @@
 package com.guzi.sherly.modules.oss.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.guzi.sherly.modules.oss.model.OssFile;
+import com.guzi.sherly.modules.oss.model.OssFileDO;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
  * @date 2022/6/29
  */
 @Repository
-public interface OssFileMapper extends BaseMapper<OssFile> {
+public interface OssFileMapper extends BaseMapper<OssFileDO> {
 }

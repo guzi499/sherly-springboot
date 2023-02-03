@@ -3,7 +3,7 @@ package com.guzi.sherly.service;
 import com.guzi.sherly.admin.department.dao.DepartmentDao;
 import com.guzi.sherly.admin.department.dto.DepartmentInsertDTO;
 import com.guzi.sherly.admin.department.dto.DepartmentUpdateDTO;
-import com.guzi.sherly.admin.department.model.Department;
+import com.guzi.sherly.admin.department.model.DepartmentDO;
 import com.guzi.sherly.admin.department.vo.DepartmentVO;
 import com.guzi.sherly.admin.user.dao.UserDao;
 import com.guzi.sherly.common.exception.BizException;
@@ -38,11 +38,11 @@ public class DepartmentService {
      * @return
      */
     public List<DepartmentVO> listTree() {
-        List<Department> list = departmentDao.list();
+        List<DepartmentDO> list = departmentDao.list();
 
         // 对象转换成vo类型
         List<DepartmentVO> all = list.stream()
-                .sorted(Comparator.comparing(Department::getSort))
+                .sorted(Comparator.comparing(DepartmentDO::getSort))
                 .map(e -> {
                     DepartmentVO vo = new DepartmentVO();
                     BeanUtils.copyProperties(e, vo);
@@ -75,14 +75,14 @@ public class DepartmentService {
      */
     public void saveOne(DepartmentInsertDTO dto) {
         // 查重
-        Department one = departmentDao.getByDepartmentName(dto.getDepartmentName());
+        DepartmentDO one = departmentDao.getByDepartmentName(dto.getDepartmentName());
         if (one != null) {
             throw new BizException(DEPARTMENT_REPEAT);
         }
 
-        Department department = new Department();
-        BeanUtils.copyProperties(dto, department);
-        departmentDao.save(department);
+        DepartmentDO departmentDO = new DepartmentDO();
+        BeanUtils.copyProperties(dto, departmentDO);
+        departmentDao.save(departmentDO);
 
     }
 
@@ -95,16 +95,16 @@ public class DepartmentService {
             throw new BizException(UPDATE_DEPT_ERROR);
         }
         // 查重 排除自身
-        Department one = departmentDao.getByDepartmentName(dto.getDepartmentName());
+        DepartmentDO one = departmentDao.getByDepartmentName(dto.getDepartmentName());
 
         // 如果待修改名称已存在且不为自身
         if (one != null && !Objects.equals(one.getDepartmentId(), dto.getDepartmentId())) {
             throw new BizException(DEPARTMENT_REPEAT);
         }
 
-        Department department = new Department();
-        BeanUtils.copyProperties(dto, department);
-        departmentDao.updateById(department);
+        DepartmentDO departmentDO = new DepartmentDO();
+        BeanUtils.copyProperties(dto, departmentDO);
+        departmentDao.updateById(departmentDO);
     }
 
     /**

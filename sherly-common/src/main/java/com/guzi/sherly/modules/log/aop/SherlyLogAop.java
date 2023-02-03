@@ -5,7 +5,7 @@ import cn.hutool.http.useragent.UserAgentUtil;
 import cn.hutool.json.JSONUtil;
 import com.guzi.sherly.common.util.IpUtil;
 import com.guzi.sherly.modules.log.annotation.SherlyLog;
-import com.guzi.sherly.modules.log.model.OperationLog;
+import com.guzi.sherly.modules.log.model.OperationLogDO;
 import com.guzi.sherly.modules.log.service.OperationLogManager;
 import com.guzi.sherly.modules.security.util.SecurityUtil;
 import io.swagger.annotations.ApiOperation;
@@ -82,15 +82,15 @@ public class SherlyLogAop {
      * @param exception
      */
     private void saveOne(Long duration, ProceedingJoinPoint joinPoint, Integer type, Throwable exception) {
-        OperationLog operationLog = new OperationLog();
+        OperationLogDO operationLogDO = new OperationLogDO();
         HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
         String ip = IpUtil.getIp(request);
         String address = IpUtil.getAddress(ip);
         String userAgent = request.getHeader("User-Agent");
         if (userAgent != null) {
             UserAgent agent = UserAgentUtil.parse(userAgent);
-            operationLog.setOs(agent.getOs().toString());
-            operationLog.setBrowser(agent.getBrowser().toString());
+            operationLogDO.setOs(agent.getOs().toString());
+            operationLogDO.setBrowser(agent.getBrowser().toString());
         }
 
         String requestMethod = request.getMethod();
@@ -103,26 +103,26 @@ public class SherlyLogAop {
 
         String requestParams = this.parseArgs(methodSignature, joinPoint.getArgs());
 
-        operationLog.setType(type);
-        operationLog.setDescription(sherlyLogAnnotation != null ? sherlyLogAnnotation.description() : apiOperationAnnotation.value());
-        operationLog.setDuration(duration);
-        operationLog.setRequestMethod(requestMethod);
-        operationLog.setUri(uri);
-        operationLog.setRequestParams(requestParams);
-        operationLog.setIp(ip);
-        operationLog.setAddress(address);
+        operationLogDO.setType(type);
+        operationLogDO.setDescription(sherlyLogAnnotation != null ? sherlyLogAnnotation.description() : apiOperationAnnotation.value());
+        operationLogDO.setDuration(duration);
+        operationLogDO.setRequestMethod(requestMethod);
+        operationLogDO.setUri(uri);
+        operationLogDO.setRequestParams(requestParams);
+        operationLogDO.setIp(ip);
+        operationLogDO.setAddress(address);
 
         if (exception != null) {
             List<String> list = Arrays.stream(exception.getStackTrace()).map(Objects::toString).filter(e -> e.startsWith("com.guzi")).collect(Collectors.toList());
             list.add(0, exception.getMessage());
-            operationLog.setException(JSONUtil.toJsonStr(list));
+            operationLogDO.setException(JSONUtil.toJsonStr(list));
         }
 
         Long createTimeMills = recordTime.get();
-        operationLog.setCreateTime(new Date(createTimeMills));
-        operationLog.setCreateUserId(SecurityUtil.getUserId());
+        operationLogDO.setCreateTime(new Date(createTimeMills));
+        operationLogDO.setCreateUserId(SecurityUtil.getUserId());
 
-        operationLogManager.saveOne(operationLog);
+        operationLogManager.saveOne(operationLogDO);
     }
 
     /**

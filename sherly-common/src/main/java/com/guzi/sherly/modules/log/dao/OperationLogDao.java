@@ -3,7 +3,7 @@ package com.guzi.sherly.modules.log.dao;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.guzi.sherly.modules.log.dto.OperationLogPageDTO;
 import com.guzi.sherly.modules.log.mapper.OperationLogMapper;
-import com.guzi.sherly.modules.log.model.OperationLog;
+import com.guzi.sherly.modules.log.model.OperationLogDO;
 import com.guzi.sherly.modules.mybatisplus.service.SherlyServiceImpl;
 import com.guzi.sherly.modules.mybatisplus.wrapper.SherlyLambdaQueryWrapper;
 import org.springframework.stereotype.Service;
@@ -14,17 +14,17 @@ import org.springframework.stereotype.Service;
  * @date 2022/7/14
  */
 @Service
-public class OperationLogDao extends SherlyServiceImpl<OperationLogMapper, OperationLog> {
-    public Page<OperationLog> listPage(OperationLogPageDTO dto) {
-        SherlyLambdaQueryWrapper<OperationLog> wrapper = new SherlyLambdaQueryWrapper<>();
+public class OperationLogDao extends SherlyServiceImpl<OperationLogMapper, OperationLogDO> {
+    public Page<OperationLogDO> listPage(OperationLogPageDTO dto) {
+        SherlyLambdaQueryWrapper<OperationLogDO> wrapper = new SherlyLambdaQueryWrapper<>();
         wrapper
-                .eqIfExist(OperationLog::getType, dto.getType())
-                .inIfExist(OperationLog::getCreateUserId, dto.getUserIds())
-                .eqIfExist(OperationLog::getRequestMethod, dto.getRequestMethod())
-                .likeIfExist(OperationLog::getUri, dto.getUri())
-                .betweenIfExist(OperationLog::getDuration, dto.getBeginDuration(), dto.getEndDuration())
-                .betweenIfExist(OperationLog::getCreateTime, dto.getBeginTime(), dto.getEndTime())
-                .orderByDesc(OperationLog::getLogId);
+                .eqIfExist(OperationLogDO::getType, dto.getType())
+                .inIfExist(OperationLogDO::getCreateUserId, dto.getUserIds())
+                .eqIfExist(OperationLogDO::getRequestMethod, dto.getRequestMethod())
+                .likeIfExist(OperationLogDO::getUri, dto.getUri())
+                .betweenIfExist(OperationLogDO::getDuration, dto.getBeginDuration(), dto.getEndDuration())
+                .betweenIfExist(OperationLogDO::getCreateTime, dto.getBeginTime(), dto.getEndTime())
+                .orderByDesc(OperationLogDO::getLogId);
         return this.page(new Page<>(dto.getCurrent(), dto.getSize()), wrapper);
     }
 

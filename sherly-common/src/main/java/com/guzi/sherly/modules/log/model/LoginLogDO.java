@@ -15,7 +15,7 @@ import java.util.Date;
  */
 @Data
 @TableName("sys_login_log")
-public class LoginLog {
+public class LoginLogDO {
     /** 日志编号 */
     @TableId(type = IdType.AUTO)
     private Long logId;

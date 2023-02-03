@@ -6,7 +6,7 @@ import com.guzi.sherly.modules.quartz.dao.ScheduleTaskDao;
 import com.guzi.sherly.modules.quartz.dto.ScheduleTaskInsertDTO;
 import com.guzi.sherly.modules.quartz.dto.ScheduleTaskPageDTO;
 import com.guzi.sherly.modules.quartz.dto.ScheduleTaskUpdateDTO;
-import com.guzi.sherly.modules.quartz.model.ScheduleTask;
+import com.guzi.sherly.modules.quartz.model.ScheduleTaskDO;
 import com.guzi.sherly.modules.quartz.util.ScheduleTaskUtil;
 import com.guzi.sherly.modules.quartz.vo.ScheduleTaskPageVO;
 import lombok.SneakyThrows;
@@ -43,9 +43,9 @@ public class ScheduleTaskManager {
     @PostConstruct
     @SneakyThrows
     public void init() {
-        List<ScheduleTask> list = scheduleTaskDao.list();
-        for (ScheduleTask scheduleTask : list) {
-            ScheduleTaskUtil.createScheduleTaskJob(scheduler, scheduleTask);
+        List<ScheduleTaskDO> list = scheduleTaskDao.list();
+        for (ScheduleTaskDO scheduleTaskDO : list) {
+            ScheduleTaskUtil.createScheduleTaskJob(scheduler, scheduleTaskDO);
         }
     }
 
@@ -56,7 +56,7 @@ public class ScheduleTaskManager {
      * @return
      */
     public PageResult<ScheduleTaskPageVO> listPage(ScheduleTaskPageDTO dto) {
-        Page<ScheduleTask> page = scheduleTaskDao.listPage(dto);
+        Page<ScheduleTaskDO> page = scheduleTaskDao.listPage(dto);
 
         List<ScheduleTaskPageVO> result = page.getRecords().stream().map(e -> {
             ScheduleTaskPageVO scheduleTaskPageVO = new ScheduleTaskPageVO();
@@ -72,10 +72,10 @@ public class ScheduleTaskManager {
      * @param dto
      */
     public void saveOne(ScheduleTaskInsertDTO dto) {
-        ScheduleTask scheduleTask = new ScheduleTask();
-        BeanUtils.copyProperties(dto, scheduleTask);
-        scheduleTaskDao.save(scheduleTask);
-        ScheduleTaskUtil.createScheduleTaskJob(scheduler, scheduleTask);
+        ScheduleTaskDO scheduleTaskDO = new ScheduleTaskDO();
+        BeanUtils.copyProperties(dto, scheduleTaskDO);
+        scheduleTaskDao.save(scheduleTaskDO);
+        ScheduleTaskUtil.createScheduleTaskJob(scheduler, scheduleTaskDO);
     }
 
     /**
@@ -103,11 +103,11 @@ public class ScheduleTaskManager {
      */
     @SneakyThrows
     public void updateOne(ScheduleTaskUpdateDTO dto) {
-        ScheduleTask scheduleTask = new ScheduleTask();
-        BeanUtils.copyProperties(dto, scheduleTask);
-        scheduleTaskDao.updateById(scheduleTask);
+        ScheduleTaskDO scheduleTaskDO = new ScheduleTaskDO();
+        BeanUtils.copyProperties(dto, scheduleTaskDO);
+        scheduleTaskDao.updateById(scheduleTaskDO);
         scheduler.deleteJob(getJobKey(dto.getScheduleTaskId()));
-        ScheduleTaskUtil.createScheduleTaskJob(scheduler, scheduleTask);
+        ScheduleTaskUtil.createScheduleTaskJob(scheduler, scheduleTaskDO);
     }
 
     /**

@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.guzi.sherly.admin.tenant.dto.TenantPageDTO;
 import com.guzi.sherly.admin.tenant.mapper.TenantMapper;
-import com.guzi.sherly.admin.tenant.model.Tenant;
+import com.guzi.sherly.admin.tenant.model.TenantDO;
 import com.guzi.sherly.modules.mybatisplus.service.SherlyServiceImpl;
 import com.guzi.sherly.modules.mybatisplus.wrapper.SherlyLambdaQueryWrapper;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,7 @@ import java.util.List;
  * @date 2022/3/25
  */
 @Service
-public class TenantDao extends SherlyServiceImpl<TenantMapper, Tenant> {
+public class TenantDao extends SherlyServiceImpl<TenantMapper, TenantDO> {
 
     /**
      * 租户查重
@@ -26,11 +26,11 @@ public class TenantDao extends SherlyServiceImpl<TenantMapper, Tenant> {
      * @param tenantCode
      * @return
      */
-    public Tenant getByTenantNameOrTenantCode(String tenantName, String tenantCode) {
-        LambdaQueryWrapper<Tenant> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(Tenant::getTenantName, tenantName)
+    public TenantDO getByTenantNameOrTenantCode(String tenantName, String tenantCode) {
+        LambdaQueryWrapper<TenantDO> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(TenantDO::getTenantName, tenantName)
                 .or()
-                .eq(Tenant::getTenantCode, tenantCode);
+                .eq(TenantDO::getTenantCode, tenantCode);
         return this.getOne(wrapper, false);
     }
 
@@ -40,17 +40,17 @@ public class TenantDao extends SherlyServiceImpl<TenantMapper, Tenant> {
      * @param dto
      * @return
      */
-    public IPage<Tenant> listPage(TenantPageDTO dto) {
-        SherlyLambdaQueryWrapper<Tenant> wrapper = new SherlyLambdaQueryWrapper<>();
+    public IPage<TenantDO> listPage(TenantPageDTO dto) {
+        SherlyLambdaQueryWrapper<TenantDO> wrapper = new SherlyLambdaQueryWrapper<>();
         wrapper
-                .likeIfExist(Tenant::getTenantName, dto.getTenantName())
-                .likeIfExist(Tenant::getTenantCode, dto.getTenantCode())
-                .likeIfExist(Tenant::getContactUser, dto.getContactUser())
-                .likeIfExist(Tenant::getContactPhone, dto.getContactPhone())
-                .betweenIfExist(Tenant::getExpireTime, dto.getBeginExpireTime(), dto.getEndExpireTime())
-                .betweenIfExist(Tenant::getUserLimit, dto.getBeginUserLimit(), dto.getEndUserLimit())
-                .betweenIfExist(Tenant::getCreateTime, dto.getBeginTime(), dto.getEndTime())
-                .orderByDesc(Tenant::getTenantId);
+                .likeIfExist(TenantDO::getTenantName, dto.getTenantName())
+                .likeIfExist(TenantDO::getTenantCode, dto.getTenantCode())
+                .likeIfExist(TenantDO::getContactUser, dto.getContactUser())
+                .likeIfExist(TenantDO::getContactPhone, dto.getContactPhone())
+                .betweenIfExist(TenantDO::getExpireTime, dto.getBeginExpireTime(), dto.getEndExpireTime())
+                .betweenIfExist(TenantDO::getUserLimit, dto.getBeginUserLimit(), dto.getEndUserLimit())
+                .betweenIfExist(TenantDO::getCreateTime, dto.getBeginTime(), dto.getEndTime())
+                .orderByDesc(TenantDO::getTenantId);
         return this.page(new Page<>(dto.getCurrent(), dto.getSize()), wrapper);
     }
 
@@ -59,9 +59,9 @@ public class TenantDao extends SherlyServiceImpl<TenantMapper, Tenant> {
      * @param tenantCode
      * @return
      */
-    public Tenant getByTenantCode(String tenantCode) {
-        SherlyLambdaQueryWrapper<Tenant> wrapper = new SherlyLambdaQueryWrapper<>();
-        wrapper.eq(Tenant::getTenantCode, tenantCode);
+    public TenantDO getByTenantCode(String tenantCode) {
+        SherlyLambdaQueryWrapper<TenantDO> wrapper = new SherlyLambdaQueryWrapper<>();
+        wrapper.eq(TenantDO::getTenantCode, tenantCode);
         return this.getOne(wrapper, false);
     }
 
@@ -70,10 +70,10 @@ public class TenantDao extends SherlyServiceImpl<TenantMapper, Tenant> {
      * @param tenantCodes
      * @return
      */
-    public List<Tenant> listAvailableByTenantCodes(List<String> tenantCodes) {
-        SherlyLambdaQueryWrapper<Tenant> wrapper = new SherlyLambdaQueryWrapper<>();
-        wrapper.inIfExist(Tenant::getTenantCode, tenantCodes)
-                .geIfExist(Tenant::getExpireTime, new Date());
+    public List<TenantDO> listAvailableByTenantCodes(List<String> tenantCodes) {
+        SherlyLambdaQueryWrapper<TenantDO> wrapper = new SherlyLambdaQueryWrapper<>();
+        wrapper.inIfExist(TenantDO::getTenantCode, tenantCodes)
+                .geIfExist(TenantDO::getExpireTime, new Date());
         return this.list(wrapper);
     }
 }

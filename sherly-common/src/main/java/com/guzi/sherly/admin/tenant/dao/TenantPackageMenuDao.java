@@ -2,7 +2,7 @@ package com.guzi.sherly.admin.tenant.dao;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.guzi.sherly.admin.tenant.mapper.TenantPackageMenuMapper;
-import com.guzi.sherly.admin.tenant.model.TenantPackageMenu;
+import com.guzi.sherly.admin.tenant.model.TenantPackageMenuDO;
 import com.guzi.sherly.modules.mybatisplus.service.SherlyServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -13,14 +13,14 @@ import java.util.List;
  * @date 2022/11/15
  */
 @Service
-public class TenantPackageMenuDao extends SherlyServiceImpl<TenantPackageMenuMapper, TenantPackageMenu> {
+public class TenantPackageMenuDao extends SherlyServiceImpl<TenantPackageMenuMapper, TenantPackageMenuDO> {
     /**
      * 根据租户套餐id删除租户套餐菜单
      * @param tenantPackageId
      */
     public void removeByMenuId(Long tenantPackageId) {
-        LambdaQueryWrapper<TenantPackageMenu> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(TenantPackageMenu::getTenantPackageId, tenantPackageId);
+        LambdaQueryWrapper<TenantPackageMenuDO> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(TenantPackageMenuDO::getTenantPackageId, tenantPackageId);
         this.remove(wrapper);
     }
 
@@ -29,9 +29,9 @@ public class TenantPackageMenuDao extends SherlyServiceImpl<TenantPackageMenuMap
      * @param tenantPackageId
      * @return
      */
-    public List<TenantPackageMenu> getByTenantPackageId(Long tenantPackageId) {
-        LambdaQueryWrapper<TenantPackageMenu> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(TenantPackageMenu::getTenantPackageId, tenantPackageId);
+    public List<TenantPackageMenuDO> getByTenantPackageId(Long tenantPackageId) {
+        LambdaQueryWrapper<TenantPackageMenuDO> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(TenantPackageMenuDO::getTenantPackageId, tenantPackageId);
         return this.list(wrapper);
     }
 }

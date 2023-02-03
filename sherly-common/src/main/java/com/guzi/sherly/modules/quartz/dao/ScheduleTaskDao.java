@@ -6,7 +6,7 @@ import com.guzi.sherly.modules.mybatisplus.service.SherlyServiceImpl;
 import com.guzi.sherly.modules.mybatisplus.wrapper.SherlyLambdaQueryWrapper;
 import com.guzi.sherly.modules.quartz.dto.ScheduleTaskPageDTO;
 import com.guzi.sherly.modules.quartz.mapper.ScheduleTaskMapper;
-import com.guzi.sherly.modules.quartz.model.ScheduleTask;
+import com.guzi.sherly.modules.quartz.model.ScheduleTaskDO;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,14 +14,14 @@ import org.springframework.stereotype.Service;
  * @date 2022/12/5
  */
 @Service
-public class ScheduleTaskDao extends SherlyServiceImpl<ScheduleTaskMapper, ScheduleTask> {
+public class ScheduleTaskDao extends SherlyServiceImpl<ScheduleTaskMapper, ScheduleTaskDO> {
     /**
      * 定时任务分页
      * @param dto
      * @return
      */
-    public Page<ScheduleTask> listPage(ScheduleTaskPageDTO dto) {
-        SherlyLambdaQueryWrapper<ScheduleTask> wrapper = new SherlyLambdaQueryWrapper<>();
+    public Page<ScheduleTaskDO> listPage(ScheduleTaskPageDTO dto) {
+        SherlyLambdaQueryWrapper<ScheduleTaskDO> wrapper = new SherlyLambdaQueryWrapper<>();
         return this.page(new Page<>(dto.getCurrent(), dto.getSize()), wrapper);
     }
 
@@ -31,9 +31,9 @@ public class ScheduleTaskDao extends SherlyServiceImpl<ScheduleTaskMapper, Sched
      * @param enable
      */
     public void enableOne(Integer scheduleTaskId, Integer enable) {
-        LambdaUpdateWrapper<ScheduleTask> wrapper = new LambdaUpdateWrapper<>();
-        wrapper.eq(ScheduleTask::getScheduleTaskId, scheduleTaskId)
-                .set(ScheduleTask::getEnable, enable);
+        LambdaUpdateWrapper<ScheduleTaskDO> wrapper = new LambdaUpdateWrapper<>();
+        wrapper.eq(ScheduleTaskDO::getScheduleTaskId, scheduleTaskId)
+                .set(ScheduleTaskDO::getEnable, enable);
         this.update(wrapper);
     }
 }

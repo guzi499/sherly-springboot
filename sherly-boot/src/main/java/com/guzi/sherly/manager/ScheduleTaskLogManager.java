@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.guzi.sherly.common.model.PageResult;
 import com.guzi.sherly.modules.quartz.dao.ScheduleTaskLogDao;
 import com.guzi.sherly.modules.quartz.dto.ScheduleTaskLogPageDTO;
-import com.guzi.sherly.modules.quartz.model.ScheduleTaskLog;
+import com.guzi.sherly.modules.quartz.model.ScheduleTaskLogDO;
 import com.guzi.sherly.modules.quartz.vo.ScheduleTaskLogPageVO;
 import com.guzi.sherly.modules.quartz.vo.ScheduleTaskLogVO;
 import org.springframework.beans.BeanUtils;
@@ -25,7 +25,7 @@ public class ScheduleTaskLogManager {
     private ScheduleTaskLogDao scheduleTaskLogDao;
 
     public PageResult<ScheduleTaskLogPageVO> listPage(ScheduleTaskLogPageDTO dto) {
-        Page<ScheduleTaskLog> page = scheduleTaskLogDao.listPage(dto);
+        Page<ScheduleTaskLogDO> page = scheduleTaskLogDao.listPage(dto);
         List<ScheduleTaskLogPageVO> result = page.getRecords().stream().map(e -> {
             ScheduleTaskLogPageVO vo = new ScheduleTaskLogPageVO();
             BeanUtils.copyProperties(e, vo);
@@ -36,9 +36,9 @@ public class ScheduleTaskLogManager {
 
 
     public ScheduleTaskLogVO getOne(Long scheduleTaskLogId) {
-        ScheduleTaskLog scheduleTaskLog = scheduleTaskLogDao.getById(scheduleTaskLogId);
+        ScheduleTaskLogDO scheduleTaskLogDO = scheduleTaskLogDao.getById(scheduleTaskLogId);
         ScheduleTaskLogVO vo = new ScheduleTaskLogVO();
-        BeanUtils.copyProperties(scheduleTaskLog, vo);
+        BeanUtils.copyProperties(scheduleTaskLogDO, vo);
         return vo;
     }
 }

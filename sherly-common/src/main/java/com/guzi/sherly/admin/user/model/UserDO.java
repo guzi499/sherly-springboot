@@ -17,7 +17,7 @@ import java.util.Date;
 @Data
 @TableName("sys_user")
 @EqualsAndHashCode(callSuper = true)
-public class User extends BaseModel {
+public class UserDO extends BaseModel {
     /** 用户编号 */
     @TableId(type = IdType.AUTO)
     private Long userId;

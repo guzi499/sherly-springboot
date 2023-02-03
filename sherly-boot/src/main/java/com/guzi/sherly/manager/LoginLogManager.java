@@ -7,7 +7,7 @@ import com.guzi.sherly.common.model.PageResult;
 import com.guzi.sherly.common.util.IpUtil;
 import com.guzi.sherly.modules.log.dao.LoginLogDao;
 import com.guzi.sherly.modules.log.dto.LoginLogPageDTO;
-import com.guzi.sherly.modules.log.model.LoginLog;
+import com.guzi.sherly.modules.log.model.LoginLogDO;
 import com.guzi.sherly.modules.log.vo.LoginLogPageVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.scheduling.annotation.Async;
@@ -37,7 +37,7 @@ public class LoginLogManager {
      * @return
      */
     public PageResult<LoginLogPageVO> listPage(LoginLogPageDTO dto) {
-        Page<LoginLog> page = loginLogDao.listPage(dto);
+        Page<LoginLogDO> page = loginLogDao.listPage(dto);
 
         List<LoginLogPageVO> result = page.getRecords().stream().map(e -> {
             LoginLogPageVO vo = new LoginLogPageVO();
@@ -65,25 +65,25 @@ public class LoginLogManager {
     @Async
     @Transactional(propagation = Propagation.NOT_SUPPORTED)
     public void saveOne(HttpServletRequest request, String username, Integer result, Integer type) {
-        LoginLog loginLog = new LoginLog();
+        LoginLogDO loginLogDO = new LoginLogDO();
 
         String userAgent = request.getHeader("User-Agent");
         if (userAgent != null) {
             UserAgent agent = UserAgentUtil.parse(userAgent);
-            loginLog.setOs(agent.getOs().toString());
-            loginLog.setBrowser(agent.getBrowser().toString());
+            loginLogDO.setOs(agent.getOs().toString());
+            loginLogDO.setBrowser(agent.getBrowser().toString());
         }
 
         String ip = IpUtil.getIp(request);
         String address = IpUtil.getAddress(ip);
 
-        loginLog.setIp(ip);
-        loginLog.setAddress(address);
-        loginLog.setUsername(username);
-        loginLog.setType(type);
-        loginLog.setResult(result);
-        loginLog.setCreateTime(new Date());
+        loginLogDO.setIp(ip);
+        loginLogDO.setAddress(address);
+        loginLogDO.setUsername(username);
+        loginLogDO.setType(type);
+        loginLogDO.setResult(result);
+        loginLogDO.setCreateTime(new Date());
 
-        loginLogDao.save(loginLog);
+        loginLogDao.save(loginLogDO);
     }
 }

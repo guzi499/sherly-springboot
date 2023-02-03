@@ -1,7 +1,7 @@
 package com.guzi.sherly.modules.email.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.guzi.sherly.modules.email.model.EmailConfig;
+import com.guzi.sherly.modules.email.model.EmailConfigDO;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
  * @date 2022/6/8
  */
 @Repository
-public interface EmailConfigMapper extends BaseMapper<EmailConfig> {
+public interface EmailConfigMapper extends BaseMapper<EmailConfigDO> {
 }

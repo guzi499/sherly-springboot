@@ -1,7 +1,7 @@
 package com.guzi.sherly.admin.user.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.guzi.sherly.admin.user.model.User;
+import com.guzi.sherly.admin.user.model.UserDO;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -10,5 +10,5 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository
-public interface UserMapper extends BaseMapper<User> {
+public interface UserMapper extends BaseMapper<UserDO> {
 }

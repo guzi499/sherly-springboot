@@ -1,7 +1,7 @@
 package com.guzi.sherly.admin.errorcode.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.guzi.sherly.admin.errorcode.model.ErrorCode;
+import com.guzi.sherly.admin.errorcode.model.ErrorCodeDO;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
  * @date 2022/9/1
  */
 @Repository
-public interface ErrorCodeMapper extends BaseMapper<ErrorCode> {
+public interface ErrorCodeMapper extends BaseMapper<ErrorCodeDO> {
 }

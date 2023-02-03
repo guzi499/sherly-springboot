@@ -5,10 +5,10 @@ import com.guzi.sherly.admin.errorcode.dao.ErrorCodeDao;
 import com.guzi.sherly.admin.errorcode.dto.ErrorCodeInsertDTO;
 import com.guzi.sherly.admin.errorcode.dto.ErrorCodePageDTO;
 import com.guzi.sherly.admin.errorcode.dto.ErrorCodeUpdateDTO;
-import com.guzi.sherly.admin.errorcode.model.ErrorCode;
+import com.guzi.sherly.admin.errorcode.model.ErrorCodeDO;
 import com.guzi.sherly.admin.errorcode.vo.ErrorCodePageVO;
 import com.guzi.sherly.admin.module.dao.ModuleDao;
-import com.guzi.sherly.admin.module.model.Module;
+import com.guzi.sherly.admin.module.model.ModuleDO;
 import com.guzi.sherly.common.exception.BizException;
 import com.guzi.sherly.common.model.PageResult;
 import org.springframework.beans.BeanUtils;
@@ -40,14 +40,14 @@ public class ErrorCodeService {
      */
     public void saveOne(ErrorCodeInsertDTO dto) {
         // 查重
-        ErrorCode one = errorCodeDao.getByErrorCode(dto.getErrorCode());
+        ErrorCodeDO one = errorCodeDao.getByErrorCode(dto.getErrorCode());
         if (one != null) {
             throw new BizException(ERROR_REPEAT);
         }
 
-        ErrorCode errorCode = new ErrorCode();
-        BeanUtils.copyProperties(dto, errorCode);
-        errorCodeDao.save(errorCode);
+        ErrorCodeDO errorCodeDO = new ErrorCodeDO();
+        BeanUtils.copyProperties(dto, errorCodeDO);
+        errorCodeDao.save(errorCodeDO);
     }
 
     /**
@@ -55,9 +55,9 @@ public class ErrorCodeService {
      * @param dto
      */
     public void updateOne(ErrorCodeUpdateDTO dto) {
-        ErrorCode errorCode = new ErrorCode();
-        BeanUtils.copyProperties(dto, errorCode);
-        errorCodeDao.updateById(errorCode);
+        ErrorCodeDO errorCodeDO = new ErrorCodeDO();
+        BeanUtils.copyProperties(dto, errorCodeDO);
+        errorCodeDao.updateById(errorCodeDO);
     }
 
     /**
@@ -74,11 +74,11 @@ public class ErrorCodeService {
      * @return
      */
     public PageResult<ErrorCodePageVO> listPage(ErrorCodePageDTO dto) {
-        IPage<ErrorCode> page = errorCodeDao.listPage(dto);
+        IPage<ErrorCodeDO> page = errorCodeDao.listPage(dto);
 
-        List<Integer> moduleIds = page.getRecords().stream().map(ErrorCode::getModuleId).collect(Collectors.toList());
-        List<Module> modules = moduleDao.listByIds(moduleIds);
-        Map<Integer, String> idMapCode = modules.stream().collect(Collectors.toMap(Module::getModuleId, Module::getModuleCode));
+        List<Integer> moduleIds = page.getRecords().stream().map(ErrorCodeDO::getModuleId).collect(Collectors.toList());
+        List<ModuleDO> moduleDOs = moduleDao.listByIds(moduleIds);
+        Map<Integer, String> idMapCode = moduleDOs.stream().collect(Collectors.toMap(ModuleDO::getModuleId, ModuleDO::getModuleCode));
 
         List<ErrorCodePageVO> result = page.getRecords().stream().map(e -> {
             ErrorCodePageVO vo = new ErrorCodePageVO();

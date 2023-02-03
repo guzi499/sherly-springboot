@@ -1,7 +1,7 @@
 package com.guzi.sherly.modules.log.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.guzi.sherly.modules.log.model.OperationLog;
+import com.guzi.sherly.modules.log.model.OperationLogDO;
 import org.apache.ibatis.annotations.Delete;
 import org.springframework.stereotype.Repository;
 
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
  * @date 2022/7/14
  */
 @Repository
-public interface OperationLogMapper extends BaseMapper<OperationLog> {
+public interface OperationLogMapper extends BaseMapper<OperationLogDO> {
     /**
      * 清空日志表
      */

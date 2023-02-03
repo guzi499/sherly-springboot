@@ -5,11 +5,11 @@ import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.write.style.column.LongestMatchColumnWidthStyleStrategy;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.guzi.sherly.admin.accountuser.dao.AccountUserDao;
-import com.guzi.sherly.admin.accountuser.model.AccountUser;
+import com.guzi.sherly.admin.accountuser.model.AccountUserDO;
 import com.guzi.sherly.admin.department.dao.DepartmentDao;
-import com.guzi.sherly.admin.department.model.Department;
+import com.guzi.sherly.admin.department.model.DepartmentDO;
 import com.guzi.sherly.admin.tenant.dao.TenantDao;
-import com.guzi.sherly.admin.tenant.model.Tenant;
+import com.guzi.sherly.admin.tenant.model.TenantDO;
 import com.guzi.sherly.admin.user.dao.UserDao;
 import com.guzi.sherly.admin.user.dao.UserRoleDao;
 import com.guzi.sherly.admin.user.dto.UserInsertDTO;
@@ -17,8 +17,8 @@ import com.guzi.sherly.admin.user.dto.UserPageDTO;
 import com.guzi.sherly.admin.user.dto.UserSelectDTO;
 import com.guzi.sherly.admin.user.dto.UserUpdateDTO;
 import com.guzi.sherly.admin.user.eo.UserEO;
-import com.guzi.sherly.admin.user.model.User;
-import com.guzi.sherly.admin.user.model.UserRole;
+import com.guzi.sherly.admin.user.model.UserDO;
+import com.guzi.sherly.admin.user.model.UserRoleDO;
 import com.guzi.sherly.admin.user.vo.UserPageVo;
 import com.guzi.sherly.admin.user.vo.UserSelectVO;
 import com.guzi.sherly.admin.user.vo.UserVo;
@@ -77,14 +77,14 @@ public class UserService {
      */
     public PageResult<UserPageVo> listPage(UserPageDTO dto) {
         // 分页查询
-        IPage<User> page = userDao.listPage(dto);
-        List<Department> departmentList = departmentDao.list();
+        IPage<UserDO> page = userDao.listPage(dto);
+        List<DepartmentDO> departmentDOList = departmentDao.list();
 
         // 对象转换成vo类型
         List<UserPageVo> result = page.getRecords().stream().map(e -> {
             UserPageVo userPageVo = new UserPageVo();
             BeanUtils.copyProperties(e, userPageVo);
-            userPageVo.setDepartmentName(departmentList.stream().filter(x -> Objects.equals(x.getDepartmentId(), e.getDepartmentId())).map(Department::getDepartmentName).collect(Collectors.joining(",")));
+            userPageVo.setDepartmentName(departmentDOList.stream().filter(x -> Objects.equals(x.getDepartmentId(), e.getDepartmentId())).map(DepartmentDO::getDepartmentName).collect(Collectors.joining(",")));
             return userPageVo;
         }).collect(Collectors.toList());
 
@@ -97,11 +97,11 @@ public class UserService {
      */
     @SneakyThrows
     public void listExport(HttpServletResponse response) {
-        List<User> userList = userDao.list();
-        List<Department> departmentList = departmentDao.list();
-        Map<Long, String> departmentIdMapName = departmentList.stream().collect(Collectors.toMap(Department::getDepartmentId, Department::getDepartmentName));
+        List<UserDO> userDOList = userDao.list();
+        List<DepartmentDO> departmentDOList = departmentDao.list();
+        Map<Long, String> departmentIdMapName = departmentDOList.stream().collect(Collectors.toMap(DepartmentDO::getDepartmentId, DepartmentDO::getDepartmentName));
 
-        List<UserEO> result = userList.stream().map(e -> {
+        List<UserEO> result = userDOList.stream().map(e -> {
             UserEO userEO = new UserEO();
             BeanUtils.copyProperties(e, userEO);
             userEO.setEnable(Objects.equals(e.getEnable(), ENABLE) ? "启用" : "禁用");
@@ -128,15 +128,15 @@ public class UserService {
      */
     public UserVo getOne(Long userId) {
 
-        User user = userDao.getById(userId);
+        UserDO userDO = userDao.getById(userId);
 
         // 查询角色
-        List<UserRole> userRoles = userRoleDao.listByUserId(userId);
-        List<Long> roleIds = userRoles.stream().map(UserRole::getRoleId).collect(Collectors.toList());
+        List<UserRoleDO> userRoleDOs = userRoleDao.listByUserId(userId);
+        List<Long> roleIds = userRoleDOs.stream().map(UserRoleDO::getRoleId).collect(Collectors.toList());
 
         // 组装vo
         UserVo vo = new UserVo();
-        BeanUtils.copyProperties(user, vo);
+        BeanUtils.copyProperties(userDO, vo);
         vo.setRoleIds(roleIds);
 
         return vo;
@@ -150,7 +150,7 @@ public class UserService {
     public void saveOne(UserInsertDTO dto) {
         // 去重
         String phone = dto.getPhone();
-        User one = userDao.getByPhone(phone);
+        UserDO one = userDao.getByPhone(phone);
         if (one != null) {
             throw new BizException(USER_REPEAT);
         }
@@ -158,38 +158,38 @@ public class UserService {
         long userNum = userDao.count();
 
         // 注册用户上限校验
-        Tenant tenant = tenantDao.getByTenantCode(SecurityUtil.getTenantCode());
-        if (tenant.getUserLimit() <= userNum) {
+        TenantDO tenantDO = tenantDao.getByTenantCode(SecurityUtil.getTenantCode());
+        if (tenantDO.getUserLimit() <= userNum) {
             throw new BizException(USER_LIMIT);
         }
 
         // 同步用户账户信息
-        AccountUser accountUser = accountUserDao.getByPhone(phone);
-        if (accountUser == null) {
-            accountUser = new AccountUser();
-            accountUser.setPhone(phone);
-            accountUser.setPassword(passwordEncoder.encode(GlobalPropertiesUtil.SHERLY_PROPERTIES.getDefaultPassword()));
-            accountUser.setTenantData(SecurityUtil.getTenantCode());
-            accountUser.setLastLoginTenantCode(SecurityUtil.getTenantCode());
-            accountUserDao.save(accountUser);
+        AccountUserDO accountUserDO = accountUserDao.getByPhone(phone);
+        if (accountUserDO == null) {
+            accountUserDO = new AccountUserDO();
+            accountUserDO.setPhone(phone);
+            accountUserDO.setPassword(passwordEncoder.encode(GlobalPropertiesUtil.SHERLY_PROPERTIES.getDefaultPassword()));
+            accountUserDO.setTenantData(SecurityUtil.getTenantCode());
+            accountUserDO.setLastLoginTenantCode(SecurityUtil.getTenantCode());
+            accountUserDao.save(accountUserDO);
         } else {
-            List<String> split = StrUtil.split(accountUser.getTenantData(), ",");
+            List<String> split = StrUtil.split(accountUserDO.getTenantData(), ",");
             split.add(SecurityUtil.getTenantCode());
             split = split.stream().filter(StrUtil::isNotBlank).collect(Collectors.toList());
             String tenantData = String.join(",", split);
-            accountUser.setTenantData(tenantData);
-            accountUserDao.updateById(accountUser);
+            accountUserDO.setTenantData(tenantData);
+            accountUserDao.updateById(accountUserDO);
         }
 
-        User user = new User();
-        BeanUtils.copyProperties(dto, user);
-        user.setEnable(ENABLE);
-        user.setAccountUserId(accountUser.getAccountUserId());
-        user.setLastLoginTime(new Date());
-        userDao.save(user);
+        UserDO userDO = new UserDO();
+        BeanUtils.copyProperties(dto, userDO);
+        userDO.setEnable(ENABLE);
+        userDO.setAccountUserId(accountUserDO.getAccountUserId());
+        userDO.setLastLoginTime(new Date());
+        userDao.save(userDO);
 
         // 保存用户角色数据
-        userRoleDao.saveUserRole(user.getUserId(), dto.getRoleIds());
+        userRoleDao.saveUserRole(userDO.getUserId(), dto.getRoleIds());
     }
 
     /**
@@ -201,9 +201,9 @@ public class UserService {
         if (Objects.equals(dto.getUserId(), 1L)) {
             throw new BizException(UPDATE_USER_ERROR);
         }
-        User user = new User();
-        BeanUtils.copyProperties(dto, user);
-        userDao.updateById(user);
+        UserDO userDO = new UserDO();
+        BeanUtils.copyProperties(dto, userDO);
+        userDao.updateById(userDO);
 
         userRoleDao.removeUserRoleByUserId(dto.getUserId());
         userRoleDao.saveUserRole(dto.getUserId(), dto.getRoleIds());
@@ -219,13 +219,13 @@ public class UserService {
             throw new BizException(DELETE_USER_ERROR);
         }
 
-        User user = userDao.getById(userId);
-        AccountUser accountUser = accountUserDao.getByPhone(user.getPhone());
-        List<String> split = StrUtil.split(accountUser.getTenantData(), ",");
+        UserDO userDO = userDao.getById(userId);
+        AccountUserDO accountUserDO = accountUserDao.getByPhone(userDO.getPhone());
+        List<String> split = StrUtil.split(accountUserDO.getTenantData(), ",");
         split.remove(SecurityUtil.getTenantCode());
         String tenantCode = String.join(",", split);
-        accountUser.setTenantData(tenantCode);
-        accountUserDao.updateById(accountUser);
+        accountUserDO.setTenantData(tenantCode);
+        accountUserDao.updateById(accountUserDO);
 
         userDao.removeById(userId);
     }
@@ -248,13 +248,13 @@ public class UserService {
      */
     public List<UserSelectVO> listAll(UserSelectDTO dto) {
 
-        List<UserRole> userRoles = userRoleDao.listByRoleIds(dto.getRoleIds());
-        List<Long> userIds = userRoles.stream().map(UserRole::getUserId).collect(Collectors.toList());
+        List<UserRoleDO> userRoleDOs = userRoleDao.listByRoleIds(dto.getRoleIds());
+        List<Long> userIds = userRoleDOs.stream().map(UserRoleDO::getUserId).collect(Collectors.toList());
         dto.setUserIds(userIds);
 
-        List<User> users = userDao.listAll(dto);
+        List<UserDO> userDOs = userDao.listAll(dto);
 
-        return users.stream().map(e -> {
+        return userDOs.stream().map(e -> {
             UserSelectVO vo = new UserSelectVO();
             BeanUtils.copyProperties(e, vo);
             return vo;

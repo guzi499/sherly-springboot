@@ -1,4 +1,4 @@
-package com.guzi.sherly.admin.role.model;
+package com.guzi.sherly.admin.user.model;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -11,17 +11,18 @@ import lombok.EqualsAndHashCode;
  * @author 谷子毅
  * @date 2022/3/17
  */
+
 @Data
-@TableName("sys_role")
+@TableName("sys_user_role")
 @EqualsAndHashCode(callSuper = true)
-public class Role extends BaseModel {
-    /** 角色编号 */
+public class UserRoleDO extends BaseModel {
+    /** 编号 */
     @TableId(type = IdType.AUTO)
+    private Long id;
+
+    /** 用户编号 */
+    private Long userId;
+
+    /** 角色编号 */
     private Long roleId;
-
-    /** 角色名称 */
-    private String roleName;
-
-    /** 描述 */
-    private String description;
 }

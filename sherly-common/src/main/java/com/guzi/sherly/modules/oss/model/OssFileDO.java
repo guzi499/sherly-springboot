@@ -14,7 +14,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @TableName("sys_oss_file")
 @EqualsAndHashCode(callSuper = true)
-public class OssFile extends BaseModel {
+public class OssFileDO extends BaseModel {
     /** 文件编号 */
     @TableId(type = IdType.AUTO)
     private Long fileId;

@@ -4,11 +4,11 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.guzi.sherly.admin.user.dao.UserDao;
 import com.guzi.sherly.admin.user.dto.UserSelectDTO;
-import com.guzi.sherly.admin.user.model.User;
+import com.guzi.sherly.admin.user.model.UserDO;
 import com.guzi.sherly.common.model.PageResult;
 import com.guzi.sherly.modules.log.dao.OperationLogDao;
 import com.guzi.sherly.modules.log.dto.OperationLogPageDTO;
-import com.guzi.sherly.modules.log.model.OperationLog;
+import com.guzi.sherly.modules.log.model.OperationLogDO;
 import com.guzi.sherly.modules.log.service.OperationLogManager;
 import com.guzi.sherly.modules.log.vo.OperationLogPageVO;
 import com.guzi.sherly.modules.log.vo.OperationLogVO;
@@ -34,8 +34,8 @@ public class OperationLogManagerImpl implements OperationLogManager {
     private UserDao userDao;
 
     @Override
-    public void saveOne(OperationLog operationLog) {
-        operationLogDao.save(operationLog);
+    public void saveOne(OperationLogDO operationLogDO) {
+        operationLogDao.save(operationLogDO);
     }
 
     @Override
@@ -43,12 +43,12 @@ public class OperationLogManagerImpl implements OperationLogManager {
         if (StrUtil.isNotBlank(dto.getRealName())) {
             UserSelectDTO userSelectDTO = new UserSelectDTO();
             userSelectDTO.setRealName(dto.getRealName());
-            List<Long> userIds = userDao.listAll(userSelectDTO).stream().map(User::getUserId).collect(Collectors.toList());
+            List<Long> userIds = userDao.listAll(userSelectDTO).stream().map(UserDO::getUserId).collect(Collectors.toList());
             dto.setUserIds(userIds);
         }
-        Page<OperationLog> page = operationLogDao.listPage(dto);
-        List<Long> userIds = page.getRecords().stream().map(OperationLog::getCreateUserId).collect(Collectors.toList());
-        Map<Long, String> userMap = userDao.listByIds(userIds).stream().collect(Collectors.toMap(User::getUserId, User::getRealName));
+        Page<OperationLogDO> page = operationLogDao.listPage(dto);
+        List<Long> userIds = page.getRecords().stream().map(OperationLogDO::getCreateUserId).collect(Collectors.toList());
+        Map<Long, String> userMap = userDao.listByIds(userIds).stream().collect(Collectors.toMap(UserDO::getUserId, UserDO::getRealName));
         List<OperationLogPageVO> result = page.getRecords().stream().map(e -> {
             OperationLogPageVO vo = new OperationLogPageVO();
             BeanUtils.copyProperties(e, vo);
@@ -61,7 +61,7 @@ public class OperationLogManagerImpl implements OperationLogManager {
 
     @Override
     public OperationLogVO getOne(Long logId) {
-        OperationLog log = operationLogDao.getById(logId);
+        OperationLogDO log = operationLogDao.getById(logId);
         OperationLogVO vo = new OperationLogVO();
         BeanUtils.copyProperties(log, vo);
         return vo;

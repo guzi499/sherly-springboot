@@ -12,7 +12,7 @@ import lombok.Data;
  */
 @Data
 @TableName("ge_schedule_task")
-public class ScheduleTask extends BaseModel {
+public class ScheduleTaskDO extends BaseModel {
 
     /** 定时任务编号 */
     @TableId(type = IdType.AUTO)

@@ -16,7 +16,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @TableName(value = "sys_oss_config", autoResultMap = true)
 @EqualsAndHashCode(callSuper = true)
-public class OssConfig extends BaseModel {
+public class OssConfigDO extends BaseModel {
     /** 配置编号 */
     @TableId(type = IdType.AUTO)
     private Long configId;

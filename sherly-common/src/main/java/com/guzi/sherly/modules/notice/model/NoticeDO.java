@@ -14,7 +14,7 @@ import lombok.Data;
  */
 @Data
 @TableName("sys_notice")
-public class Notice extends SimpleBaseModel {
+public class NoticeDO extends SimpleBaseModel {
     /** 消息编号 */
     @TableId(type = IdType.AUTO)
     private Long noticeId;

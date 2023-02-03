@@ -1,6 +1,6 @@
 package com.guzi.sherly.modules.quartz.util;
 
-import com.guzi.sherly.modules.quartz.model.ScheduleTask;
+import com.guzi.sherly.modules.quartz.model.ScheduleTaskDO;
 import com.guzi.sherly.modules.quartz.model.SherlyJob;
 import lombok.SneakyThrows;
 import org.quartz.*;
@@ -22,14 +22,14 @@ public class ScheduleTaskUtil {
     /**
      * 创建定时任务实例
      * @param scheduler
-     * @param scheduleTask
+     * @param scheduleTaskDO
      */
     @SneakyThrows
-    public static void createScheduleTaskJob(Scheduler scheduler, ScheduleTask scheduleTask) {
+    public static void createScheduleTaskJob(Scheduler scheduler, ScheduleTaskDO scheduleTaskDO) {
         Class<SherlyJob> sherlyJobClass = SherlyJob.class;
 
-        Integer scheduleTaskId = scheduleTask.getScheduleTaskId();
-        String cronExpression = scheduleTask.getCronExpression();
+        Integer scheduleTaskId = scheduleTaskDO.getScheduleTaskId();
+        String cronExpression = scheduleTaskDO.getCronExpression();
 
         JobDetail jobDetail = JobBuilder
                 .newJob(sherlyJobClass)
@@ -42,11 +42,11 @@ public class ScheduleTaskUtil {
                 .withSchedule(CronScheduleBuilder.cronSchedule(cronExpression))
                 .build();
 
-        jobDetail.getJobDataMap().put(SCHEDULE_TASK_PARAMS, scheduleTask);
+        jobDetail.getJobDataMap().put(SCHEDULE_TASK_PARAMS, scheduleTaskDO);
 
         scheduler.scheduleJob(jobDetail, cronTrigger);
 
-        if (Objects.equals(scheduleTask.getEnable(), DISABLE)) {
+        if (Objects.equals(scheduleTaskDO.getEnable(), DISABLE)) {
             scheduler.pauseJob(getJobKey(scheduleTaskId));
         }
     }

@@ -14,7 +14,7 @@ import java.util.Date;
  */
 @Data
 @TableName("ge_schedule_task_log")
-public class ScheduleTaskLog {
+public class ScheduleTaskLogDO {
     /** 定时任务日志编号 */
     @TableId(type = IdType.AUTO)
     private Long scheduleTaskLogId;
