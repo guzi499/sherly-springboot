@@ -90,7 +90,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         List<String> permissions = Collections.emptyList();
         if (!CollectionUtils.isEmpty(menuIds)) {
             List<MenuDO> menuDOs = menuDao.listByIds(menuIds);
-            permissions = menuDOs.stream().filter(e -> !Objects.equals(e.getMenuType(), DIR.getType())).map(MenuDO::getPermission).filter(StringUtils::hasText).collect(Collectors.toList());
+            permissions = menuDOs.stream().filter(e -> !Objects.equals(e.getMenuType(), DIR)).map(MenuDO::getPermission).filter(StringUtils::hasText).collect(Collectors.toList());
         }
 
         // 响应userDetails用于登录校验

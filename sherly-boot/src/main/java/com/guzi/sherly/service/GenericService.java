@@ -102,9 +102,9 @@ public class GenericService {
         List<MenuDO> menuDOs = menuDao.listByIds(menuIds);
 
         // 跳转相关
-        List<MenuDO> jumps = menuDOs.stream().filter(e -> !Objects.equals(e.getMenuType(), BUTTON.getType())).sorted(Comparator.comparing(MenuDO::getSort)).collect(Collectors.toList());
+        List<MenuDO> jumps = menuDOs.stream().filter(e -> !Objects.equals(e.getMenuType(), BUTTON)).sorted(Comparator.comparing(MenuDO::getSort)).collect(Collectors.toList());
         // 权限相关
-        List<MenuDO> permissions = menuDOs.stream().filter(e -> !Objects.equals(e.getMenuType(), DIR.getType())).collect(Collectors.toList());
+        List<MenuDO> permissions = menuDOs.stream().filter(e -> !Objects.equals(e.getMenuType(), DIR)).collect(Collectors.toList());
 
         // 跳转相关数据转换成树
         List<BasicMenuInfoVO> menuVOList = jumps.stream().filter(e -> Objects.equals(e.getParentId(), ROOT_PARENT_ID)).map(e -> {

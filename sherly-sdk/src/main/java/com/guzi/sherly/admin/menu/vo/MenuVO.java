@@ -19,7 +19,7 @@ public class MenuVO {
 
     /** 菜单类型{@link MenuTypeEnum} */
     @ApiModelProperty(value = "菜单类型[enum]")
-    private Integer menuType;
+    private MenuTypeEnum menuType;
 
     /** 权限 */
     @ApiModelProperty(value = "权限")

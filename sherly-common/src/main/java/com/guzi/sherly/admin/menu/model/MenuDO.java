@@ -24,7 +24,7 @@ public class MenuDO extends BaseModel {
     private String menuName;
 
     /** 菜单类型{@link MenuTypeEnum} */
-    private Integer menuType;
+    private MenuTypeEnum menuType;
 
     /** 权限 */
     private String permission;

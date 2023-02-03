@@ -1,5 +1,7 @@
 package com.guzi.sherly.admin.menu.enums;
 
+import com.baomidou.mybatisplus.annotation.EnumValue;
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -12,12 +14,15 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum MenuTypeEnum {
     /** 目录 */
-    DIR(1),
+    DIR(1, "目录"),
     /** 菜单 */
-    MENU(2),
+    MENU(2, "菜单"),
     /** 按钮 */
-    BUTTON(3),
+    BUTTON(3, "按钮"),
     ;
 
-    private final Integer type;
+    @EnumValue
+    @JsonValue
+    private final Integer value;
+    private final String description;
 }

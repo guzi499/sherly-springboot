@@ -61,12 +61,6 @@
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
 
-        <!-- mybatis-plus -->
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-boot-starter</artifactId>
-        </dependency>
-
         <!-- easy-excel -->
         <dependency>
             <groupId>com.alibaba</groupId>

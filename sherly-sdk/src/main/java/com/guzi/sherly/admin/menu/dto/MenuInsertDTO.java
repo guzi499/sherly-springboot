@@ -22,7 +22,7 @@ public class MenuInsertDTO {
     /** 菜单类型{@link MenuTypeEnum} */
     @ApiModelProperty(value = "菜单类型[enum]", required = true)
     @NotNull
-    private Integer menuType;
+    private MenuTypeEnum menuType;
 
     /** 权限 */
     @ApiModelProperty(value = "权限")
