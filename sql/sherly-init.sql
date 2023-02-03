@@ -25,52 +25,6 @@ VALUES (1, '18888888888', '$2a$10$Rx/tS8zBxlhHZVN/tVbIeueFnxcZUHY8T7vgPOmor8Vy9c
         '2022-05-05 16:29:56', '2022-05-05 16:29:56');
 
 -- ----------------------------
--- Table structure for ge_error_code
--- ----------------------------
-DROP TABLE IF EXISTS `ge_error_code`;
-CREATE TABLE `ge_error_code`
-(
-    `error_id`       int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '错误编号',
-    `error_code`     char(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci     NOT NULL DEFAULT '' COMMENT '错误代码',
-    `message`        varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '错误信息',
-    `description`    varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '描述',
-    `module_id`      int(11) UNSIGNED NOT NULL COMMENT '模块编号',
-    `create_time`    datetime(0) NOT NULL COMMENT '创建时间',
-    `update_time`    datetime(0) NOT NULL COMMENT '更新时间',
-    `create_user_id` bigint(20) UNSIGNED NOT NULL COMMENT '创建人编号',
-    `update_user_id` bigint(20) UNSIGNED NOT NULL COMMENT '更新人编号',
-    `is_deleted`     tinyint(4) UNSIGNED NOT NULL DEFAULT 0 COMMENT '逻辑删除[enum]',
-    PRIMARY KEY (`error_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of ge_error_code
--- ----------------------------
-
--- ----------------------------
--- Table structure for ge_module
--- ----------------------------
-DROP TABLE IF EXISTS `ge_module`;
-CREATE TABLE `ge_module`
-(
-    `module_id`      int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '模块编号',
-    `module_code`    varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '模块代码',
-    `module_name`    varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '模块名称',
-    `sort`           int(11) UNSIGNED NOT NULL COMMENT '排序',
-    `parent_id`      int(11) UNSIGNED NOT NULL COMMENT '父模块编号',
-    `create_time`    datetime(0) NOT NULL COMMENT '创建时间',
-    `update_time`    datetime(0) NOT NULL COMMENT '更新时间',
-    `create_user_id` bigint(20) UNSIGNED NOT NULL COMMENT '创建人编号',
-    `update_user_id` bigint(20) UNSIGNED NOT NULL COMMENT '更新人编号',
-    `is_deleted`     tinyint(4) UNSIGNED NOT NULL DEFAULT 0 COMMENT '逻辑删除[enum]',
-    PRIMARY KEY (`module_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of ge_module
--- ----------------------------
-
--- ----------------------------
 -- Table structure for ge_tenant
 -- ----------------------------
 DROP TABLE IF EXISTS `ge_tenant`;
@@ -107,7 +61,7 @@ CREATE TABLE `ge_tenant_package`
     `tenant_package_id`   bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '租户套餐编号',
     `tenant_package_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '租户套餐名称',
     `description`         varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '描述',
-    `enable`              tinyint(4) UNSIGNED NOT NULL COMMENT '启用禁用[enum]',
+    `enable`              tinyint(4) UNSIGNED NOT NULL COMMENT '可用性[enum]',
     `create_time`         datetime(0) NOT NULL COMMENT '创建时间',
     `update_time`         datetime(0) NOT NULL COMMENT '更新时间',
     `create_user_id`      bigint(20) UNSIGNED NOT NULL COMMENT '创建人编号',
@@ -421,7 +375,7 @@ CREATE TABLE `sys_oss_config`
     `config_name`    varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL DEFAULT '' COMMENT '配置名称',
     `type`           int(11) UNSIGNED NOT NULL COMMENT '存储类型[enum]',
     `description`    varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci  NOT NULL DEFAULT '' COMMENT '描述',
-    `enable`         tinyint(4) UNSIGNED NOT NULL COMMENT '启用禁用[enum]',
+    `enable`         tinyint(4) UNSIGNED NOT NULL COMMENT '可用性[enum]',
     `config`         varchar(4096) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '具体配置',
     `create_time`    datetime(0) NOT NULL COMMENT '创建时间',
     `update_time`    datetime(0) NOT NULL COMMENT '更新时间',
@@ -626,7 +580,7 @@ CREATE TABLE `sys_user`
     `email`           varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '用户邮箱',
     `gender`          tinyint(4) UNSIGNED NOT NULL COMMENT '性别[enum]',
     `department_id`   bigint(20) UNSIGNED NOT NULL COMMENT '部门编号',
-    `enable`          tinyint(4) UNSIGNED NOT NULL COMMENT '启用禁用[enum]',
+    `enable`          tinyint(4) UNSIGNED NOT NULL COMMENT '可用性[enum]',
     `last_login_time` datetime(0) NOT NULL COMMENT '最后登录时间',
     `last_login_ip`   varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '最后登录IP',
     `create_time`     datetime(0) NOT NULL COMMENT '创建时间',

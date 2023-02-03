@@ -3,6 +3,7 @@ package com.guzi.sherly.modules.log.aop;
 import cn.hutool.http.useragent.UserAgent;
 import cn.hutool.http.useragent.UserAgentUtil;
 import cn.hutool.json.JSONUtil;
+import com.guzi.sherly.common.enums.LogTypeEnum;
 import com.guzi.sherly.common.util.IpUtil;
 import com.guzi.sherly.modules.log.annotation.SherlyLog;
 import com.guzi.sherly.modules.log.model.OperationLogDO;
@@ -26,8 +27,8 @@ import java.lang.reflect.Method;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.guzi.sherly.modules.log.enums.OperationLogTypeEnum.EXCEPTION_LOG;
-import static com.guzi.sherly.modules.log.enums.OperationLogTypeEnum.NORMAL_LOG;
+import static com.guzi.sherly.common.enums.LogTypeEnum.EXCEPTION;
+import static com.guzi.sherly.common.enums.LogTypeEnum.NORMAL;
 
 /**
  * @author 谷子毅
@@ -63,11 +64,11 @@ public class SherlyLogAop {
             recordTime.set(System.currentTimeMillis());
             Object result = joinPoint.proceed();
             Long duration = System.currentTimeMillis() - recordTime.get();
-            this.saveOne(duration, joinPoint, NORMAL_LOG.getType(), null);
+            this.saveOne(duration, joinPoint, NORMAL, null);
             return result;
         } catch (Throwable exception) {
             Long duration = System.currentTimeMillis() - recordTime.get();
-            this.saveOne(duration, joinPoint, EXCEPTION_LOG.getType(), exception);
+            this.saveOne(duration, joinPoint, EXCEPTION, exception);
             throw exception;
         } finally {
             recordTime.remove();
@@ -81,7 +82,7 @@ public class SherlyLogAop {
      * @param type
      * @param exception
      */
-    private void saveOne(Long duration, ProceedingJoinPoint joinPoint, Integer type, Throwable exception) {
+    private void saveOne(Long duration, ProceedingJoinPoint joinPoint, LogTypeEnum type, Throwable exception) {
         OperationLogDO operationLogDO = new OperationLogDO();
         HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
         String ip = IpUtil.getIp(request);

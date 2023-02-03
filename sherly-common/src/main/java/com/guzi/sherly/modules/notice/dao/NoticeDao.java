@@ -42,7 +42,7 @@ public class NoticeDao extends SherlyServiceImpl<NoticeMapper, NoticeDO> {
     public void clearList(List<Long> noticeIds) {
         LambdaUpdateWrapper<NoticeDO> wrapper = new LambdaUpdateWrapper<>();
         wrapper.in(NoticeDO::getNoticeId, noticeIds)
-                .set(NoticeDO::getNoticeStatus, READ.getStatus());
+                .set(NoticeDO::getNoticeStatus, READ);
         this.update(wrapper);
     }
 
@@ -52,7 +52,7 @@ public class NoticeDao extends SherlyServiceImpl<NoticeMapper, NoticeDO> {
     public void clearAll() {
         LambdaUpdateWrapper<NoticeDO> wrapper = new LambdaUpdateWrapper<>();
         wrapper.eq(NoticeDO::getNoticeUserId, SecurityUtil.getUserId())
-                .set(NoticeDO::getNoticeStatus, READ.getStatus());
+                .set(NoticeDO::getNoticeStatus, READ);
         this.update(wrapper);
     }
 
@@ -63,7 +63,7 @@ public class NoticeDao extends SherlyServiceImpl<NoticeMapper, NoticeDO> {
     public void resetList(List<Long> noticeIds) {
         LambdaUpdateWrapper<NoticeDO> wrapper = new LambdaUpdateWrapper<>();
         wrapper.in(NoticeDO::getNoticeId, noticeIds)
-                .set(NoticeDO::getNoticeStatus, UNREAD.getStatus());
+                .set(NoticeDO::getNoticeStatus, UNREAD);
         this.update(wrapper);
     }
 }

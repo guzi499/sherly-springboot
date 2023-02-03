@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
+import com.guzi.sherly.common.enums.UsableEnum;
 import com.guzi.sherly.common.model.BaseModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -30,8 +31,8 @@ public class OssConfigDO extends BaseModel {
     /** 描述 */
     private String description;
 
-    /** 启用禁用[enum] */
-    private Integer enable;
+    /** 可用性 */
+    private UsableEnum enable;
 
     /** 具体配置 */
     @TableField(typeHandler = JacksonTypeHandler.class)

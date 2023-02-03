@@ -145,7 +145,7 @@
         `email` varchar(255) NOT NULL DEFAULT '' COMMENT '用户邮箱',
         `gender` tinyint(3) unsigned NOT NULL COMMENT '性别[enum]',
         `department_id` bigint(20) unsigned NOT NULL COMMENT '部门id',
-        `enable` tinyint(3) unsigned NOT NULL COMMENT '启用禁用[enum]',
+        `enable` tinyint(3) unsigned NOT NULL COMMENT '可用性[enum]',
         `last_login_time` datetime NOT NULL COMMENT '最后登录时间',
         `last_login_ip` varchar(255) NOT NULL DEFAULT '' COMMENT '最后登录IP',
         `create_time` datetime NOT NULL COMMENT '创建时间',

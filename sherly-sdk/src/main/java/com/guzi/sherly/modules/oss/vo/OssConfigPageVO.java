@@ -27,8 +27,8 @@ public class OssConfigPageVO {
     @ApiModelProperty(value = "描述")
     private String description;
 
-    /** 启用禁用[enum] */
-    @ApiModelProperty(value = "启用禁用[enum]")
+    /** 可用性[enum] */
+    @ApiModelProperty(value = "可用性[enum]")
     private Integer enable;
 
     /** 创建时间 */

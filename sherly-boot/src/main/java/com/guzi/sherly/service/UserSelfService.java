@@ -93,7 +93,7 @@ public class UserSelfService {
         vo.setAvatar(ossManager.accessUrl(vo.getAvatar()));
         vo.setRoleIds(roleIds);
         vo.setRoleNames(roleNames);
-        vo.setGenderStr(Objects.equals(vo.getGender(), MALE.getGender()) ? "男" : "女");
+        vo.setGenderStr(vo.getGender() == MALE ? "男" : "女");
         vo.setDepartmentName(departmentIdMapName.get(vo.getDepartmentId()));
         vo.setTenantName(SecurityUtil.getTenantCode());
 

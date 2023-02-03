@@ -1,4 +1,4 @@
-package com.guzi.sherly.admin.menu.enums;
+package com.guzi.sherly.common.enums;
 
 import com.baomidou.mybatisplus.annotation.EnumValue;
 import com.fasterxml.jackson.annotation.JsonValue;
@@ -6,19 +6,17 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * 菜单类型枚举
+ * 操作日志类型枚举
  * @author 谷子毅
- * @date 2023/1/6
+ * @date 2023/1/5
  */
 @Getter
 @AllArgsConstructor
-public enum MenuTypeEnum {
-    /** 目录 */
-    DIR(1, "DIR", "目录"),
-    /** 菜单 */
-    MENU(2, "MENU", "菜单"),
-    /** 按钮 */
-    BUTTON(3, "BUTTON", "按钮"),
+public enum LogTypeEnum {
+    /** 正常 */
+    NORMAL(0, "NORMAL", "正常"),
+    /** 异常 */
+    EXCEPTION(1, "EXCEPTION", "异常"),
     ;
 
     @EnumValue

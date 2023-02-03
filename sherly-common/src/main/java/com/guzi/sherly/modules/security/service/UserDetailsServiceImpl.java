@@ -29,7 +29,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static com.guzi.sherly.admin.menu.enums.MenuTypeEnum.DIR;
-import static com.guzi.sherly.common.contants.CommonConstants.DISABLE;
+import static com.guzi.sherly.common.enums.UsableEnum.DISABLE;
 import static com.guzi.sherly.common.exception.enums.AdminErrorEnum.*;
 
 /**
@@ -78,7 +78,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         // 根据查询参数查询用户信息
         UserDO userDO = userDao.getByPhone(phone);
 
-        if (Objects.equals(userDO.getEnable(), DISABLE)) {
+        if (userDO.getEnable() == DISABLE) {
             throw new BizException(FORBIDDEN);
         }
 

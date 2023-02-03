@@ -1,5 +1,6 @@
 package com.guzi.sherly.modules.quartz.dto;
 
+import com.guzi.sherly.common.enums.UsableEnum;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -30,9 +31,9 @@ public class ScheduleTaskUpdateDTO {
     @ApiModelProperty(value = "corn表达式")
     private String cronExpression;
 
-    /** 启用禁用[enum] */
-    @ApiModelProperty(value = "启用禁用[enum]")
-    private Integer enable;
+    /** 可用性 */
+    @ApiModelProperty(value = "可用性")
+    private UsableEnum enable;
 
     /** 描述 */
     @ApiModelProperty(value = "描述")

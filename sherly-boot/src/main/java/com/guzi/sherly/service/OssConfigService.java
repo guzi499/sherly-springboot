@@ -24,8 +24,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static com.guzi.sherly.common.contants.CommonConstants.DISABLE;
-import static com.guzi.sherly.common.contants.CommonConstants.ENABLE;
+import static com.guzi.sherly.common.enums.UsableEnum.DISABLE;
+import static com.guzi.sherly.common.enums.UsableEnum.ENABLE;
 
 /**
  * @author 谷子毅
@@ -98,7 +98,7 @@ public class OssConfigService {
         ossConfigDao.updateById(ossConfigDO);
 
         // 如果是激活状态那么需要从clients容器中删除该租户的client
-        if (Objects.equals(ossConfigDO.getEnable(), ENABLE)) {
+        if (ossConfigDO.getEnable() == ENABLE) {
             ossClientFactory.removeOssClient(SecurityUtil.getTenantCode());
         }
     }

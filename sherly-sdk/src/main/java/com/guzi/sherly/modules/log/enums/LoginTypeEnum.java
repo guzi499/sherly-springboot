@@ -1,5 +1,7 @@
 package com.guzi.sherly.modules.log.enums;
 
+import com.baomidou.mybatisplus.annotation.EnumValue;
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -11,15 +13,13 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum LoginTypeEnum {
-    /** 密码 */
-    LOGIN_TYPE_PASSWORD(0),
-    /** 二维码 */
-    LOGIN_TYPE_QRCODE(1),
-    /** QQ */
-    LOGIN_TYPE_QQ(2),
-    /** 微信 */
-    LOGIN_TYPE_WX(3),
+    /** 密码登录 */
+    PASSWORD(0, "PASSWORD", "密码登录"),
     ;
 
-    private final Integer type;
+    @EnumValue
+    private final Integer value;
+    @JsonValue
+    private final String key;
+    private final String description;
 }

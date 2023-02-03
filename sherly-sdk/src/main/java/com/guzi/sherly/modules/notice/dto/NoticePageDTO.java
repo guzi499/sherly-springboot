@@ -13,12 +13,12 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class NoticePageDTO extends PageQuery {
-    /** 消息类型{@link NoticeTypeEnum} */
-    private Integer noticeType;
+    /** 消息类型 */
+    private NoticeTypeEnum noticeType;
 
     /** 关联用户编号 */
     private Long noticeUserId;
 
-    /** 状态{@link NoticeStatusEnum} */
-    private Integer noticeStatus;
+    /** 状态 */
+    private NoticeStatusEnum noticeStatus;
 }

@@ -3,6 +3,7 @@ package com.guzi.sherly.modules.log.model;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.guzi.sherly.common.enums.LogTypeEnum;
 import lombok.Data;
 
 import java.util.Date;
@@ -19,8 +20,8 @@ public class OperationLogDO {
     @TableId(type = IdType.AUTO)
     private Long logId;
 
-    /** 日志类型[enum] */
-    private Integer type;
+    /** 日志类型 */
+    private LogTypeEnum type;
 
     /** 描述 */
     private String description;

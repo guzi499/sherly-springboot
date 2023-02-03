@@ -43,7 +43,7 @@ import java.util.stream.Collectors;
 
 import static com.guzi.sherly.common.exception.enums.AdminErrorEnum.*;
 import static com.guzi.sherly.modules.log.enums.LoginResultEnum.*;
-import static com.guzi.sherly.modules.log.enums.LoginTypeEnum.LOGIN_TYPE_PASSWORD;
+import static com.guzi.sherly.modules.log.enums.LoginTypeEnum.PASSWORD;
 
 /**
  * @author 谷子毅
@@ -105,9 +105,9 @@ public class LoginService {
             if (e instanceof BizException) {
                 BizException exception = (BizException) e;
                 if (exception.getCode().equals(ERR_USR_PWD.getCode())) {
-                    loginLogManager.saveOne(request, dto.getPhone(), LOGIN_LOG_FAIL.getResult(), LOGIN_TYPE_PASSWORD.getType());
+                    loginLogManager.saveOne(request, dto.getPhone(), CHECK_FAIL, PASSWORD);
                 } else if (exception.getCode().equals(FORBIDDEN.getCode())) {
-                    loginLogManager.saveOne(request, dto.getPhone(), LOGIN_LOG_DISABLE.getResult(), LOGIN_TYPE_PASSWORD.getType());
+                    loginLogManager.saveOne(request, dto.getPhone(), DISABLE, PASSWORD);
                 }
             }
             throw e;
@@ -125,7 +125,7 @@ public class LoginService {
         LoginVO loginVO = new LoginVO(JwtUtil.generateToken(sessionId));
 
         // 记录日志
-        loginLogManager.saveOne(request, dto.getPhone(), LOGIN_LOG_SUCCESS.getResult(), LOGIN_TYPE_PASSWORD.getType());
+        loginLogManager.saveOne(request, dto.getPhone(), SUCCESS, PASSWORD);
 
         return loginVO;
     }

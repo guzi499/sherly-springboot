@@ -1,5 +1,6 @@
 package com.guzi.sherly.admin.user.dto;
 
+import com.guzi.sherly.admin.user.enums.GenderEnum;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -39,7 +40,7 @@ public class UserSelectDTO {
     @ApiModelProperty(value = "角色ids")
     private List<Long> roleIds;
 
-    /** 启用禁用[enum] */
-    @ApiModelProperty(value = "启用禁用[enum]")
-    private Integer enable;
+    /** 可用性 */
+    @ApiModelProperty(value = "可用性")
+    private GenderEnum enable;
 }

@@ -1,5 +1,6 @@
 package com.guzi.sherly.controller;
 
+import com.guzi.sherly.common.enums.UsableEnum;
 import com.guzi.sherly.common.model.PageResult;
 import com.guzi.sherly.common.model.Result;
 import com.guzi.sherly.manager.ScheduleTaskManager;
@@ -65,7 +66,7 @@ public class ScheduleTaskController {
 
     @PutMapping("/enable_one")
     @ApiOperation("定时任务禁用/启用")
-    public Result enableOne(@RequestParam Integer scheduleTaskId, @RequestParam Integer enable) {
+    public Result enableOne(@RequestParam Integer scheduleTaskId, @RequestParam UsableEnum enable) {
         scheduleTaskManager.enableOne(scheduleTaskId, enable);
         return Result.success();
     }

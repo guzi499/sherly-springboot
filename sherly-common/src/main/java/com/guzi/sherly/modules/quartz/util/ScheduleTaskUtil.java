@@ -6,9 +6,8 @@ import lombok.SneakyThrows;
 import org.quartz.*;
 
 import java.util.List;
-import java.util.Objects;
 
-import static com.guzi.sherly.common.contants.CommonConstants.DISABLE;
+import static com.guzi.sherly.common.enums.UsableEnum.DISABLE;
 import static com.guzi.sherly.modules.quartz.contants.ScheduleTaskConstants.SCHEDULE_TASK_NAME;
 import static com.guzi.sherly.modules.quartz.contants.ScheduleTaskConstants.SCHEDULE_TASK_PARAMS;
 import static com.guzi.sherly.modules.quartz.model.SherlyJob.keyPointRecord;
@@ -46,7 +45,7 @@ public class ScheduleTaskUtil {
 
         scheduler.scheduleJob(jobDetail, cronTrigger);
 
-        if (Objects.equals(scheduleTaskDO.getEnable(), DISABLE)) {
+        if (scheduleTaskDO.getEnable() == DISABLE) {
             scheduler.pauseJob(getJobKey(scheduleTaskId));
         }
     }

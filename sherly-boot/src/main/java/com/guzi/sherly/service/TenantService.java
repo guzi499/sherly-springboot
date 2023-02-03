@@ -46,8 +46,9 @@ import java.net.URLEncoder;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.guzi.sherly.common.contants.CommonConstants.ENABLE;
+import static com.guzi.sherly.admin.user.enums.GenderEnum.MALE;
 import static com.guzi.sherly.common.contants.CommonConstants.ROOT_PARENT_ID;
+import static com.guzi.sherly.common.enums.UsableEnum.ENABLE;
 import static com.guzi.sherly.common.exception.enums.AdminErrorEnum.DELETE_TENANT_ERROR;
 import static com.guzi.sherly.common.exception.enums.AdminErrorEnum.TENANT_REPEAT;
 
@@ -163,7 +164,7 @@ public class TenantService {
         userDO.setRealName(dto.getContactUser());
         userDO.setEnable(ENABLE);
         userDO.setDepartmentId(departmentDO.getDepartmentId());
-        userDO.setGender(1);
+        userDO.setGender(MALE);
         userDO.setLastLoginTime(new Date());
         userDao.save(userDO);
 

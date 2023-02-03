@@ -23,7 +23,7 @@ public class MenuDO extends BaseModel {
     /** 菜单名称 */
     private String menuName;
 
-    /** 菜单类型{@link MenuTypeEnum} */
+    /** 菜单类型 */
     private MenuTypeEnum menuType;
 
     /** 权限 */

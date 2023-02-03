@@ -42,7 +42,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static com.guzi.sherly.admin.user.enums.GenderEnum.MALE;
-import static com.guzi.sherly.common.contants.CommonConstants.ENABLE;
+import static com.guzi.sherly.common.enums.UsableEnum.ENABLE;
 import static com.guzi.sherly.common.exception.enums.AdminErrorEnum.*;
 
 /**
@@ -104,9 +104,9 @@ public class UserService {
         List<UserEO> result = userDOList.stream().map(e -> {
             UserEO userEO = new UserEO();
             BeanUtils.copyProperties(e, userEO);
-            userEO.setEnable(Objects.equals(e.getEnable(), ENABLE) ? "启用" : "禁用");
+            userEO.setEnable(e.getEnable() == ENABLE ? "启用" : "禁用");
             userEO.setDepartmentName(departmentIdMapName.get(e.getDepartmentId()));
-            userEO.setGender(Objects.equals(e.getGender(), MALE.getGender()) ? "男" : "女");
+            userEO.setGender(e.getGender() == MALE ? "男" : "女");
             return userEO;
         }).collect(Collectors.toList());
 

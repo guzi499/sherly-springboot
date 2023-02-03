@@ -1,6 +1,7 @@
 package com.guzi.sherly.admin.user.dto;
 
 import cn.hutool.core.date.DatePattern;
+import com.guzi.sherly.admin.user.enums.GenderEnum;
 import com.guzi.sherly.common.model.PageQuery;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -37,9 +38,9 @@ public class UserPageDTO extends PageQuery {
     @ApiModelProperty(value = "部门ids")
     private List<Long> departmentIds;
 
-    /** 启用禁用[enum] */
-    @ApiModelProperty(value = "启用禁用[enum]")
-    private Integer enable;
+    /** 可用性 */
+    @ApiModelProperty(value = "可用性")
+    private GenderEnum enable;
 
     @ApiModelProperty(value = "开始时间")
     @DateTimeFormat(pattern = DatePattern.NORM_DATETIME_PATTERN)

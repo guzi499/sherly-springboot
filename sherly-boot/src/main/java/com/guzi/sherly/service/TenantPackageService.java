@@ -17,7 +17,8 @@ import javax.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.guzi.sherly.common.contants.CommonConstants.ENABLE;
+import static com.guzi.sherly.common.enums.UsableEnum.ENABLE;
+
 
 /**
  * @author 谷子毅

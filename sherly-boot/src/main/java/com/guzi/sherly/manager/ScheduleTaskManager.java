@@ -1,6 +1,7 @@
 package com.guzi.sherly.manager;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.guzi.sherly.common.enums.UsableEnum;
 import com.guzi.sherly.common.model.PageResult;
 import com.guzi.sherly.modules.quartz.dao.ScheduleTaskDao;
 import com.guzi.sherly.modules.quartz.dto.ScheduleTaskInsertDTO;
@@ -17,11 +18,10 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static com.guzi.sherly.common.contants.CommonConstants.DISABLE;
-import static com.guzi.sherly.common.contants.CommonConstants.ENABLE;
+import static com.guzi.sherly.common.enums.UsableEnum.DISABLE;
+import static com.guzi.sherly.common.enums.UsableEnum.ENABLE;
 import static com.guzi.sherly.modules.quartz.util.ScheduleTaskUtil.getJobKey;
 
 /**
@@ -116,11 +116,11 @@ public class ScheduleTaskManager {
      * @param enable
      */
     @SneakyThrows
-    public void enableOne(Integer scheduleTaskId, Integer enable) {
+    public void enableOne(Integer scheduleTaskId, UsableEnum enable) {
         scheduleTaskDao.enableOne(scheduleTaskId, enable);
-        if (Objects.equals(enable, ENABLE)) {
+        if (enable == ENABLE) {
             scheduler.resumeJob(getJobKey(scheduleTaskId));
-        } else if (Objects.equals(enable, DISABLE)){
+        } else if (enable == DISABLE) {
             scheduler.pauseJob(getJobKey(scheduleTaskId));
         }
     }

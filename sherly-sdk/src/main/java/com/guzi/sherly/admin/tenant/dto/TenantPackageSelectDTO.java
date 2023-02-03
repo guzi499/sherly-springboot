@@ -1,5 +1,6 @@
 package com.guzi.sherly.admin.tenant.dto;
 
+import com.guzi.sherly.common.enums.UsableEnum;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -9,7 +10,7 @@ import lombok.Data;
  */
 @Data
 public class TenantPackageSelectDTO {
-    /** 启用禁用[enum] */
-    @ApiModelProperty(value = "启用禁用[enum]")
-    private Integer enable;
+    /** 可用性 */
+    @ApiModelProperty(value = "可用性")
+    private UsableEnum enable;
 }

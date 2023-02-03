@@ -17,8 +17,8 @@ import java.lang.reflect.Method;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.guzi.sherly.modules.log.enums.OperationLogTypeEnum.EXCEPTION_LOG;
-import static com.guzi.sherly.modules.log.enums.OperationLogTypeEnum.NORMAL_LOG;
+import static com.guzi.sherly.common.enums.LogTypeEnum.EXCEPTION;
+import static com.guzi.sherly.common.enums.LogTypeEnum.NORMAL;
 import static com.guzi.sherly.modules.quartz.contants.ScheduleTaskConstants.SCHEDULE_TASK_PARAMS;
 
 /**
@@ -85,7 +85,7 @@ public class SherlyJob implements Job {
         scheduleTaskLogDO.setScheduleTaskName(scheduleTaskDO.getScheduleTaskName());
         scheduleTaskLogDO.setInvokeClassAndMethod(scheduleTaskDO.getInvokeClassAndMethod());
         scheduleTaskLogDO.setInvokeParam(scheduleTaskDO.getInvokeParam());
-        scheduleTaskLogDO.setType(exception == null ? NORMAL_LOG.getType() : EXCEPTION_LOG.getType());
+        scheduleTaskLogDO.setType(exception == null ? NORMAL : EXCEPTION);
         scheduleTaskLogDO.setDuration(duration);
         scheduleTaskLogDO.setKeyPointRecord(JSONUtil.toJsonStr(records));
         if (exception != null) {

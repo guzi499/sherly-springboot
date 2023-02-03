@@ -3,6 +3,7 @@ package com.guzi.sherly.modules.quartz.model;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.guzi.sherly.common.enums.UsableEnum;
 import com.guzi.sherly.common.model.BaseModel;
 import lombok.Data;
 
@@ -30,8 +31,8 @@ public class ScheduleTaskDO extends BaseModel {
     /** corn表达式 */
     private String cronExpression;
 
-    /** 启用禁用[enum] */
-    private Integer enable;
+    /** 可用性 */
+    private UsableEnum enable;
 
     /** 描述 */
     private String description;

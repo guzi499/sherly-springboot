@@ -3,7 +3,7 @@ package com.guzi.sherly.modules.quartz.model;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.guzi.sherly.modules.quartz.enums.ScheduleTaskLogTypeEnum;
+import com.guzi.sherly.common.enums.LogTypeEnum;
 import lombok.Data;
 
 import java.util.Date;
@@ -31,8 +31,8 @@ public class ScheduleTaskLogDO {
     /** 调用参数 */
     private String invokeParam;
 
-    /** 日志类型{@link ScheduleTaskLogTypeEnum} */
-    private Integer type;
+    /** 日志类型 */
+    private LogTypeEnum type;
 
     /** 耗时 */
     private Long duration;

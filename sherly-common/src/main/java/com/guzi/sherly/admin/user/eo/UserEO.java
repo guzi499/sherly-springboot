@@ -40,8 +40,8 @@ public class UserEO {
     @ExcelProperty("部门名称")
     private String departmentName;
 
-    /** 启用禁用 */
-    @ExcelProperty("启用禁用")
+    /** 可用性 */
+    @ExcelProperty("可用性")
     private String enable;
 
     /** 最后登录时间 */

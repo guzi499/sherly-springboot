@@ -19,8 +19,8 @@ public class NoticeDO extends SimpleBaseModel {
     @TableId(type = IdType.AUTO)
     private Long noticeId;
 
-    /** 消息类型{@link NoticeTypeEnum} */
-    private Integer noticeType;
+    /** 消息类型 */
+    private NoticeTypeEnum noticeType;
 
     /** 关联用户编号 */
     private Long noticeUserId;
@@ -31,6 +31,6 @@ public class NoticeDO extends SimpleBaseModel {
     /** 消息内容 */
     private String noticeText;
 
-    /** 状态{@link NoticeStatusEnum} */
-    private Integer noticeStatus;
+    /** 状态 */
+    private NoticeStatusEnum noticeStatus;
 }

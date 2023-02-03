@@ -23,13 +23,13 @@ public class LoginLogPageDTO extends PageQuery {
     @ApiModelProperty(value = "登录账号")
     private String username;
 
-    /** 登录方式{@link LoginTypeEnum} */
-    @ApiModelProperty(value = "登录方式[enum]")
-    private Integer type;
+    /** 登录方式 */
+    @ApiModelProperty(value = "登录方式")
+    private LoginTypeEnum type;
 
-    /** 登录结果{@link LoginResultEnum} */
-    @ApiModelProperty(value = "登录结果[enum]")
-    private Integer result;
+    /** 登录结果 */
+    @ApiModelProperty(value = "登录结果")
+    private LoginResultEnum result;
 
     /** 开始时间 */
     @ApiModelProperty(value = "开始时间")

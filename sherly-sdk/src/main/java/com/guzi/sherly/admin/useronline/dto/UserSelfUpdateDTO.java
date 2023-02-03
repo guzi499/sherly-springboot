@@ -23,8 +23,8 @@ public class UserSelfUpdateDTO {
     @Email
     private String email;
 
-    /** 性别{@link GenderEnum} */
-    @ApiModelProperty(value = "性别[enum]", required = true)
+    /** 性别 */
+    @ApiModelProperty(value = "性别", required = true)
     @NotNull
-    private Integer gender;
+    private GenderEnum gender;
 }

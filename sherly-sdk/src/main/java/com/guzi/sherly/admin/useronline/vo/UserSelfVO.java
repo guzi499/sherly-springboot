@@ -37,9 +37,9 @@ public class UserSelfVO {
     @ApiModelProperty(value = "用户邮箱")
     private String email;
 
-    /** 性别{@link GenderEnum} */
-    @ApiModelProperty(value = "性别[enum]")
-    private Integer gender;
+    /** 性别 */
+    @ApiModelProperty(value = "性别")
+    private GenderEnum gender;
 
     /** 性别 */
     @ApiModelProperty(value = "性别")

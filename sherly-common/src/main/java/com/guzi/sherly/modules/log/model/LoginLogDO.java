@@ -23,8 +23,8 @@ public class LoginLogDO {
     /** 登录账号 */
     private String username;
 
-    /** 登录方式{@link LoginTypeEnum} */
-    private Integer type;
+    /** 登录方式 */
+    private LoginTypeEnum type;
 
     /** 请求ip */
     private String ip;
@@ -38,8 +38,8 @@ public class LoginLogDO {
     /** 请求浏览器 */
     private String browser;
 
-    /** 登录结果{@link LoginResultEnum} */
-    private Integer result;
+    /** 登录结果 */
+    private LoginResultEnum result;
 
     /** 创建时间 */
     private Date createTime;

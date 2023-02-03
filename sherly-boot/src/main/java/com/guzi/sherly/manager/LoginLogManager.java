@@ -7,6 +7,8 @@ import com.guzi.sherly.common.model.PageResult;
 import com.guzi.sherly.common.util.IpUtil;
 import com.guzi.sherly.modules.log.dao.LoginLogDao;
 import com.guzi.sherly.modules.log.dto.LoginLogPageDTO;
+import com.guzi.sherly.modules.log.enums.LoginResultEnum;
+import com.guzi.sherly.modules.log.enums.LoginTypeEnum;
 import com.guzi.sherly.modules.log.model.LoginLogDO;
 import com.guzi.sherly.modules.log.vo.LoginLogPageVO;
 import org.springframework.beans.BeanUtils;
@@ -64,7 +66,7 @@ public class LoginLogManager {
      */
     @Async
     @Transactional(propagation = Propagation.NOT_SUPPORTED)
-    public void saveOne(HttpServletRequest request, String username, Integer result, Integer type) {
+    public void saveOne(HttpServletRequest request, String username, LoginResultEnum result, LoginTypeEnum type) {
         LoginLogDO loginLogDO = new LoginLogDO();
 
         String userAgent = request.getHeader("User-Agent");

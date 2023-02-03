@@ -3,6 +3,7 @@ package com.guzi.sherly.admin.tenant.model;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.guzi.sherly.common.enums.UsableEnum;
 import com.guzi.sherly.common.model.BaseModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -26,6 +27,6 @@ public class TenantPackageDO extends BaseModel {
     /** 描述 */
     private String description;
 
-    /** 启用禁用[enum] */
-    private Integer enable;
+    /** 可用性 */
+    private UsableEnum enable;
 }

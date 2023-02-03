@@ -1,6 +1,6 @@
 package com.guzi.sherly.modules.log.vo;
 
-import com.guzi.sherly.modules.log.enums.OperationLogTypeEnum;
+import com.guzi.sherly.common.enums.LogTypeEnum;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -16,9 +16,9 @@ public class OperationLogPageVO {
     @ApiModelProperty(value = "日志编号")
     private Long logId;
 
-    /** 日志类型{@link OperationLogTypeEnum} */
-    @ApiModelProperty(value = "日志类型[enum]")
-    private Integer type;
+    /** 日志类型 */
+    @ApiModelProperty(value = "日志类型")
+    private LogTypeEnum type;
 
     /** 操作用户 */
     @ApiModelProperty(value = "操作用户")

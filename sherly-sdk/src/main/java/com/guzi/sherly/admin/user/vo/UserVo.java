@@ -32,9 +32,9 @@ public class UserVo {
     @ApiModelProperty(value = "用户邮箱")
     private String email;
 
-    /** 性别{@link GenderEnum} */
-    @ApiModelProperty(value = "性别[enum]")
-    private Integer gender;
+    /** 性别 */
+    @ApiModelProperty(value = "性别")
+    private GenderEnum gender;
 
     /** 部门编号 */
     @ApiModelProperty(value = "部门编号")

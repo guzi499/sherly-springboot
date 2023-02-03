@@ -1,5 +1,6 @@
 package com.guzi.sherly.admin.tenant.vo;
 
+import com.guzi.sherly.admin.user.enums.GenderEnum;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -23,9 +24,9 @@ public class TenantPackagePageVO {
     @ApiModelProperty("描述")
     private String description;
 
-    /** 启用禁用[enum] */
-    @ApiModelProperty("启用禁用[enum]")
-    private Integer enable;
+    /** 可用性 */
+    @ApiModelProperty("可用性")
+    private GenderEnum enable;
 
     /** 创建时间 */
     @ApiModelProperty(value = "创建时间")

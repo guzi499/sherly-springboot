@@ -24,10 +24,10 @@ public class MenuUpdateDTO {
     @NotBlank
     private String menuName;
 
-    /** 菜单类型{@link MenuTypeEnum} */
-    @ApiModelProperty(value = "菜单类型[enum]", required = true)
+    /** 菜单类型 */
+    @ApiModelProperty(value = "菜单类型", required = true)
     @NotNull
-    private Integer menuType;
+    private MenuTypeEnum menuType;
 
     /** 权限 */
     @ApiModelProperty(value = "权限")

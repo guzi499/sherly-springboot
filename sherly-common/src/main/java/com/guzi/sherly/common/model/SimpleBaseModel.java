@@ -21,7 +21,7 @@ public abstract class SimpleBaseModel {
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date updateTime;
 
-    /** 逻辑删除[enum] */
+    /** 逻辑删除[const] */
     @TableField("is_deleted")
     @TableLogic
     private Integer deleted;

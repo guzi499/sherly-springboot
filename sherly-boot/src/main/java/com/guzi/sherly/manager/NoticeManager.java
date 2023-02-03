@@ -6,6 +6,7 @@ import com.guzi.sherly.modules.notice.dao.NoticeDao;
 import com.guzi.sherly.modules.notice.dto.NoticeClearListDTO;
 import com.guzi.sherly.modules.notice.dto.NoticePageDTO;
 import com.guzi.sherly.modules.notice.dto.NoticeResetListDTO;
+import com.guzi.sherly.modules.notice.enums.NoticeTypeEnum;
 import com.guzi.sherly.modules.notice.model.NoticeDO;
 import com.guzi.sherly.modules.notice.vo.NoticePageVO;
 import org.springframework.beans.BeanUtils;
@@ -32,7 +33,7 @@ public class NoticeManager {
      * @param noticeText
      * @param userIds
      */
-    public void saveList(Integer noticeType, String noticeTitle, String noticeText, List<Long> userIds) {
+    public void saveList(NoticeTypeEnum noticeType, String noticeTitle, String noticeText, List<Long> userIds) {
         List<NoticeDO> list = userIds.stream().map(userId -> {
             NoticeDO noticeDO = new NoticeDO();
             noticeDO.setNoticeType(noticeType);

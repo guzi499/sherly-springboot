@@ -6,7 +6,8 @@ import com.guzi.sherly.modules.oss.mapper.OssConfigMapper;
 import com.guzi.sherly.modules.oss.model.OssConfigDO;
 import org.springframework.stereotype.Service;
 
-import static com.guzi.sherly.common.contants.CommonConstants.ENABLE;
+import static com.guzi.sherly.common.enums.UsableEnum.ENABLE;
+
 
 /**
  * @author 谷子毅

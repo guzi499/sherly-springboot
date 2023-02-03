@@ -24,14 +24,6 @@ public class CommonConstants {
     /** 已删除 */
     public static final Integer DELETED = 1;
 
-    /*=============================启用禁用========================*/
-
-    /** 启用 */
-    public static final Integer ENABLE = 1;
-
-    /** 禁用 */
-    public static final Integer DISABLE = 0;
-
     /*=============================树形结构========================*/
 
     /** 顶级节点的父编号 */

@@ -1,6 +1,7 @@
 package com.guzi.sherly.admin.user.vo;
 
 import com.guzi.sherly.admin.user.enums.GenderEnum;
+import com.guzi.sherly.common.enums.UsableEnum;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -32,9 +33,9 @@ public class UserPageVo {
     @ApiModelProperty(value = "用户邮箱")
     private String email;
 
-    /** 性别{@link GenderEnum} */
-    @ApiModelProperty(value = "性别[enum]")
-    private Integer gender;
+    /** 性别 */
+    @ApiModelProperty(value = "性别")
+    private GenderEnum gender;
 
     /** 部门名称 */
     @ApiModelProperty(value = "部门名称")
@@ -44,9 +45,9 @@ public class UserPageVo {
     @ApiModelProperty(value = "部门编号")
     private Long departmentId;
 
-    /** 启用禁用[enum] */
-    @ApiModelProperty(value = "启用禁用[enum]")
-    private Integer enable;
+    /** 可用性 */
+    @ApiModelProperty(value = "可用性")
+    private UsableEnum enable;
 
     /** 创建时间 */
     @ApiModelProperty(value = "创建时间")

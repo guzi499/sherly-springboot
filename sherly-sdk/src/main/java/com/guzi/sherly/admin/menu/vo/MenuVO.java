@@ -17,8 +17,8 @@ public class MenuVO {
     @ApiModelProperty(value = "菜单编号")
     private Long menuId;
 
-    /** 菜单类型{@link MenuTypeEnum} */
-    @ApiModelProperty(value = "菜单类型[enum]")
+    /** 菜单类型 */
+    @ApiModelProperty(value = "菜单类型")
     private MenuTypeEnum menuType;
 
     /** 权限 */
