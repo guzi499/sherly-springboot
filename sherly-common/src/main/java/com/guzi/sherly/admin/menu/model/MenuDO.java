@@ -33,7 +33,7 @@ public class MenuDO extends BaseModel {
     private Long parentId;
 
     /** 菜单路径 */
-    private String link;
+    private String path;
 
     /** 菜单图标 */
     private String icon;

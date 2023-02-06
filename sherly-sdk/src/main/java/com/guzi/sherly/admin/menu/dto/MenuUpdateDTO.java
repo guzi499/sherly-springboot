@@ -40,7 +40,7 @@ public class MenuUpdateDTO {
 
     /** 菜单路径  */
     @ApiModelProperty(value = "菜单路径")
-    private String link;
+    private String path;
 
     /** 菜单图标 */
     @ApiModelProperty(value = "菜单图标")

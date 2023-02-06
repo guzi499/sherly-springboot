@@ -187,7 +187,7 @@ CREATE TABLE `sys_menu`
     `permission`     varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '权限',
     `menu_name`      varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '菜单名称',
     `parent_id`      bigint(20) UNSIGNED NOT NULL DEFAULT 0 COMMENT '父菜单编号',
-    `link`           varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '菜单路径',
+    `path`           varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '菜单路径',
     `icon`           varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '菜单图标',
     `sort`           int(11) UNSIGNED NOT NULL COMMENT '排序',
     `create_time`    datetime(0) NOT NULL COMMENT '创建时间',
